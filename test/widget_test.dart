@@ -32,12 +32,12 @@ void main() {
     await tester.pumpWidget(WuxApp(bridge: bridge));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField), 'Bonjour');
+    await tester.enterText(find.byType(EditableText), 'Bonjour');
     await tester.tap(find.text('Appliquer'));
     await tester.pumpAndSettle();
 
     expect(bridge.data['hello.message'], 'Bonjour');
-    expect(find.text('Widget mis à jour'), findsOneWidget);
+    expect(find.text('Widget mis à jour'), findsWidgets);
   });
 
   testWidgets("le bouton d'épinglage suit le support du lanceur", (

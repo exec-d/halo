@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iux_flutter/iux_flutter.dart';
 
 import '../home_widgets/home_widget_bridge.dart';
 import '../home_widgets/wux_home_widget.dart';
@@ -17,6 +18,10 @@ class CatalogScreen extends StatefulWidget {
 class _CatalogScreenState extends State<CatalogScreen> {
   bool _canPin = false;
 
+  /// L'unique emplacement de notice de l'écran : `IuxTransientLayer` n'en
+  /// affiche qu'une à la fois.
+  IuxTransientMessage? _notice;
+
   @override
   void initState() {
     super.initState();
@@ -25,19 +30,68 @@ class _CatalogScreenState extends State<CatalogScreen> {
     });
   }
 
+  void _notify(String text) {
+    setState(
+      () => _notice = IuxTransientMessage(
+        text: text,
+        dismissLabel: 'Fermer',
+        tone: IuxTransientTone.success,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Mes widgets')),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(16),
-        itemCount: widget.widgets.length,
-        separatorBuilder: (_, _) => const SizedBox(height: 12),
-        itemBuilder: (context, index) => _WidgetCard(
-          homeWidget: widget.widgets[index],
-          bridge: widget.bridge,
-          canPin: _canPin,
+      body: IuxTransientLayer(
+        message: _notice,
+        onDismissed: () => setState(() => _notice = null),
+        child: _ScreenFrame(
+          title: 'Mes widgets',
+          child: IuxSection(
+            children: [
+              for (final homeWidget in widget.widgets) ...[
+                _WidgetCard(
+                  homeWidget: homeWidget,
+                  bridge: widget.bridge,
+                  canPin: _canPin,
+                  onApplied: () => _notify('Widget mis à jour'),
+                ),
+                const IuxGap.between(),
+              ],
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+/// Barre d'application au-dessus d'une page, défilant ensemble.
+///
+/// Reprend `apps/pilot/lib/screen_frame.dart` d'IUX : `IuxPage` et
+/// `IuxAppBar` ne se composent pas seuls (double marge haute, débordement à
+/// fort grossissement du texte).
+class _ScreenFrame extends StatelessWidget {
+  const _ScreenFrame({required this.title, required this.child});
+
+  final String title;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          IuxAppBar(title: title),
+          MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: IuxPage(scrollable: false, child: child),
+          ),
+        ],
       ),
     );
   }
@@ -48,11 +102,13 @@ class _WidgetCard extends StatefulWidget {
     required this.homeWidget,
     required this.bridge,
     required this.canPin,
+    required this.onApplied,
   });
 
   final WuxHomeWidget homeWidget;
   final HomeWidgetBridge bridge;
   final bool canPin;
+  final VoidCallback onApplied;
 
   @override
   State<_WidgetCard> createState() => _WidgetCardState();
@@ -60,6 +116,11 @@ class _WidgetCard extends StatefulWidget {
 
 class _WidgetCardState extends State<_WidgetCard> {
   final _message = TextEditingController();
+
+  static const _messageInput = IuxInputDescriptor(
+    semantics: IuxInputSemantics(label: 'Message'),
+    helpText: 'Texte affiché par le widget.',
+  );
 
   @override
   void initState() {
@@ -75,47 +136,41 @@ class _WidgetCardState extends State<_WidgetCard> {
     super.dispose();
   }
 
-  Future<void> _save() async {
-    final messenger = ScaffoldMessenger.of(context);
+  Future<void> _apply() async {
     await widget.bridge.write(widget.homeWidget, 'message', _message.text);
-    messenger.showSnackBar(const SnackBar(content: Text('Widget mis à jour')));
+    widget.onApplied();
   }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(widget.homeWidget.title, style: textTheme.titleMedium),
-            const SizedBox(height: 4),
-            Text(widget.homeWidget.description, style: textTheme.bodyMedium),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _message,
-              decoration: const InputDecoration(
-                labelText: 'Message',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                FilledButton(onPressed: _save, child: const Text('Appliquer')),
-                if (widget.canPin)
-                  OutlinedButton(
-                    onPressed: () => widget.bridge.pin(widget.homeWidget),
-                    child: const Text("Ajouter à l'accueil"),
-                  ),
-              ],
-            ),
-          ],
+    return IuxCard(
+      actions: [
+        IuxButton(
+          label: 'Appliquer',
+          action: const IuxActionDescriptor.primary(
+            semantics: IuxActionSemantics(label: 'Appliquer'),
+          ),
+          onActivate: _apply,
         ),
+        if (widget.canPin)
+          IuxButton(
+            label: "Ajouter à l'accueil",
+            action: const IuxActionDescriptor(
+              semantics: IuxActionSemantics(label: "Ajouter à l'accueil"),
+            ),
+            onActivate: () => widget.bridge.pin(widget.homeWidget),
+          ),
+      ],
+      child: IuxSection(
+        title: widget.homeWidget.title,
+        description: widget.homeWidget.description,
+        children: [
+          IuxTextField(
+            input: _messageInput,
+            controller: _message,
+            onChanged: (_) {},
+          ),
+        ],
       ),
     );
   }

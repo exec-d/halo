@@ -123,6 +123,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  iux_flutter:
+    dependency: "direct main"
+    description:
+      path: "packages/iux_flutter"
+      ref: "26c5e81470d4f635fe623a8e0e20690bfe3ec114"
+      resolved-ref: "26c5e81470d4f635fe623a8e0e20690bfe3ec114"
+      url: "https://github.com/systm-d/IUX.git"
+    source: git
+    version: "0.2.0-dev.6"
   jni:
     dependency: transitive
     description:

@@ -19,6 +19,24 @@ L'application écrit des valeurs dans un stockage partagé
 (`HomeWidget.saveWidgetData`), puis demande au widget de se redessiner
 (`HomeWidget.updateWidget`). Le `HomeWidgetProvider` Kotlin relit ces valeurs.
 
+## Décisions
+
+| Sujet | Choix |
+| --- | --- |
+| Rendu des widgets | Jetpack Glance (Kotlin), natif et accessible |
+| Couleurs des widgets | Celles du fond d'écran (Material You, Android 12+) |
+| App compagnon | Construite avec [IUX](https://github.com/systm-d/IUX) |
+| Diffusion | Usage personnel, APK de debug issu de la CI |
+| Premiers widgets | Horloge / date, Agenda / rappels |
+
+IUX ne concerne que l'app compagnon : les widgets de l'écran d'accueil sont
+des vues natives, dessinées hors de Flutter. IUX n'est pas publié ; il est tiré
+de GitHub et épinglé sur un commit dans `pubspec.yaml`. Pour monter de
+version, changer ce `ref` puis lancer `flutter pub upgrade iux_flutter`.
+
+Le widget « Message » et son rendu `RemoteViews` sont une démonstration
+provisoire, remplacée par les widgets Glance.
+
 ## Structure
 
 ```
