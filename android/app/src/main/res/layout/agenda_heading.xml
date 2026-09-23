@@ -7,7 +7,7 @@
     android:paddingStart="2dp"
     android:paddingTop="6dp"
     android:paddingBottom="4dp"
-    android:fontFamily="@font/share_tech_mono"
+    android:fontFamily="monospace"
     android:includeFontPadding="false"
     android:letterSpacing="0.08"
     android:maxLines="1"

@@ -14,10 +14,10 @@ import dev.levilainpetit.wux.R
 /**
  * Widget horloge : heure, date et prochaine alarme.
  *
- * En `RemoteViews` plutôt qu'en Glance : `TextClock` se met à jour seul chaque
- * minute sans réveiller l'application, ce que Glance ne sait pas faire. La
- * prochaine alarme, elle, est redessinée quand le système annonce qu'elle a
- * changé (voir le `<receiver>` dans `AndroidManifest.xml`).
+ * L'heure est une image redessinée chaque minute ([ClockTime]), la date un
+ * `TextClock`, qui avance seul. La prochaine alarme est redessinée quand le
+ * système annonce qu'elle a changé (voir le `<receiver>` dans
+ * `AndroidManifest.xml`).
  *
  * Deux mises en page, d'après la maquette : la grande (`widget_clock`, date
  * sur deux lignes) et, quand le widget est réduit à une rangée, la compacte
@@ -27,7 +27,7 @@ class ClockWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        if (intent.action in ClockViews.REFRESH_ACTIONS) {
+        if (intent.action in ClockViews.REFRESH_ACTIONS || intent.action == ClockTime.ACTION_TICK) {
             val manager = AppWidgetManager.getInstance(context)
             val ids = manager.getAppWidgetIds(ComponentName(context, ClockWidgetProvider::class.java))
             if (ids.isNotEmpty()) onUpdate(context, manager, ids)
@@ -42,6 +42,13 @@ class ClockWidgetProvider : AppWidgetProvider() {
         appWidgetIds.forEach { id ->
             appWidgetManager.updateAppWidget(id, views(context, appWidgetManager.getAppWidgetOptions(id)))
         }
+        ClockTime.scheduleNextTick(context)
+    }
+
+    override fun onDisabled(context: Context) {
+        super.onDisabled(context)
+        // Plus aucune horloge posée : plus rien à redessiner chaque minute.
+        ClockTime.cancelTicks(context)
     }
 
     override fun onAppWidgetOptionsChanged(
@@ -66,7 +73,10 @@ class ClockWidgetProvider : AppWidgetProvider() {
     }
 
     private fun build(context: Context, layout: Int): RemoteViews =
-        RemoteViews(context.packageName, layout).also { ClockViews.bind(context, it) }
+        RemoteViews(context.packageName, layout).also {
+            ClockViews.bind(context, it)
+            ClockTime.bind(context, it)
+        }
 
     private companion object {
         /** Hauteur (dp) à partir de laquelle l'heure, la date et l'alarme s'empilent. */

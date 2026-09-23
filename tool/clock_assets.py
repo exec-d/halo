@@ -41,22 +41,6 @@ def divider(vertical: bool):
     return glow(img, 2)
 
 
-def bars(count: int = 7):
-    """Pile de barres, puis hachures en biais, comme à droite de la maquette."""
-    pad = 6
-    img, d = canvas(16 + 2 * pad, count * 7 + 27 + 2 * pad)
-    x0, x1 = pad * DP, (pad + 16) * DP
-    y = pad * DP
-    for _ in range(count):
-        d.rectangle((x0, y, x1, y + 4 * DP), fill='white')
-        y += 7 * DP
-    y += 4 * DP
-    for i in range(3):
-        x = x0 + i * 6 * DP
-        d.polygon([(x, y + 14 * DP), (x + 3 * DP, y + 14 * DP), (x + 8 * DP, y), (x + 5 * DP, y)], fill='white')
-    return glow(img, 2)
-
-
 def event_bar():
     """Trait vertical d'un événement, teint à la couleur de son agenda."""
     pad = 5
@@ -89,8 +73,6 @@ if __name__ == '__main__':
     import sys
     divider(True).save(OUT + 'clock_divider_vertical.png')
     divider(False).save(OUT + 'clock_divider_horizontal.png')
-    bars().save(OUT + 'clock_bars.png')
-    bars(20).save(OUT + 'agenda_bars.png')
     event_bar().save(OUT + 'agenda_event_bar.png')
     dotted_divider().save(OUT + 'agenda_divider_dotted.png')
     # MaterialIcons-Regular.otf : livrée avec le SDK Flutter

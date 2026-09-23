@@ -32,9 +32,9 @@ object AgendaRenderer {
     private const val TWO_COLUMNS_MIN_WIDTH = 300f
 
     // Hauteurs estimées (dp à 100 % de texte) ; suivre les mises en page agenda_*.
-    private const val HEADING = 30f
-    private const val ROW = 44f
-    private const val NOTE = 22f
+    private const val HEADING = 28f
+    private const val ROW = 41f
+    private const val NOTE = 20f
 
     private sealed interface Item {
         val height: Float
@@ -84,7 +84,6 @@ object AgendaRenderer {
         val twoColumns = size.width >= TWO_COLUMNS_MIN_WIDTH
         views.setViewVisibility(R.id.agenda_separator, if (twoColumns) View.VISIBLE else View.GONE)
         views.setViewVisibility(R.id.agenda_col2, if (twoColumns) View.VISIBLE else View.GONE)
-        views.setViewVisibility(R.id.agenda_bars, if (size.width >= 220f) View.VISIBLE else View.GONE)
         views.removeAllViews(R.id.agenda_col1)
         views.removeAllViews(R.id.agenda_col2)
 

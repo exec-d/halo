@@ -3,6 +3,11 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <!-- Certaines applications Horloge l'exigent pour s'ouvrir depuis le widget. -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <!-- L'heure de l'horloge est redessinée à la minute pile (ClockTime). -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission
+        android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:maxSdkVersion="32" />
     <application
         android:label="WUX"
         android:name="${applicationName}"

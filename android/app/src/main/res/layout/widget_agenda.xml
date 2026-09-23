@@ -32,13 +32,4 @@
         android:layout_weight="1"
         android:orientation="vertical" />
 
-    <ImageView
-        android:id="@+id/agenda_bars"
-        android:layout_width="28dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="4dp"
-        android:importantForAccessibility="no"
-        android:scaleType="fitCenter"
-        android:src="@drawable/agenda_bars"
-        android:tint="@color/clock_line" />
 </LinearLayout>

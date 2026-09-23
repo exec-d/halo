@@ -28,7 +28,8 @@ class WallpaperFrame extends StatelessWidget {
   }
 }
 
-const _mono = 'ShareTechMono';
+/// La police mono du système, seule police « technique » qu'un widget accepte.
+const _mono = 'monospace';
 
 /// Le halo : l'ombre sans décalage des widgets natifs, doublée pour l'éclat.
 List<Shadow> _glow(Color color, double radius) => [
@@ -63,66 +64,6 @@ class _NeonLine extends StatelessWidget {
       decoration: BoxDecoration(color: color, boxShadow: _boxGlow(glow)),
     );
   }
-}
-
-/// Barres empilées et hachures, à droite des widgets (`tool/clock_assets.py`).
-class _NeonBars extends StatelessWidget {
-  const _NeonBars({required this.palette, required this.count});
-
-  final WidgetPalette palette;
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 20,
-      height: count * 7.0 + 27,
-      child: CustomPaint(painter: _BarsPainter(palette, count)),
-    );
-  }
-}
-
-class _BarsPainter extends CustomPainter {
-  _BarsPainter(this.palette, this.count);
-
-  final WidgetPalette palette;
-  final int count;
-
-  void _draw(Canvas canvas, Paint paint) {
-    var y = 0.0;
-    for (var i = 0; i < count; i++) {
-      canvas.drawRect(Rect.fromLTWH(2, y, 16, 4), paint);
-      y += 7;
-    }
-    y += 4;
-    for (var i = 0; i < 3; i++) {
-      final x = 2.0 + i * 6;
-      canvas.drawPath(
-        Path()
-          ..moveTo(x, y + 14)
-          ..lineTo(x + 3, y + 14)
-          ..lineTo(x + 8, y)
-          ..lineTo(x + 5, y)
-          ..close(),
-        paint,
-      );
-    }
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    _draw(
-      canvas,
-      Paint()
-        ..color = palette.glow
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
-    );
-    _draw(canvas, Paint()..color = palette.line);
-  }
-
-  @override
-  bool shouldRepaint(_BarsPainter old) =>
-      old.palette != palette || old.count != count;
 }
 
 class _Alarm extends StatelessWidget {
@@ -190,11 +131,8 @@ class ClockWidgetPreview extends StatelessWidget {
       height: compact ? 64 : 110,
       child: Row(
         children: [
-          Expanded(
-            child: FittedBox(
-              alignment: Alignment.centerRight,
-              child: Text(clock.time, style: _time(palette)),
-            ),
+          Flexible(
+            child: FittedBox(child: Text(clock.time, style: _time(palette))),
           ),
           _NeonLine(color: palette.line, glow: palette.glow, vertical: true),
           IntrinsicWidth(
@@ -218,8 +156,6 @@ class ClockWidgetPreview extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 8),
-          _NeonBars(palette: palette, count: compact ? 4 : 7),
         ],
       ),
     );
@@ -277,8 +213,6 @@ class AgendaWidgetPreview extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(width: 8),
-        _NeonBars(palette: palette, count: 12),
       ],
     );
   }

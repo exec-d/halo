@@ -6,7 +6,7 @@ pour personnaliser son téléphone.
 ## Widgets
 
 Style néon d'après les maquettes : chiffres à points, texte mono, halo
-lumineux, barres décoratives. Les couleurs suivent l'accent du fond d'écran
+lumineux. Les couleurs suivent l'accent du fond d'écran
 (Material You, Android 12+), un bleu fixe avant.
 
 | Widget | Contenu | Toucher |
@@ -15,9 +15,12 @@ lumineux, barres décoratives. Les couleurs suivent l'accent du fond d'écran
 | Agenda du jour | Événements d'aujourd'hui, en une ou deux colonnes | Ouvre l'événement ou le jour |
 | Aujourd'hui et demain | Idem sur deux jours | Idem |
 
-Tous sont en `RemoteViews` : Glance n'accepte ni police personnalisée ni
-halo sur le texte. L'horloge utilise `TextClock`, qui avance seul chaque
-minute sans réveiller l'application. L'agenda ne défile pas : `AgendaRenderer`
+Tous sont en `RemoteViews` : Glance n'accepte pas de halo sur le texte. Un
+widget est dessiné par le lanceur, qui n'a pas accès aux polices de
+l'application : les textes utilisent la police mono du système, et l'heure est
+une image dessinée avec la police à points (`ClockTime.kt`), redessinée à la
+minute par une alarme non réveillante. Elle est blanche, en deux calques
+(halo, tracé) que la mise en page teinte, donc aux couleurs du téléphone. L'agenda ne défile pas : `AgendaRenderer`
 estime ce qui tient dans chaque colonne et termine par « ••• » s'il en reste.
 
 À partir de 18 h, quand il ne reste plus d'événement à venir dans la journée,
@@ -29,12 +32,10 @@ Un appui long sur un widget ouvre ses réglages dans WUX (Android 12+).
 
 - `res/font/wux_dots.ttf` : police à points, dessinée chiffre par chiffre
   dans `tool/wux_dots_font.py`.
-- `res/font/share_tech_mono.ttf` : [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono), licence OFL
-  (`assets/fonts/ShareTechMono-OFL.txt`).
-- `res/drawable-xxhdpi/*.png` : traits, barres et icône d'alarme avec leur halo, en blanc,
+- `res/drawable-xxhdpi/*.png` : traits et icône d'alarme avec leur halo, en blanc,
   teintés par le widget ; générés par `tool/clock_assets.py`.
 
-Les deux polices sont aussi dans `assets/fonts/` pour les aperçus Flutter.
+La police à points est aussi dans `assets/fonts/` pour les aperçus Flutter.
 
 ## Principe
 
