@@ -102,6 +102,23 @@ class FakePlatform implements WuxPlatform {
   @override
   Future<WidgetPalette> palette() async => WidgetPalette.fallback;
 
+  @override
+  Future<List<SystemTilePreview>> systemPreview() async => const [
+    SystemTilePreview(
+      label: 'BATTERIE',
+      value: '82 %',
+      detail: 'En charge',
+      progress: 82,
+    ),
+    SystemTilePreview(label: 'RÉSEAU', value: 'Wi-Fi', detail: 'Signal 3/4'),
+    SystemTilePreview(
+      label: 'STOCKAGE',
+      value: '64 Go',
+      detail: 'Libres sur 128 Go',
+      progress: 50,
+    ),
+  ];
+
   var finishedConfiguring = 0;
 
   @override

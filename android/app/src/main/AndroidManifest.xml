@@ -3,6 +3,8 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <!-- Certaines applications Horloge l'exigent pour s'ouvrir depuis le widget. -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <!-- Widget système : savoir si l'on est en ligne, et par quoi. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:label="WUX"
         android:name="${applicationName}"
@@ -85,6 +87,17 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_agenda_two_columns_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.SystemWidgetProvider"
+            android:exported="false"
+            android:label="@string/widget_system_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_system_info" />
         </receiver>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

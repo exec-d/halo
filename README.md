@@ -14,6 +14,7 @@ halo lumineux. Les couleurs suivent l'accent du fond d'écran
 | Horloge | Heure, date, prochaine alarme ; grande ou compacte selon la hauteur | Ouvre l'horloge |
 | Agenda | Événements d'aujourd'hui (et de demain, au choix), en une colonne | Ouvre l'événement ou le jour |
 | Agenda 2 colonnes | Idem en deux colonnes | Idem |
+| Système (4x1) | Batterie, réseau, stockage | Ouvre le réglage correspondant |
 
 Tous sont en `RemoteViews` : Glance n'accepte pas de halo sur le texte. Un
 widget est dessiné par le lanceur, qui n'a pas accès aux polices de

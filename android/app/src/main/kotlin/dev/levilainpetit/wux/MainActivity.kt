@@ -11,6 +11,7 @@ import dev.levilainpetit.wux.calendar.AgendaBuilder
 import dev.levilainpetit.wux.calendar.CalendarRepository
 import dev.levilainpetit.wux.widgets.AgendaRefresh
 import dev.levilainpetit.wux.widgets.NextAlarm
+import dev.levilainpetit.wux.widgets.SystemStatus
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
@@ -99,6 +100,15 @@ open class MainActivity : FlutterActivity() {
                     "glow" to getColor(R.color.clock_glow),
                     "line" to getColor(R.color.clock_line),
                 ),
+            )
+            "systemPreview" -> result.success(
+                listOf(
+                    SystemStatus.battery(this),
+                    SystemStatus.network(this),
+                    SystemStatus.storage(this),
+                ).map {
+                    mapOf("label" to it.label, "value" to it.value, "detail" to it.detail, "progress" to it.progress)
+                },
             )
             "widgetProvider" -> {
                 // Classe Kotlin du widget en cours de configuration, pour que

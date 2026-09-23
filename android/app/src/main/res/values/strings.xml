@@ -11,6 +11,24 @@
     <string name="widget_agenda_two_columns_label">Agenda 2 colonnes</string>
     <string name="widget_agenda_two_columns_description">Les événements du jour, en deux colonnes.</string>
 
+    <string name="widget_system_label">Système</string>
+    <string name="widget_system_description">Batterie, réseau et stockage.</string>
+    <string name="system_battery">BATTERIE</string>
+    <string name="system_charging">En charge</string>
+    <string name="system_on_battery">Sur batterie</string>
+    <string name="system_network">RÉSEAU</string>
+    <string name="system_wifi">Wi-Fi</string>
+    <string name="system_mobile">Mobile</string>
+    <string name="system_ethernet">Ethernet</string>
+    <string name="system_mobile_data">Données mobiles</string>
+    <string name="system_connected">Connecté</string>
+    <string name="system_signal">Signal %1$d/4</string>
+    <string name="system_offline">Hors ligne</string>
+    <string name="system_airplane">Mode avion</string>
+    <string name="system_no_network">Aucun réseau</string>
+    <string name="system_storage">STOCKAGE</string>
+    <string name="system_storage_free">Libres sur %1$s</string>
+
     <string name="agenda_more" translatable="false">•••</string>
     <string name="agenda_today">Aujourd\'hui</string>
     <string name="agenda_tomorrow">Demain</string>

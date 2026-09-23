@@ -120,3 +120,28 @@ class WidgetPalette {
   /// Traits, barres, horaires.
   final Color line;
 }
+
+/// Une case du widget système, telle que `SystemStatus.kt` la remplit.
+class SystemTilePreview {
+  const SystemTilePreview({
+    required this.label,
+    required this.value,
+    required this.detail,
+    this.progress,
+  });
+
+  factory SystemTilePreview.fromMap(Map<Object?, Object?> map) =>
+      SystemTilePreview(
+        label: map['label']! as String,
+        value: map['value']! as String,
+        detail: map['detail']! as String,
+        progress: (map['progress'] as num?)?.toInt(),
+      );
+
+  final String label;
+  final String value;
+  final String detail;
+
+  /// Jauge de 0 à 100, ou `null` quand la case n'en a pas.
+  final int? progress;
+}

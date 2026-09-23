@@ -278,3 +278,92 @@ class _EventRow extends StatelessWidget {
     );
   }
 }
+
+/// Reproduction de `widget_system.xml` : trois cases séparées par des traits.
+class SystemWidgetPreview extends StatelessWidget {
+  const SystemWidgetPreview({
+    super.key,
+    required this.tiles,
+    required this.palette,
+  });
+
+  final List<SystemTilePreview> tiles;
+  final WidgetPalette palette;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 64,
+      child: Row(
+        children: [
+          for (final (index, tile) in tiles.indexed) ...[
+            if (index > 0)
+              _NeonLine(
+                color: palette.line,
+                glow: palette.glow,
+                vertical: true,
+              ),
+            Expanded(child: _SystemTile(tile, palette)),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _SystemTile extends StatelessWidget {
+  const _SystemTile(this.tile, this.palette);
+
+  final SystemTilePreview tile;
+  final WidgetPalette palette;
+
+  @override
+  Widget build(BuildContext context) {
+    final small = TextStyle(
+      fontFamily: _mono,
+      fontSize: 10,
+      color: palette.line,
+      shadows: _glow(palette.glow, 3),
+    );
+    final progress = tile.progress;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(tile.label, style: small.copyWith(letterSpacing: 1)),
+        const SizedBox(height: 2),
+        Text(
+          tile.value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+            height: 1,
+            color: palette.core,
+            shadows: _glow(palette.glow, 6),
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          tile.detail.toUpperCase(),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: small,
+        ),
+        const SizedBox(height: 4),
+        Opacity(
+          opacity: progress == null ? 0 : 1,
+          child: SizedBox(
+            height: 4,
+            child: LinearProgressIndicator(
+              value: (progress ?? 0) / 100,
+              color: palette.line,
+              backgroundColor: palette.glow,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

@@ -43,6 +43,9 @@ abstract interface class WuxPlatform {
 
   Future<WidgetPalette> palette();
 
+  /// Batterie, réseau, stockage, comme le widget système les affiche.
+  Future<List<SystemTilePreview>> systemPreview();
+
   /// Widget dont le lanceur a ouvert les réglages, ou `null`.
   Future<WuxHomeWidget?> configuringWidget();
 
@@ -68,6 +71,7 @@ class AndroidWuxPlatform implements WuxPlatform {
         // relire leurs réglages quand leur session est encore ouverte.
         await _channel.invokeMethod<void>('refreshWidgets');
       case WuxWidgetKind.clock:
+      case WuxWidgetKind.system:
         await HomeWidget.updateWidget(
           qualifiedAndroidName: widget.androidProvider,
         );
@@ -135,6 +139,16 @@ class AndroidWuxPlatform implements WuxPlatform {
   Future<WidgetPalette> palette() async {
     final map = await _channel.invokeMapMethod<Object?, Object?>('palette');
     return map == null ? WidgetPalette.fallback : WidgetPalette.fromMap(map);
+  }
+
+  @override
+  Future<List<SystemTilePreview>> systemPreview() async {
+    final list =
+        await _channel.invokeListMethod<Object?>('systemPreview') ?? [];
+    return [
+      for (final item in list)
+        SystemTilePreview.fromMap(item! as Map<Object?, Object?>),
+    ];
   }
 
   @override

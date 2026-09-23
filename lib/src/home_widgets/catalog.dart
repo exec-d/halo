@@ -26,9 +26,18 @@ const twoColumnAgendaWidget = WuxHomeWidget(
   androidProvider: '$_androidPackage.TwoColumnAgendaWidget',
 );
 
+const systemWidget = WuxHomeWidget(
+  id: 'system',
+  kind: WuxWidgetKind.system,
+  title: 'Système',
+  description: 'Batterie, réseau et stockage, sur une rangée.',
+  androidProvider: '$_androidPackage.SystemWidgetProvider',
+);
+
 /// Tous les widgets proposés par l'application.
 const wuxHomeWidgets = <WuxHomeWidget>[
   clockWidget,
   oneColumnAgendaWidget,
   twoColumnAgendaWidget,
+  systemWidget,
 ];
