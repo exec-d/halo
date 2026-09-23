@@ -11,9 +11,6 @@
     <string name="widget_agenda_two_days_label">Aujourd\'hui et demain</string>
     <string name="widget_agenda_two_days_description">Les événements d\'aujourd\'hui et de demain.</string>
 
-    <string name="widget_clock_agenda_label">Horloge et agenda</string>
-    <string name="widget_clock_agenda_description">L\'heure, puis les événements d\'aujourd\'hui et de demain.</string>
-
     <string name="agenda_more" translatable="false">•••</string>
     <string name="agenda_today">Aujourd\'hui</string>
     <string name="agenda_tomorrow">Demain</string>

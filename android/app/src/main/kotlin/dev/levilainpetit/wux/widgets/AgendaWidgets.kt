@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import dev.levilainpetit.wux.calendar.AgendaBuilder
 import dev.levilainpetit.wux.calendar.CalendarRepository
@@ -14,18 +13,12 @@ import es.antonborri.home_widget.HomeWidgetPlugin
  * Widget agenda : les événements groupés par jour, sur [days] jours.
  *
  * [widgetId] est l'identifiant partagé avec Flutter (`lib/src/home_widgets/catalog.dart`)
- * pour les réglages ; [withClock] ajoute le bloc horloge en tête.
+ * pour les réglages.
  */
 abstract class AgendaWidgetProvider(
     private val widgetId: String,
     private val days: Int,
-    private val withClock: Boolean = false,
 ) : AppWidgetProvider() {
-
-    override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
-        if (withClock && intent.action in ClockViews.REFRESH_ACTIONS) renderAll(context)
-    }
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         appWidgetIds.forEach { render(context, appWidgetManager, it) }
@@ -57,7 +50,7 @@ abstract class AgendaWidgetProvider(
         }
         manager.updateAppWidget(
             appWidgetId,
-            AgendaRenderer.views(context, agenda, manager.getAppWidgetOptions(appWidgetId), withClock),
+            AgendaRenderer.views(context, agenda, manager.getAppWidgetOptions(appWidgetId)),
         )
     }
 }
@@ -65,6 +58,3 @@ abstract class AgendaWidgetProvider(
 class TodayAgendaWidgetReceiver : AgendaWidgetProvider(widgetId = "agenda_today", days = 1)
 
 class TwoDayAgendaWidgetReceiver : AgendaWidgetProvider(widgetId = "agenda_two_days", days = 2)
-
-class ClockAgendaWidgetProvider :
-    AgendaWidgetProvider(widgetId = "clock_agenda", days = 2, withClock = true)

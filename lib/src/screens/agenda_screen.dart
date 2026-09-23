@@ -42,7 +42,6 @@ class _AgendaScreenState extends State<AgendaScreen> {
 
   /// `null` : tous les agendas, y compris ceux ajoutés plus tard.
   Set<int>? _selected;
-  ClockPreview? _clock;
   WidgetPalette _palette = WidgetPalette.fallback;
   List<AgendaDayPreview> _preview = const [];
 
@@ -59,9 +58,6 @@ class _AgendaScreenState extends State<AgendaScreen> {
     final canPin = await _platform.canPin();
     final palette = await _platform.palette();
     final stored = await _platform.read(widget.homeWidget, _calendarsKey);
-    final clock = widget.homeWidget.withClock
-        ? await _platform.clockPreview()
-        : null;
     if (!mounted) return;
     setState(() {
       _permission = permission;
@@ -70,7 +66,6 @@ class _AgendaScreenState extends State<AgendaScreen> {
       _selected = stored == null
           ? null
           : {for (final part in stored.split(',')) ?int.tryParse(part)};
-      _clock = clock;
     });
     if (permission) await _loadCalendar();
   }
@@ -132,11 +127,7 @@ class _AgendaScreenState extends State<AgendaScreen> {
               children: [
                 WallpaperFrame(
                   child: _permission ?? false
-                      ? AgendaWidgetPreview(
-                          days: _preview,
-                          palette: _palette,
-                          clock: _clock,
-                        )
+                      ? AgendaWidgetPreview(days: _preview, palette: _palette)
                       : const _PreviewPlaceholder(),
                 ),
                 const IuxGap.between(),

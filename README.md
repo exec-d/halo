@@ -14,7 +14,6 @@ lumineux, barres décoratives. Les couleurs suivent l'accent du fond d'écran
 | Horloge | Heure, date, prochaine alarme ; grande ou compacte selon la hauteur | Ouvre l'horloge |
 | Agenda du jour | Événements d'aujourd'hui, en une ou deux colonnes | Ouvre l'événement ou le jour |
 | Aujourd'hui et demain | Idem sur deux jours | Idem |
-| Horloge et agenda | L'horloge, puis les événements d'aujourd'hui et de demain | Idem |
 
 Tous sont en `RemoteViews` : Glance n'accepte ni police personnalisée ni
 halo sur le texte. L'horloge utilise `TextClock`, qui avance seul chaque
@@ -32,7 +31,7 @@ Un appui long sur un widget ouvre ses réglages dans WUX (Android 12+).
   dans `tool/wux_dots_font.py`.
 - `res/font/share_tech_mono.ttf` : [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono), licence OFL
   (`assets/fonts/ShareTechMono-OFL.txt`).
-- `res/drawable-xxhdpi/*.png` : traits et barres avec leur halo, en blanc,
+- `res/drawable-xxhdpi/*.png` : traits, barres et icône d'alarme avec leur halo, en blanc,
   teintés par le widget ; générés par `tool/clock_assets.py`.
 
 Les deux polices sont aussi dans `assets/fonts/` pour les aperçus Flutter.

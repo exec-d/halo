@@ -17,24 +17,13 @@ Future<void> _open(
 }
 
 void main() {
-  testWidgets('le catalogue liste les quatre widgets', (tester) async {
+  testWidgets('le catalogue liste les trois widgets', (tester) async {
     await tester.pumpWidget(WuxApp(platform: FakePlatform()));
     await tester.pumpAndSettle();
 
     expect(find.text('Horloge'), findsOneWidget);
     expect(find.text('Agenda du jour'), findsOneWidget);
     expect(find.text("Aujourd'hui et demain"), findsOneWidget);
-    expect(find.text('Horloge et agenda'), findsOneWidget);
-  });
-
-  testWidgets("l'horloge et agenda montre l'heure puis les jours", (
-    tester,
-  ) async {
-    await _open(tester, FakePlatform(), 'Horloge et agenda');
-
-    expect(find.text('09:41'), findsOneWidget);
-    expect(find.text('MERCREDI 23 SEPTEMBRE'), findsOneWidget);
-    expect(find.text('DEMAIN'), findsOneWidget);
   });
 
   testWidgets("l'horloge montre l'heure et la date natives", (tester) async {

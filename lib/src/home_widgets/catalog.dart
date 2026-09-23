@@ -28,20 +28,9 @@ const twoDayAgendaWidget = WuxHomeWidget(
   days: 2,
 );
 
-const clockAgendaWidget = WuxHomeWidget(
-  id: 'clock_agenda',
-  kind: WuxWidgetKind.agenda,
-  title: 'Horloge et agenda',
-  description: "L'heure, puis les événements d'aujourd'hui et de demain.",
-  androidProvider: '$_androidPackage.ClockAgendaWidgetProvider',
-  days: 2,
-  withClock: true,
-);
-
 /// Tous les widgets proposés par l'application.
 const wuxHomeWidgets = <WuxHomeWidget>[
   clockWidget,
   todayAgendaWidget,
   twoDayAgendaWidget,
-  clockAgendaWidget,
 ];

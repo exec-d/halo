@@ -3,9 +3,10 @@
 Tout est dessiné en blanc avec son halo : le widget les teinte à la couleur
 d'accent du téléphone (android:tint), ce qui teinte le halo avec.
 
-    pip install pillow && python3 tool/clock_assets.py
+    pip install pillow
+    python3 tool/clock_assets.py <flutter>/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf
 """
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 OUT = 'android/app/src/main/res/drawable-xxhdpi/'
 DP = 3  # xxhdpi
@@ -75,10 +76,23 @@ def dotted_divider():
     return glow(img, 1.5)
 
 
+def alarm_icon(font_path: str):
+    """Icône « alarm » de Material Icons (U+E072 dans la police du SDK Flutter), avec son halo."""
+    size, pad = 24, 5
+    img, d = canvas(size + 2 * pad, size + 2 * pad)
+    font = ImageFont.truetype(font_path, size * DP)
+    d.text((pad * DP, pad * DP), chr(0xE072), font=font, fill='white')
+    return glow(img, 1.5)
+
+
 if __name__ == '__main__':
+    import sys
     divider(True).save(OUT + 'clock_divider_vertical.png')
     divider(False).save(OUT + 'clock_divider_horizontal.png')
     bars().save(OUT + 'clock_bars.png')
     bars(20).save(OUT + 'agenda_bars.png')
     event_bar().save(OUT + 'agenda_event_bar.png')
     dotted_divider().save(OUT + 'agenda_divider_dotted.png')
+    # MaterialIcons-Regular.otf : livrée avec le SDK Flutter
+    # (bin/cache/artifacts/material_fonts/), licence Apache 2.0.
+    alarm_icon(sys.argv[1]).save(OUT + 'clock_alarm.png')

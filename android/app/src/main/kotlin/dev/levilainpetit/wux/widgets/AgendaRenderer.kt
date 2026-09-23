@@ -36,13 +36,6 @@ object AgendaRenderer {
     private const val ROW = 44f
     private const val NOTE = 22f
 
-    /** Bloc horloge du widget combiné : heure, date, alarme, trait. */
-    private const val CLOCK_BLOCK = 72f + 18f + 18f + 14f
-
-    // Largeurs fixes : séparateur, barres décoratives, marges.
-    private const val SEPARATOR = 20f
-    private const val BARS = 32f
-
     private sealed interface Item {
         val height: Float
 
@@ -67,30 +60,26 @@ object AgendaRenderer {
         context: Context,
         agenda: List<AgendaDay>?,
         options: Bundle,
-        withClock: Boolean,
     ): RemoteViews {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             @Suppress("DEPRECATION")
             val sizes = options.getParcelableArrayList<SizeF>(AppWidgetManager.OPTION_APPWIDGET_SIZES)
             if (!sizes.isNullOrEmpty()) {
-                return RemoteViews(sizes.associateWith { render(context, agenda, it, withClock) })
+                return RemoteViews(sizes.associateWith { render(context, agenda, it) })
             }
         }
         // Avant Android 12 : la taille portrait (largeur mini, hauteur maxi).
         val width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 250)
         val height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, 180)
-        return render(context, agenda, SizeF(width.toFloat(), height.toFloat()), withClock)
+        return render(context, agenda, SizeF(width.toFloat(), height.toFloat()))
     }
 
     private fun render(
         context: Context,
         agenda: List<AgendaDay>?,
         size: SizeF,
-        withClock: Boolean,
     ): RemoteViews {
-        val layout = if (withClock) R.layout.widget_clock_agenda else R.layout.widget_agenda
-        val views = RemoteViews(context.packageName, layout)
-        if (withClock) ClockViews.bind(context, views)
+        val views = RemoteViews(context.packageName, R.layout.widget_agenda)
 
         val twoColumns = size.width >= TWO_COLUMNS_MIN_WIDTH
         views.setViewVisibility(R.id.agenda_separator, if (twoColumns) View.VISIBLE else View.GONE)
@@ -103,10 +92,7 @@ object AgendaRenderer {
         val padding = context.resources.getDimension(R.dimen.agenda_padding) /
             context.resources.displayMetrics.density
         val usable = size.height - 2 * padding
-        val capacities = buildList {
-            add(usable - if (withClock) CLOCK_BLOCK * scale else 0f)
-            if (twoColumns) add(usable)
-        }
+        val capacities = List(if (twoColumns) 2 else 1) { usable }
 
         val items = items(context, agenda)
         val columns = List(capacities.size) { mutableListOf<Item>() }

@@ -86,21 +86,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_agenda_two_days_info" />
         </receiver>
-        <receiver
-            android:name=".widgets.ClockAgendaWidgetProvider"
-            android:exported="false"
-            android:label="@string/widget_clock_agenda_label">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.app.action.NEXT_ALARM_CLOCK_CHANGED" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.LOCALE_CHANGED" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_clock_agenda_info" />
-        </receiver>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

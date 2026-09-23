@@ -143,11 +143,11 @@ class _Alarm extends StatelessWidget {
       children: [
         Icon(
           Icons.alarm,
-          size: size + 1,
+          size: size * 1.4,
           color: palette.core,
-          shadows: _glow(palette.glow, 4),
+          shadows: _glow(palette.glow, 5),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 6),
         Text(
           label.toUpperCase(),
           style: TextStyle(
@@ -233,18 +233,13 @@ class AgendaWidgetPreview extends StatelessWidget {
     super.key,
     required this.days,
     required this.palette,
-    this.clock,
   });
 
   final List<AgendaDayPreview> days;
   final WidgetPalette palette;
 
-  /// Pour le widget combiné : l'horloge en tête.
-  final ClockPreview? clock;
-
   @override
   Widget build(BuildContext context) {
-    final clock = this.clock;
     final note = TextStyle(
       fontFamily: _mono,
       fontSize: 13,
@@ -258,27 +253,6 @@ class AgendaWidgetPreview extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (clock != null) ...[
-                SizedBox(
-                  height: 72,
-                  child: FittedBox(
-                    alignment: Alignment.centerLeft,
-                    child: Text(clock.time, style: _time(palette)),
-                  ),
-                ),
-                Text(
-                  clock.date.toUpperCase(),
-                  style: TextStyle(
-                    fontFamily: _mono,
-                    fontSize: 14,
-                    color: palette.core,
-                    shadows: _glow(palette.glow, 5),
-                  ),
-                ),
-                if (clock.nextAlarm case final alarm?)
-                  _Alarm(label: alarm, palette: palette, size: 13),
-                _NeonLine(color: palette.line, glow: palette.glow),
-              ],
               for (final day in days) ...[
                 Padding(
                   padding: const EdgeInsets.only(left: 2, top: 6, bottom: 4),

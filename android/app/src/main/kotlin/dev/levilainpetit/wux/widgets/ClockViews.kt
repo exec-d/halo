@@ -10,8 +10,8 @@ import android.widget.RemoteViews
 import dev.levilainpetit.wux.R
 
 /**
- * Remplit un bloc horloge (`clock_root`, `clock_alarm`, `clock_alarm_text`),
- * qu'il soit seul dans le widget horloge ou en tête du widget combiné.
+ * Remplit le bloc horloge (`clock_root`, `clock_alarm`, `clock_alarm_text`)
+ * des deux mises en page du widget horloge.
  */
 object ClockViews {
 
