@@ -36,6 +36,11 @@
             android:label="@string/widget_clock_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <!-- Redessine la prochaine alarme quand elle change. -->
+                <action android:name="android.app.action.NEXT_ALARM_CLOCK_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"

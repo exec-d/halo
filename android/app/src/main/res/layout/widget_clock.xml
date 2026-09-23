@@ -33,4 +33,33 @@
         android:shadowRadius="4"
         android:textColor="@color/clock_accent"
         android:textSize="18sp" />
+
+    <!-- Prochaine alarme, masquée quand il n'y en a pas. -->
+    <LinearLayout
+        android:id="@+id/clock_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="4dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_alarm"
+            android:tint="@color/clock_accent" />
+
+        <TextView
+            android:id="@+id/clock_alarm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shadowColor="#66000000"
+            android:shadowDy="1"
+            android:shadowRadius="4"
+            android:textColor="@color/clock_accent"
+            android:textSize="15sp" />
+    </LinearLayout>
 </LinearLayout>

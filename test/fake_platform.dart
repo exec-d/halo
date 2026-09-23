@@ -4,7 +4,13 @@ import 'package:wux/src/platform/wux_platform.dart';
 
 /// Plateforme simulée : un stockage en mémoire et deux agendas.
 class FakePlatform implements WuxPlatform {
-  FakePlatform({this.permission = true, this.grantOnRequest = true});
+  FakePlatform({
+    this.permission = true,
+    this.grantOnRequest = true,
+    this.nextAlarm,
+  });
+
+  final String? nextAlarm;
 
   bool permission;
   final bool grantOnRequest;
@@ -76,6 +82,7 @@ class FakePlatform implements WuxPlatform {
               time: 'De 18:30 à 22:30',
               title: 'Dîner',
               location: 'Turin',
+              detail: '18:30 – 22:30 · Turin',
               color: Color(0xFFE53935),
             ),
         ],
@@ -85,8 +92,11 @@ class FakePlatform implements WuxPlatform {
   }
 
   @override
-  Future<ClockPreview> clockPreview() async =>
-      const ClockPreview(time: '09:41', date: 'mercredi 23 septembre');
+  Future<ClockPreview> clockPreview() async => ClockPreview(
+    time: '09:41',
+    date: 'mercredi 23 septembre',
+    nextAlarm: nextAlarm,
+  );
 
   @override
   Future<WidgetPalette> palette() async => WidgetPalette.fallback;

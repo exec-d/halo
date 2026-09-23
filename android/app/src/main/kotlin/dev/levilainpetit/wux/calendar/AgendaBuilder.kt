@@ -20,7 +20,11 @@ data class AgendaLine(
     val title: String,
     val location: String,
     val color: Int,
-)
+) {
+    /** Seconde ligne affichée : l'horaire, puis le lieu s'il y en a un. */
+    val detail: String
+        get() = if (location.isBlank()) time else "$time · $location"
+}
 
 /** Un jour de l'agenda : son titre et ses événements. */
 data class AgendaDay(

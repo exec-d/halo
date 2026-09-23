@@ -7,7 +7,7 @@ pour personnaliser son téléphone.
 
 | Widget | Contenu | Rendu | Toucher |
 | --- | --- | --- | --- |
-| Horloge | Heure (sans secondes) et date | `RemoteViews` + `TextClock` | Ouvre l'horloge |
+| Horloge | Heure (sans secondes), date et prochaine alarme | `RemoteViews` + `TextClock` | Ouvre l'horloge |
 | Agenda du jour | Événements d'aujourd'hui | Jetpack Glance | Ouvre l'événement ou le jour |
 | Aujourd'hui et demain | Événements groupés par jour | Jetpack Glance | Ouvre l'événement ou le jour |
 

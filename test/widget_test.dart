@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wux/src/app.dart';
 
@@ -33,6 +34,14 @@ void main() {
 
     await tester.tap(find.text("Ajouter à l'écran d'accueil"));
     expect(platform.pinned, ['clock']);
+    expect(find.byIcon(Icons.alarm), findsNothing);
+  });
+
+  testWidgets("l'horloge montre la prochaine alarme", (tester) async {
+    await _open(tester, FakePlatform(nextAlarm: 'jeu. 07:00'), 'Horloge');
+
+    expect(find.text('jeu. 07:00'), findsOneWidget);
+    expect(find.byIcon(Icons.alarm), findsOneWidget);
   });
 
   testWidgets("l'agenda à deux jours affiche aujourd'hui et demain", (
@@ -43,6 +52,7 @@ void main() {
     expect(find.text("AUJOURD'HUI"), findsOneWidget);
     expect(find.text('DEMAIN'), findsOneWidget);
     expect(find.text('Dîner'), findsOneWidget);
+    expect(find.text('18:30 – 22:30 · Turin'), findsOneWidget);
     expect(find.text('Aucun événement'), findsOneWidget);
   });
 

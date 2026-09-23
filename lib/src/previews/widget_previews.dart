@@ -70,6 +70,24 @@ class ClockWidgetPreview extends StatelessWidget {
               shadows: _shadow,
             ),
           ),
+          if (clock.nextAlarm case final alarm?) ...[
+            const SizedBox(height: 4),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.alarm, size: 16, color: palette.clockAccent),
+                const SizedBox(width: 4),
+                Text(
+                  alarm,
+                  style: TextStyle(
+                    color: palette.clockAccent,
+                    fontSize: 15,
+                    shadows: _shadow,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -106,27 +124,27 @@ class AgendaWidgetPreview extends StatelessWidget {
       children: [
         for (final day in days) ...[
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.only(top: 6, bottom: 2),
             child: Text(
               day.label,
               style: TextStyle(
                 color: primary,
-                fontSize: 26,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
           if (day.events.isEmpty)
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.symmetric(vertical: 3),
               child: Text(
                 'Aucun événement',
-                style: TextStyle(color: secondary, fontSize: 14),
+                style: TextStyle(color: secondary, fontSize: 13),
               ),
             ),
           for (final event in day.events)
             Padding(
-              padding: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.symmetric(vertical: 3),
               child: Row(
                 children: [
                   Expanded(
@@ -134,33 +152,28 @@ class AgendaWidgetPreview extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          event.time,
-                          style: TextStyle(color: secondary, fontSize: 13),
-                        ),
-                        Text(
                           event.title,
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: text,
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        if (event.location.isNotEmpty)
-                          Text(
-                            event.location,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: secondary, fontSize: 12),
-                          ),
+                        Text(
+                          event.detail,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: secondary, fontSize: 12),
+                        ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   Container(
-                    width: 12,
-                    height: 12,
+                    width: 8,
+                    height: 8,
                     decoration: BoxDecoration(
                       color: event.color,
                       shape: BoxShape.circle,
@@ -174,13 +187,8 @@ class AgendaWidgetPreview extends StatelessWidget {
     );
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: surface
-          ? BoxDecoration(
-              color: palette.surface,
-              borderRadius: BorderRadius.circular(24),
-            )
-          : null,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      color: surface ? palette.surface : null,
       child: content,
     );
   }

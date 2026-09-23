@@ -28,6 +28,7 @@ class AgendaEventPreview {
     required this.time,
     required this.title,
     required this.location,
+    required this.detail,
     required this.color,
   });
 
@@ -36,12 +37,16 @@ class AgendaEventPreview {
         time: map['time']! as String,
         title: map['title']! as String,
         location: map['location']! as String,
+        detail: map['detail']! as String,
         color: Color((map['color']! as num).toInt()),
       );
 
   final String time;
   final String title;
   final String location;
+
+  /// Seconde ligne du widget : l'horaire, puis le lieu s'il y en a un.
+  final String detail;
   final Color color;
 }
 
@@ -64,10 +69,13 @@ class AgendaDayPreview {
 
 /// L'heure et la date, formatées comme le widget horloge.
 class ClockPreview {
-  const ClockPreview({required this.time, required this.date});
+  const ClockPreview({required this.time, required this.date, this.nextAlarm});
 
   final String time;
   final String date;
+
+  /// « mer. 07:00 », ou `null` si aucune alarme n'est programmée.
+  final String? nextAlarm;
 }
 
 /// Couleurs des widgets, résolues par Android (Material You à partir

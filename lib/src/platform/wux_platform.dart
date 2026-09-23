@@ -115,8 +115,12 @@ class AndroidWuxPlatform implements WuxPlatform {
 
   @override
   Future<ClockPreview> clockPreview() async {
-    final map = await _channel.invokeMapMethod<String, String>('clockPreview');
-    return ClockPreview(time: map!['time']!, date: map['date']!);
+    final map = await _channel.invokeMapMethod<String, Object?>('clockPreview');
+    return ClockPreview(
+      time: map!['time']! as String,
+      date: map['date']! as String,
+      nextAlarm: map['nextAlarm'] as String?,
+    );
   }
 
   @override

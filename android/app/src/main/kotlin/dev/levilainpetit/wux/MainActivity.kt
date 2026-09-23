@@ -9,6 +9,7 @@ import android.text.format.DateFormat
 import dev.levilainpetit.wux.calendar.AgendaBuilder
 import dev.levilainpetit.wux.calendar.CalendarRepository
 import dev.levilainpetit.wux.widgets.AgendaRefresh
+import dev.levilainpetit.wux.widgets.NextAlarm
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
@@ -70,6 +71,7 @@ class MainActivity : FlutterActivity() {
                                 "time" to it.time,
                                 "title" to it.title,
                                 "location" to it.location,
+                                "detail" to it.detail,
                                 "color" to it.color,
                             )
                         },
@@ -85,6 +87,7 @@ class MainActivity : FlutterActivity() {
                             now,
                         ).toString(),
                         "date" to DateFormat.format(getString(R.string.clock_date_format), now).toString(),
+                        "nextAlarm" to NextAlarm.label(this),
                     ),
                 )
             }

@@ -20,7 +20,6 @@ import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.action.actionStartActivity
-import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
@@ -136,13 +135,13 @@ private fun AgendaContent(state: AgendaState) {
             secondary = ColorProvider(R.color.agenda_on_surface_variant),
         )
     }
-    var modifier = GlanceModifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 12.dp)
+    // Pas de cornerRadius : il arrondit les angles et rogne aussi le contenu
+    // qui défile dessous.
+    var modifier = GlanceModifier.fillMaxSize()
     if (state.background == AgendaBackground.SURFACE) {
-        modifier = GlanceModifier.fillMaxSize()
-            .background(ColorProvider(R.color.agenda_surface))
-            .cornerRadius(24.dp)
-            .padding(horizontal = 16.dp, vertical = 12.dp)
+        modifier = modifier.background(ColorProvider(R.color.agenda_surface))
     }
+    modifier = modifier.padding(horizontal = 12.dp, vertical = 8.dp)
 
     Box(modifier = modifier) {
         val agenda = state.agenda
@@ -161,8 +160,8 @@ private fun AgendaContent(state: AgendaState) {
                         is ListRow.Event -> EventRow(context, row.line, palette)
                         is ListRow.Empty -> Text(
                             text = context.getString(R.string.agenda_empty),
-                            style = TextStyle(color = palette.secondary, fontSize = 14.sp),
-                            modifier = GlanceModifier.padding(bottom = 8.dp),
+                            style = TextStyle(color = palette.secondary, fontSize = 13.sp),
+                            modifier = GlanceModifier.padding(vertical = 3.dp),
                         )
                     }
                 }
@@ -193,8 +192,8 @@ private fun DayHeading(context: Context, day: AgendaDay, palette: Palette) {
     )
     Text(
         text = day.label,
-        style = TextStyle(color = palette.primary, fontSize = 26.sp, fontWeight = FontWeight.Bold),
-        modifier = GlanceModifier.padding(top = 8.dp, bottom = 8.dp)
+        style = TextStyle(color = palette.primary, fontSize = 16.sp, fontWeight = FontWeight.Bold),
+        modifier = GlanceModifier.padding(top = 6.dp, bottom = 2.dp)
             .clickable(actionStartActivity(open)),
     )
 }
@@ -207,32 +206,30 @@ private fun EventRow(context: Context, line: AgendaLine, palette: Palette) {
     )
         .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, line.begin)
         .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, line.end)
+    // Deux lignes par événement : le titre, puis l'horaire et le lieu.
     Row(
-        modifier = GlanceModifier.fillMaxWidth().padding(bottom = 12.dp)
+        modifier = GlanceModifier.fillMaxWidth().padding(vertical = 3.dp)
             .clickable(actionStartActivity(open)),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(modifier = GlanceModifier.defaultWeight()) {
-            Text(line.time, style = TextStyle(color = palette.secondary, fontSize = 13.sp))
             Text(
                 line.title,
-                maxLines = 2,
-                style = TextStyle(color = palette.text, fontSize = 15.sp, fontWeight = FontWeight.Medium),
+                maxLines = 1,
+                style = TextStyle(color = palette.text, fontSize = 14.sp, fontWeight = FontWeight.Medium),
             )
-            if (line.location.isNotBlank()) {
-                Text(
-                    line.location,
-                    maxLines = 1,
-                    style = TextStyle(color = palette.secondary, fontSize = 12.sp),
-                )
-            }
+            Text(
+                line.detail,
+                maxLines = 1,
+                style = TextStyle(color = palette.secondary, fontSize = 12.sp),
+            )
         }
-        Spacer(GlanceModifier.width(12.dp))
+        Spacer(GlanceModifier.width(8.dp))
         Image(
             provider = ImageProvider(R.drawable.agenda_dot),
             contentDescription = null,
             colorFilter = ColorFilter.tint(fixed(Color(line.color))),
-            modifier = GlanceModifier.size(12.dp),
+            modifier = GlanceModifier.size(8.dp),
         )
     }
 }
