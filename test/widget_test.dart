@@ -22,8 +22,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Horloge'), findsOneWidget);
-    expect(find.text('Agenda du jour'), findsOneWidget);
-    expect(find.text("Aujourd'hui et demain"), findsOneWidget);
+    expect(find.text('Agenda'), findsOneWidget);
+    expect(find.text('Agenda 2 colonnes'), findsOneWidget);
   });
 
   testWidgets("l'horloge montre l'heure et la date natives", (tester) async {
@@ -47,10 +47,10 @@ void main() {
     expect(find.byIcon(Icons.alarm), findsNWidgets(2));
   });
 
-  testWidgets("l'agenda à deux jours affiche aujourd'hui et demain", (
+  testWidgets("par défaut, l'agenda affiche aujourd'hui et demain", (
     tester,
   ) async {
-    await _open(tester, FakePlatform(), "Aujourd'hui et demain");
+    await _open(tester, FakePlatform(), 'Agenda 2 colonnes');
 
     expect(find.text("AUJOURD'HUI"), findsOneWidget);
     expect(find.text('DEMAIN'), findsOneWidget);
@@ -59,27 +59,39 @@ void main() {
     expect(find.text('Aucun événement'), findsOneWidget);
   });
 
+  testWidgets("choisir « Aujourd'hui » n'affiche plus demain", (tester) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Agenda 2 colonnes');
+
+    await tester.ensureVisible(find.text("Aujourd'hui"));
+    await tester.tap(find.text("Aujourd'hui"));
+    await tester.pumpAndSettle();
+
+    expect(platform.data['agenda_two_columns.days'], '1');
+    expect(find.text('DEMAIN'), findsNothing);
+  });
+
   testWidgets('masquer un agenda enregistre la sélection', (tester) async {
     final platform = FakePlatform();
-    await _open(tester, platform, 'Agenda du jour');
+    await _open(tester, platform, 'Agenda');
 
     await tester.ensureVisible(find.text('Personnel'));
     await tester.tap(find.text('Personnel'));
     await tester.pumpAndSettle();
 
-    expect(platform.data['agenda_today.calendars'], '2');
+    expect(platform.data['agenda_one_column.calendars'], '2');
     expect(platform.lastPreviewIds, {2});
     expect(find.text('Dîner'), findsNothing);
 
     // Tout réactiver revient à « tous les agendas », y compris les futurs.
     await tester.tap(find.text('Personnel'));
     await tester.pumpAndSettle();
-    expect(platform.data.containsKey('agenda_today.calendars'), isFalse);
+    expect(platform.data.containsKey('agenda_one_column.calendars'), isFalse);
   });
 
   testWidgets("sans autorisation, l'écran la demande", (tester) async {
     final platform = FakePlatform(permission: false);
-    await _open(tester, platform, 'Agenda du jour');
+    await _open(tester, platform, 'Agenda');
 
     expect(find.text('Personnel'), findsNothing);
     await tester.tap(find.text("Autoriser l'accès à l'agenda"));
@@ -92,7 +104,7 @@ void main() {
 
   testWidgets('un refus propose les réglages', (tester) async {
     final platform = FakePlatform(permission: false, grantOnRequest: false);
-    await _open(tester, platform, 'Agenda du jour');
+    await _open(tester, platform, 'Agenda');
 
     await tester.tap(find.text("Autoriser l'accès à l'agenda"));
     await tester.pumpAndSettle();
@@ -105,7 +117,7 @@ void main() {
   ) async {
     final platform = FakePlatform();
     await tester.pumpWidget(
-      WuxApp(platform: platform, configuring: todayAgendaWidget),
+      WuxApp(platform: platform, configuring: oneColumnAgendaWidget),
     );
     await tester.pumpAndSettle();
 

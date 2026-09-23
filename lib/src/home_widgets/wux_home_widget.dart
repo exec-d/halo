@@ -9,7 +9,6 @@ class WuxHomeWidget {
     required this.title,
     required this.description,
     required this.androidProvider,
-    this.days = 0,
   });
 
   /// Identifiant stable, utilisé comme préfixe des clés de données partagées.
@@ -24,9 +23,6 @@ class WuxHomeWidget {
 
   /// Nom complet de la classe Kotlin qui reçoit les mises à jour du widget.
   final String androidProvider;
-
-  /// Nombre de jours affichés, pour un agenda.
-  final int days;
 
   /// Clé sous laquelle une donnée de ce widget est stockée pour le code natif.
   String key(String name) => '$id.$name';

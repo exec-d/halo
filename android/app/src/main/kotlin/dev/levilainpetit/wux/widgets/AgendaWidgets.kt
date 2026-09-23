@@ -10,14 +10,15 @@ import dev.levilainpetit.wux.calendar.CalendarRepository
 import es.antonborri.home_widget.HomeWidgetPlugin
 
 /**
- * Widget agenda : les événements groupés par jour, sur [days] jours.
+ * Widget agenda : les événements groupés par jour, en [columns] colonnes. Le
+ * nombre de jours (aujourd'hui, ou aujourd'hui et demain) est un réglage.
  *
  * [widgetId] est l'identifiant partagé avec Flutter (`lib/src/home_widgets/catalog.dart`)
  * pour les réglages.
  */
 abstract class AgendaWidgetProvider(
     private val widgetId: String,
-    private val days: Int,
+    private val columns: Int,
 ) : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
@@ -44,17 +45,17 @@ abstract class AgendaWidgetProvider(
         val settings = AgendaSettings.read(HomeWidgetPlugin.getData(context), widgetId)
         val repository = CalendarRepository(context)
         val agenda = if (repository.hasPermission()) {
-            AgendaBuilder.build(context, repository, days, settings.calendarIds)
+            AgendaBuilder.build(context, repository, settings.days, settings.calendarIds)
         } else {
             null
         }
         manager.updateAppWidget(
             appWidgetId,
-            AgendaRenderer.views(context, agenda, manager.getAppWidgetOptions(appWidgetId)),
+            AgendaRenderer.views(context, agenda, manager.getAppWidgetOptions(appWidgetId), columns),
         )
     }
 }
 
-class TodayAgendaWidgetReceiver : AgendaWidgetProvider(widgetId = "agenda_today", days = 1)
+class OneColumnAgendaWidget : AgendaWidgetProvider(widgetId = "agenda_one_column", columns = 1)
 
-class TwoDayAgendaWidgetReceiver : AgendaWidgetProvider(widgetId = "agenda_two_days", days = 2)
+class TwoColumnAgendaWidget : AgendaWidgetProvider(widgetId = "agenda_two_columns", columns = 2)

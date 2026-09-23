@@ -5,23 +5,21 @@ pour personnaliser son téléphone.
 
 ## Widgets
 
-Style néon d'après les maquettes : chiffres à points, texte mono, halo
-lumineux. Les couleurs suivent l'accent du fond d'écran
+Style néon d'après les maquettes : heure en Roboto extra gras, texte mono,
+halo lumineux. Les couleurs suivent l'accent du fond d'écran
 (Material You, Android 12+), un bleu fixe avant.
 
 | Widget | Contenu | Toucher |
 | --- | --- | --- |
 | Horloge | Heure, date, prochaine alarme ; grande ou compacte selon la hauteur | Ouvre l'horloge |
-| Agenda du jour | Événements d'aujourd'hui, en une ou deux colonnes | Ouvre l'événement ou le jour |
-| Aujourd'hui et demain | Idem sur deux jours | Idem |
+| Agenda | Événements d'aujourd'hui (et de demain, au choix), en une colonne | Ouvre l'événement ou le jour |
+| Agenda 2 colonnes | Idem en deux colonnes | Idem |
 
 Tous sont en `RemoteViews` : Glance n'accepte pas de halo sur le texte. Un
 widget est dessiné par le lanceur, qui n'a pas accès aux polices de
-l'application : les textes utilisent la police mono du système, et l'heure est
-une image dessinée avec la police à points (`ClockTime.kt`), redessinée à la
-minute par une alarme non réveillante. Elle est blanche, en deux calques
-(halo, tracé) que la mise en page teinte, donc aux couleurs du téléphone. L'agenda ne défile pas : `AgendaRenderer`
-estime ce qui tient dans chaque colonne et termine par « ••• » s'il en reste.
+l'application : les textes utilisent la police mono du système et l'heure
+Roboto extra gras. Heure et date sont des `TextClock`, qui avancent seuls sans
+réveiller l'application.
 
 À partir de 18 h, quand il ne reste plus d'événement à venir dans la journée,
 les agendas passent au lendemain (`AgendaBuilder.END_OF_DAY_HOUR`).
@@ -30,12 +28,8 @@ Un appui long sur un widget ouvre ses réglages dans WUX (Android 12+).
 
 ### Ressources graphiques
 
-- `res/font/wux_dots.ttf` : police à points, dessinée chiffre par chiffre
-  dans `tool/wux_dots_font.py`.
 - `res/drawable-xxhdpi/*.png` : traits et icône d'alarme avec leur halo, en blanc,
   teintés par le widget ; générés par `tool/clock_assets.py`.
-
-La police à points est aussi dans `assets/fonts/` pour les aperçus Flutter.
 
 ## Principe
 
@@ -48,7 +42,7 @@ dessine pas sur l'écran d'accueil. WUX a donc deux moitiés :
 | Kotlin | Lecture du calendrier, rendu des widgets, rafraîchissement | `android/app/src/main/kotlin/…` |
 
 - **Réglages** : écrits par Flutter avec `home_widget` sous la clé
-  `<id du widget>.<nom>` (`agenda_today.calendars`), relus par
+  `<id du widget>.<nom>` (`agenda_one_column.calendars`), relus par
   `AgendaSettings.kt`.
 - **Aperçus** : le canal `dev.levilainpetit.wux/native` (`MainActivity.kt`)
   renvoie les textes déjà mis en forme par `AgendaBuilder.kt`, le même code

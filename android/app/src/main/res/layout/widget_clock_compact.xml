@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Horloge sur une rangée : date sur une ligne. Même identifiants dans les deux mises en page, pour que
-     ClockWidgetProvider les remplisse de la même façon. L'heure est une image
-     (ClockTime) ; le halo des textes est leur ombre, sans décalage ; celui des traits est dessiné dans les images
+     ClockWidgetProvider les remplisse de la même façon. Le halo des textes est
+     leur ombre, sans décalage ; celui des traits est dessiné dans les images
      (tool/clock_assets.py) et teinté ici. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/clock_root"
@@ -12,33 +12,22 @@
     android:paddingHorizontal="@dimen/agenda_padding"
     android:paddingVertical="2dp">
 
-    <!-- L'heure, en image : un widget ne peut pas utiliser la police à points
-         de l'application. ClockTime la dessine en blanc (halo et tracé
-         séparés) et chaque calque est teinté ici, donc aux couleurs du
-         téléphone. -->
-    <FrameLayout
+    <TextClock
+        android:id="@+id/clock_time"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/clock_time_glow"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:maxWidth="170dp"
-            android:importantForAccessibility="no"
-            android:scaleType="fitCenter"
-            android:tint="@color/clock_glow" />
-
-        <ImageView
-            android:id="@+id/clock_time"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:maxWidth="170dp"
-            android:scaleType="fitCenter"
-            android:tint="@color/clock_core" />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:format12Hour="h:mm"
+        android:format24Hour="HH:mm"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:shadowColor="@color/clock_glow"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="24"
+        android:textColor="@color/clock_core"
+        android:textFontWeight="800"
+        android:textSize="44sp" />
 
     <ImageView
         android:layout_width="10dp"
@@ -50,14 +39,15 @@
         android:tint="@color/clock_line" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_marginStart="4dp"
         android:orientation="vertical">
 
         <TextClock
             android:id="@+id/clock_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:format12Hour="@string/clock_date_format"

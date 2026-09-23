@@ -28,8 +28,8 @@ import java.time.ZoneId
  */
 object AgendaRenderer {
 
-    /** En dessous de cette largeur (dp), une seule colonne. */
-    private const val TWO_COLUMNS_MIN_WIDTH = 300f
+    /** En dessous de cette largeur (dp), deux colonnes ne tiennent pas : une seule. */
+    private const val TWO_COLUMNS_MIN_WIDTH = 220f
 
     // Hauteurs estimées (dp à 100 % de texte) ; suivre les mises en page agenda_*.
     private const val HEADING = 28f
@@ -60,28 +60,30 @@ object AgendaRenderer {
         context: Context,
         agenda: List<AgendaDay>?,
         options: Bundle,
+        columns: Int,
     ): RemoteViews {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             @Suppress("DEPRECATION")
             val sizes = options.getParcelableArrayList<SizeF>(AppWidgetManager.OPTION_APPWIDGET_SIZES)
             if (!sizes.isNullOrEmpty()) {
-                return RemoteViews(sizes.associateWith { render(context, agenda, it) })
+                return RemoteViews(sizes.associateWith { render(context, agenda, it, columns) })
             }
         }
         // Avant Android 12 : la taille portrait (largeur mini, hauteur maxi).
         val width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 250)
         val height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, 180)
-        return render(context, agenda, SizeF(width.toFloat(), height.toFloat()))
+        return render(context, agenda, SizeF(width.toFloat(), height.toFloat()), columns)
     }
 
     private fun render(
         context: Context,
         agenda: List<AgendaDay>?,
         size: SizeF,
+        columns: Int,
     ): RemoteViews {
         val views = RemoteViews(context.packageName, R.layout.widget_agenda)
 
-        val twoColumns = size.width >= TWO_COLUMNS_MIN_WIDTH
+        val twoColumns = columns == 2 && size.width >= TWO_COLUMNS_MIN_WIDTH
         views.setViewVisibility(R.id.agenda_separator, if (twoColumns) View.VISIBLE else View.GONE)
         views.setViewVisibility(R.id.agenda_col2, if (twoColumns) View.VISIBLE else View.GONE)
         views.removeAllViews(R.id.agenda_col1)

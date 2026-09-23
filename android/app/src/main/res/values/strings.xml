@@ -6,10 +6,10 @@
     <string name="clock_date_format" translatable="false">EEEE d MMMM</string>
     <string name="clock_date_format_stacked" translatable="false">EEEE\nd MMMM</string>
 
-    <string name="widget_agenda_today_label">Agenda du jour</string>
-    <string name="widget_agenda_today_description">Les événements d\'aujourd\'hui.</string>
-    <string name="widget_agenda_two_days_label">Aujourd\'hui et demain</string>
-    <string name="widget_agenda_two_days_description">Les événements d\'aujourd\'hui et de demain.</string>
+    <string name="widget_agenda_one_column_label">Agenda</string>
+    <string name="widget_agenda_one_column_description">Les événements du jour, en une colonne.</string>
+    <string name="widget_agenda_two_columns_label">Agenda 2 colonnes</string>
+    <string name="widget_agenda_two_columns_description">Les événements du jour, en deux colonnes.</string>
 
     <string name="agenda_more" translatable="false">•••</string>
     <string name="agenda_today">Aujourd\'hui</string>

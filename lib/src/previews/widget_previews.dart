@@ -103,9 +103,10 @@ class _Alarm extends StatelessWidget {
   }
 }
 
+/// Roboto extra gras, comme le `TextClock` des widgets.
 TextStyle _time(WidgetPalette palette) => TextStyle(
-  fontFamily: 'WuxDots',
   fontSize: 96,
+  fontWeight: FontWeight.w800,
   height: 1,
   color: palette.core,
   shadows: _glow(palette.glow, 8),

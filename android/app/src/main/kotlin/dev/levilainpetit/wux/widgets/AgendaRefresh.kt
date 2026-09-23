@@ -29,7 +29,7 @@ object AgendaRefresh {
     private const val WORK_NEXT_CHANGE = "agenda-next-change"
 
     fun refreshAll(context: Context) {
-        listOf(TodayAgendaWidgetReceiver(), TwoDayAgendaWidgetReceiver())
+        listOf(OneColumnAgendaWidget(), TwoColumnAgendaWidget())
             .forEach { it.renderAll(context) }
     }
 

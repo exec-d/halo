@@ -10,27 +10,25 @@ const clockWidget = WuxHomeWidget(
   androidProvider: '$_androidPackage.ClockWidgetProvider',
 );
 
-const todayAgendaWidget = WuxHomeWidget(
-  id: 'agenda_today',
+const oneColumnAgendaWidget = WuxHomeWidget(
+  id: 'agenda_one_column',
   kind: WuxWidgetKind.agenda,
-  title: 'Agenda du jour',
-  description: "Les événements d'aujourd'hui.",
-  androidProvider: '$_androidPackage.TodayAgendaWidgetReceiver',
-  days: 1,
+  title: 'Agenda',
+  description: 'Les événements du jour, en une colonne.',
+  androidProvider: '$_androidPackage.OneColumnAgendaWidget',
 );
 
-const twoDayAgendaWidget = WuxHomeWidget(
-  id: 'agenda_two_days',
+const twoColumnAgendaWidget = WuxHomeWidget(
+  id: 'agenda_two_columns',
   kind: WuxWidgetKind.agenda,
-  title: "Aujourd'hui et demain",
-  description: "Les événements d'aujourd'hui et de demain.",
-  androidProvider: '$_androidPackage.TwoDayAgendaWidgetReceiver',
-  days: 2,
+  title: 'Agenda 2 colonnes',
+  description: 'Les événements du jour, en deux colonnes.',
+  androidProvider: '$_androidPackage.TwoColumnAgendaWidget',
 );
 
 /// Tous les widgets proposés par l'application.
 const wuxHomeWidgets = <WuxHomeWidget>[
   clockWidget,
-  todayAgendaWidget,
-  twoDayAgendaWidget,
+  oneColumnAgendaWidget,
+  twoColumnAgendaWidget,
 ];

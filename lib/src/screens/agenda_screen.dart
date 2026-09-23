@@ -6,7 +6,7 @@ import '../platform/wux_platform.dart';
 import '../previews/widget_previews.dart';
 import 'screen_frame.dart';
 
-/// Réglages d'un widget agenda : accès au calendrier, agendas affichés.
+/// Réglages d'un widget agenda : accès au calendrier, jours et agendas affichés.
 ///
 /// Chaque changement s'applique tout de suite au widget et à l'aperçu ; il n'y
 /// a pas de bouton « Enregistrer ».
@@ -30,6 +30,7 @@ class AgendaScreen extends StatefulWidget {
 
 class _AgendaScreenState extends State<AgendaScreen> {
   static const _calendarsKey = 'calendars';
+  static const _daysKey = 'days';
 
   bool? _permission;
 
@@ -45,6 +46,9 @@ class _AgendaScreenState extends State<AgendaScreen> {
   WidgetPalette _palette = WidgetPalette.fallback;
   List<AgendaDayPreview> _preview = const [];
 
+  /// 1 : aujourd'hui ; 2 : aujourd'hui et demain. Relu par `AgendaSettings.kt`.
+  int _days = 2;
+
   WuxPlatform get _platform => widget.platform;
 
   @override
@@ -58,11 +62,13 @@ class _AgendaScreenState extends State<AgendaScreen> {
     final canPin = await _platform.canPin();
     final palette = await _platform.palette();
     final stored = await _platform.read(widget.homeWidget, _calendarsKey);
+    final days = await _platform.read(widget.homeWidget, _daysKey);
     if (!mounted) return;
     setState(() {
       _permission = permission;
       _canPin = canPin;
       _palette = palette;
+      _days = days == '1' ? 1 : 2;
       _selected = stored == null
           ? null
           : {for (final part in stored.split(',')) ?int.tryParse(part)};
@@ -79,7 +85,7 @@ class _AgendaScreenState extends State<AgendaScreen> {
 
   Future<void> _refreshPreview() async {
     final preview = await _platform.agendaPreview(
-      days: widget.homeWidget.days,
+      days: _days,
       calendarIds: _selected,
     );
     if (mounted) setState(() => _preview = preview);
@@ -110,6 +116,12 @@ class _AgendaScreenState extends State<AgendaScreen> {
       _calendarsKey,
       all ? null : selected.join(','),
     );
+    await _refreshPreview();
+  }
+
+  Future<void> _setDays(int days) async {
+    setState(() => _days = days);
+    await _platform.write(widget.homeWidget, _daysKey, '$days');
     await _refreshPreview();
   }
 
@@ -146,6 +158,27 @@ class _AgendaScreenState extends State<AgendaScreen> {
               ),
               const IuxGap.between(),
             ],
+            IuxSection(
+              title: 'Jours',
+              children: [
+                IuxRadioGroup<int>(
+                  label: 'Jours affichés',
+                  input: const IuxInputDescriptor(
+                    semantics: IuxInputSemantics(label: 'Jours affichés'),
+                    helpText:
+                        'À partir de 18 h, une journée terminée laisse '
+                        'place au lendemain.',
+                  ),
+                  value: _days,
+                  options: const [
+                    IuxRadioOption(value: 1, label: "Aujourd'hui"),
+                    IuxRadioOption(value: 2, label: "Aujourd'hui et demain"),
+                  ],
+                  onChanged: _setDays,
+                ),
+              ],
+            ),
+            const IuxGap.between(),
             if (_calendars.isNotEmpty) ...[
               IuxSection(
                 title: 'Agendas',
