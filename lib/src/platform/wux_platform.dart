@@ -23,8 +23,18 @@ abstract interface class WuxPlatform {
   /// Propose à l'utilisateur d'ajouter [widget] à son écran d'accueil.
   Future<void> pin(WuxHomeWidget widget);
 
-  /// Le widget tel qu'Android le dessine, à la taille [size] (dp), en PNG.
-  Future<Uint8List?> render(WuxHomeWidget widget, Size size);
+  /// Le widget tel qu'Android le dessine, à la taille [size] (dp), en PNG ;
+  /// [sample] : avec des données d'exemple plutôt que les vraies.
+  Future<Uint8List?> render(
+    WuxHomeWidget widget,
+    Size size, {
+    bool sample = false,
+  });
+
+  /// Vrai jusqu'à ce que [markLaunched] soit appelé une fois.
+  Future<bool> isFirstLaunch();
+
+  Future<void> markLaunched();
 
   Future<bool> hasCalendarPermission();
 
@@ -80,12 +90,26 @@ class AndroidWuxPlatform implements WuxPlatform {
       HomeWidget.requestPinWidget(qualifiedAndroidName: widget.androidProvider);
 
   @override
-  Future<Uint8List?> render(WuxHomeWidget widget, Size size) =>
-      _channel.invokeMethod<Uint8List>('renderWidget', {
-        'id': widget.id,
-        'width': size.width,
-        'height': size.height,
-      });
+  Future<Uint8List?> render(
+    WuxHomeWidget widget,
+    Size size, {
+    bool sample = false,
+  }) => _channel.invokeMethod<Uint8List>('renderWidget', {
+    'id': widget.id,
+    'width': size.width,
+    'height': size.height,
+    'sample': sample,
+  });
+
+  static const _launched = 'app.launched';
+
+  @override
+  Future<bool> isFirstLaunch() async =>
+      await HomeWidget.getWidgetData<String>(_launched) == null;
+
+  @override
+  Future<void> markLaunched() =>
+      HomeWidget.saveWidgetData<String>(_launched, '1');
 
   @override
   Future<bool> hasCalendarPermission() async =>

@@ -95,6 +95,10 @@
         <item>Dernier croissant</item>
     </string-array>
 
+    <!-- Aperçus de la liste des widgets. -->
+    <string name="sample_alarm">jeu. 07:00</string>
+    <string name="sample_countdown">Vacances</string>
+
     <string name="agenda_more" translatable="false">•••</string>
     <string name="agenda_today">Aujourd\'hui</string>
     <string name="agenda_tomorrow">Demain</string>

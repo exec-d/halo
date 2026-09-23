@@ -39,11 +39,16 @@ class WidgetPreview extends StatefulWidget {
     required this.homeWidget,
     required this.platform,
     this.revision = 0,
+    this.sample = false,
   });
 
   final WuxHomeWidget homeWidget;
   final WuxPlatform platform;
   final int revision;
+
+  /// Données d'exemple : pour la liste des widgets, qui doit être belle même
+  /// sans autorisation ni données.
+  final bool sample;
 
   @override
   State<WidgetPreview> createState() => _WidgetPreviewState();
@@ -79,6 +84,7 @@ class _WidgetPreviewState extends State<WidgetPreview> {
     final image = await widget.platform.render(
       widget.homeWidget,
       widget.homeWidget.previewSize,
+      sample: widget.sample,
     );
     if (mounted) setState(() => _image = image);
   }
@@ -90,11 +96,17 @@ class _WidgetPreviewState extends State<WidgetPreview> {
     return Semantics(
       image: true,
       label: 'Aperçu du widget ${widget.homeWidget.title}',
-      child: AspectRatio(
-        aspectRatio: size.width / size.height,
-        child: image == null
-            ? const SizedBox.shrink()
-            : Image.memory(image, fit: BoxFit.contain, gaplessPlayback: true),
+      // Taille réelle du widget, réduite seulement si la place manque :
+      // agrandi, un widget étroit aurait un texte démesuré.
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: SizedBox(
+          width: size.width,
+          height: size.height,
+          child: image == null
+              ? null
+              : Image.memory(image, fit: BoxFit.fill, gaplessPlayback: true),
+        ),
       ),
     );
   }

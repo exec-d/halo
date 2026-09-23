@@ -50,8 +50,8 @@ abstract class AgendaWidgetProvider(
         )
     }
 
-    override fun preview(context: Context, size: SizeF) =
-        AgendaRenderer.render(context, agenda(context), size, columns)
+    override fun preview(context: Context, size: SizeF, sample: Boolean) =
+        AgendaRenderer.render(context, if (sample) SampleData.agenda(context) else agenda(context), size, columns)
 
     /** `null` : l'accès au calendrier n'est pas accordé. */
     private fun agenda(context: Context): List<AgendaDay>? {

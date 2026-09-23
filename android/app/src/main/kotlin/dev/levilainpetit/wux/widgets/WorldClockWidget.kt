@@ -14,7 +14,7 @@ import dev.levilainpetit.wux.R
  */
 class WorldClockWidget : NeonWidget() {
 
-    override fun build(context: Context, size: SizeF): RemoteViews {
+    override fun build(context: Context, size: SizeF, sample: Boolean): RemoteViews {
         val views = RemoteViews(context.packageName, R.layout.widget_world_clock)
         views.removeAllViews(R.id.world_row)
         zones(context).forEachIndexed { i, (city, zone) ->

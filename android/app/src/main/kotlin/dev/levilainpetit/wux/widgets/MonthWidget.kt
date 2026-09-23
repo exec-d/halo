@@ -28,13 +28,13 @@ class MonthWidget : NeonWidget() {
 
     override val refreshActions = DATE_ACTIONS
 
-    override fun build(context: Context, size: SizeF): RemoteViews {
+    override fun build(context: Context, size: SizeF, sample: Boolean): RemoteViews {
         val zone = ZoneId.systemDefault()
         val today = LocalDate.now(zone)
         val month = YearMonth.from(today)
         val locale = Locale.getDefault()
         val firstDay = WeekFields.of(locale).firstDayOfWeek
-        val busy = busyDays(context, month, zone)
+        val busy = if (sample) SampleData.busyDays(month) else busyDays(context, month, zone)
 
         val views = RemoteViews(context.packageName, R.layout.widget_month)
         views.setTextViewText(

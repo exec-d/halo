@@ -18,7 +18,7 @@ Future<void> _open(
 }
 
 void main() {
-  testWidgets('le catalogue montre chaque widget avec son aperçu', (
+  testWidgets("le catalogue montre chaque widget avec un aperçu d'exemple", (
     tester,
   ) async {
     final platform = FakePlatform();
@@ -27,9 +27,26 @@ void main() {
 
     for (final widget in wuxHomeWidgets) {
       expect(find.text(widget.title), findsOneWidget);
-      expect(platform.renders, contains(widget.id));
+      expect(platform.sampleRenders, contains(widget.id));
     }
+    expect(platform.renders, isEmpty);
     // Les aperçus se redessinent seuls : on arrête leur minuterie.
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets("au premier lancement, l'accès à l'agenda est demandé", (
+    tester,
+  ) async {
+    final platform = FakePlatform(permission: false)..firstLaunch = true;
+    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpAndSettle();
+    expect(platform.permissionRequests, 1);
+
+    // Pas une seconde fois.
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpAndSettle();
+    expect(platform.permissionRequests, 1);
     await tester.pumpWidget(const SizedBox());
   });
 

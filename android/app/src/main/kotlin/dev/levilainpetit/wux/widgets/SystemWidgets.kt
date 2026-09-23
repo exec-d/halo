@@ -32,6 +32,9 @@ abstract class SystemWidgetProvider(
     /** Une liste de cases par rangée (`system_row1`, `system_row2`). */
     abstract fun rows(context: Context): List<List<SystemTile>>
 
+    /** Les mêmes rangées, avec des valeurs d'exemple. */
+    abstract fun sampleRows(context: Context): List<List<SystemTile>>
+
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         if (intent.action == ACTION_REFRESH) renderAll(context)
@@ -91,10 +94,12 @@ abstract class SystemWidgetProvider(
         )
     }
 
-    override fun preview(context: Context, size: SizeF) = views(context)
+    override fun preview(context: Context, size: SizeF, sample: Boolean) =
+        views(context, if (sample) sampleRows(context) else rows(context))
 
-    private fun views(context: Context) = RemoteViews(context.packageName, layout).apply {
-        rows(context).forEachIndexed { index, tiles ->
+    private fun views(context: Context, rows: List<List<SystemTile>> = rows(context)) =
+        RemoteViews(context.packageName, layout).apply {
+        rows.forEachIndexed { index, tiles ->
             val row = if (index == 0) R.id.system_row1 else R.id.system_row2
             removeAllViews(row)
             tiles.forEachIndexed { i, tile ->
@@ -130,8 +135,10 @@ abstract class SystemWidgetProvider(
 
 class SystemWidget : SystemWidgetProvider(R.layout.widget_system, code = 1) {
     override fun rows(context: Context) = listOf(SystemStatus.basic(context))
+    override fun sampleRows(context: Context) = listOf(SampleData.systemBasic(context))
 }
 
 class AdvancedSystemWidget : SystemWidgetProvider(R.layout.widget_system_advanced, code = 2) {
     override fun rows(context: Context) = SystemStatus.advanced(context)
+    override fun sampleRows(context: Context) = SampleData.systemAdvanced(context)
 }

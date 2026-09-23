@@ -49,11 +49,24 @@ class FakePlatform implements WuxPlatform {
   @override
   Future<void> pin(WuxHomeWidget widget) async => pinned.add(widget.id);
 
+  final sampleRenders = <String>[];
+  bool firstLaunch = false;
+
   @override
-  Future<Uint8List?> render(WuxHomeWidget widget, Size size) async {
-    renders.add(widget.id);
+  Future<Uint8List?> render(
+    WuxHomeWidget widget,
+    Size size, {
+    bool sample = false,
+  }) async {
+    (sample ? sampleRenders : renders).add(widget.id);
     return null;
   }
+
+  @override
+  Future<bool> isFirstLaunch() async => firstLaunch;
+
+  @override
+  Future<void> markLaunched() async => firstLaunch = false;
 
   @override
   Future<bool> hasCalendarPermission() async => permission;

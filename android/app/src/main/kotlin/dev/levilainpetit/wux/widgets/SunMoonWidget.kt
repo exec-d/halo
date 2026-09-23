@@ -25,10 +25,11 @@ class SunMoonWidget : NeonWidget() {
 
     override val refreshActions = DATE_ACTIONS
 
-    override fun build(context: Context, size: SizeF): RemoteViews {
+    override fun build(context: Context, size: SizeF, sample: Boolean): RemoteViews {
         val views = RemoteViews(context.packageName, R.layout.widget_sun_moon)
         views.setOnClickPendingIntent(R.id.sun_moon_root, activity(context, Intent(context, MainActivity::class.java), 61))
-        val today = Weather.forecast(context)?.days?.firstOrNull { it.date == LocalDate.now() }
+        val forecast = if (sample) SampleData.forecast() else Weather.forecast(context)
+        val today = forecast?.days?.firstOrNull { it.date == LocalDate.now() }
         val format = DateTimeFormatter.ofPattern(if (DateFormat.is24HourFormat(context)) "HH:mm" else "h:mm a", Locale.getDefault())
         val sunrise = today?.sunrise
         val sunset = today?.sunset

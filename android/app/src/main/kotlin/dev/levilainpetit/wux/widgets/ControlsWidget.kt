@@ -20,7 +20,7 @@ import dev.levilainpetit.wux.R
  */
 class ControlsWidget : NeonWidget() {
 
-    override fun build(context: Context, size: SizeF): RemoteViews {
+    override fun build(context: Context, size: SizeF, sample: Boolean): RemoteViews {
         val torchOn = settings(context).getBoolean(TORCH_STATE, false)
         val views = RemoteViews(context.packageName, R.layout.widget_controls)
         views.removeAllViews(R.id.controls_row)

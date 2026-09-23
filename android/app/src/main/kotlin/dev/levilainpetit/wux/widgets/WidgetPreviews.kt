@@ -4,15 +4,24 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.util.SizeF
+import android.text.format.DateFormat
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextClock
 import android.widget.FrameLayout
 import android.widget.RemoteViews
 import java.io.ByteArrayOutputStream
+import java.util.Calendar
+import java.util.TimeZone
 import kotlin.math.roundToInt
 
-/** Un widget capable de produire sa mise en page pour une taille donnée (dp). */
+/**
+ * Un widget capable de produire sa mise en page pour une taille donnée (dp).
+ * [sample] : avec des données d'exemple plutôt que les vraies, pour la liste
+ * des widgets, qui doit être belle même sans autorisation ni données.
+ */
 interface PreviewableWidget {
-    fun preview(context: Context, size: SizeF): RemoteViews
+    fun preview(context: Context, size: SizeF, sample: Boolean): RemoteViews
 }
 
 /**
@@ -39,14 +48,15 @@ object WidgetPreviews {
     }
 
     /** À appeler sur le fil principal : il construit des vues. */
-    fun render(context: Context, id: String, widthDp: Float, heightDp: Float): ByteArray? {
-        val views = widget(id)?.preview(context, SizeF(widthDp, heightDp)) ?: return null
+    fun render(context: Context, id: String, widthDp: Float, heightDp: Float, sample: Boolean): ByteArray? {
+        val views = widget(id)?.preview(context, SizeF(widthDp, heightDp), sample) ?: return null
         val density = context.resources.displayMetrics.density
         val width = (widthDp * density).roundToInt()
         val height = (heightDp * density).roundToInt()
         val parent = FrameLayout(context)
         val view = views.apply(context, parent)
         parent.addView(view, FrameLayout.LayoutParams(width, height))
+        fillClocks(view)
         parent.measure(
             View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
             View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY),
@@ -59,5 +69,18 @@ object WidgetPreviews {
             bitmap.recycle()
             it.toByteArray()
         }
+    }
+
+    /**
+     * Un `TextClock` ne s'écrit qu'une fois attaché à une fenêtre ; hors écran
+     * il reste vide. On lui donne son texte, à son fuseau, avec son motif.
+     */
+    private fun fillClocks(view: View) {
+        if (view is TextClock) {
+            val pattern = if (DateFormat.is24HourFormat(view.context)) view.format24Hour else view.format12Hour
+            val zone = view.timeZone?.let { TimeZone.getTimeZone(it) } ?: TimeZone.getDefault()
+            if (pattern != null) view.text = DateFormat.format(pattern, Calendar.getInstance(zone))
+        }
+        if (view is ViewGroup) for (i in 0 until view.childCount) fillClocks(view.getChildAt(i))
     }
 }

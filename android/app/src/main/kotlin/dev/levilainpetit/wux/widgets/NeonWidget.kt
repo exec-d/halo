@@ -21,8 +21,8 @@ import java.time.ZonedDateTime
  */
 abstract class NeonWidget : AppWidgetProvider(), PreviewableWidget {
 
-    /** La mise en page pour une taille donnée (dp). */
-    abstract fun build(context: Context, size: SizeF): RemoteViews
+    /** La mise en page pour une taille donnée (dp) ; [sample] : données d'exemple. */
+    abstract fun build(context: Context, size: SizeF, sample: Boolean = false): RemoteViews
 
     /** Diffusions système qui changent ce que le widget affiche. */
     open val refreshActions: Set<String> = emptySet()
@@ -30,7 +30,7 @@ abstract class NeonWidget : AppWidgetProvider(), PreviewableWidget {
     /** Après chaque dessin : (re)programmer ce qui doit l'être. */
     open fun onRendered(context: Context) {}
 
-    override fun preview(context: Context, size: SizeF) = build(context, size)
+    override fun preview(context: Context, size: SizeF, sample: Boolean) = build(context, size, sample)
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)

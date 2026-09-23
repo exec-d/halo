@@ -65,8 +65,14 @@ class ClockWidgetProvider : AppWidgetProvider(), PreviewableWidget {
         return if (height < FULL_MIN_HEIGHT) compact else full
     }
 
-    override fun preview(context: Context, size: SizeF): RemoteViews =
-        build(context, if (size.height < FULL_MIN_HEIGHT) R.layout.widget_clock_compact else R.layout.widget_clock)
+    override fun preview(context: Context, size: SizeF, sample: Boolean): RemoteViews {
+        val views = build(context, if (size.height < FULL_MIN_HEIGHT) R.layout.widget_clock_compact else R.layout.widget_clock)
+        if (sample && NextAlarm.label(context) == null) {
+            views.setViewVisibility(R.id.clock_alarm, android.view.View.VISIBLE)
+            views.setTextViewText(R.id.clock_alarm_text, context.getString(R.string.sample_alarm))
+        }
+        return views
+    }
 
     private fun build(context: Context, layout: Int): RemoteViews =
         RemoteViews(context.packageName, layout).also { ClockViews.bind(context, it) }

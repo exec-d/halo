@@ -86,8 +86,9 @@ open class MainActivity : FlutterActivity() {
                 val id = call.argument<String>("id").orEmpty()
                 val width = call.argument<Number>("width")?.toFloat() ?: 0f
                 val height = call.argument<Number>("height")?.toFloat() ?: 0f
+                val sample = call.argument<Boolean>("sample") == true
                 try {
-                    result.success(WidgetPreviews.render(this, id, width, height))
+                    result.success(WidgetPreviews.render(this, id, width, height, sample))
                 } catch (e: Exception) {
                     result.error("render", e.message, null)
                 }

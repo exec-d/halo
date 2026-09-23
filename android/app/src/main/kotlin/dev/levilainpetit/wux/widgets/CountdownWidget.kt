@@ -19,11 +19,15 @@ class CountdownWidget : NeonWidget() {
 
     override val refreshActions = DATE_ACTIONS
 
-    override fun build(context: Context, size: SizeF): RemoteViews {
+    override fun build(context: Context, size: SizeF, sample: Boolean): RemoteViews {
         val prefs = settings(context)
-        val title = prefs.getString("countdown.title", null)?.ifBlank { null }
+        var title = prefs.getString("countdown.title", null)?.ifBlank { null }
             ?: context.getString(R.string.countdown_default_title)
-        val target = prefs.getString("countdown.date", null)?.let { runCatching { LocalDate.parse(it) }.getOrNull() }
+        var target = prefs.getString("countdown.date", null)?.let { runCatching { LocalDate.parse(it) }.getOrNull() }
+        if (sample) {
+            title = context.getString(R.string.sample_countdown)
+            target = LocalDate.now().plusDays(42)
+        }
         val views = RemoteViews(context.packageName, R.layout.widget_countdown)
         views.setTextViewText(R.id.countdown_title, title)
         if (target == null) {

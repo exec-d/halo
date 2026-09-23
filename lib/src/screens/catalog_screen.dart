@@ -7,9 +7,12 @@ import '../previews/widget_previews.dart';
 import 'screen_frame.dart';
 import 'widget_screen.dart';
 
-/// Liste des widgets disponibles, chacun avec son aperçu ; toucher une carte
-/// ouvre ses réglages.
-class CatalogScreen extends StatelessWidget {
+/// Liste des widgets disponibles, chacun avec un aperçu d'exemple ; toucher
+/// une carte ouvre ses réglages, avec l'aperçu de ses vraies données.
+///
+/// Au premier lancement, demande l'accès à l'agenda, dont dépendent trois
+/// widgets. La position, qui ne sert qu'à la météo, est demandée là-bas.
+class CatalogScreen extends StatefulWidget {
   const CatalogScreen({
     super.key,
     required this.widgets,
@@ -18,6 +21,28 @@ class CatalogScreen extends StatelessWidget {
 
   final List<WuxHomeWidget> widgets;
   final WuxPlatform platform;
+
+  @override
+  State<CatalogScreen> createState() => _CatalogScreenState();
+}
+
+class _CatalogScreenState extends State<CatalogScreen> {
+  List<WuxHomeWidget> get widgets => widget.widgets;
+  WuxPlatform get platform => widget.platform;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _firstLaunch());
+  }
+
+  Future<void> _firstLaunch() async {
+    if (!await platform.isFirstLaunch()) return;
+    await platform.markLaunched();
+    if (!await platform.hasCalendarPermission()) {
+      await platform.requestCalendarPermission();
+    }
+  }
 
   void _open(BuildContext context, WuxHomeWidget homeWidget) {
     Navigator.of(context).push<void>(
@@ -47,6 +72,7 @@ class CatalogScreen extends StatelessWidget {
                       child: WidgetPreview(
                         homeWidget: homeWidget,
                         platform: platform,
+                        sample: true,
                       ),
                     ),
                     const IuxGap.standard(),

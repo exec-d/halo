@@ -20,11 +20,11 @@ import kotlin.math.roundToInt
  */
 class WeatherWidget : NeonWidget() {
 
-    override fun build(context: Context, size: SizeF): RemoteViews {
+    override fun build(context: Context, size: SizeF, sample: Boolean): RemoteViews {
         val views = RemoteViews(context.packageName, R.layout.widget_weather)
         views.setOnClickPendingIntent(R.id.weather_root, activity(context, Intent(context, MainActivity::class.java), 60))
-        val place = Weather.place(context)
-        val forecast = Weather.forecast(context)
+        val place = if (sample) SampleData.place else Weather.place(context)
+        val forecast = if (sample) SampleData.forecast() else Weather.forecast(context)
         if (place == null || forecast == null) {
             views.setImageViewResource(R.id.weather_icon, R.drawable.icon_cloud)
             views.setTextViewText(R.id.weather_temperature, "--°")
