@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.compose")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
@@ -32,10 +31,6 @@ android {
         versionName = flutter.versionName
     }
 
-    buildFeatures {
-        compose = true
-    }
-
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
@@ -56,8 +51,6 @@ flutter {
 }
 
 dependencies {
-    implementation("androidx.glance:glance-appwidget:1.2.0")
-    implementation("androidx.datastore:datastore-preferences-core:1.1.1")
     implementation("androidx.work:work-runtime-ktx:2.11.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
 }

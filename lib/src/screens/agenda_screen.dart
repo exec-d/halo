@@ -6,7 +6,7 @@ import '../platform/wux_platform.dart';
 import '../previews/widget_previews.dart';
 import 'screen_frame.dart';
 
-/// Réglages d'un widget agenda : accès au calendrier, agendas affichés, fond.
+/// Réglages d'un widget agenda : accès au calendrier, agendas affichés.
 ///
 /// Chaque changement s'applique tout de suite au widget et à l'aperçu ; il n'y
 /// a pas de bouton « Enregistrer ».
@@ -30,7 +30,6 @@ class AgendaScreen extends StatefulWidget {
 
 class _AgendaScreenState extends State<AgendaScreen> {
   static const _calendarsKey = 'calendars';
-  static const _backgroundKey = 'background';
 
   bool? _permission;
 
@@ -43,7 +42,7 @@ class _AgendaScreenState extends State<AgendaScreen> {
 
   /// `null` : tous les agendas, y compris ceux ajoutés plus tard.
   Set<int>? _selected;
-  AgendaBackground _background = AgendaBackground.transparent;
+  ClockPreview? _clock;
   WidgetPalette _palette = WidgetPalette.fallback;
   List<AgendaDayPreview> _preview = const [];
 
@@ -60,7 +59,9 @@ class _AgendaScreenState extends State<AgendaScreen> {
     final canPin = await _platform.canPin();
     final palette = await _platform.palette();
     final stored = await _platform.read(widget.homeWidget, _calendarsKey);
-    final background = await _platform.read(widget.homeWidget, _backgroundKey);
+    final clock = widget.homeWidget.withClock
+        ? await _platform.clockPreview()
+        : null;
     if (!mounted) return;
     setState(() {
       _permission = permission;
@@ -69,7 +70,7 @@ class _AgendaScreenState extends State<AgendaScreen> {
       _selected = stored == null
           ? null
           : {for (final part in stored.split(',')) ?int.tryParse(part)};
-      _background = AgendaBackground.fromKey(background);
+      _clock = clock;
     });
     if (permission) await _loadCalendar();
   }
@@ -117,11 +118,6 @@ class _AgendaScreenState extends State<AgendaScreen> {
     await _refreshPreview();
   }
 
-  Future<void> _setBackground(AgendaBackground background) async {
-    setState(() => _background = background);
-    await _platform.write(widget.homeWidget, _backgroundKey, background.key);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,8 +134,8 @@ class _AgendaScreenState extends State<AgendaScreen> {
                   child: _permission ?? false
                       ? AgendaWidgetPreview(
                           days: _preview,
-                          background: _background,
                           palette: _palette,
+                          clock: _clock,
                         )
                       : const _PreviewPlaceholder(),
                 ),
@@ -184,31 +180,6 @@ class _AgendaScreenState extends State<AgendaScreen> {
               ),
               const IuxGap.between(),
             ],
-            IuxSection(
-              title: 'Apparence',
-              children: [
-                IuxRadioGroup<AgendaBackground>(
-                  label: 'Fond du widget',
-                  input: const IuxInputDescriptor(
-                    semantics: IuxInputSemantics(label: 'Fond du widget'),
-                  ),
-                  value: _background,
-                  options: const [
-                    IuxRadioOption(
-                      value: AgendaBackground.transparent,
-                      label: 'Transparent',
-                      helpText: "Texte clair posé sur le fond d'écran.",
-                    ),
-                    IuxRadioOption(
-                      value: AgendaBackground.surface,
-                      label: 'Couleurs du fond d’écran',
-                      helpText: 'Carte aux teintes Material You (Android 12+).',
-                    ),
-                  ],
-                  onChanged: _setBackground,
-                ),
-              ],
-            ),
           ],
         ),
       ),

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../platform/models.dart';
 
-/// Faux fond d'écran derrière un aperçu, proche de la maquette.
-///
-/// Le vrai fond d'écran n'est pas lisible sans permission de stockage ; ce
-/// dégradé suffit à juger la lisibilité d'un widget transparent.
+/// Aperçus des widgets, dessinés en Flutter avec les mêmes polices, couleurs
+/// et textes que les widgets natifs. Seule la mise en page est dupliquée :
+/// elle doit suivre `res/layout/widget_clock*.xml` et `agenda_*.xml`.
+
+/// Fond sombre derrière un aperçu : le style néon est pensé pour un fond
+/// d'écran foncé.
 class WallpaperFrame extends StatelessWidget {
   const WallpaperFrame({super.key, required this.child});
 
@@ -13,183 +15,357 @@ class WallpaperFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(24),
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF4A5BD4), Color(0xFFB45BD0), Color(0xFFE0689A)],
-          ),
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF05070D), Color(0xFF0B1224)],
         ),
-        child: Padding(padding: const EdgeInsets.all(16), child: child),
       ),
+      child: Padding(padding: const EdgeInsets.all(12), child: child),
     );
   }
 }
 
-const _shadow = [
-  Shadow(color: Color(0x66000000), offset: Offset(0, 1), blurRadius: 4),
+const _mono = 'ShareTechMono';
+
+/// Le halo : l'ombre sans décalage des widgets natifs, doublée pour l'éclat.
+List<Shadow> _glow(Color color, double radius) => [
+  Shadow(color: color, blurRadius: radius),
+  Shadow(color: color.withValues(alpha: 0.6), blurRadius: radius * 2),
 ];
 
-/// Reproduction de `res/layout/widget_clock.xml`.
+List<BoxShadow> _boxGlow(Color color) => [
+  BoxShadow(color: color, blurRadius: 6),
+  BoxShadow(color: color.withValues(alpha: 0.5), blurRadius: 14),
+];
+
+class _NeonLine extends StatelessWidget {
+  const _NeonLine({
+    required this.color,
+    required this.glow,
+    this.vertical = false,
+  });
+
+  final Color color;
+  final Color glow;
+  final bool vertical;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: vertical ? 2 : double.infinity,
+      height: vertical ? double.infinity : 2,
+      margin: vertical
+          ? const EdgeInsets.symmetric(horizontal: 8)
+          : const EdgeInsets.symmetric(vertical: 6),
+      decoration: BoxDecoration(color: color, boxShadow: _boxGlow(glow)),
+    );
+  }
+}
+
+/// Barres empilées et hachures, à droite des widgets (`tool/clock_assets.py`).
+class _NeonBars extends StatelessWidget {
+  const _NeonBars({required this.palette, required this.count});
+
+  final WidgetPalette palette;
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 20,
+      height: count * 7.0 + 27,
+      child: CustomPaint(painter: _BarsPainter(palette, count)),
+    );
+  }
+}
+
+class _BarsPainter extends CustomPainter {
+  _BarsPainter(this.palette, this.count);
+
+  final WidgetPalette palette;
+  final int count;
+
+  void _draw(Canvas canvas, Paint paint) {
+    var y = 0.0;
+    for (var i = 0; i < count; i++) {
+      canvas.drawRect(Rect.fromLTWH(2, y, 16, 4), paint);
+      y += 7;
+    }
+    y += 4;
+    for (var i = 0; i < 3; i++) {
+      final x = 2.0 + i * 6;
+      canvas.drawPath(
+        Path()
+          ..moveTo(x, y + 14)
+          ..lineTo(x + 3, y + 14)
+          ..lineTo(x + 8, y)
+          ..lineTo(x + 5, y)
+          ..close(),
+        paint,
+      );
+    }
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    _draw(
+      canvas,
+      Paint()
+        ..color = palette.glow
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
+    );
+    _draw(canvas, Paint()..color = palette.line);
+  }
+
+  @override
+  bool shouldRepaint(_BarsPainter old) =>
+      old.palette != palette || old.count != count;
+}
+
+class _Alarm extends StatelessWidget {
+  const _Alarm({
+    required this.label,
+    required this.palette,
+    required this.size,
+  });
+
+  final String label;
+  final WidgetPalette palette;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          Icons.alarm,
+          size: size + 1,
+          color: palette.core,
+          shadows: _glow(palette.glow, 4),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          label.toUpperCase(),
+          style: TextStyle(
+            fontFamily: _mono,
+            fontSize: size,
+            color: palette.core,
+            shadows: _glow(palette.glow, 5),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+TextStyle _time(WidgetPalette palette) => TextStyle(
+  fontFamily: 'WuxDots',
+  fontSize: 96,
+  height: 1,
+  color: palette.core,
+  shadows: _glow(palette.glow, 8),
+);
+
+/// Reproduction de `widget_clock.xml` (grande) et `widget_clock_compact.xml`.
 class ClockWidgetPreview extends StatelessWidget {
   const ClockWidgetPreview({
     super.key,
     required this.clock,
     required this.palette,
+    this.compact = false,
   });
 
   final ClockPreview clock;
   final WidgetPalette palette;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
-      child: Column(
+    final dateSize = compact ? 12.0 : 17.0;
+    return SizedBox(
+      height: compact ? 64 : 110,
+      child: Row(
         children: [
-          Text(
-            clock.time,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 64,
-              fontWeight: FontWeight.w300,
-              height: 1,
-              shadows: _shadow,
+          Expanded(
+            child: FittedBox(
+              alignment: Alignment.centerRight,
+              child: Text(clock.time, style: _time(palette)),
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            clock.date,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: palette.clockAccent,
-              fontSize: 18,
-              shadows: _shadow,
-            ),
-          ),
-          if (clock.nextAlarm case final alarm?) ...[
-            const SizedBox(height: 4),
-            Row(
-              mainAxisSize: MainAxisSize.min,
+          _NeonLine(color: palette.line, glow: palette.glow, vertical: true),
+          IntrinsicWidth(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Icon(Icons.alarm, size: 16, color: palette.clockAccent),
-                const SizedBox(width: 4),
                 Text(
-                  alarm,
+                  (compact ? clock.date : clock.dateStacked).toUpperCase(),
                   style: TextStyle(
-                    color: palette.clockAccent,
-                    fontSize: 15,
-                    shadows: _shadow,
+                    fontFamily: _mono,
+                    fontSize: dateSize,
+                    height: 1.1,
+                    color: palette.core,
+                    shadows: _glow(palette.glow, 5),
                   ),
                 ),
+                _NeonLine(color: palette.line, glow: palette.glow),
+                if (clock.nextAlarm case final alarm?)
+                  _Alarm(label: alarm, palette: palette, size: dateSize - 1),
               ],
             ),
-          ],
+          ),
+          const SizedBox(width: 8),
+          _NeonBars(palette: palette, count: compact ? 4 : 7),
         ],
       ),
     );
   }
 }
 
-/// Reproduction de `AgendaContent` (`AgendaWidget.kt`).
-///
-/// Les textes viennent du code natif, déjà mis en forme : seule la mise en
-/// page est dupliquée ici, et elle doit suivre celle du widget.
+/// Reproduction des éléments `agenda_heading`, `agenda_row` et `agenda_note`,
+/// en une colonne : l'aperçu n'a pas la largeur de deux.
 class AgendaWidgetPreview extends StatelessWidget {
   const AgendaWidgetPreview({
     super.key,
     required this.days,
-    required this.background,
     required this.palette,
+    this.clock,
   });
 
   final List<AgendaDayPreview> days;
-  final AgendaBackground background;
+  final WidgetPalette palette;
+
+  /// Pour le widget combiné : l'horloge en tête.
+  final ClockPreview? clock;
+
+  @override
+  Widget build(BuildContext context) {
+    final clock = this.clock;
+    final note = TextStyle(
+      fontFamily: _mono,
+      fontSize: 13,
+      color: palette.line,
+      shadows: _glow(palette.glow, 4),
+    );
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (clock != null) ...[
+                SizedBox(
+                  height: 72,
+                  child: FittedBox(
+                    alignment: Alignment.centerLeft,
+                    child: Text(clock.time, style: _time(palette)),
+                  ),
+                ),
+                Text(
+                  clock.date.toUpperCase(),
+                  style: TextStyle(
+                    fontFamily: _mono,
+                    fontSize: 14,
+                    color: palette.core,
+                    shadows: _glow(palette.glow, 5),
+                  ),
+                ),
+                if (clock.nextAlarm case final alarm?)
+                  _Alarm(label: alarm, palette: palette, size: 13),
+                _NeonLine(color: palette.line, glow: palette.glow),
+              ],
+              for (final day in days) ...[
+                Padding(
+                  padding: const EdgeInsets.only(left: 2, top: 6, bottom: 4),
+                  child: Text(
+                    day.label,
+                    style: TextStyle(
+                      fontFamily: _mono,
+                      fontSize: 17,
+                      letterSpacing: 17 * 0.08,
+                      color: palette.line,
+                      shadows: _glow(palette.glow, 6),
+                    ),
+                  ),
+                ),
+                if (day.events.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(17, 3, 0, 3),
+                    child: Text('Aucun événement', style: note),
+                  ),
+                for (final event in day.events) _EventRow(event, palette),
+              ],
+            ],
+          ),
+        ),
+        const SizedBox(width: 8),
+        _NeonBars(palette: palette, count: 12),
+      ],
+    );
+  }
+}
+
+class _EventRow extends StatelessWidget {
+  const _EventRow(this.event, this.palette);
+
+  final AgendaEventPreview event;
   final WidgetPalette palette;
 
   @override
   Widget build(BuildContext context) {
-    final surface = background == AgendaBackground.surface;
-    final primary = surface ? palette.primary : Colors.white;
-    final text = surface ? palette.onSurface : Colors.white;
-    final secondary = surface
-        ? palette.onSurfaceVariant
-        : const Color(0xE6FFFFFF);
-
-    final content = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        for (final day in days) ...[
-          Padding(
-            padding: const EdgeInsets.only(top: 6, bottom: 2),
-            child: Text(
-              day.label,
-              style: TextStyle(
-                color: primary,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              width: 3,
+              margin: const EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                color: event.color,
+                boxShadow: _boxGlow(event.color),
               ),
             ),
-          ),
-          if (day.events.isEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3),
-              child: Text(
-                'Aucun événement',
-                style: TextStyle(color: secondary, fontSize: 13),
-              ),
-            ),
-          for (final event in day.events)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3),
-              child: Row(
+            const SizedBox(width: 6),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          event.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: text,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          event.detail,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: secondary, fontSize: 12),
-                        ),
-                      ],
+                  Text(
+                    event.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: _mono,
+                      fontSize: 15,
+                      color: palette.core,
+                      shadows: _glow(palette.glow, 4),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: event.color,
-                      shape: BoxShape.circle,
+                  const SizedBox(height: 2),
+                  Text(
+                    event.detail,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: _mono,
+                      fontSize: 13,
+                      color: palette.line,
+                      shadows: _glow(palette.glow, 3),
                     ),
                   ),
                 ],
               ),
             ),
-        ],
-      ],
-    );
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 8, 10, 8),
-      color: surface ? palette.surface : null,
-      child: content,
+          ],
+        ),
+      ),
     );
   }
 }

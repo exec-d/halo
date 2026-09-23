@@ -75,8 +75,18 @@ class _ClockScreenState extends State<ClockScreen> {
           children: [
             WallpaperFrame(
               child: clock == null
-                  ? const SizedBox(height: 120)
-                  : ClockWidgetPreview(clock: clock, palette: _palette),
+                  ? const SizedBox(height: 190)
+                  : Column(
+                      children: [
+                        ClockWidgetPreview(clock: clock, palette: _palette),
+                        const SizedBox(height: 16),
+                        ClockWidgetPreview(
+                          clock: clock,
+                          palette: _palette,
+                          compact: true,
+                        ),
+                      ],
+                    ),
             ),
             const IuxGap.between(),
             PinButton(

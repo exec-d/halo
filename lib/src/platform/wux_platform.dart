@@ -126,6 +126,7 @@ class AndroidWuxPlatform implements WuxPlatform {
     return ClockPreview(
       time: map!['time']! as String,
       date: map['date']! as String,
+      dateStacked: map['dateStacked']! as String,
       nextAlarm: map['nextAlarm'] as String?,
     );
   }

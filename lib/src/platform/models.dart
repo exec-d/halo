@@ -69,63 +69,54 @@ class AgendaDayPreview {
 
 /// L'heure et la date, formatées comme le widget horloge.
 class ClockPreview {
-  const ClockPreview({required this.time, required this.date, this.nextAlarm});
+  const ClockPreview({
+    required this.time,
+    required this.date,
+    required this.dateStacked,
+    this.nextAlarm,
+  });
 
   final String time;
   final String date;
+
+  /// La date sur deux lignes, pour la grande horloge.
+  final String dateStacked;
 
   /// « mer. 07:00 », ou `null` si aucune alarme n'est programmée.
   final String? nextAlarm;
 }
 
-/// Couleurs des widgets, résolues par Android (Material You à partir
-/// d'Android 12, repli fixe avant).
+/// Couleurs des widgets, résolues par Android : l'accent du fond d'écran
+/// (Material You) à partir d'Android 12, un bleu fixe avant.
 class WidgetPalette {
   const WidgetPalette({
-    required this.surface,
-    required this.onSurface,
-    required this.onSurfaceVariant,
-    required this.primary,
-    required this.clockAccent,
+    required this.core,
+    required this.glow,
+    required this.line,
   });
 
   factory WidgetPalette.fromMap(Map<Object?, Object?> map) {
     Color color(String key) => Color((map[key]! as num).toInt());
     return WidgetPalette(
-      surface: color('surface'),
-      onSurface: color('onSurface'),
-      onSurfaceVariant: color('onSurfaceVariant'),
-      primary: color('primary'),
-      clockAccent: color('clockAccent'),
+      core: color('core'),
+      glow: color('glow'),
+      line: color('line'),
     );
   }
 
+  /// Mêmes valeurs que `res/values/colors.xml`.
   static const fallback = WidgetPalette(
-    surface: Color(0xF2FFFFFF),
-    onSurface: Color(0xFF1B1B1F),
-    onSurfaceVariant: Color(0xFF46464F),
-    primary: Color(0xFF3F51B5),
-    clockAccent: Color(0xFFFFFFFF),
+    core: Color(0xFFE6F6FF),
+    glow: Color(0xFF2F9BFF),
+    line: Color(0xFF8AD2FF),
   );
 
-  final Color surface;
-  final Color onSurface;
-  final Color onSurfaceVariant;
-  final Color primary;
-  final Color clockAccent;
-}
+  /// Cœur des chiffres et des titres.
+  final Color core;
 
-/// Fond d'un widget agenda. Les clés sont relues par `AgendaSettings.kt`.
-enum AgendaBackground {
-  transparent('transparent'),
-  surface('surface');
+  /// Halo autour de tout ce qui est dessiné.
+  final Color glow;
 
-  const AgendaBackground(this.key);
-
-  final String key;
-
-  static AgendaBackground fromKey(String? key) => values.firstWhere(
-    (value) => value.key == key,
-    orElse: () => AgendaBackground.transparent,
-  );
+  /// Traits, barres, horaires.
+  final Color line;
 }

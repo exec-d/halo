@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Titre d'un jour de l'agenda (« DEMAIN »). Hauteur prévue : AgendaRenderer.HEADING. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agenda_heading"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="2dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="4dp"
+    android:fontFamily="@font/share_tech_mono"
+    android:includeFontPadding="false"
+    android:letterSpacing="0.08"
+    android:maxLines="1"
+    android:shadowColor="@color/clock_glow"
+        android:shadowDx="0"
+        android:shadowDy="0"
+    android:shadowRadius="16"
+    android:textColor="@color/clock_line"
+    android:textSize="17sp" />

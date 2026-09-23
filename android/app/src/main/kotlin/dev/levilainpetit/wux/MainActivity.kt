@@ -26,7 +26,7 @@ import java.util.Date
 /**
  * Hôte Flutter, et canal `dev.levilainpetit.wux/native` : tout ce dont
  * l'application a besoin et que `home_widget` ne couvre pas (calendrier,
- * aperçus, rafraîchissement des widgets Glance).
+ * aperçus, rafraîchissement des widgets agenda).
  */
 open class MainActivity : FlutterActivity() {
 
@@ -88,17 +88,16 @@ open class MainActivity : FlutterActivity() {
                             now,
                         ).toString(),
                         "date" to DateFormat.format(getString(R.string.clock_date_format), now).toString(),
+                        "dateStacked" to DateFormat.format(getString(R.string.clock_date_format_stacked), now).toString(),
                         "nextAlarm" to NextAlarm.label(this),
                     ),
                 )
             }
             "palette" -> result.success(
                 mapOf(
-                    "surface" to getColor(R.color.agenda_surface),
-                    "onSurface" to getColor(R.color.agenda_on_surface),
-                    "onSurfaceVariant" to getColor(R.color.agenda_on_surface_variant),
-                    "primary" to getColor(R.color.agenda_primary),
-                    "clockAccent" to getColor(R.color.clock_accent),
+                    "core" to getColor(R.color.clock_core),
+                    "glow" to getColor(R.color.clock_glow),
+                    "line" to getColor(R.color.clock_line),
                 ),
             )
             "widgetProvider" -> {
@@ -108,7 +107,7 @@ open class MainActivity : FlutterActivity() {
                 result.success(AppWidgetManager.getInstance(this).getAppWidgetInfo(id)?.provider?.className)
             }
             "refreshWidgets" -> scope.launch {
-                AgendaRefresh.refreshAll(applicationContext)
+                withContext(Dispatchers.IO) { AgendaRefresh.refreshAll(applicationContext) }
                 AgendaRefresh.schedule(applicationContext)
                 result.success(null)
             }
@@ -148,7 +147,7 @@ open class MainActivity : FlutterActivity() {
         pendingPermission = null
         if (granted) {
             scope.launch {
-                AgendaRefresh.refreshAll(applicationContext)
+                withContext(Dispatchers.IO) { AgendaRefresh.refreshAll(applicationContext) }
                 AgendaRefresh.schedule(applicationContext)
             }
         }

@@ -2,8 +2,6 @@ package dev.levilainpetit.wux.widgets
 
 import android.content.Context
 import android.provider.CalendarContract
-import androidx.glance.appwidget.GlanceAppWidgetManager
-import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
@@ -30,15 +28,9 @@ object AgendaRefresh {
     private const val WORK_MIDNIGHT = "agenda-midnight"
     private const val WORK_NEXT_CHANGE = "agenda-next-change"
 
-    suspend fun refreshAll(context: Context) {
-        val manager = GlanceAppWidgetManager(context)
-        val stamp = System.currentTimeMillis()
-        listOf(TodayAgendaWidget(), TwoDayAgendaWidget()).forEach { widget ->
-            manager.getGlanceIds(widget.javaClass).forEach { id ->
-                updateAppWidgetState(context, id) { it[AgendaWidget.REFRESH_KEY] = stamp }
-                widget.update(context, id)
-            }
-        }
+    fun refreshAll(context: Context) {
+        listOf(TodayAgendaWidgetReceiver(), TwoDayAgendaWidgetReceiver(), ClockAgendaWidgetProvider())
+            .forEach { it.renderAll(context) }
     }
 
     /** (Re)programme les deux déclencheurs, qui ne servent qu'une fois chacun. */

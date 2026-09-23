@@ -95,6 +95,7 @@ class FakePlatform implements WuxPlatform {
   Future<ClockPreview> clockPreview() async => ClockPreview(
     time: '09:41',
     date: 'mercredi 23 septembre',
+    dateStacked: 'mercredi\n23 septembre',
     nextAlarm: nextAlarm,
   );
 

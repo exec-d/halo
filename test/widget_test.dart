@@ -17,21 +17,34 @@ Future<void> _open(
 }
 
 void main() {
-  testWidgets('le catalogue liste les trois widgets', (tester) async {
+  testWidgets('le catalogue liste les quatre widgets', (tester) async {
     await tester.pumpWidget(WuxApp(platform: FakePlatform()));
     await tester.pumpAndSettle();
 
     expect(find.text('Horloge'), findsOneWidget);
     expect(find.text('Agenda du jour'), findsOneWidget);
     expect(find.text("Aujourd'hui et demain"), findsOneWidget);
+    expect(find.text('Horloge et agenda'), findsOneWidget);
+  });
+
+  testWidgets("l'horloge et agenda montre l'heure puis les jours", (
+    tester,
+  ) async {
+    await _open(tester, FakePlatform(), 'Horloge et agenda');
+
+    expect(find.text('09:41'), findsOneWidget);
+    expect(find.text('MERCREDI 23 SEPTEMBRE'), findsOneWidget);
+    expect(find.text('DEMAIN'), findsOneWidget);
   });
 
   testWidgets("l'horloge montre l'heure et la date natives", (tester) async {
     final platform = FakePlatform();
     await _open(tester, platform, 'Horloge');
 
-    expect(find.text('09:41'), findsOneWidget);
-    expect(find.text('mercredi 23 septembre'), findsOneWidget);
+    // Grande et compacte.
+    expect(find.text('09:41'), findsNWidgets(2));
+    expect(find.text('MERCREDI\n23 SEPTEMBRE'), findsOneWidget);
+    expect(find.text('MERCREDI 23 SEPTEMBRE'), findsOneWidget);
 
     await tester.tap(find.text("Ajouter à l'écran d'accueil"));
     expect(platform.pinned, ['clock']);
@@ -41,8 +54,8 @@ void main() {
   testWidgets("l'horloge montre la prochaine alarme", (tester) async {
     await _open(tester, FakePlatform(nextAlarm: 'jeu. 07:00'), 'Horloge');
 
-    expect(find.text('jeu. 07:00'), findsOneWidget);
-    expect(find.byIcon(Icons.alarm), findsOneWidget);
+    expect(find.text('JEU. 07:00'), findsNWidgets(2));
+    expect(find.byIcon(Icons.alarm), findsNWidgets(2));
   });
 
   testWidgets("l'agenda à deux jours affiche aujourd'hui et demain", (
@@ -73,17 +86,6 @@ void main() {
     await tester.tap(find.text('Personnel'));
     await tester.pumpAndSettle();
     expect(platform.data.containsKey('agenda_today.calendars'), isFalse);
-  });
-
-  testWidgets('le fond choisi est transmis au widget', (tester) async {
-    final platform = FakePlatform();
-    await _open(tester, platform, 'Agenda du jour');
-
-    await tester.ensureVisible(find.text('Couleurs du fond d’écran'));
-    await tester.tap(find.text('Couleurs du fond d’écran'));
-    await tester.pumpAndSettle();
-
-    expect(platform.data['agenda_today.background'], 'surface');
   });
 
   testWidgets("sans autorisation, l'écran la demande", (tester) async {

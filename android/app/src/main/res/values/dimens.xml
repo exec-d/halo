@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Relues par AgendaRenderer pour savoir combien de lignes tiennent. -->
+<resources>
+    <dimen name="agenda_padding">8dp</dimen>
+    <dimen name="clock_agenda_time_height">72dp</dimen>
+</resources>

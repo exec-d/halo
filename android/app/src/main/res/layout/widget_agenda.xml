@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Agenda : une ou deux colonnes remplies par AgendaRenderer selon la taille,
+     sans défilement. Aucun fond : rien que le lanceur puisse arrondir. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agenda_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/agenda_padding">
+
+    <LinearLayout
+        android:id="@+id/agenda_col1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" />
+
+    <ImageView
+        android:id="@+id/agenda_separator"
+        android:layout_width="12dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="4dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/agenda_divider_dotted"
+        android:tint="@color/clock_line" />
+
+    <LinearLayout
+        android:id="@+id/agenda_col2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" />
+
+    <ImageView
+        android:id="@+id/agenda_bars"
+        android:layout_width="28dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="4dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        android:src="@drawable/agenda_bars"
+        android:tint="@color/clock_line" />
+</LinearLayout>

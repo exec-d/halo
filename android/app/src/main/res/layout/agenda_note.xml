@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ligne de texte simple : « Aucun événement », « ••• », demande d'accès.
+     Hauteur prévue : AgendaRenderer.NOTE. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agenda_note"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="17dp"
+    android:paddingVertical="3dp"
+    android:fontFamily="@font/share_tech_mono"
+    android:includeFontPadding="false"
+    android:maxLines="2"
+    android:shadowColor="@color/clock_glow"
+        android:shadowDx="0"
+        android:shadowDy="0"
+    android:shadowRadius="10"
+    android:textColor="@color/clock_line"
+    android:textSize="13sp" />

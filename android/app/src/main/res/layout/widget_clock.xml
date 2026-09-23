@@ -1,65 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Motifs d'heure et de date repris dans MainActivity pour l'aperçu. -->
+<!-- Horloge grande : date sur deux lignes. Même identifiants dans les deux mises en page, pour que
+     ClockWidgetProvider les remplisse de la même façon. Le halo des textes est
+     leur ombre, sans décalage ; celui des traits est dessiné dans les images
+     (tool/clock_assets.py) et teinté ici. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/clock_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="4dp"
+    android:paddingVertical="6dp">
 
     <TextClock
         android:id="@+id/clock_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:autoSizeMaxTextSize="110sp"
+        android:autoSizeMinTextSize="20sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/wux_dots"
         android:format12Hour="h:mm"
         android:format24Hour="HH:mm"
+        android:gravity="center_vertical|end"
         android:includeFontPadding="false"
-        android:shadowColor="#66000000"
-        android:shadowDy="1"
-        android:shadowRadius="4"
-        android:textColor="#FFFFFFFF"
-        android:textSize="64sp" />
+        android:maxLines="1"
+        android:shadowColor="@color/clock_glow"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="28"
+        android:textColor="@color/clock_core" />
 
-    <TextClock
-        android:id="@+id/clock_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:format12Hour="@string/clock_date_format"
-        android:format24Hour="@string/clock_date_format"
-        android:shadowColor="#66000000"
-        android:shadowDy="1"
-        android:shadowRadius="4"
-        android:textColor="@color/clock_accent"
-        android:textSize="18sp" />
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="4dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/clock_divider_vertical"
+        android:tint="@color/clock_line" />
 
-    <!-- Prochaine alarme, masquée quand il n'y en a pas. -->
     <LinearLayout
-        android:id="@+id/clock_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:layout_marginStart="4dp"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginEnd="4dp"
-            android:importantForAccessibility="no"
-            android:src="@drawable/ic_alarm"
-            android:tint="@color/clock_accent" />
-
-        <TextView
-            android:id="@+id/clock_alarm_text"
+        <TextClock
+            android:id="@+id/clock_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:shadowColor="#66000000"
-            android:shadowDy="1"
-            android:shadowRadius="4"
-            android:textColor="@color/clock_accent"
-            android:textSize="15sp" />
+            android:fontFamily="@font/share_tech_mono"
+            android:format12Hour="@string/clock_date_format_stacked"
+            android:format24Hour="@string/clock_date_format_stacked"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="14"
+            android:textAllCaps="true"
+            android:textColor="@color/clock_core"
+            android:textSize="19sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="14dp"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            android:src="@drawable/clock_divider_horizontal"
+            android:tint="@color/clock_line" />
+
+        <!-- Prochaine alarme, masquée quand il n'y en a pas. -->
+        <LinearLayout
+            android:id="@+id/clock_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="8dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_alarm"
+                android:tint="@color/clock_core" />
+
+            <TextView
+                android:id="@+id/clock_alarm_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/share_tech_mono"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="14"
+                android:textAllCaps="true"
+                android:textColor="@color/clock_core"
+                android:textSize="17sp" />
+        </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="4dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        android:src="@drawable/clock_bars"
+        android:tint="@color/clock_line" />
 </LinearLayout>

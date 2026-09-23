@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Repli avant Android 12 ; values-v31 prend les couleurs du fond d'écran. -->
 <resources>
-    <color name="clock_accent">#FFFFFFFF</color>
-    <color name="agenda_surface">#F2FFFFFF</color>
-    <color name="agenda_on_surface">#FF1B1B1F</color>
-    <color name="agenda_on_surface_variant">#FF46464F</color>
-    <color name="agenda_primary">#FF3F51B5</color>
+    <!-- Horloge : cœur des traits, halo, lignes et barres. -->
+    <color name="clock_core">#FFE6F6FF</color>
+    <color name="clock_glow">#FF2F9BFF</color>
+    <color name="clock_line">#FF8AD2FF</color>
 </resources>
