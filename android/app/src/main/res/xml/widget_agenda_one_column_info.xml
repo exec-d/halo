@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/widget_agenda_one_column_description"
+    android:previewLayout="@layout/preview_agenda"
     android:initialLayout="@layout/widget_agenda"
     android:minWidth="110dp"
     android:minHeight="110dp"

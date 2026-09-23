@@ -15,13 +15,16 @@ abstract interface class WuxPlatform {
   /// Réglage partagé avec le widget natif.
   Future<String?> read(WuxHomeWidget widget, String name);
 
-  /// Enregistre un réglage, puis redessine le widget.
+  /// Enregistre un réglage, puis redessine les widgets concernés.
   Future<void> write(WuxHomeWidget widget, String name, String? value);
 
   Future<bool> canPin();
 
   /// Propose à l'utilisateur d'ajouter [widget] à son écran d'accueil.
   Future<void> pin(WuxHomeWidget widget);
+
+  /// Le widget tel qu'Android le dessine, à la taille [size] (dp), en PNG.
+  Future<Uint8List?> render(WuxHomeWidget widget, Size size);
 
   Future<bool> hasCalendarPermission();
 
@@ -32,19 +35,6 @@ abstract interface class WuxPlatform {
   Future<void> openAppSettings();
 
   Future<List<CalendarInfo>> calendars();
-
-  /// Ce que le widget agenda afficherait avec ces réglages.
-  Future<List<AgendaDayPreview>> agendaPreview({
-    required int days,
-    required Set<int>? calendarIds,
-  });
-
-  Future<ClockPreview> clockPreview();
-
-  Future<WidgetPalette> palette();
-
-  /// Les rangées de cases d'un widget système, telles qu'il les affiche.
-  Future<List<List<SystemTilePreview>>> systemPreview({required bool advanced});
 
   /// Widget dont le lanceur a ouvert les réglages, ou `null`.
   Future<WuxHomeWidget?> configuringWidget();
@@ -65,18 +55,8 @@ class AndroidWuxPlatform implements WuxPlatform {
   @override
   Future<void> write(WuxHomeWidget widget, String name, String? value) async {
     await HomeWidget.saveWidgetData<String>(widget.key(name), value);
-    switch (widget.kind) {
-      case WuxWidgetKind.agenda:
-        // Les widgets Glance ont besoin d'un rafraîchissement explicite pour
-        // relire leurs réglages quand leur session est encore ouverte.
-        await _channel.invokeMethod<void>('refreshWidgets');
-      case WuxWidgetKind.clock:
-      case WuxWidgetKind.system:
-      case WuxWidgetKind.systemAdvanced:
-        await HomeWidget.updateWidget(
-          qualifiedAndroidName: widget.androidProvider,
-        );
-    }
+    await _channel.invokeMethod<void>('refreshWidgets');
+    await HomeWidget.updateWidget(qualifiedAndroidName: widget.androidProvider);
   }
 
   @override
@@ -86,6 +66,14 @@ class AndroidWuxPlatform implements WuxPlatform {
   @override
   Future<void> pin(WuxHomeWidget widget) =>
       HomeWidget.requestPinWidget(qualifiedAndroidName: widget.androidProvider);
+
+  @override
+  Future<Uint8List?> render(WuxHomeWidget widget, Size size) =>
+      _channel.invokeMethod<Uint8List>('renderWidget', {
+        'id': widget.id,
+        'width': size.width,
+        'height': size.height,
+      });
 
   @override
   Future<bool> hasCalendarPermission() async =>
@@ -105,58 +93,6 @@ class AndroidWuxPlatform implements WuxPlatform {
     return [
       for (final item in list)
         CalendarInfo.fromMap(item! as Map<Object?, Object?>),
-    ];
-  }
-
-  @override
-  Future<List<AgendaDayPreview>> agendaPreview({
-    required int days,
-    required Set<int>? calendarIds,
-  }) async {
-    final list =
-        await _channel.invokeListMethod<Object?>('agendaPreview', {
-          'days': days,
-          'calendarIds': calendarIds?.toList(),
-        }) ??
-        [];
-    return [
-      for (final item in list)
-        AgendaDayPreview.fromMap(item! as Map<Object?, Object?>),
-    ];
-  }
-
-  @override
-  Future<ClockPreview> clockPreview() async {
-    final map = await _channel.invokeMapMethod<String, Object?>('clockPreview');
-    return ClockPreview(
-      time: map!['time']! as String,
-      date: map['date']! as String,
-      dateStacked: map['dateStacked']! as String,
-      nextAlarm: map['nextAlarm'] as String?,
-    );
-  }
-
-  @override
-  Future<WidgetPalette> palette() async {
-    final map = await _channel.invokeMapMethod<Object?, Object?>('palette');
-    return map == null ? WidgetPalette.fallback : WidgetPalette.fromMap(map);
-  }
-
-  @override
-  Future<List<List<SystemTilePreview>>> systemPreview({
-    required bool advanced,
-  }) async {
-    final rows =
-        await _channel.invokeListMethod<Object?>('systemPreview', {
-          'advanced': advanced,
-        }) ??
-        [];
-    return [
-      for (final row in rows)
-        [
-          for (final item in row! as List<Object?>)
-            SystemTilePreview.fromMap(item! as Map<Object?, Object?>),
-        ],
     ];
   }
 

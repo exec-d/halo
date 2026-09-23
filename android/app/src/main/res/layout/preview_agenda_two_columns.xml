@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu dans la liste des widgets du lanceur (android:previewLayout),
+     avec des événements d'exemple. Même structure que widget_agenda. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/agenda_padding">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="DEMAIN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="2dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="4dp"
+            android:fontFamily="monospace"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.08"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+            android:shadowRadius="16"
+            android:textColor="@color/clock_line"
+            android:textSize="17sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="3dp">
+
+            <ImageView
+                android:tint="#FF7FE0F0"
+                android:layout_width="13dp"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:src="@drawable/agenda_event_bar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Bureau"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="12"
+                    android:textColor="@color/clock_core"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:text="Toute la journée"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_line"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="3dp">
+
+            <ImageView
+                android:tint="#FFF2C14E"
+                android:layout_width="13dp"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:src="@drawable/agenda_event_bar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="École — David &amp; Olivier"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="12"
+                    android:textColor="@color/clock_core"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:text="08:20 – 16:30"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_line"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="3dp">
+
+            <ImageView
+                android:tint="#FF3FD8F0"
+                android:layout_width="13dp"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:src="@drawable/agenda_event_bar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Standup Meeting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="12"
+                    android:textColor="@color/clock_core"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:text="11:50 – 12:20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_line"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="12dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="4dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/agenda_divider_dotted"
+        android:tint="@color/clock_line" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="3dp">
+
+            <ImageView
+                android:tint="#FF3FD8F0"
+                android:layout_width="13dp"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:src="@drawable/agenda_event_bar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Pause déjeuner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="12"
+                    android:textColor="@color/clock_core"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:text="12:45 – 14:00"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_line"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="3dp">
+
+            <ImageView
+                android:tint="#FF3FD8F0"
+                android:layout_width="13dp"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:src="@drawable/agenda_event_bar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Point squads dev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="12"
+                    android:textColor="@color/clock_core"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:text="17:00 – 18:00"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_line"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="3dp">
+
+            <ImageView
+                android:tint="#FFF2C14E"
+                android:layout_width="13dp"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:src="@drawable/agenda_event_bar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Périscolaire"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="12"
+                    android:textColor="@color/clock_core"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:text="16:30 – 17:30"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:paddingStart="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_line"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

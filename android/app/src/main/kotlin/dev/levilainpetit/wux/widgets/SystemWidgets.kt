@@ -10,6 +10,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkRequest
 import android.os.Build
+import android.util.SizeF
 import android.view.View
 import android.widget.RemoteViews
 import dev.levilainpetit.wux.R
@@ -26,7 +27,7 @@ abstract class SystemWidgetProvider(
     private val layout: Int,
     /** Code propre à chaque widget, pour que leurs alarmes ne se remplacent pas. */
     private val code: Int,
-) : AppWidgetProvider() {
+) : AppWidgetProvider(), PreviewableWidget {
 
     /** Une liste de cases par rangée (`system_row1`, `system_row2`). */
     abstract fun rows(context: Context): List<List<SystemTile>>
@@ -89,6 +90,8 @@ abstract class SystemWidgetProvider(
             mutability or PendingIntent.FLAG_UPDATE_CURRENT,
         )
     }
+
+    override fun preview(context: Context, size: SizeF) = views(context)
 
     private fun views(context: Context) = RemoteViews(context.packageName, layout).apply {
         rows(context).forEachIndexed { index, tiles ->

@@ -1,23 +1,21 @@
-import 'package:flutter/material.dart';
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:wux/src/home_widgets/wux_home_widget.dart';
 import 'package:wux/src/platform/wux_platform.dart';
 
-/// Plateforme simulée : un stockage en mémoire et deux agendas.
+/// Plateforme simulée : un stockage en mémoire, deux agendas, et un journal
+/// des aperçus demandés.
 class FakePlatform implements WuxPlatform {
-  FakePlatform({
-    this.permission = true,
-    this.grantOnRequest = true,
-    this.nextAlarm,
-  });
-
-  final String? nextAlarm;
+  FakePlatform({this.permission = true, this.grantOnRequest = true});
 
   bool permission;
   final bool grantOnRequest;
   final data = <String, String>{};
   final pinned = <String>[];
+  final renders = <String>[];
   var permissionRequests = 0;
-  Set<int>? lastPreviewIds;
+  var finishedConfiguring = 0;
 
   static const personal = CalendarInfo(
     id: 1,
@@ -52,6 +50,12 @@ class FakePlatform implements WuxPlatform {
   Future<void> pin(WuxHomeWidget widget) async => pinned.add(widget.id);
 
   @override
+  Future<Uint8List?> render(WuxHomeWidget widget, Size size) async {
+    renders.add(widget.id);
+    return null;
+  }
+
+  @override
   Future<bool> hasCalendarPermission() async => permission;
 
   @override
@@ -66,68 +70,6 @@ class FakePlatform implements WuxPlatform {
 
   @override
   Future<List<CalendarInfo>> calendars() async => [personal, work];
-
-  @override
-  Future<List<AgendaDayPreview>> agendaPreview({
-    required int days,
-    required Set<int>? calendarIds,
-  }) async {
-    lastPreviewIds = calendarIds;
-    return [
-      AgendaDayPreview(
-        label: "AUJOURD'HUI",
-        events: [
-          if (calendarIds?.contains(1) ?? true)
-            const AgendaEventPreview(
-              time: 'De 18:30 à 22:30',
-              title: 'Dîner',
-              location: 'Turin',
-              detail: '18:30 – 22:30 · Turin',
-              color: Color(0xFFE53935),
-            ),
-        ],
-      ),
-      if (days > 1) const AgendaDayPreview(label: 'DEMAIN', events: []),
-    ];
-  }
-
-  @override
-  Future<ClockPreview> clockPreview() async => ClockPreview(
-    time: '09:41',
-    date: 'mercredi 23 septembre',
-    dateStacked: 'mercredi\n23 septembre',
-    nextAlarm: nextAlarm,
-  );
-
-  @override
-  Future<WidgetPalette> palette() async => WidgetPalette.fallback;
-
-  @override
-  Future<List<List<SystemTilePreview>>> systemPreview({
-    required bool advanced,
-  }) async => [
-    const [
-      SystemTilePreview(
-        label: 'BATTERIE',
-        value: '82 %',
-        detail: 'En charge',
-        progress: 82,
-      ),
-      SystemTilePreview(label: 'RÉSEAU', value: 'Wi-Fi', detail: 'Signal 3/4'),
-      SystemTilePreview(
-        label: 'STOCKAGE',
-        value: '64 Go',
-        detail: 'Libres sur 128 Go',
-        progress: 50,
-      ),
-    ],
-    if (advanced)
-      const [
-        SystemTilePreview(label: 'BLUETOOTH', value: 'Activé', detail: ''),
-      ],
-  ];
-
-  var finishedConfiguring = 0;
 
   @override
   Future<WuxHomeWidget?> configuringWidget() async => null;

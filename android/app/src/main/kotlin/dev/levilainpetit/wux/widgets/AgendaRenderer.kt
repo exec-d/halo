@@ -75,7 +75,7 @@ object AgendaRenderer {
         return render(context, agenda, SizeF(width.toFloat(), height.toFloat()), columns)
     }
 
-    private fun render(
+    fun render(
         context: Context,
         agenda: List<AgendaDay>?,
         size: SizeF,

@@ -45,10 +45,13 @@ dessine pas sur l'écran d'accueil. WUX a donc deux moitiés :
 - **Réglages** : écrits par Flutter avec `home_widget` sous la clé
   `<id du widget>.<nom>` (`agenda_one_column.calendars`), relus par
   `AgendaSettings.kt`.
-- **Aperçus** : le canal `dev.levilainpetit.wux/native` (`MainActivity.kt`)
-  renvoie les textes déjà mis en forme par `AgendaBuilder.kt`, le même code
-  que le widget. Seule la mise en page est reproduite en Flutter
-  (`lib/src/previews/`), et doit suivre les mises en page `res/layout/`.
+- **Aperçus dans l'app** : Android dessine le vrai widget
+  (`WidgetPreviews.kt`, chaque widget implémentant `PreviewableWidget`) et
+  l'envoie en PNG à Flutter par le canal `dev.levilainpetit.wux/native`.
+  Rien n'est redessiné côté Dart.
+- **Aperçus dans la liste du lanceur** : `android:previewLayout` (Android 12+),
+  la vraie mise en page pour l'horloge, des mises en page d'exemple
+  (`res/layout/preview_*.xml`) pour les autres.
 - **Fraîcheur des agendas** (`AgendaRefresh.kt`) : modification du calendrier
   (déclencheur de contenu WorkManager), fin d'un événement du jour, 18 h,
   passage à minuit, changement de réglage,
@@ -76,6 +79,12 @@ IUX n'est pas publié ; il est tiré de GitHub et épinglé sur un commit dans
 3. Ajouter ses métadonnées (`res/xml/`) et son `<receiver>` dans
    `AndroidManifest.xml`.
 4. Lui donner un écran de réglage et un aperçu dans `lib/src/`.
+
+## Installer une mise à jour
+
+Toutes les builds de CI signent avec la même clé de debug
+(`android/app/debug.keystore`) : un nouvel APK s'installe par-dessus le
+précédent. Cette clé est publique ; elle ne doit pas servir à publier.
 
 ## Développement
 

@@ -5,6 +5,8 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
+import android.util.SizeF
+import dev.levilainpetit.wux.calendar.AgendaDay
 import dev.levilainpetit.wux.calendar.AgendaBuilder
 import dev.levilainpetit.wux.calendar.CalendarRepository
 import es.antonborri.home_widget.HomeWidgetPlugin
@@ -19,7 +21,7 @@ import es.antonborri.home_widget.HomeWidgetPlugin
 abstract class AgendaWidgetProvider(
     private val widgetId: String,
     private val columns: Int,
-) : AppWidgetProvider() {
+) : AppWidgetProvider(), PreviewableWidget {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         appWidgetIds.forEach { render(context, appWidgetManager, it) }
@@ -42,17 +44,21 @@ abstract class AgendaWidgetProvider(
     }
 
     private fun render(context: Context, manager: AppWidgetManager, appWidgetId: Int) {
-        val settings = AgendaSettings.read(HomeWidgetPlugin.getData(context), widgetId)
-        val repository = CalendarRepository(context)
-        val agenda = if (repository.hasPermission()) {
-            AgendaBuilder.build(context, repository, settings.days, settings.calendarIds)
-        } else {
-            null
-        }
         manager.updateAppWidget(
             appWidgetId,
-            AgendaRenderer.views(context, agenda, manager.getAppWidgetOptions(appWidgetId), columns),
+            AgendaRenderer.views(context, agenda(context), manager.getAppWidgetOptions(appWidgetId), columns),
         )
+    }
+
+    override fun preview(context: Context, size: SizeF) =
+        AgendaRenderer.render(context, agenda(context), size, columns)
+
+    /** `null` : l'accès au calendrier n'est pas accordé. */
+    private fun agenda(context: Context): List<AgendaDay>? {
+        val settings = AgendaSettings.read(HomeWidgetPlugin.getData(context), widgetId)
+        val repository = CalendarRepository(context)
+        if (!repository.hasPermission()) return null
+        return AgendaBuilder.build(context, repository, settings.days, settings.calendarIds)
     }
 }
 

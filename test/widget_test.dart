@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wux/src/app.dart';
 import 'package:wux/src/home_widgets/catalog.dart';
@@ -12,73 +12,60 @@ Future<void> _open(
 ) async {
   await tester.pumpWidget(WuxApp(platform: platform));
   await tester.pumpAndSettle();
-  await tester.tap(find.text(title));
+  await tester.ensureVisible(find.text(title).first);
+  await tester.tap(find.text(title).first);
   await tester.pumpAndSettle();
 }
 
 void main() {
-  testWidgets('le catalogue liste tous les widgets', (tester) async {
-    await tester.pumpWidget(WuxApp(platform: FakePlatform()));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Horloge'), findsOneWidget);
-    expect(find.text('Agenda'), findsOneWidget);
-    expect(find.text('Agenda 2 colonnes'), findsOneWidget);
-    expect(find.text('Système'), findsOneWidget);
-    expect(find.text('Système avancé'), findsOneWidget);
-  });
-
-  testWidgets('le système avancé a sa seconde rangée', (tester) async {
-    await _open(tester, FakePlatform(), 'Système avancé');
-
-    expect(find.text('BLUETOOTH'), findsOneWidget);
-    expect(find.text('82 %'), findsOneWidget);
-  });
-
-  testWidgets('le widget système montre batterie, réseau et stockage', (
+  testWidgets('le catalogue montre chaque widget avec son aperçu', (
     tester,
   ) async {
-    await _open(tester, FakePlatform(), 'Système');
+    final platform = FakePlatform();
+    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpAndSettle();
 
-    expect(find.text('82 %'), findsOneWidget);
-    expect(find.text('Wi-Fi'), findsOneWidget);
-    expect(find.text('LIBRES SUR 128 GO'), findsOneWidget);
+    for (final widget in wuxHomeWidgets) {
+      expect(find.text(widget.title), findsOneWidget);
+      expect(platform.renders, contains(widget.id));
+    }
+    // Les aperçus se redessinent seuls : on arrête leur minuterie.
+    await tester.pumpWidget(const SizedBox());
   });
 
-  testWidgets("l'horloge montre l'heure et la date natives", (tester) async {
+  testWidgets("un widget sans réglage s'épingle", (tester) async {
     final platform = FakePlatform();
     await _open(tester, platform, 'Horloge');
 
-    // Grande et compacte.
-    expect(find.text('09:41'), findsNWidgets(2));
-    expect(find.text('MERCREDI\n23 SEPTEMBRE'), findsOneWidget);
-    expect(find.text('MERCREDI 23 SEPTEMBRE'), findsOneWidget);
-
     await tester.tap(find.text("Ajouter à l'écran d'accueil"));
     expect(platform.pinned, ['clock']);
-    expect(find.byIcon(Icons.alarm), findsNothing);
+    await tester.pumpWidget(const SizedBox());
   });
 
-  testWidgets("l'horloge montre la prochaine alarme", (tester) async {
-    await _open(tester, FakePlatform(nextAlarm: 'jeu. 07:00'), 'Horloge');
-
-    expect(find.text('JEU. 07:00'), findsNWidgets(2));
-    expect(find.byIcon(Icons.alarm), findsNWidgets(2));
-  });
-
-  testWidgets("par défaut, l'agenda affiche aujourd'hui et demain", (
+  testWidgets('masquer un agenda enregistre la sélection et redessine', (
     tester,
   ) async {
-    await _open(tester, FakePlatform(), 'Agenda 2 colonnes');
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Agenda');
+    final before = platform.renders.length;
 
-    expect(find.text("AUJOURD'HUI"), findsOneWidget);
-    expect(find.text('DEMAIN'), findsOneWidget);
-    expect(find.text('Dîner'), findsOneWidget);
-    expect(find.text('18:30 – 22:30 · Turin'), findsOneWidget);
-    expect(find.text('Aucun événement'), findsOneWidget);
+    await tester.ensureVisible(find.text('Personnel'));
+    await tester.tap(find.text('Personnel'));
+    await tester.pumpAndSettle();
+
+    expect(platform.data['agenda_one_column.calendars'], '2');
+    expect(platform.renders.length, greaterThan(before));
+
+    // Tout réactiver revient à « tous les agendas », y compris les futurs.
+    await tester.tap(find.text('Personnel'));
+    await tester.pumpAndSettle();
+    expect(platform.data.containsKey('agenda_one_column.calendars'), isFalse);
+    await tester.pumpWidget(const SizedBox());
   });
 
-  testWidgets("choisir « Aujourd'hui » n'affiche plus demain", (tester) async {
+  testWidgets("choisir « Aujourd'hui » enregistre un seul jour", (
+    tester,
+  ) async {
     final platform = FakePlatform();
     await _open(tester, platform, 'Agenda 2 colonnes');
 
@@ -87,25 +74,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(platform.data['agenda_two_columns.days'], '1');
-    expect(find.text('DEMAIN'), findsNothing);
-  });
-
-  testWidgets('masquer un agenda enregistre la sélection', (tester) async {
-    final platform = FakePlatform();
-    await _open(tester, platform, 'Agenda');
-
-    await tester.ensureVisible(find.text('Personnel'));
-    await tester.tap(find.text('Personnel'));
-    await tester.pumpAndSettle();
-
-    expect(platform.data['agenda_one_column.calendars'], '2');
-    expect(platform.lastPreviewIds, {2});
-    expect(find.text('Dîner'), findsNothing);
-
-    // Tout réactiver revient à « tous les agendas », y compris les futurs.
-    await tester.tap(find.text('Personnel'));
-    await tester.pumpAndSettle();
-    expect(platform.data.containsKey('agenda_one_column.calendars'), isFalse);
+    await tester.pumpWidget(const SizedBox());
   });
 
   testWidgets("sans autorisation, l'écran la demande", (tester) async {
@@ -118,7 +87,7 @@ void main() {
 
     expect(platform.permissionRequests, 1);
     expect(find.text('Personnel'), findsOneWidget);
-    expect(find.text("Autoriser l'accès à l'agenda"), findsNothing);
+    await tester.pumpWidget(const SizedBox());
   });
 
   testWidgets('un refus propose les réglages', (tester) async {
@@ -129,6 +98,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Ouvrir les réglages'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
   });
 
   testWidgets("ouvert depuis un widget, l'écran rend la main au lanceur", (
@@ -140,12 +110,12 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Directement sur les réglages, sans bouton d'épinglage.
     expect(find.text('Agendas'), findsOneWidget);
     expect(find.text("Ajouter à l'écran d'accueil"), findsNothing);
 
     await tester.tap(find.bySemanticsLabel('Retour'));
     await tester.pumpAndSettle();
     expect(platform.finishedConfiguring, 1);
+    await tester.pumpWidget(const SizedBox());
   });
 }

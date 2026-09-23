@@ -1,10 +1,10 @@
+import 'dart:async';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
-import '../platform/models.dart';
-
-/// Aperçus des widgets, dessinés en Flutter avec les mêmes polices, couleurs
-/// et textes que les widgets natifs. Seule la mise en page est dupliquée :
-/// elle doit suivre `res/layout/widget_clock*.xml` et `agenda_*.xml`.
+import '../home_widgets/wux_home_widget.dart';
+import '../platform/wux_platform.dart';
 
 /// Fond sombre derrière un aperçu : le style néon est pensé pour un fond
 /// d'écran foncé.
@@ -28,350 +28,74 @@ class WallpaperFrame extends StatelessWidget {
   }
 }
 
-/// La police mono du système, seule police « technique » qu'un widget accepte.
-const _mono = 'monospace';
-
-/// Le halo : l'ombre sans décalage des widgets natifs, doublée pour l'éclat.
-List<Shadow> _glow(Color color, double radius) => [
-  Shadow(color: color, blurRadius: radius),
-  Shadow(color: color.withValues(alpha: 0.6), blurRadius: radius * 2),
-];
-
-List<BoxShadow> _boxGlow(Color color) => [
-  BoxShadow(color: color, blurRadius: 6),
-  BoxShadow(color: color.withValues(alpha: 0.5), blurRadius: 14),
-];
-
-class _NeonLine extends StatelessWidget {
-  const _NeonLine({
-    required this.color,
-    required this.glow,
-    this.vertical = false,
-  });
-
-  final Color color;
-  final Color glow;
-  final bool vertical;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: vertical ? 2 : double.infinity,
-      height: vertical ? double.infinity : 2,
-      margin: vertical
-          ? const EdgeInsets.symmetric(horizontal: 8)
-          : const EdgeInsets.symmetric(vertical: 6),
-      decoration: BoxDecoration(color: color, boxShadow: _boxGlow(glow)),
-    );
-  }
-}
-
-class _Alarm extends StatelessWidget {
-  const _Alarm({
-    required this.label,
-    required this.palette,
-    required this.size,
-  });
-
-  final String label;
-  final WidgetPalette palette;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          Icons.alarm,
-          size: size * 1.4,
-          color: palette.core,
-          shadows: _glow(palette.glow, 5),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label.toUpperCase(),
-          style: TextStyle(
-            fontFamily: _mono,
-            fontSize: size,
-            color: palette.core,
-            shadows: _glow(palette.glow, 5),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-/// Roboto extra gras, comme le `TextClock` des widgets.
-TextStyle _time(WidgetPalette palette) => TextStyle(
-  fontSize: 96,
-  fontWeight: FontWeight.w800,
-  height: 1,
-  color: palette.core,
-  shadows: _glow(palette.glow, 8),
-);
-
-/// Reproduction de `widget_clock.xml` (grande) et `widget_clock_compact.xml`.
-class ClockWidgetPreview extends StatelessWidget {
-  const ClockWidgetPreview({
+/// Le vrai widget, dessiné par Android (`WidgetPreviews.kt`) et affiché en
+/// image, à l'échelle de la place disponible.
+///
+/// Redessiné quand [revision] change (un réglage vient de bouger) et toutes
+/// les 30 secondes, pour que l'heure et l'état du téléphone restent justes.
+class WidgetPreview extends StatefulWidget {
+  const WidgetPreview({
     super.key,
-    required this.clock,
-    required this.palette,
-    this.compact = false,
+    required this.homeWidget,
+    required this.platform,
+    this.revision = 0,
   });
 
-  final ClockPreview clock;
-  final WidgetPalette palette;
-  final bool compact;
+  final WuxHomeWidget homeWidget;
+  final WuxPlatform platform;
+  final int revision;
+
+  @override
+  State<WidgetPreview> createState() => _WidgetPreviewState();
+}
+
+class _WidgetPreviewState extends State<WidgetPreview> {
+  Uint8List? _image;
+  Timer? _tick;
+
+  @override
+  void initState() {
+    super.initState();
+    _render();
+    _tick = Timer.periodic(const Duration(seconds: 30), (_) => _render());
+  }
+
+  @override
+  void didUpdateWidget(WidgetPreview old) {
+    super.didUpdateWidget(old);
+    if (old.revision != widget.revision ||
+        old.homeWidget != widget.homeWidget) {
+      _render();
+    }
+  }
+
+  @override
+  void dispose() {
+    _tick?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _render() async {
+    final image = await widget.platform.render(
+      widget.homeWidget,
+      widget.homeWidget.previewSize,
+    );
+    if (mounted) setState(() => _image = image);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final dateSize = compact ? 12.0 : 17.0;
-    return SizedBox(
-      height: compact ? 64 : 110,
-      child: Row(
-        children: [
-          Flexible(
-            child: FittedBox(child: Text(clock.time, style: _time(palette))),
-          ),
-          _NeonLine(color: palette.line, glow: palette.glow, vertical: true),
-          IntrinsicWidth(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  (compact ? clock.date : clock.dateStacked).toUpperCase(),
-                  style: TextStyle(
-                    fontFamily: _mono,
-                    fontSize: dateSize,
-                    height: 1.1,
-                    color: palette.core,
-                    shadows: _glow(palette.glow, 5),
-                  ),
-                ),
-                _NeonLine(color: palette.line, glow: palette.glow),
-                if (clock.nextAlarm case final alarm?)
-                  _Alarm(label: alarm, palette: palette, size: dateSize - 1),
-              ],
-            ),
-          ),
-        ],
+    final size = widget.homeWidget.previewSize;
+    final image = _image;
+    return Semantics(
+      image: true,
+      label: 'Aperçu du widget ${widget.homeWidget.title}',
+      child: AspectRatio(
+        aspectRatio: size.width / size.height,
+        child: image == null
+            ? const SizedBox.shrink()
+            : Image.memory(image, fit: BoxFit.contain, gaplessPlayback: true),
       ),
-    );
-  }
-}
-
-/// Reproduction des éléments `agenda_heading`, `agenda_row` et `agenda_note`,
-/// en une colonne : l'aperçu n'a pas la largeur de deux.
-class AgendaWidgetPreview extends StatelessWidget {
-  const AgendaWidgetPreview({
-    super.key,
-    required this.days,
-    required this.palette,
-  });
-
-  final List<AgendaDayPreview> days;
-  final WidgetPalette palette;
-
-  @override
-  Widget build(BuildContext context) {
-    final note = TextStyle(
-      fontFamily: _mono,
-      fontSize: 13,
-      color: palette.line,
-      shadows: _glow(palette.glow, 4),
-    );
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (final day in days) ...[
-                Padding(
-                  padding: const EdgeInsets.only(left: 2, top: 6, bottom: 4),
-                  child: Text(
-                    day.label,
-                    style: TextStyle(
-                      fontFamily: _mono,
-                      fontSize: 17,
-                      letterSpacing: 17 * 0.08,
-                      color: palette.line,
-                      shadows: _glow(palette.glow, 6),
-                    ),
-                  ),
-                ),
-                if (day.events.isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(17, 3, 0, 3),
-                    child: Text('Aucun événement', style: note),
-                  ),
-                for (final event in day.events) _EventRow(event, palette),
-              ],
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _EventRow extends StatelessWidget {
-  const _EventRow(this.event, this.palette);
-
-  final AgendaEventPreview event;
-  final WidgetPalette palette;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 3),
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              width: 3,
-              margin: const EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
-                color: event.color,
-                boxShadow: _boxGlow(event.color),
-              ),
-            ),
-            const SizedBox(width: 6),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    event.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: _mono,
-                      fontSize: 15,
-                      color: palette.core,
-                      shadows: _glow(palette.glow, 4),
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    event.detail,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: _mono,
-                      fontSize: 13,
-                      color: palette.line,
-                      shadows: _glow(palette.glow, 3),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Reproduction de `widget_system*.xml` : des rangées de cases séparées par
-/// des traits.
-class SystemWidgetPreview extends StatelessWidget {
-  const SystemWidgetPreview({
-    super.key,
-    required this.rows,
-    required this.palette,
-  });
-
-  final List<List<SystemTilePreview>> rows;
-  final WidgetPalette palette;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        for (final (r, tiles) in rows.indexed) ...[
-          if (r > 0) _NeonLine(color: palette.line, glow: palette.glow),
-          SizedBox(
-            height: 64,
-            child: Row(
-              children: [
-                for (final (index, tile) in tiles.indexed) ...[
-                  if (index > 0)
-                    _NeonLine(
-                      color: palette.line,
-                      glow: palette.glow,
-                      vertical: true,
-                    ),
-                  Expanded(child: _SystemTile(tile, palette)),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ],
-    );
-  }
-}
-
-class _SystemTile extends StatelessWidget {
-  const _SystemTile(this.tile, this.palette);
-
-  final SystemTilePreview tile;
-  final WidgetPalette palette;
-
-  @override
-  Widget build(BuildContext context) {
-    final small = TextStyle(
-      fontFamily: _mono,
-      fontSize: 10,
-      color: palette.line,
-      shadows: _glow(palette.glow, 3),
-    );
-    final progress = tile.progress;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(tile.label, style: small.copyWith(letterSpacing: 1)),
-        const SizedBox(height: 2),
-        Text(
-          tile.value,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
-            height: 1,
-            color: palette.core,
-            shadows: _glow(palette.glow, 6),
-          ),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          tile.detail.toUpperCase(),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: small,
-        ),
-        const SizedBox(height: 4),
-        Opacity(
-          opacity: progress == null ? 0 : 1,
-          child: SizedBox(
-            height: 4,
-            child: LinearProgressIndicator(
-              value: (progress ?? 0) / 100,
-              color: palette.line,
-              backgroundColor: palette.glow,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

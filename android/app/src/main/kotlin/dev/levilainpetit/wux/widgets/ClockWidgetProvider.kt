@@ -23,7 +23,7 @@ import dev.levilainpetit.wux.R
  * sur deux lignes) et, quand le widget est réduit à une rangée, la compacte
  * (`widget_clock_compact`).
  */
-class ClockWidgetProvider : AppWidgetProvider() {
+class ClockWidgetProvider : AppWidgetProvider(), PreviewableWidget {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
@@ -64,6 +64,9 @@ class ClockWidgetProvider : AppWidgetProvider() {
         val height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, FULL_MIN_HEIGHT.toInt())
         return if (height < FULL_MIN_HEIGHT) compact else full
     }
+
+    override fun preview(context: Context, size: SizeF): RemoteViews =
+        build(context, if (size.height < FULL_MIN_HEIGHT) R.layout.widget_clock_compact else R.layout.widget_clock)
 
     private fun build(context: Context, layout: Int): RemoteViews =
         RemoteViews(context.packageName, layout).also { ClockViews.bind(context, it) }

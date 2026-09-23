@@ -43,8 +43,9 @@ class _AgendaScreenState extends State<AgendaScreen> {
 
   /// `null` : tous les agendas, y compris ceux ajoutés plus tard.
   Set<int>? _selected;
-  WidgetPalette _palette = WidgetPalette.fallback;
-  List<AgendaDayPreview> _preview = const [];
+
+  /// Augmentée à chaque réglage, pour redessiner l'aperçu.
+  int _revision = 0;
 
   /// 1 : aujourd'hui ; 2 : aujourd'hui et demain. Relu par `AgendaSettings.kt`.
   int _days = 2;
@@ -60,14 +61,12 @@ class _AgendaScreenState extends State<AgendaScreen> {
   Future<void> _load() async {
     final permission = await _platform.hasCalendarPermission();
     final canPin = await _platform.canPin();
-    final palette = await _platform.palette();
     final stored = await _platform.read(widget.homeWidget, _calendarsKey);
     final days = await _platform.read(widget.homeWidget, _daysKey);
     if (!mounted) return;
     setState(() {
       _permission = permission;
       _canPin = canPin;
-      _palette = palette;
       _days = days == '1' ? 1 : 2;
       _selected = stored == null
           ? null
@@ -80,16 +79,10 @@ class _AgendaScreenState extends State<AgendaScreen> {
     final calendars = await _platform.calendars();
     if (!mounted) return;
     setState(() => _calendars = calendars);
-    await _refreshPreview();
+    _refreshPreview();
   }
 
-  Future<void> _refreshPreview() async {
-    final preview = await _platform.agendaPreview(
-      days: _days,
-      calendarIds: _selected,
-    );
-    if (mounted) setState(() => _preview = preview);
-  }
+  void _refreshPreview() => setState(() => _revision++);
 
   Future<void> _requestPermission() async {
     final granted = await _platform.requestCalendarPermission();
@@ -116,13 +109,13 @@ class _AgendaScreenState extends State<AgendaScreen> {
       _calendarsKey,
       all ? null : selected.join(','),
     );
-    await _refreshPreview();
+    _refreshPreview();
   }
 
   Future<void> _setDays(int days) async {
     setState(() => _days = days);
     await _platform.write(widget.homeWidget, _daysKey, '$days');
-    await _refreshPreview();
+    _refreshPreview();
   }
 
   @override
@@ -139,7 +132,11 @@ class _AgendaScreenState extends State<AgendaScreen> {
               children: [
                 WallpaperFrame(
                   child: _permission ?? false
-                      ? AgendaWidgetPreview(days: _preview, palette: _palette)
+                      ? WidgetPreview(
+                          homeWidget: widget.homeWidget,
+                          platform: _platform,
+                          revision: _revision,
+                        )
                       : const _PreviewPlaceholder(),
                 ),
                 const IuxGap.between(),
