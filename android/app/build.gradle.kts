@@ -1,5 +1,7 @@
 plugins {
     id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
@@ -19,7 +21,8 @@ android {
         applicationId = "dev.levilainpetit.wux"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        // 26 : java.time sans désucrage, et épinglage de widget (API 26).
+        minSdk = 26
         targetSdk = flutter.targetSdkVersion
         // Uses the version code from pubspec.yaml. When using split APKs, 1000 * ABI_VERSION
         // is added automatically by Flutter. (https://developer.android.com/studio/build/configure-apk-splits#configure-APK-versions)
@@ -27,6 +30,10 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+    }
+
+    buildFeatures {
+        compose = true
     }
 
     buildTypes {
@@ -46,4 +53,11 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    implementation("androidx.glance:glance-appwidget:1.2.0")
+    implementation("androidx.datastore:datastore-preferences-core:1.1.1")
+    implementation("androidx.work:work-runtime-ktx:2.11.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
 }

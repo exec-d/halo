@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Lecture seule : les widgets agenda consultent, ils ne modifient rien. -->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
     <application
         android:label="WUX"
         android:name="${applicationName}"
@@ -27,15 +29,37 @@
         </activity>
         <!-- Widgets d'écran d'accueil : un <receiver> par widget. -->
         <receiver
-            android:name=".widgets.HelloWidgetProvider"
+            android:name=".widgets.ClockWidgetProvider"
             android:exported="false"
-            android:label="@string/widget_hello_label">
+            android:label="@string/widget_clock_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_hello_info" />
+                android:resource="@xml/widget_clock_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.TodayAgendaWidgetReceiver"
+            android:exported="false"
+            android:label="@string/widget_agenda_today_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_agenda_today_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.TwoDayAgendaWidgetReceiver"
+            android:exported="false"
+            android:label="@string/widget_agenda_two_days_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_agenda_two_days_info" />
         </receiver>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
@@ -49,6 +73,11 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <!-- Ouvrir un événement ou un jour dans l'application Agenda. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="content" android:host="com.android.calendar"/>
+        </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="widget_hello_label">Message</string>
-    <string name="widget_hello_description">Affiche un court message sur l\'écran d\'accueil.</string>
-    <string name="widget_hello_placeholder">Touchez pour choisir un message</string>
+    <string name="widget_clock_label">Horloge</string>
+    <string name="widget_clock_description">L\'heure et la date. Touchez pour ouvrir l\'horloge.</string>
+    <!-- Motif android.text.format.DateFormat, partagé par le widget et l'aperçu. -->
+    <string name="clock_date_format" translatable="false">EEEE d MMMM</string>
+
+    <string name="widget_agenda_today_label">Agenda du jour</string>
+    <string name="widget_agenda_today_description">Les événements d\'aujourd\'hui.</string>
+    <string name="widget_agenda_two_days_label">Aujourd\'hui et demain</string>
+    <string name="widget_agenda_two_days_description">Les événements d\'aujourd\'hui et de demain.</string>
+
+    <string name="agenda_today">Aujourd\'hui</string>
+    <string name="agenda_tomorrow">Demain</string>
+    <string name="agenda_all_day">Toute la journée</string>
+    <string name="agenda_range">De %1$s à %2$s</string>
+    <string name="agenda_from">À partir de %1$s</string>
+    <string name="agenda_until">Jusqu\'à %1$s</string>
+    <string name="agenda_untitled">(Sans titre)</string>
+    <string name="agenda_empty">Aucun événement</string>
+    <string name="agenda_permission_missing">Touchez pour autoriser WUX à lire votre agenda.</string>
 </resources>

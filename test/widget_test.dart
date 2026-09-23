@@ -1,61 +1,100 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wux/src/app.dart';
-import 'package:wux/src/home_widgets/home_widget_bridge.dart';
-import 'package:wux/src/home_widgets/wux_home_widget.dart';
 
-class _FakeBridge implements HomeWidgetBridge {
-  _FakeBridge({this.pinSupported = true});
+import 'fake_platform.dart';
 
-  final bool pinSupported;
-  final data = <String, String>{};
-  final pinned = <String>[];
-
-  @override
-  Future<String?> read(WuxHomeWidget widget, String name) async =>
-      data[widget.key(name)];
-
-  @override
-  Future<void> write(WuxHomeWidget widget, String name, String value) async =>
-      data[widget.key(name)] = value;
-
-  @override
-  Future<bool> canPin() async => pinSupported;
-
-  @override
-  Future<void> pin(WuxHomeWidget widget) async => pinned.add(widget.id);
+Future<void> _open(
+  WidgetTester tester,
+  FakePlatform platform,
+  String title,
+) async {
+  await tester.pumpWidget(WuxApp(platform: platform));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text(title));
+  await tester.pumpAndSettle();
 }
 
 void main() {
-  testWidgets('le message saisi est transmis au widget', (tester) async {
-    final bridge = _FakeBridge();
-    await tester.pumpWidget(WuxApp(bridge: bridge));
+  testWidgets('le catalogue liste les trois widgets', (tester) async {
+    await tester.pumpWidget(WuxApp(platform: FakePlatform()));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(EditableText), 'Bonjour');
-    await tester.tap(find.text('Appliquer'));
-    await tester.pumpAndSettle();
-
-    expect(bridge.data['hello.message'], 'Bonjour');
-    expect(find.text('Widget mis à jour'), findsWidgets);
+    expect(find.text('Horloge'), findsOneWidget);
+    expect(find.text('Agenda du jour'), findsOneWidget);
+    expect(find.text("Aujourd'hui et demain"), findsOneWidget);
   });
 
-  testWidgets("le bouton d'épinglage suit le support du lanceur", (
+  testWidgets("l'horloge montre l'heure et la date natives", (tester) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Horloge');
+
+    expect(find.text('09:41'), findsOneWidget);
+    expect(find.text('mercredi 23 septembre'), findsOneWidget);
+
+    await tester.tap(find.text("Ajouter à l'écran d'accueil"));
+    expect(platform.pinned, ['clock']);
+  });
+
+  testWidgets("l'agenda à deux jours affiche aujourd'hui et demain", (
     tester,
   ) async {
-    final bridge = _FakeBridge(pinSupported: false);
-    await tester.pumpWidget(WuxApp(bridge: bridge));
-    await tester.pumpAndSettle();
+    await _open(tester, FakePlatform(), "Aujourd'hui et demain");
 
-    expect(find.text("Ajouter à l'accueil"), findsNothing);
+    expect(find.text("AUJOURD'HUI"), findsOneWidget);
+    expect(find.text('DEMAIN'), findsOneWidget);
+    expect(find.text('Dîner'), findsOneWidget);
+    expect(find.text('Aucun événement'), findsOneWidget);
   });
 
-  testWidgets("l'épinglage vise le bon widget", (tester) async {
-    final bridge = _FakeBridge();
-    await tester.pumpWidget(WuxApp(bridge: bridge));
+  testWidgets('masquer un agenda enregistre la sélection', (tester) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Agenda du jour');
+
+    await tester.ensureVisible(find.text('Personnel'));
+    await tester.tap(find.text('Personnel'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text("Ajouter à l'accueil"));
-    expect(bridge.pinned, ['hello']);
+    expect(platform.data['agenda_today.calendars'], '2');
+    expect(platform.lastPreviewIds, {2});
+    expect(find.text('Dîner'), findsNothing);
+
+    // Tout réactiver revient à « tous les agendas », y compris les futurs.
+    await tester.tap(find.text('Personnel'));
+    await tester.pumpAndSettle();
+    expect(platform.data.containsKey('agenda_today.calendars'), isFalse);
+  });
+
+  testWidgets('le fond choisi est transmis au widget', (tester) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Agenda du jour');
+
+    await tester.ensureVisible(find.text('Couleurs du fond d’écran'));
+    await tester.tap(find.text('Couleurs du fond d’écran'));
+    await tester.pumpAndSettle();
+
+    expect(platform.data['agenda_today.background'], 'surface');
+  });
+
+  testWidgets("sans autorisation, l'écran la demande", (tester) async {
+    final platform = FakePlatform(permission: false);
+    await _open(tester, platform, 'Agenda du jour');
+
+    expect(find.text('Personnel'), findsNothing);
+    await tester.tap(find.text("Autoriser l'accès à l'agenda"));
+    await tester.pumpAndSettle();
+
+    expect(platform.permissionRequests, 1);
+    expect(find.text('Personnel'), findsOneWidget);
+    expect(find.text("Autoriser l'accès à l'agenda"), findsNothing);
+  });
+
+  testWidgets('un refus propose les réglages', (tester) async {
+    final platform = FakePlatform(permission: false, grantOnRequest: false);
+    await _open(tester, platform, 'Agenda du jour');
+
+    await tester.tap(find.text("Autoriser l'accès à l'agenda"));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Ouvrir les réglages'), findsOneWidget);
   });
 }

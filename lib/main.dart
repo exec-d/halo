@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'src/app.dart';
-import 'src/home_widgets/home_widget_bridge.dart';
+import 'src/platform/wux_platform.dart';
 
 void main() {
-  runApp(WuxApp(bridge: PluginHomeWidgetBridge()));
+  runApp(WuxApp(platform: AndroidWuxPlatform()));
 }
