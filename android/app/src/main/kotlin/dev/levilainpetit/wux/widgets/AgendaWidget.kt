@@ -19,6 +19,8 @@ import androidx.glance.LocalContext
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.appWidgetBackground
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
@@ -142,9 +144,11 @@ private fun AgendaContent(state: AgendaState) {
             secondary = ColorProvider(R.color.agenda_on_surface_variant),
         )
     }
-    // Pas de cornerRadius : il arrondit les angles et rogne aussi le contenu
-    // qui défile dessous.
-    var modifier = GlanceModifier.fillMaxSize()
+    // Depuis Android 12, le lanceur arrondit lui-même les angles d'un widget
+    // et rogne ce qui dépasse, sauf si le widget déclare sa propre forme : une
+    // vue `@android:id/background` qui découpe déjà sur son contour. On lui
+    // donne un contour droit (rayon 0), ce qui désactive l'arrondi imposé.
+    var modifier = GlanceModifier.fillMaxSize().appWidgetBackground().cornerRadius(0.dp)
     if (state.background == AgendaBackground.SURFACE) {
         modifier = modifier.background(ColorProvider(R.color.agenda_surface))
     }
