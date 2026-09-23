@@ -100,4 +100,12 @@ class FakePlatform implements WuxPlatform {
 
   @override
   Future<WidgetPalette> palette() async => WidgetPalette.fallback;
+
+  var finishedConfiguring = 0;
+
+  @override
+  Future<WuxHomeWidget?> configuringWidget() async => null;
+
+  @override
+  Future<void> finishConfiguring() async => finishedConfiguring++;
 }

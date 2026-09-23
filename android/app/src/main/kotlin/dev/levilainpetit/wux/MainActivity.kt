@@ -1,6 +1,7 @@
 package dev.levilainpetit.wux
 
 import android.Manifest
+import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -27,7 +28,7 @@ import java.util.Date
  * l'application a besoin et que `home_widget` ne couvre pas (calendrier,
  * aperçus, rafraîchissement des widgets Glance).
  */
-class MainActivity : FlutterActivity() {
+open class MainActivity : FlutterActivity() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var pendingPermission: MethodChannel.Result? = null
@@ -100,6 +101,12 @@ class MainActivity : FlutterActivity() {
                     "clockAccent" to getColor(R.color.clock_accent),
                 ),
             )
+            "widgetProvider" -> {
+                // Classe Kotlin du widget en cours de configuration, pour que
+                // Dart retrouve son écran dans le catalogue.
+                val id = call.argument<Int>("id") ?: AppWidgetManager.INVALID_APPWIDGET_ID
+                result.success(AppWidgetManager.getInstance(this).getAppWidgetInfo(id)?.provider?.className)
+            }
             "refreshWidgets" -> scope.launch {
                 AgendaRefresh.refreshAll(applicationContext)
                 AgendaRefresh.schedule(applicationContext)

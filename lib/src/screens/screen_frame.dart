@@ -32,7 +32,8 @@ class ScreenFrame extends StatelessWidget {
             leading: canGoBack
                 ? IuxAppBarLeading.back(
                     label: 'Retour',
-                    onActivate: () => Navigator.of(context).pop(),
+                    // maybePop : laisse un PopScope décider (écran de configuration).
+                    onActivate: () => Navigator.of(context).maybePop(),
                   )
                 : null,
           ),

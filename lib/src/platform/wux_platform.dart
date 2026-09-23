@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:home_widget/home_widget.dart';
 
+import '../home_widgets/catalog.dart';
 import '../home_widgets/wux_home_widget.dart';
 import 'models.dart';
 
@@ -41,6 +42,12 @@ abstract interface class WuxPlatform {
   Future<ClockPreview> clockPreview();
 
   Future<WidgetPalette> palette();
+
+  /// Widget dont le lanceur a ouvert les réglages, ou `null`.
+  Future<WuxHomeWidget?> configuringWidget();
+
+  /// Rend la main au lanceur après les réglages.
+  Future<void> finishConfiguring();
 }
 
 /// Implémentation réelle : `home_widget` pour le stockage et l'épinglage, le
@@ -128,4 +135,20 @@ class AndroidWuxPlatform implements WuxPlatform {
     final map = await _channel.invokeMapMethod<Object?, Object?>('palette');
     return map == null ? WidgetPalette.fallback : WidgetPalette.fromMap(map);
   }
+
+  @override
+  Future<WuxHomeWidget?> configuringWidget() async {
+    final id = await HomeWidget.initiallyLaunchedFromHomeWidgetConfigure();
+    if (id == null) return null;
+    final provider = await _channel.invokeMethod<String>('widgetProvider', {
+      'id': int.parse(id),
+    });
+    for (final widget in wuxHomeWidgets) {
+      if (widget.androidProvider == provider) return widget;
+    }
+    return null;
+  }
+
+  @override
+  Future<void> finishConfiguring() => HomeWidget.finishHomeWidgetConfigure();
 }

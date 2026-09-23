@@ -15,10 +15,14 @@ class AgendaScreen extends StatefulWidget {
     super.key,
     required this.homeWidget,
     required this.platform,
+    this.allowPin = true,
   });
 
   final WuxHomeWidget homeWidget;
   final WuxPlatform platform;
+
+  /// Faux quand l'écran est ouvert depuis un widget déjà posé.
+  final bool allowPin;
 
   @override
   State<AgendaScreen> createState() => _AgendaScreenState();
@@ -141,7 +145,7 @@ class _AgendaScreenState extends State<AgendaScreen> {
                 ),
                 const IuxGap.between(),
                 PinButton(
-                  visible: _canPin,
+                  visible: _canPin && widget.allowPin,
                   onPin: () => _platform.pin(widget.homeWidget),
                 ),
               ],

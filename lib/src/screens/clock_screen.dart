@@ -13,10 +13,14 @@ class ClockScreen extends StatefulWidget {
     super.key,
     required this.homeWidget,
     required this.platform,
+    this.allowPin = true,
   });
 
   final WuxHomeWidget homeWidget;
   final WuxPlatform platform;
+
+  /// Faux quand l'écran est ouvert depuis un widget déjà posé.
+  final bool allowPin;
 
   @override
   State<ClockScreen> createState() => _ClockScreenState();
@@ -76,7 +80,7 @@ class _ClockScreenState extends State<ClockScreen> {
             ),
             const IuxGap.between(),
             PinButton(
-              visible: _canPin,
+              visible: _canPin && widget.allowPin,
               onPin: () => widget.platform.pin(widget.homeWidget),
             ),
           ],

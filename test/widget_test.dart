@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wux/src/app.dart';
+import 'package:wux/src/home_widgets/catalog.dart';
 
 import 'fake_platform.dart';
 
@@ -106,5 +107,23 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Ouvrir les réglages'), findsOneWidget);
+  });
+
+  testWidgets("ouvert depuis un widget, l'écran rend la main au lanceur", (
+    tester,
+  ) async {
+    final platform = FakePlatform();
+    await tester.pumpWidget(
+      WuxApp(platform: platform, configuring: todayAgendaWidget),
+    );
+    await tester.pumpAndSettle();
+
+    // Directement sur les réglages, sans bouton d'épinglage.
+    expect(find.text('Agendas'), findsOneWidget);
+    expect(find.text("Ajouter à l'écran d'accueil"), findsNothing);
+
+    await tester.tap(find.bySemanticsLabel('Retour'));
+    await tester.pumpAndSettle();
+    expect(platform.finishedConfiguring, 1);
   });
 }
