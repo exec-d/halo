@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Lecture seule : les widgets agenda consultent, ils ne modifient rien. -->
     <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <!-- Certaines applications Horloge l'exigent pour s'ouvrir depuis le widget. -->
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <application
         android:label="WUX"
         android:name="${applicationName}"
