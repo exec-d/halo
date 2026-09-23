@@ -113,6 +113,28 @@ const sunMoonWidget = WuxHomeWidget(
   previewSize: Size(340, 72),
 );
 
+const rainWidget = WuxHomeWidget(
+  id: 'rain',
+  kind: WuxWidgetKind.simple,
+  title: 'Pluie',
+  description:
+      'Si la pluie arrive et quand, puis les probabilités des 12 prochaines '
+      'heures, au lieu choisi dans Météo.',
+  androidProvider: '$_androidPackage.RainWidget',
+  previewSize: Size(340, 150),
+);
+
+const allergyWidget = WuxHomeWidget(
+  id: 'allergy',
+  kind: WuxWidgetKind.simple,
+  title: 'Allergies',
+  description:
+      'Graminées, bouleau, aulne, olivier, armoise, ambroisie et qualité de '
+      "l'air, au lieu choisi dans Météo. Pollens : Europe seulement.",
+  androidProvider: '$_androidPackage.AllergyWidget',
+  previewSize: Size(340, 190),
+);
+
 /// Tous les widgets proposés par l'application.
 const wuxHomeWidgets = <WuxHomeWidget>[
   clockWidget,
@@ -126,4 +148,6 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   monthWidget,
   weatherWidget,
   sunMoonWidget,
+  rainWidget,
+  allergyWidget,
 ];

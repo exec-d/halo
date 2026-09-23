@@ -10,6 +10,8 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import dev.levilainpetit.wux.widgets.AllergyWidget
+import dev.levilainpetit.wux.widgets.RainWidget
 import dev.levilainpetit.wux.widgets.SunMoonWidget
 import dev.levilainpetit.wux.widgets.WeatherWidget
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +46,8 @@ object WeatherRefresh {
     fun redraw(context: Context) {
         WeatherWidget().renderAll(context)
         SunMoonWidget().renderAll(context)
+        RainWidget().renderAll(context)
+        AllergyWidget().renderAll(context)
     }
 }
 

@@ -22,6 +22,8 @@ halo lumineux. Les couleurs suivent l'accent du fond d'écran
 | Mois (4x3) | Le mois en cours, jours avec événements marqués | Ouvre le jour dans l'agenda |
 | Météo (4x2) | Conditions actuelles, six prochaines heures (Open-Meteo) | Ouvre WUX |
 | Soleil et Lune (4x1) | Lever, coucher, durée du jour, phase de la lune | Ouvre WUX |
+| Pluie (4x2) | Pluie en cours ou à venir, probabilités sur 12 h | Ouvre WUX |
+| Allergies (4x2) | Six pollens, qualité de l'air (Open-Meteo, Europe) | Ouvre WUX |
 
 La météo vient d'[Open-Meteo](https://open-meteo.com) (gratuit, sans clé),
 rafraîchie chaque heure par WorkManager quand le réseau est là. Le lieu se

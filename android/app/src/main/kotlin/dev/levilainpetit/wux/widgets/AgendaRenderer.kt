@@ -32,9 +32,9 @@ object AgendaRenderer {
     private const val TWO_COLUMNS_MIN_WIDTH = 220f
 
     // Hauteurs estimées (dp à 100 % de texte) ; suivre les mises en page agenda_*.
-    private const val HEADING = 28f
-    private const val ROW = 41f
-    private const val NOTE = 20f
+    private const val HEADING = 24f
+    private const val ROW = 35f
+    private const val NOTE = 17f
 
     private sealed interface Item {
         val height: Float

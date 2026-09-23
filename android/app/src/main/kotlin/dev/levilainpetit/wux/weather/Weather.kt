@@ -20,6 +20,26 @@ data class Hour(val time: LocalDateTime, val temperature: Double, val code: Int,
 /** Un jour de prévision. */
 data class Day(val date: LocalDate, val code: Int, val max: Double, val min: Double, val sunrise: LocalTime?, val sunset: LocalTime?)
 
+/** Une heure de pluie : probabilité (%) et cumul (mm). */
+data class RainHour(val time: LocalDateTime, val probability: Int, val millimeters: Double)
+
+/** Pollens (grains/m³) et indice européen de qualité de l'air, par Open-Meteo. */
+data class Air(val aqi: Int?, val pollens: Map<Pollen, Double>)
+
+/** Les pollens suivis, avec leurs seuils (grains/m³) faible, moyen, élevé, très élevé. */
+enum class Pollen(val key: String, val label: Int, val thresholds: DoubleArray) {
+    GRASS("grass_pollen", R.string.pollen_grass, doubleArrayOf(1.0, 5.0, 25.0, 100.0)),
+    BIRCH("birch_pollen", R.string.pollen_birch, doubleArrayOf(1.0, 10.0, 50.0, 500.0)),
+    ALDER("alder_pollen", R.string.pollen_alder, doubleArrayOf(1.0, 10.0, 50.0, 500.0)),
+    OLIVE("olive_pollen", R.string.pollen_olive, doubleArrayOf(1.0, 10.0, 50.0, 200.0)),
+    MUGWORT("mugwort_pollen", R.string.pollen_mugwort, doubleArrayOf(1.0, 10.0, 30.0, 100.0)),
+    RAGWEED("ragweed_pollen", R.string.pollen_ragweed, doubleArrayOf(1.0, 5.0, 20.0, 50.0)),
+    ;
+
+    /** Niveau 0 (aucun) à 4 (très élevé). */
+    fun level(value: Double) = thresholds.count { value >= it }
+}
+
 /** Les prévisions telles que le widget les affiche. */
 data class Forecast(
     val fetchedAt: Long,
@@ -31,6 +51,10 @@ data class Forecast(
     val wind: Double,
     val hours: List<Hour>,
     val days: List<Day>,
+    /** Les 12 prochaines heures. */
+    val rain: List<RainHour> = emptyList(),
+    /** Les 8 prochains quarts d'heure (mm), quand la zone en a. */
+    val rainSoon: List<Double> = emptyList(),
 )
 
 /**
@@ -43,6 +67,7 @@ object Weather {
     private const val PLACE = "weather.place"
     private const val CACHE = "weather.cache"
     private const val FETCHED = "weather.fetched_at"
+    private const val AIR = "weather.air"
 
     fun place(context: Context): Place? {
         val parts = HomeWidgetPlugin.getData(context).getString(PLACE, null)?.split('|') ?: return null
@@ -62,15 +87,35 @@ object Weather {
         val place = place(context) ?: return false
         val url = "https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}" +
             "&current=temperature_2m,apparent_temperature,weather_code,is_day,wind_speed_10m" +
-            "&hourly=temperature_2m,weather_code,is_day" +
+            "&hourly=temperature_2m,weather_code,is_day,precipitation_probability,precipitation" +
+            "&minutely_15=precipitation&forecast_minutely_15=12" +
             "&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset" +
             "&timezone=auto&forecast_days=4"
         val body = get(url) ?: return false
-        HomeWidgetPlugin.getData(context).edit()
+        // Pollens et qualité de l'air : service distinct, facultatif (hors
+        // Europe, pas de pollens).
+        val air = get(
+            "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${place.latitude}" +
+                "&longitude=${place.longitude}&timezone=auto" +
+                "&current=european_aqi," + Pollen.entries.joinToString(",") { it.key },
+        )
+        val editor = HomeWidgetPlugin.getData(context).edit()
             .putString(CACHE, body)
             .putLong(FETCHED, System.currentTimeMillis())
-            .apply()
+        if (air != null) editor.putString(AIR, air)
+        editor.apply()
         return true
+    }
+
+    fun air(context: Context): Air? {
+        val json = HomeWidgetPlugin.getData(context).getString(AIR, null) ?: return null
+        return runCatching {
+            val current = JSONObject(json).getJSONObject("current")
+            Air(
+                aqi = if (current.isNull("european_aqi")) null else current.getDouble("european_aqi").toInt(),
+                pollens = Pollen.entries.filter { !current.isNull(it.key) }.associateWith { current.getDouble(it.key) },
+            )
+        }.getOrNull()
     }
 
     fun forecast(context: Context): Forecast? {
@@ -108,6 +153,23 @@ object Weather {
                 hourly.getJSONArray("is_day").getInt(i) == 1,
             )
         }.filter { it.time.isAfter(now) }.take(6)
+        val probabilities = hourly.optJSONArray("precipitation_probability")
+        val amounts = hourly.optJSONArray("precipitation")
+        val rain = (0 until times.length()).mapNotNull { i ->
+            val time = LocalDateTime.parse(times.getString(i))
+            // L'heure en cours compte : elle commence avant « maintenant ».
+            if (time.isBefore(now.minusHours(1)) || probabilities == null || amounts == null) return@mapNotNull null
+            RainHour(time, probabilities.optInt(i, 0), amounts.optDouble(i, 0.0))
+        }.filter { !it.time.plusHours(1).isBefore(now) }.take(12)
+        val quarters = root.optJSONObject("minutely_15")
+        val rainSoon = quarters?.let { q ->
+            val qTimes = q.getJSONArray("time")
+            val qRain = q.getJSONArray("precipitation")
+            (0 until qTimes.length())
+                .filter { !LocalDateTime.parse(qTimes.getString(it)).plusMinutes(15).isBefore(now) }
+                .map { qRain.optDouble(it, 0.0) }
+                .take(8)
+        }.orEmpty()
         val daily = root.getJSONObject("daily")
         val dates = daily.getJSONArray("time")
         val days = (0 until dates.length()).map { i ->
@@ -130,6 +192,8 @@ object Weather {
             wind = current.getDouble("wind_speed_10m"),
             hours = hours,
             days = days,
+            rain = rain,
+            rainSoon = rainSoon,
         )
     }
 

@@ -34,9 +34,9 @@
             android:shadowColor="@color/clock_glow"
         android:shadowDx="0"
         android:shadowDy="0"
-            android:shadowRadius="12"
+            android:shadowRadius="10"
             android:textColor="@color/clock_core"
-            android:textSize="15sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/agenda_row_detail"
@@ -53,6 +53,6 @@
         android:shadowDy="0"
             android:shadowRadius="10"
             android:textColor="@color/clock_line"
-            android:textSize="13sp" />
+            android:textSize="11sp" />
     </LinearLayout>
 </LinearLayout>

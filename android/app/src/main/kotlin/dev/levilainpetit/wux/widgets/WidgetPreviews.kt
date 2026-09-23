@@ -44,6 +44,8 @@ object WidgetPreviews {
         "month" -> MonthWidget()
         "weather" -> WeatherWidget()
         "sun_moon" -> SunMoonWidget()
+        "rain" -> RainWidget()
+        "allergy" -> AllergyWidget()
         else -> null
     }
 

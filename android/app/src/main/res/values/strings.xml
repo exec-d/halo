@@ -95,6 +95,41 @@
         <item>Dernier croissant</item>
     </string-array>
 
+    <string name="widget_rain_label">Pluie</string>
+    <string name="widget_rain_description">La pluie qui arrive, et les 12 prochaines heures.</string>
+    <string name="rain_now">Il pleut</string>
+    <string name="rain_in_minutes">Pluie dans %1$d min</string>
+    <string name="rain_at">Pluie probable à %1$s (%2$d %%)</string>
+    <string name="rain_none">Pas de pluie d\'ici %1$d h</string>
+    <string name="rain_detail">Cumul 12 h %1$s mm · max %2$d %%</string>
+    <string name="widget_allergy_label">Allergies</string>
+    <string name="widget_allergy_description">Six pollens et la qualité de l\'air.</string>
+    <string name="pollen_grass">Graminées</string>
+    <string name="pollen_birch">Bouleau</string>
+    <string name="pollen_alder">Aulne</string>
+    <string name="pollen_olive">Olivier</string>
+    <string name="pollen_mugwort">Armoise</string>
+    <string name="pollen_ragweed">Ambroisie</string>
+    <string name="pollen_grains">%1$d grains/m³</string>
+    <string name="pollen_highest">Pollens : %1$s</string>
+    <string name="pollen_unavailable">Pollens indisponibles ici</string>
+    <string name="aqi">Qualité de l\'air %1$s · %2$d</string>
+    <string-array name="pollen_levels">
+        <item>Aucun</item>
+        <item>Faible</item>
+        <item>Moyen</item>
+        <item>Élevé</item>
+        <item>Très élevé</item>
+    </string-array>
+    <string-array name="aqi_levels">
+        <item>bonne</item>
+        <item>correcte</item>
+        <item>moyenne</item>
+        <item>médiocre</item>
+        <item>très médiocre</item>
+        <item>mauvaise</item>
+    </string-array>
+
     <!-- Aperçus de la liste des widgets. -->
     <string name="sample_alarm">jeu. 07:00</string>
     <string name="sample_countdown">Vacances</string>

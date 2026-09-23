@@ -15,4 +15,4 @@
         android:shadowDy="0"
     android:shadowRadius="10"
     android:textColor="@color/clock_line"
-    android:textSize="13sp" />
+    android:textSize="11sp" />

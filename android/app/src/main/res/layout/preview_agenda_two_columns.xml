@@ -29,7 +29,7 @@
                 android:shadowDy="0"
             android:shadowRadius="16"
             android:textColor="@color/clock_line"
-            android:textSize="17sp" />
+            android:textSize="14sp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="12"
                     android:textColor="@color/clock_core"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:text="Toute la journée"
@@ -81,7 +81,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="10"
                     android:textColor="@color/clock_line"
-                    android:textSize="13sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -118,7 +118,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="12"
                     android:textColor="@color/clock_core"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:text="08:20 – 16:30"
@@ -135,7 +135,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="10"
                     android:textColor="@color/clock_line"
-                    android:textSize="13sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -172,7 +172,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="12"
                     android:textColor="@color/clock_core"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:text="11:50 – 12:20"
@@ -189,7 +189,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="10"
                     android:textColor="@color/clock_line"
-                    android:textSize="13sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -242,7 +242,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="12"
                     android:textColor="@color/clock_core"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:text="12:45 – 14:00"
@@ -259,7 +259,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="10"
                     android:textColor="@color/clock_line"
-                    android:textSize="13sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -296,7 +296,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="12"
                     android:textColor="@color/clock_core"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:text="17:00 – 18:00"
@@ -313,7 +313,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="10"
                     android:textColor="@color/clock_line"
-                    android:textSize="13sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -350,7 +350,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="12"
                     android:textColor="@color/clock_core"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:text="16:30 – 17:30"
@@ -367,7 +367,7 @@
                 android:shadowDy="0"
                     android:shadowRadius="10"
                     android:textColor="@color/clock_line"
-                    android:textSize="13sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
