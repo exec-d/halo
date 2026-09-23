@@ -31,6 +31,18 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        // Clé commune à toutes les builds (app/debug.keystore, mots de passe
+        // standards d'Android pour le debug). Sans elle, chaque exécution de
+        // la CI signait avec une clé neuve, et Android refusait la mise à jour.
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

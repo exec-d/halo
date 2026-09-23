@@ -11,4 +11,7 @@ GeneratedPluginRegistrant.java
 # See https://flutter.dev/to/reference-keystore
 key.properties
 **/*.keystore
+# Clé de debug partagée : toutes les builds de CI signent pareil, donc un APK
+# s'installe par-dessus le précédent. Elle ne sert pas à publier.
+!/app/debug.keystore
 **/*.jks
