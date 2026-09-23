@@ -1,0 +1,1336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu dans la liste des widgets du lanceur, valeurs d'exemple. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/agenda_padding">
+
+    <TextView
+        android:text="SEPTEMBRE 2026"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="2dp"
+        android:paddingBottom="4dp"
+        android:fontFamily="monospace"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.08"
+        android:maxLines="1"
+        android:shadowColor="@color/clock_glow"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="16"
+        android:textColor="@color/clock_line"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:text="L"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="8"
+                android:textAllCaps="true"
+                android:textColor="@color/clock_line"
+                android:textSize="11sp" />
+            <TextView
+                android:text="M"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="8"
+                android:textAllCaps="true"
+                android:textColor="@color/clock_line"
+                android:textSize="11sp" />
+            <TextView
+                android:text="M"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="8"
+                android:textAllCaps="true"
+                android:textColor="@color/clock_line"
+                android:textSize="11sp" />
+            <TextView
+                android:text="J"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="8"
+                android:textAllCaps="true"
+                android:textColor="@color/clock_line"
+                android:textSize="11sp" />
+            <TextView
+                android:text="V"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="8"
+                android:textAllCaps="true"
+                android:textColor="@color/clock_line"
+                android:textSize="11sp" />
+            <TextView
+                android:text="S"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="8"
+                android:textAllCaps="true"
+                android:textColor="@color/clock_line"
+                android:textSize="11sp" />
+            <TextView
+                android:text="D"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:shadowColor="@color/clock_glow"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="8"
+                android:textAllCaps="true"
+                android:textColor="@color/clock_line"
+                android:textSize="11sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_glow"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                android:background="@drawable/month_today"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="18"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="800"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="visible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_core"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_glow"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_glow"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_glow"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:minWidth="26dp"
+                    android:paddingVertical="2dp"
+                    android:shadowColor="@color/clock_glow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:textColor="@color/clock_glow"
+                    android:textFontWeight="500"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="1dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/agenda_dot"
+                    android:tint="@color/clock_line" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

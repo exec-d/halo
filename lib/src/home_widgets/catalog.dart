@@ -51,6 +51,46 @@ const advancedSystemWidget = WuxHomeWidget(
   previewSize: Size(340, 150),
 );
 
+const worldClockWidget = WuxHomeWidget(
+  id: 'world_clock',
+  kind: WuxWidgetKind.worldClock,
+  title: 'Fuseaux horaires',
+  description: "L'heure de trois villes, sur une rangée.",
+  androidProvider: '$_androidPackage.WorldClockWidget',
+  previewSize: Size(340, 80),
+);
+
+const countdownWidget = WuxHomeWidget(
+  id: 'countdown',
+  kind: WuxWidgetKind.countdown,
+  title: 'Compte à rebours',
+  description: "Les jours jusqu'à une date qui compte.",
+  androidProvider: '$_androidPackage.CountdownWidget',
+  previewSize: Size(280, 72),
+);
+
+const controlsWidget = WuxHomeWidget(
+  id: 'controls',
+  kind: WuxWidgetKind.simple,
+  title: 'Contrôles',
+  description:
+      'Lampe torche en un geste ; Wi-Fi, Bluetooth, son et appareil photo '
+      'à portée de doigt.',
+  androidProvider: '$_androidPackage.ControlsWidget',
+  previewSize: Size(340, 72),
+);
+
+const monthWidget = WuxHomeWidget(
+  id: 'month',
+  kind: WuxWidgetKind.simple,
+  title: 'Mois',
+  description:
+      'Le mois en cours ; un point sous chaque jour qui a un événement. '
+      "Il lit l'agenda : autorisez-le depuis un widget Agenda.",
+  androidProvider: '$_androidPackage.MonthWidget',
+  previewSize: Size(340, 250),
+);
+
 /// Tous les widgets proposés par l'application.
 const wuxHomeWidgets = <WuxHomeWidget>[
   clockWidget,
@@ -58,4 +98,8 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   twoColumnAgendaWidget,
   systemWidget,
   advancedSystemWidget,
+  worldClockWidget,
+  countdownWidget,
+  controlsWidget,
+  monthWidget,
 ];

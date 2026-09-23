@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import 'agenda_screen.dart';
+import 'countdown_screen.dart';
 import 'simple_screen.dart';
+import 'world_clock_screen.dart';
 
 /// Écran de réglage d'un widget, ouvert depuis le catalogue ou depuis un
 /// appui long sur l'écran d'accueil.
@@ -31,6 +33,16 @@ class WidgetScreen extends StatelessWidget {
         allowPin: !configuring,
       ),
       WuxWidgetKind.agenda => AgendaScreen(
+        homeWidget: homeWidget,
+        platform: platform,
+        allowPin: !configuring,
+      ),
+      WuxWidgetKind.worldClock => WorldClockScreen(
+        homeWidget: homeWidget,
+        platform: platform,
+        allowPin: !configuring,
+      ),
+      WuxWidgetKind.countdown => CountdownScreen(
         homeWidget: homeWidget,
         platform: platform,
         allowPin: !configuring,

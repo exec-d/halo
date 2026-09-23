@@ -116,6 +116,56 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_system_advanced_info" />
         </receiver>
+        <receiver
+            android:name=".widgets.WorldClockWidget"
+            android:exported="false"
+            android:label="@string/widget_world_clock_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_world_clock_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.CountdownWidget"
+            android:exported="false"
+            android:label="@string/widget_countdown_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_countdown_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.ControlsWidget"
+            android:exported="false"
+            android:label="@string/widget_controls_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_controls_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.MonthWidget"
+            android:exported="false"
+            android:label="@string/widget_month_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_month_info" />
+        </receiver>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
@@ -128,6 +178,10 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <!-- Contrôles : ouvrir l'appareil photo. -->
+        <intent>
+            <action android:name="android.media.action.STILL_IMAGE_CAMERA" />
+        </intent>
         <!-- Ouvrir un événement ou un jour dans l'application Agenda. -->
         <intent>
             <action android:name="android.intent.action.VIEW"/>

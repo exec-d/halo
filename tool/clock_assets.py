@@ -60,12 +60,47 @@ def dotted_divider():
     return glow(img, 1.5)
 
 
-def alarm_icon(font_path: str):
-    """Icône « alarm » de Material Icons (U+E072 dans la police du SDK Flutter), avec son halo."""
+def icon(font_path: str, codepoint: int):
+    """Une icône Material Icons (codes de la police du SDK Flutter), avec son halo."""
     size, pad = 24, 5
     img, d = canvas(size + 2 * pad, size + 2 * pad)
     font = ImageFont.truetype(font_path, size * DP)
-    d.text((pad * DP, pad * DP), chr(0xE072), font=font, fill='white')
+    d.text((pad * DP, pad * DP), chr(codepoint), font=font, fill='white')
+    return glow(img, 1.5)
+
+
+# Nom du fichier (icon_<nom>.png) -> code dans MaterialIcons-Regular.otf.
+ICONS = {
+    'sunny': 0xE6D9, 'night': 0xE430, 'partly_cloudy': 0xE6D5, 'cloud': 0xE16F,
+    'fog': 0xF0505, 'drizzle': 0xE2E2, 'rain': 0xF05A2, 'showers': 0xE68A,
+    'snow': 0xE037, 'storm': 0xF07CB, 'wind': 0xE064,
+    'flashlight_on': 0xE295, 'flashlight_off': 0xE294, 'wifi': 0xE6E7,
+    'bluetooth': 0xE0E4, 'volume': 0xE6C5, 'camera': 0xE4B6,
+    'sunrise': 0xE6DB, 'moon': 0xE1B0, 'hourglass': 0xE323, 'event': 0xE23E,
+}
+
+
+def moon(phase: int):
+    """Lune à la phase [phase] sur 8 (0 : nouvelle, 4 : pleine), vue de
+    l'hémisphère nord : elle croît par la droite."""
+    import math
+    size, pad = 24, 5
+    img, d = canvas(size + 2 * pad, size + 2 * pad)
+    r = size * DP / 2
+    c = (pad + size / 2) * DP
+    d.ellipse((c - r, c - r, c + r, c + r), outline='white', width=int(1.2 * DP))
+    k = math.cos(2 * math.pi * phase / 8)
+    px = img.load()
+    for yy in range(img.size[1]):
+        for xx in range(img.size[0]):
+            x, y = (xx - c) / r, (yy - c) / r
+            if x * x + y * y > 1:
+                continue
+            w = math.sqrt(1 - y * y)
+            # Terminateur en x = w·cos(2π·phase) : éclairé à droite en croissant.
+            lit = x > w * k if phase <= 4 else x < -w * k
+            if lit:
+                px[xx, yy] = (255, 255, 255, 255)
     return glow(img, 1.5)
 
 
@@ -77,4 +112,8 @@ if __name__ == '__main__':
     dotted_divider().save(OUT + 'agenda_divider_dotted.png')
     # MaterialIcons-Regular.otf : livrée avec le SDK Flutter
     # (bin/cache/artifacts/material_fonts/), licence Apache 2.0.
-    alarm_icon(sys.argv[1]).save(OUT + 'clock_alarm.png')
+    icon(sys.argv[1], 0xE072).save(OUT + 'clock_alarm.png')
+    for name, codepoint in ICONS.items():
+        icon(sys.argv[1], codepoint).save(OUT + f'icon_{name}.png')
+    for phase in range(8):
+        moon(phase).save(OUT + f'moon_{phase}.png')

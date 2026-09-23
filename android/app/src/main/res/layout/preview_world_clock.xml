@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu dans la liste des widgets du lanceur, valeurs d'exemple. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="4dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="Paris"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.1"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="10"
+            android:textAllCaps="true"
+            android:textColor="@color/clock_line"
+            android:textSize="11sp" />
+
+        <TextClock
+            android:timeZone="Europe/Paris"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:format12Hour="h:mm"
+            android:format24Hour="HH:mm"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="20"
+            android:textColor="@color/clock_core"
+            android:textFontWeight="800"
+            android:textSize="30sp" />
+
+        <TextClock
+            android:timeZone="Europe/Paris"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:format12Hour="EEE d"
+            android:format24Hour="EEE d"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="8"
+            android:textAllCaps="true"
+            android:textColor="@color/clock_line"
+            android:textSize="10sp" />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/clock_divider_vertical"
+        android:tint="@color/clock_line" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="New York"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.1"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="10"
+            android:textAllCaps="true"
+            android:textColor="@color/clock_line"
+            android:textSize="11sp" />
+
+        <TextClock
+            android:timeZone="America/New_York"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:format12Hour="h:mm"
+            android:format24Hour="HH:mm"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="20"
+            android:textColor="@color/clock_core"
+            android:textFontWeight="800"
+            android:textSize="30sp" />
+
+        <TextClock
+            android:timeZone="America/New_York"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:format12Hour="EEE d"
+            android:format24Hour="EEE d"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="8"
+            android:textAllCaps="true"
+            android:textColor="@color/clock_line"
+            android:textSize="10sp" />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/clock_divider_vertical"
+        android:tint="@color/clock_line" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="Tokyo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.1"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="10"
+            android:textAllCaps="true"
+            android:textColor="@color/clock_line"
+            android:textSize="11sp" />
+
+        <TextClock
+            android:timeZone="Asia/Tokyo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:format12Hour="h:mm"
+            android:format24Hour="HH:mm"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="20"
+            android:textColor="@color/clock_core"
+            android:textFontWeight="800"
+            android:textSize="30sp" />
+
+        <TextClock
+            android:timeZone="Asia/Tokyo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:format12Hour="EEE d"
+            android:format24Hour="EEE d"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="8"
+            android:textAllCaps="true"
+            android:textColor="@color/clock_line"
+            android:textSize="10sp" />
+    </LinearLayout>
+</LinearLayout>

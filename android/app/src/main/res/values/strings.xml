@@ -46,6 +46,22 @@
     <string name="system_silent">Silencieux</string>
     <string name="system_dnd">Ne pas déranger</string>
 
+    <string name="widget_world_clock_label">Fuseaux horaires</string>
+    <string name="widget_world_clock_description">L\'heure de trois villes.</string>
+    <string name="widget_countdown_label">Compte à rebours</string>
+    <string name="widget_countdown_description">Les jours jusqu\'à une date.</string>
+    <string name="countdown_default_title">Mon évènement</string>
+    <string name="countdown_pick_date">Choisissez une date dans WUX</string>
+    <string name="widget_controls_label">Contrôles</string>
+    <string name="widget_controls_description">Lampe torche, Wi-Fi, Bluetooth, son, appareil photo.</string>
+    <string name="controls_torch">Lampe</string>
+    <string name="controls_wifi">Wi-Fi</string>
+    <string name="controls_bluetooth">Bluetooth</string>
+    <string name="controls_sound">Son</string>
+    <string name="controls_camera">Photo</string>
+    <string name="widget_month_label">Mois</string>
+    <string name="widget_month_description">Le mois en cours, les jours avec événements marqués.</string>
+
     <string name="agenda_more" translatable="false">•••</string>
     <string name="agenda_today">Aujourd\'hui</string>
     <string name="agenda_tomorrow">Demain</string>
@@ -56,4 +72,14 @@
     <string name="agenda_untitled">(Sans titre)</string>
     <string name="agenda_empty">Aucun événement</string>
     <string name="agenda_permission_missing">Touchez pour autoriser WUX à lire votre agenda.</string>
+    <plurals name="countdown_days_left">
+        <item quantity="one">jour restant</item>
+        <item quantity="many">jours restants</item>
+        <item quantity="other">jours restants</item>
+    </plurals>
+    <plurals name="countdown_days_ago">
+        <item quantity="one">jour écoulé</item>
+        <item quantity="many">jours écoulés</item>
+        <item quantity="other">jours écoulés</item>
+    </plurals>
 </resources>

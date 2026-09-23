@@ -15,6 +15,11 @@ halo lumineux. Les couleurs suivent l'accent du fond d'écran
 | Agenda | Événements d'aujourd'hui (et de demain, au choix), en une colonne | Ouvre l'événement ou le jour |
 | Agenda 2 colonnes | Idem en deux colonnes | Idem |
 | Système (4x1) | Batterie, réseau, stockage | Ouvre le réglage correspondant |
+| Système avancé (4x2) | Signal, Wi-Fi, Bluetooth, batterie, mémoire, stockage, localisation, son | Idem |
+| Fuseaux horaires (4x1) | L'heure de trois villes au choix | Ouvre l'horloge |
+| Compte à rebours | Les jours jusqu'à une date | Ouvre WUX |
+| Contrôles (4x1) | Lampe torche, Wi-Fi, Bluetooth, son, appareil photo | Bascule la lampe, ouvre le reste |
+| Mois (4x3) | Le mois en cours, jours avec événements marqués | Ouvre le jour dans l'agenda |
 
 Tous sont en `RemoteViews` : Glance n'accepte pas de halo sur le texte. Un
 widget est dessiné par le lanceur, qui n'a pas accès aux polices de

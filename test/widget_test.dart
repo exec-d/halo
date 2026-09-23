@@ -118,4 +118,20 @@ void main() {
     expect(platform.finishedConfiguring, 1);
     await tester.pumpWidget(const SizedBox());
   });
+
+  testWidgets('le compte à rebours enregistre titre et date', (tester) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Compte à rebours');
+
+    final fields = find.byType(EditableText);
+    await tester.enterText(fields.at(0), 'Vacances');
+    await tester.enterText(fields.at(1), '4');
+    await tester.enterText(fields.at(2), '11');
+    await tester.enterText(fields.at(3), '2026');
+    await tester.pumpAndSettle();
+
+    expect(platform.data['countdown.title'], 'Vacances');
+    expect(platform.data['countdown.date'], '2026-11-04');
+    await tester.pumpWidget(const SizedBox());
+  });
 }

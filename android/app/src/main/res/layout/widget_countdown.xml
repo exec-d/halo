@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Compte à rebours : titre, nombre de jours, date visée. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/countdown_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/agenda_padding">
+
+    <ImageView
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/icon_hourglass"
+        android:tint="@color/clock_line" />
+
+    <TextView
+        android:id="@+id/countdown_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="sans-serif"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:shadowColor="@color/clock_glow"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="24"
+        android:textColor="@color/clock_core"
+        android:textFontWeight="800"
+        android:textSize="44sp" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/countdown_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="monospace"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="10"
+            android:textAllCaps="true"
+            android:textColor="@color/clock_line"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/countdown_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:fontFamily="monospace"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="12"
+            android:textColor="@color/clock_core"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/countdown_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:fontFamily="monospace"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="@color/clock_glow"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="8"
+            android:textAllCaps="true"
+            android:textColor="@color/clock_line"
+            android:textSize="10sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -7,6 +7,12 @@ enum WuxWidgetKind {
 
   /// Accès au calendrier, jours et agendas affichés.
   agenda,
+
+  /// Trois villes au choix.
+  worldClock,
+
+  /// Un titre et une date.
+  countdown,
 }
 
 /// Description, côté Dart, d'un widget d'écran d'accueil déclaré côté Android.

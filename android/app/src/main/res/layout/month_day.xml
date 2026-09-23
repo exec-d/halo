@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Un jour ; le point marque un jour avec événement. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/month_cell"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/month_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:minWidth="26dp"
+        android:paddingVertical="2dp"
+        android:shadowColor="@color/clock_glow"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="10"
+        android:textColor="@color/clock_core"
+        android:textFontWeight="500"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/month_dot"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="1dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/agenda_dot"
+        android:tint="@color/clock_line" />
+</LinearLayout>

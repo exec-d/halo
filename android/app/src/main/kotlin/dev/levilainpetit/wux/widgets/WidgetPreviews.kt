@@ -29,6 +29,10 @@ object WidgetPreviews {
         "agenda_two_columns" -> TwoColumnAgendaWidget()
         "system" -> SystemWidget()
         "system_advanced" -> AdvancedSystemWidget()
+        "world_clock" -> WorldClockWidget()
+        "countdown" -> CountdownWidget()
+        "controls" -> ControlsWidget()
+        "month" -> MonthWidget()
         else -> null
     }
 
