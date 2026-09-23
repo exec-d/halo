@@ -33,6 +33,8 @@ object WidgetPreviews {
         "countdown" -> CountdownWidget()
         "controls" -> ControlsWidget()
         "month" -> MonthWidget()
+        "weather" -> WeatherWidget()
+        "sun_moon" -> SunMoonWidget()
         else -> null
     }
 

@@ -5,6 +5,7 @@ import '../platform/wux_platform.dart';
 import 'agenda_screen.dart';
 import 'countdown_screen.dart';
 import 'simple_screen.dart';
+import 'weather_screen.dart';
 import 'world_clock_screen.dart';
 
 /// Écran de réglage d'un widget, ouvert depuis le catalogue ou depuis un
@@ -43,6 +44,11 @@ class WidgetScreen extends StatelessWidget {
         allowPin: !configuring,
       ),
       WuxWidgetKind.countdown => CountdownScreen(
+        homeWidget: homeWidget,
+        platform: platform,
+        allowPin: !configuring,
+      ),
+      WuxWidgetKind.weather => WeatherScreen(
         homeWidget: homeWidget,
         platform: platform,
         allowPin: !configuring,

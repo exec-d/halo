@@ -36,6 +36,18 @@ abstract interface class WuxPlatform {
 
   Future<List<CalendarInfo>> calendars();
 
+  /// Le lieu de la météo, ou `null` s'il n'est pas encore choisi.
+  Future<String?> weatherPlace();
+
+  Future<List<WeatherPlace>> searchPlaces(String query);
+
+  /// Choisit [place] et télécharge ses prévisions ; renvoie son nom.
+  Future<String?> setWeatherPlace(WeatherPlace place);
+
+  /// Utilise la position du téléphone (demande l'autorisation au besoin) ;
+  /// renvoie le nom du lieu, ou `null` si elle est refusée.
+  Future<String?> locateWeatherPlace();
+
   /// Widget dont le lanceur a ouvert les réglages, ou `null`.
   Future<WuxHomeWidget?> configuringWidget();
 
@@ -94,6 +106,44 @@ class AndroidWuxPlatform implements WuxPlatform {
       for (final item in list)
         CalendarInfo.fromMap(item! as Map<Object?, Object?>),
     ];
+  }
+
+  @override
+  Future<String?> weatherPlace() =>
+      _channel.invokeMethod<String>('weatherPlace');
+
+  @override
+  Future<List<WeatherPlace>> searchPlaces(String query) async {
+    final list =
+        await _channel.invokeListMethod<Object?>('weatherSearch', {
+          'query': query,
+        }) ??
+        [];
+    return [
+      for (final item in list)
+        WeatherPlace.fromMap(item! as Map<Object?, Object?>),
+    ];
+  }
+
+  @override
+  Future<String?> setWeatherPlace(WeatherPlace place) async {
+    final result = await _channel.invokeMapMethod<String, Object?>(
+      'weatherSetPlace',
+      {
+        'name': place.name,
+        'latitude': place.latitude,
+        'longitude': place.longitude,
+      },
+    );
+    return result?['name'] as String?;
+  }
+
+  @override
+  Future<String?> locateWeatherPlace() async {
+    final result = await _channel.invokeMapMethod<String, Object?>(
+      'weatherLocate',
+    );
+    return result?['name'] as String?;
   }
 
   @override

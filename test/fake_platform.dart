@@ -71,6 +71,23 @@ class FakePlatform implements WuxPlatform {
   @override
   Future<List<CalendarInfo>> calendars() async => [personal, work];
 
+  String? place;
+
+  @override
+  Future<String?> weatherPlace() async => place;
+
+  @override
+  Future<List<WeatherPlace>> searchPlaces(String query) async => [
+    WeatherPlace(name: '$query, Ain, France', latitude: 46, longitude: 5),
+  ];
+
+  @override
+  Future<String?> setWeatherPlace(WeatherPlace chosen) async =>
+      place = chosen.name;
+
+  @override
+  Future<String?> locateWeatherPlace() async => place = 'Ma position';
+
   @override
   Future<WuxHomeWidget?> configuringWidget() async => null;
 

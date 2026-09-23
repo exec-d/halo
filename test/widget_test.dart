@@ -134,4 +134,21 @@ void main() {
     expect(platform.data['countdown.date'], '2026-11-04');
     await tester.pumpWidget(const SizedBox());
   });
+
+  testWidgets('la météo se règle par une recherche de ville', (tester) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Météo');
+
+    await tester.enterText(find.byType(EditableText), 'Villars');
+    await tester.ensureVisible(find.text('Rechercher'));
+    await tester.tap(find.text('Rechercher'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Villars, Ain, France'));
+    await tester.tap(find.text('Villars, Ain, France'));
+    await tester.pumpAndSettle();
+
+    expect(platform.place, 'Villars, Ain, France');
+    expect(find.text('Prévisions pour Villars, Ain, France.'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
 }

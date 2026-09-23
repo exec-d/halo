@@ -62,6 +62,39 @@
     <string name="widget_month_label">Mois</string>
     <string name="widget_month_description">Le mois en cours, les jours avec événements marqués.</string>
 
+    <string name="widget_weather_label">Météo</string>
+    <string name="widget_weather_description">Le temps qu\'il fait, puis les prochaines heures.</string>
+    <string name="weather_pick_place">Choisissez un lieu dans WUX</string>
+    <string name="weather_loading">Prévisions en cours…</string>
+    <string name="weather_my_position">Ma position</string>
+    <string name="weather_detail">Ressenti %1$s · %2$d km/h</string>
+    <string name="weather_clear">Ciel dégagé</string>
+    <string name="weather_partly">Peu nuageux</string>
+    <string name="weather_cloudy">Couvert</string>
+    <string name="weather_fog">Brouillard</string>
+    <string name="weather_drizzle">Bruine</string>
+    <string name="weather_rain">Pluie</string>
+    <string name="weather_snow">Neige</string>
+    <string name="weather_showers">Averses</string>
+    <string name="weather_snow_showers">Averses de neige</string>
+    <string name="weather_storm">Orage</string>
+    <string name="weather_unknown">—</string>
+    <string name="widget_sun_moon_label">Soleil et Lune</string>
+    <string name="widget_sun_moon_description">Lever et coucher du soleil, phase de la lune.</string>
+    <string name="sun_day_length">Jour %1$d h %2$02d</string>
+    <string name="sun_pick_place">Lieu dans Météo</string>
+    <string name="moon_illumination">Éclairée à %1$d %%</string>
+    <string-array name="moon_phases">
+        <item>Nouvelle lune</item>
+        <item>Premier croissant</item>
+        <item>Premier quartier</item>
+        <item>Gibbeuse croissante</item>
+        <item>Pleine lune</item>
+        <item>Gibbeuse décroissante</item>
+        <item>Dernier quartier</item>
+        <item>Dernier croissant</item>
+    </string-array>
+
     <string name="agenda_more" translatable="false">•••</string>
     <string name="agenda_today">Aujourd\'hui</string>
     <string name="agenda_tomorrow">Demain</string>

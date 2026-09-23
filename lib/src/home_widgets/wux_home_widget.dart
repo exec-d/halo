@@ -13,6 +13,9 @@ enum WuxWidgetKind {
 
   /// Un titre et une date.
   countdown,
+
+  /// Le lieu des prévisions.
+  weather,
 }
 
 /// Description, côté Dart, d'un widget d'écran d'accueil déclaré côté Android.

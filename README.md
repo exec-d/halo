@@ -20,6 +20,14 @@ halo lumineux. Les couleurs suivent l'accent du fond d'écran
 | Compte à rebours | Les jours jusqu'à une date | Ouvre WUX |
 | Contrôles (4x1) | Lampe torche, Wi-Fi, Bluetooth, son, appareil photo | Bascule la lampe, ouvre le reste |
 | Mois (4x3) | Le mois en cours, jours avec événements marqués | Ouvre le jour dans l'agenda |
+| Météo (4x2) | Conditions actuelles, six prochaines heures (Open-Meteo) | Ouvre WUX |
+| Soleil et Lune (4x1) | Lever, coucher, durée du jour, phase de la lune | Ouvre WUX |
+
+La météo vient d'[Open-Meteo](https://open-meteo.com) (gratuit, sans clé),
+rafraîchie chaque heure par WorkManager quand le réseau est là. Le lieu se
+choisit dans l'app, par la position (approximative, demandée une fois) ou par
+une recherche ; il sert aussi à Soleil et Lune, dont la phase lunaire est
+calculée sur le téléphone.
 
 Tous sont en `RemoteViews` : Glance n'accepte pas de halo sur le texte. Un
 widget est dessiné par le lanceur, qui n'a pas accès aux polices de
@@ -72,6 +80,7 @@ dessine pas sur l'écran d'accueil. WUX a donc deux moitiés :
 | Diffusion | Usage personnel, APK de debug issu de la CI |
 | Android minimum | 8.0 (API 26) |
 | Calendrier | Lecture seule (`READ_CALENDAR`) |
+| Autorisations demandées | Agenda, position approximative (Météo) ; rien d'autre |
 
 IUX n'est pas publié ; il est tiré de GitHub et épinglé sur un commit dans
 `pubspec.yaml`. Pour monter de version, changer ce `ref` puis lancer

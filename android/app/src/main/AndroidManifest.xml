@@ -5,6 +5,9 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <!-- Widget système : savoir si l'on est en ligne, et par quoi. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Météo : prévisions Open-Meteo, et position approximative pour le lieu. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Système avancé : Wi-Fi activé ou non, bande et débit. -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- Système avancé : Bluetooth activé ou non (sans autorisation dès Android 12). -->
@@ -165,6 +168,31 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_month_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.WeatherWidget"
+            android:exported="false"
+            android:label="@string/widget_weather_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_weather_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.SunMoonWidget"
+            android:exported="false"
+            android:label="@string/widget_sun_moon_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_sun_moon_info" />
         </receiver>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

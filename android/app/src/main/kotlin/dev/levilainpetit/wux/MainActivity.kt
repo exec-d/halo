@@ -4,9 +4,16 @@ import android.Manifest
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
+import android.os.Build
 import android.net.Uri
 import android.provider.Settings
 import dev.levilainpetit.wux.calendar.CalendarRepository
+import dev.levilainpetit.wux.weather.Place
+import dev.levilainpetit.wux.weather.Weather
+import dev.levilainpetit.wux.weather.WeatherRefresh
 import dev.levilainpetit.wux.widgets.AgendaRefresh
 import dev.levilainpetit.wux.widgets.WidgetPreviews
 import io.flutter.embedding.android.FlutterActivity
@@ -19,6 +26,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Locale
 
 /**
  * Hôte Flutter, et canal `dev.levilainpetit.wux/native` : tout ce dont
@@ -29,6 +37,7 @@ open class MainActivity : FlutterActivity() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var pendingPermission: MethodChannel.Result? = null
+    private var pendingLocation: MethodChannel.Result? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -53,6 +62,21 @@ open class MainActivity : FlutterActivity() {
                 )
                 result.success(null)
             }
+            "weatherPlace" -> result.success(Weather.place(this)?.name)
+            "weatherSearch" -> background(result) {
+                Weather.search(call.argument<String>("query").orEmpty()).map {
+                    mapOf("name" to it.name, "latitude" to it.latitude, "longitude" to it.longitude)
+                }
+            }
+            "weatherSetPlace" -> {
+                val place = Place(
+                    call.argument<String>("name").orEmpty(),
+                    call.argument<Double>("latitude") ?: 0.0,
+                    call.argument<Double>("longitude") ?: 0.0,
+                )
+                usePlace(place, result)
+            }
+            "weatherLocate" -> locate(result)
             "calendars" -> background(result) {
                 repository.calendars().map {
                     mapOf("id" to it.id, "name" to it.name, "account" to it.account, "color" to it.color)
@@ -93,6 +117,57 @@ open class MainActivity : FlutterActivity() {
         }
     }
 
+    /** Enregistre [place], télécharge ses prévisions et redessine les widgets. */
+    private fun usePlace(place: Place, result: MethodChannel.Result) {
+        Weather.setPlace(applicationContext, place)
+        scope.launch {
+            val ok = withContext(Dispatchers.IO) { Weather.refresh(applicationContext) }
+            WeatherRefresh.redraw(applicationContext)
+            WeatherRefresh.schedule(applicationContext)
+            if (!ok) WeatherRefresh.now(applicationContext)
+            result.success(mapOf("name" to place.name, "fetched" to ok))
+        }
+    }
+
+    /** Position approximative (réseau), demandée au premier usage. */
+    private fun locate(result: MethodChannel.Result) {
+        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            pendingLocation?.success(null)
+            pendingLocation = result
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_REQUEST)
+            return
+        }
+        val locations: LocationManager? = getSystemService(LocationManager::class.java)
+        val provider = listOf(LocationManager.NETWORK_PROVIDER, "fused", LocationManager.GPS_PROVIDER)
+            .firstOrNull { runCatching { locations?.isProviderEnabled(it) == true }.getOrDefault(false) }
+        if (locations == null || provider == null) {
+            result.error("location", "La localisation est désactivée.", null)
+            return
+        }
+        val found = { location: Location? ->
+            val known = location ?: runCatching { locations.getLastKnownLocation(provider) }.getOrNull()
+            if (known == null) {
+                result.error("location", "Position introuvable.", null)
+            } else {
+                scope.launch {
+                    val name = withContext(Dispatchers.IO) { placeName(known) }
+                    usePlace(Place(name, known.latitude, known.longitude), result)
+                }
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            locations.getCurrentLocation(provider, null, mainExecutor) { found(it) }
+        } else {
+            found(null)
+        }
+    }
+
+    private fun placeName(location: Location): String = runCatching {
+        @Suppress("DEPRECATION")
+        Geocoder(this, Locale.getDefault()).getFromLocation(location.latitude, location.longitude, 1)
+            ?.firstOrNull()?.locality
+    }.getOrNull() ?: getString(R.string.weather_my_position)
+
     private fun requestCalendarPermission(result: MethodChannel.Result) {
         if (CalendarRepository(applicationContext).hasPermission()) {
             result.success(true)
@@ -109,8 +184,14 @@ open class MainActivity : FlutterActivity() {
         grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode != CALENDAR_REQUEST) return
         val granted = grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED
+        if (requestCode == LOCATION_REQUEST) {
+            val pending = pendingLocation ?: return
+            pendingLocation = null
+            if (granted) locate(pending) else pending.success(null)
+            return
+        }
+        if (requestCode != CALENDAR_REQUEST) return
         pendingPermission?.success(granted)
         pendingPermission = null
         if (granted) {
@@ -124,6 +205,6 @@ open class MainActivity : FlutterActivity() {
     private companion object {
         const val CHANNEL = "dev.levilainpetit.wux/native"
         const val CALENDAR_REQUEST = 4201
-
+        const val LOCATION_REQUEST = 4202
     }
 }

@@ -91,6 +91,28 @@ const monthWidget = WuxHomeWidget(
   previewSize: Size(340, 250),
 );
 
+const weatherWidget = WuxHomeWidget(
+  id: 'weather',
+  kind: WuxWidgetKind.weather,
+  title: 'Météo',
+  description:
+      "Le temps qu'il fait et les six prochaines heures, par Open-Meteo. "
+      'Mises à jour chaque heure.',
+  androidProvider: '$_androidPackage.WeatherWidget',
+  previewSize: Size(340, 150),
+);
+
+const sunMoonWidget = WuxHomeWidget(
+  id: 'sun_moon',
+  kind: WuxWidgetKind.simple,
+  title: 'Soleil et Lune',
+  description:
+      'Lever et coucher du soleil au lieu choisi dans Météo, durée du jour '
+      'et phase de la lune.',
+  androidProvider: '$_androidPackage.SunMoonWidget',
+  previewSize: Size(340, 72),
+);
+
 /// Tous les widgets proposés par l'application.
 const wuxHomeWidgets = <WuxHomeWidget>[
   clockWidget,
@@ -102,4 +124,6 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   countdownWidget,
   controlsWidget,
   monthWidget,
+  weatherWidget,
+  sunMoonWidget,
 ];
