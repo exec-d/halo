@@ -10,6 +10,8 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import dev.levilainpetit.wux.calendar.AgendaBuilder
+import dev.levilainpetit.wux.calendar.CalendarRepository
 import java.time.Duration
 import java.time.LocalDate
 import java.time.ZonedDateTime
@@ -17,14 +19,16 @@ import java.time.ZonedDateTime
 /**
  * Tient les widgets agenda à jour.
  *
- * Trois déclencheurs : une modification du calendrier (déclencheur de contenu
- * WorkManager), le passage à minuit, et un changement de réglage dans l'app.
+ * Déclencheurs : une modification du calendrier (déclencheur de contenu
+ * WorkManager), la fin d'un événement du jour, la fin de journée, minuit, et
+ * un changement de réglage dans l'app.
  * Le système ajoute sa mise à jour périodique (`updatePeriodMillis`).
  */
 object AgendaRefresh {
 
     private const val WORK_CALENDAR_CHANGE = "agenda-calendar-change"
     private const val WORK_MIDNIGHT = "agenda-midnight"
+    private const val WORK_NEXT_CHANGE = "agenda-next-change"
 
     suspend fun refreshAll(context: Context) {
         val manager = GlanceAppWidgetManager(context)
@@ -57,6 +61,15 @@ object AgendaRefresh {
             .setInitialDelay(Duration.between(now, midnight))
             .build()
         work.enqueueUniqueWork(WORK_MIDNIGHT, ExistingWorkPolicy.REPLACE, atMidnight)
+
+        // Fin d'un événement ou fin de journée : l'affichage change aussi.
+        val next = AgendaBuilder.nextChange(CalendarRepository(context), now)
+        if (next != null) {
+            val atNextChange = OneTimeWorkRequestBuilder<AgendaRefreshWorker>()
+                .setInitialDelay(Duration.between(now, next).plusSeconds(30))
+                .build()
+            work.enqueueUniqueWork(WORK_NEXT_CHANGE, ExistingWorkPolicy.REPLACE, atNextChange)
+        }
     }
 }
 

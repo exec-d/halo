@@ -187,7 +187,7 @@ class AgendaWidgetPreview extends StatelessWidget {
     );
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.fromLTRB(12, 8, 10, 8),
       color: surface ? palette.surface : null,
       child: content,
     );

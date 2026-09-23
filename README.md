@@ -11,6 +11,9 @@ pour personnaliser son téléphone.
 | Agenda du jour | Événements d'aujourd'hui | Jetpack Glance | Ouvre l'événement ou le jour |
 | Aujourd'hui et demain | Événements groupés par jour | Jetpack Glance | Ouvre l'événement ou le jour |
 
+À partir de 18 h, quand il ne reste plus d'événement à venir dans la journée,
+les agendas passent au lendemain (`AgendaBuilder.END_OF_DAY_HOUR`).
+
 L'horloge n'est pas en Glance : `TextClock` se met à jour seul chaque minute
 sans réveiller l'application, ce que Glance ne sait pas faire.
 
@@ -36,7 +39,8 @@ dessine pas sur l'écran d'accueil. WUX a donc deux moitiés :
   que le widget. Seule la mise en page est reproduite en Flutter
   (`lib/src/previews/`), et doit suivre celle de `AgendaWidget.kt`.
 - **Fraîcheur des agendas** (`AgendaRefresh.kt`) : modification du calendrier
-  (déclencheur de contenu WorkManager), passage à minuit, changement de réglage,
+  (déclencheur de contenu WorkManager), fin d'un événement du jour, 18 h,
+  passage à minuit, changement de réglage,
   plus la mise à jour système toutes les 30 minutes.
 - **Couleurs** : `res/values-v31/colors.xml` pointe sur les couleurs système
   tirées du fond d'écran ; `res/values/colors.xml` est le repli avant Android 12.

@@ -115,6 +115,13 @@ private sealed interface ListRow {
     data class Empty(override val key: Long) : ListRow
 }
 
+/**
+ * Marge laissée à gauche d'un texte : un TextView rogne ce qui dépasse de son
+ * bord, et certains chiffres (le « 1 » de Google Sans) débordent à gauche de
+ * leur origine.
+ */
+private val GlyphRoom = GlanceModifier.padding(start = 2.dp)
+
 /** Couleur identique en mode clair et sombre. */
 private fun fixed(color: Color): ColorProvider = DayNightColorProvider(day = color, night = color)
 
@@ -141,7 +148,7 @@ private fun AgendaContent(state: AgendaState) {
     if (state.background == AgendaBackground.SURFACE) {
         modifier = modifier.background(ColorProvider(R.color.agenda_surface))
     }
-    modifier = modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+    modifier = modifier.padding(horizontal = 10.dp, vertical = 8.dp)
 
     Box(modifier = modifier) {
         val agenda = state.agenda
@@ -161,7 +168,7 @@ private fun AgendaContent(state: AgendaState) {
                         is ListRow.Empty -> Text(
                             text = context.getString(R.string.agenda_empty),
                             style = TextStyle(color = palette.secondary, fontSize = 13.sp),
-                            modifier = GlanceModifier.padding(vertical = 3.dp),
+                            modifier = GlanceModifier.padding(start = 2.dp, top = 3.dp, bottom = 3.dp),
                         )
                     }
                 }
@@ -193,7 +200,7 @@ private fun DayHeading(context: Context, day: AgendaDay, palette: Palette) {
     Text(
         text = day.label,
         style = TextStyle(color = palette.primary, fontSize = 16.sp, fontWeight = FontWeight.Bold),
-        modifier = GlanceModifier.padding(top = 6.dp, bottom = 2.dp)
+        modifier = GlanceModifier.padding(start = 2.dp, top = 6.dp, bottom = 2.dp)
             .clickable(actionStartActivity(open)),
     )
 }
@@ -216,11 +223,13 @@ private fun EventRow(context: Context, line: AgendaLine, palette: Palette) {
             Text(
                 line.title,
                 maxLines = 1,
+                modifier = GlyphRoom,
                 style = TextStyle(color = palette.text, fontSize = 14.sp, fontWeight = FontWeight.Medium),
             )
             Text(
                 line.detail,
                 maxLines = 1,
+                modifier = GlyphRoom,
                 style = TextStyle(color = palette.secondary, fontSize = 12.sp),
             )
         }

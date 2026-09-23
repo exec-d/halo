@@ -41,6 +41,12 @@ data class AgendaDay(
  */
 object AgendaBuilder {
 
+    /**
+     * Heure à partir de laquelle une journée sans plus aucun événement à venir
+     * est considérée comme finie : l'agenda passe alors au lendemain.
+     */
+    const val END_OF_DAY_HOUR = 18
+
     fun build(
         context: Context,
         repository: CalendarRepository,
@@ -49,9 +55,11 @@ object AgendaBuilder {
         now: ZonedDateTime = ZonedDateTime.now(),
     ): List<AgendaDay> {
         val zone = now.zone
+        val nowMillis = now.toInstant().toEpochMilli()
         val today = now.toLocalDate()
         val start = today.atStartOfDay(zone)
-        val end = today.plusDays(days.toLong()).atStartOfDay(zone)
+        // Un jour de plus que demandé, pour le décalage de fin de journée.
+        val end = today.plusDays(days + 1L).atStartOfDay(zone)
         // Les événements « toute la journée » sont stockés en UTC : on élargit
         // la requête d'un jour de chaque côté puis on les range par date UTC.
         val events = repository.events(
@@ -64,18 +72,42 @@ object AgendaBuilder {
             Locale.getDefault(),
         )
 
-        return (0 until days).map { offset ->
+        // En fin de journée, s'il ne reste plus rien à venir aujourd'hui, la
+        // fenêtre commence au lendemain.
+        val todayEnd = today.plusDays(1).atStartOfDay(zone)
+        val remainingToday = events.any {
+            !it.allDay && it.occursOn(today, start, todayEnd) && it.end > nowMillis
+        }
+        val first = if (now.hour >= END_OF_DAY_HOUR && !remainingToday) 1 else 0
+
+        return (first until first + days).map { offset ->
             val date = today.plusDays(offset.toLong())
             val dayStart = date.atStartOfDay(zone)
             val dayEnd = date.plusDays(1).atStartOfDay(zone)
             val lines = events
                 .filter { it.occursOn(date, dayStart, dayEnd) }
                 // Sur le jour même, un événement terminé n'a plus d'intérêt.
-                .filter { offset > 0 || it.allDay || it.end > now.toInstant().toEpochMilli() }
+                .filter { offset > 0 || it.allDay || it.end > nowMillis }
                 .sortedWith(compareByDescending<CalendarEvent> { it.allDay }.thenBy { it.begin })
                 .map { it.toLine(context, dayStart, dayEnd, zone, timeFormat) }
             AgendaDay(date, dayLabel(context, offset, date), lines)
         }
+    }
+
+    /**
+     * Prochain instant où l'agenda affiché change sans que le calendrier ne
+     * bouge : la fin d'un événement du jour, ou le passage en fin de journée.
+     * Tous agendas confondus, ce qui peut réveiller le widget pour rien, jamais
+     * trop tard.
+     */
+    fun nextChange(repository: CalendarRepository, now: ZonedDateTime = ZonedDateTime.now()): ZonedDateTime? {
+        val nowMillis = now.toInstant().toEpochMilli()
+        val todayEnd = now.toLocalDate().plusDays(1).atStartOfDay(now.zone)
+        val ends = repository.events(nowMillis, todayEnd.toInstant().toEpochMilli(), null)
+            .filter { !it.allDay && it.end > nowMillis && it.end < todayEnd.toInstant().toEpochMilli() }
+            .map { Instant.ofEpochMilli(it.end).atZone(now.zone) }
+        val endOfDay = now.toLocalDate().atTime(END_OF_DAY_HOUR, 0).atZone(now.zone)
+        return (ends + listOfNotNull(endOfDay.takeIf { it.isAfter(now) })).minOrNull()
     }
 
     private fun CalendarEvent.occursOn(
