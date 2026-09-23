@@ -26,7 +26,7 @@ class SystemScreen extends StatefulWidget {
 }
 
 class _SystemScreenState extends State<SystemScreen> {
-  List<SystemTilePreview> _tiles = const [];
+  List<List<SystemTilePreview>> _rows = const [];
   WidgetPalette _palette = WidgetPalette.fallback;
   bool _canPin = false;
 
@@ -37,12 +37,14 @@ class _SystemScreenState extends State<SystemScreen> {
   }
 
   Future<void> _load() async {
-    final tiles = await widget.platform.systemPreview();
+    final rows = await widget.platform.systemPreview(
+      advanced: widget.homeWidget.kind == WuxWidgetKind.systemAdvanced,
+    );
     final palette = await widget.platform.palette();
     final canPin = await widget.platform.canPin();
     if (!mounted) return;
     setState(() {
-      _tiles = tiles;
+      _rows = rows;
       _palette = palette;
       _canPin = canPin;
     });
@@ -57,12 +59,12 @@ class _SystemScreenState extends State<SystemScreen> {
         child: IuxSection(
           description:
               '${widget.homeWidget.description} Le réseau se met à jour dès '
-              "qu'il change ; la batterie et le stockage toutes les 5 minutes, "
+              "qu'il change, le reste toutes les 5 minutes, "
               'écran allumé. Touchez une case pour ouvrir le réglage '
               'correspondant.',
           children: [
             WallpaperFrame(
-              child: SystemWidgetPreview(tiles: _tiles, palette: _palette),
+              child: SystemWidgetPreview(rows: _rows, palette: _palette),
             ),
             const IuxGap.between(),
             PinButton(

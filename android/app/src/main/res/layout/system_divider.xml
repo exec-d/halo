@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Trait lumineux entre deux cases d'une rangée. -->
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="10dp"
+    android:layout_height="match_parent"
+    android:importantForAccessibility="no"
+    android:scaleType="fitXY"
+    android:src="@drawable/clock_divider_vertical"
+    android:tint="@color/clock_line" />

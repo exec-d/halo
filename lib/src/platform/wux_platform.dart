@@ -43,8 +43,8 @@ abstract interface class WuxPlatform {
 
   Future<WidgetPalette> palette();
 
-  /// Batterie, réseau, stockage, comme le widget système les affiche.
-  Future<List<SystemTilePreview>> systemPreview();
+  /// Les rangées de cases d'un widget système, telles qu'il les affiche.
+  Future<List<List<SystemTilePreview>>> systemPreview({required bool advanced});
 
   /// Widget dont le lanceur a ouvert les réglages, ou `null`.
   Future<WuxHomeWidget?> configuringWidget();
@@ -72,6 +72,7 @@ class AndroidWuxPlatform implements WuxPlatform {
         await _channel.invokeMethod<void>('refreshWidgets');
       case WuxWidgetKind.clock:
       case WuxWidgetKind.system:
+      case WuxWidgetKind.systemAdvanced:
         await HomeWidget.updateWidget(
           qualifiedAndroidName: widget.androidProvider,
         );
@@ -142,12 +143,20 @@ class AndroidWuxPlatform implements WuxPlatform {
   }
 
   @override
-  Future<List<SystemTilePreview>> systemPreview() async {
-    final list =
-        await _channel.invokeListMethod<Object?>('systemPreview') ?? [];
+  Future<List<List<SystemTilePreview>>> systemPreview({
+    required bool advanced,
+  }) async {
+    final rows =
+        await _channel.invokeListMethod<Object?>('systemPreview', {
+          'advanced': advanced,
+        }) ??
+        [];
     return [
-      for (final item in list)
-        SystemTilePreview.fromMap(item! as Map<Object?, Object?>),
+      for (final row in rows)
+        [
+          for (final item in row! as List<Object?>)
+            SystemTilePreview.fromMap(item! as Map<Object?, Object?>),
+        ],
     ];
   }
 

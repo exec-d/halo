@@ -101,15 +101,20 @@ open class MainActivity : FlutterActivity() {
                     "line" to getColor(R.color.clock_line),
                 ),
             )
-            "systemPreview" -> result.success(
-                listOf(
-                    SystemStatus.battery(this),
-                    SystemStatus.network(this),
-                    SystemStatus.storage(this),
-                ).map {
-                    mapOf("label" to it.label, "value" to it.value, "detail" to it.detail, "progress" to it.progress)
-                },
-            )
+            "systemPreview" -> {
+                val rows = if (call.argument<Boolean>("advanced") == true) {
+                    SystemStatus.advanced(this)
+                } else {
+                    listOf(SystemStatus.basic(this))
+                }
+                result.success(
+                    rows.map { row ->
+                        row.map {
+                            mapOf("label" to it.label, "value" to it.value, "detail" to it.detail, "progress" to it.progress)
+                        }
+                    },
+                )
+            }
             "widgetProvider" -> {
                 // Classe Kotlin du widget en cours de configuration, pour que
                 // Dart retrouve son écran dans le catalogue.

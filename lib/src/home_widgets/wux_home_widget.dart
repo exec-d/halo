@@ -1,5 +1,5 @@
 /// Nature d'un widget, qui décide de son écran de réglage et de son aperçu.
-enum WuxWidgetKind { clock, agenda, system }
+enum WuxWidgetKind { clock, agenda, system, systemAdvanced }
 
 /// Description, côté Dart, d'un widget d'écran d'accueil déclaré côté Android.
 class WuxHomeWidget {

@@ -31,7 +31,17 @@ const systemWidget = WuxHomeWidget(
   kind: WuxWidgetKind.system,
   title: 'Système',
   description: 'Batterie, réseau et stockage, sur une rangée.',
-  androidProvider: '$_androidPackage.SystemWidgetProvider',
+  androidProvider: '$_androidPackage.SystemWidget',
+);
+
+const advancedSystemWidget = WuxHomeWidget(
+  id: 'system_advanced',
+  kind: WuxWidgetKind.systemAdvanced,
+  title: 'Système avancé',
+  description:
+      'Signal, Wi-Fi, Bluetooth, batterie, mémoire, stockage, localisation '
+      'et son, sur deux rangées.',
+  androidProvider: '$_androidPackage.AdvancedSystemWidget',
 );
 
 /// Tous les widgets proposés par l'application.
@@ -40,4 +50,5 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   oneColumnAgendaWidget,
   twoColumnAgendaWidget,
   systemWidget,
+  advancedSystemWidget,
 ];

@@ -17,7 +17,7 @@ Future<void> _open(
 }
 
 void main() {
-  testWidgets('le catalogue liste les quatre widgets', (tester) async {
+  testWidgets('le catalogue liste tous les widgets', (tester) async {
     await tester.pumpWidget(WuxApp(platform: FakePlatform()));
     await tester.pumpAndSettle();
 
@@ -25,6 +25,14 @@ void main() {
     expect(find.text('Agenda'), findsOneWidget);
     expect(find.text('Agenda 2 colonnes'), findsOneWidget);
     expect(find.text('Système'), findsOneWidget);
+    expect(find.text('Système avancé'), findsOneWidget);
+  });
+
+  testWidgets('le système avancé a sa seconde rangée', (tester) async {
+    await _open(tester, FakePlatform(), 'Système avancé');
+
+    expect(find.text('BLUETOOTH'), findsOneWidget);
+    expect(find.text('82 %'), findsOneWidget);
   });
 
   testWidgets('le widget système montre batterie, réseau et stockage', (

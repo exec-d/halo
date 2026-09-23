@@ -27,7 +27,24 @@
     <string name="system_airplane">Mode avion</string>
     <string name="system_no_network">Aucun réseau</string>
     <string name="system_storage">STOCKAGE</string>
-    <string name="system_storage_free">Libres sur %1$s</string>
+    <string name="system_free_of">Libres sur %1$s</string>
+    <string name="widget_system_advanced_label">Système avancé</string>
+    <string name="widget_system_advanced_description">Signal, Wi-Fi, Bluetooth, batterie, mémoire, stockage, localisation, son.</string>
+    <string name="system_cellular">SIGNAL</string>
+    <string name="system_no_sim">Pas de SIM</string>
+    <string name="system_wifi_label">WI-FI</string>
+    <string name="system_on">Activé</string>
+    <string name="system_off">Désactivé</string>
+    <string name="system_not_connected">Non connecté</string>
+    <string name="system_unavailable">Indisponible</string>
+    <string name="system_bluetooth">BLUETOOTH</string>
+    <string name="system_memory">MÉMOIRE</string>
+    <string name="system_location">LOCALISATION</string>
+    <string name="system_sound">SON</string>
+    <string name="system_ring">Sonnerie</string>
+    <string name="system_vibrate">Vibreur</string>
+    <string name="system_silent">Silencieux</string>
+    <string name="system_dnd">Ne pas déranger</string>
 
     <string name="agenda_more" translatable="false">•••</string>
     <string name="agenda_today">Aujourd\'hui</string>

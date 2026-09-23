@@ -279,34 +279,42 @@ class _EventRow extends StatelessWidget {
   }
 }
 
-/// Reproduction de `widget_system.xml` : trois cases séparées par des traits.
+/// Reproduction de `widget_system*.xml` : des rangées de cases séparées par
+/// des traits.
 class SystemWidgetPreview extends StatelessWidget {
   const SystemWidgetPreview({
     super.key,
-    required this.tiles,
+    required this.rows,
     required this.palette,
   });
 
-  final List<SystemTilePreview> tiles;
+  final List<List<SystemTilePreview>> rows;
   final WidgetPalette palette;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 64,
-      child: Row(
-        children: [
-          for (final (index, tile) in tiles.indexed) ...[
-            if (index > 0)
-              _NeonLine(
-                color: palette.line,
-                glow: palette.glow,
-                vertical: true,
-              ),
-            Expanded(child: _SystemTile(tile, palette)),
-          ],
+    return Column(
+      children: [
+        for (final (r, tiles) in rows.indexed) ...[
+          if (r > 0) _NeonLine(color: palette.line, glow: palette.glow),
+          SizedBox(
+            height: 64,
+            child: Row(
+              children: [
+                for (final (index, tile) in tiles.indexed) ...[
+                  if (index > 0)
+                    _NeonLine(
+                      color: palette.line,
+                      glow: palette.glow,
+                      vertical: true,
+                    ),
+                  Expanded(child: _SystemTile(tile, palette)),
+                ],
+              ],
+            ),
+          ),
         ],
-      ),
+      ],
     );
   }
 }

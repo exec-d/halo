@@ -36,7 +36,7 @@ class WidgetScreen extends StatelessWidget {
         platform: platform,
         allowPin: !configuring,
       ),
-      WuxWidgetKind.system => SystemScreen(
+      WuxWidgetKind.system || WuxWidgetKind.systemAdvanced => SystemScreen(
         homeWidget: homeWidget,
         platform: platform,
         allowPin: !configuring,
