@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_hello_label">Message</string>
+    <string name="widget_hello_description">Affiche un court message sur l\'écran d\'accueil.</string>
+    <string name="widget_hello_placeholder">Touchez pour choisir un message</string>
+</resources>
