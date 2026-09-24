@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Météo façon tableau de bord : température et jauge, relevés (weather_readout), courbe des 24 heures. WeatherWidget. -->
+<!-- Météo façon tableau de bord : température et jauge, relevés (weather_readout), barres des 24 heures, qui
+     occupent toute la hauteur restante. WeatherWidget. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/weather_root"
     android:layout_width="match_parent"
@@ -141,17 +142,17 @@
     <LinearLayout
         android:id="@+id/weather_curve_block"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="6dp"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/weather_curve"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
+            android:layout_height="match_parent"
             android:importantForAccessibility="no"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:tint="@color/clock_line" />
 
     </LinearLayout>

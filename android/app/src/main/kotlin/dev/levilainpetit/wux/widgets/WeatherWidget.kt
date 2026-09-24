@@ -94,7 +94,11 @@ class WeatherWidget : NeonWidget() {
             // Une barre toutes les deux heures, sur 24 heures.
             val points = forecast.curve.filterIndexed { i, _ -> i % 2 == 0 }
             val format = DateTimeFormatter.ofPattern(if (DateFormat.is24HourFormat(context)) "HH'h'" else "ha", Locale.getDefault())
-            val chartHeight = ((size.height - 150f).coerceIn(48f, 72f) * density).roundToInt()
+            // Le graphique prend toute la hauteur sous le bloc du haut, pour ne
+            // pas laisser de vide en bas. S'il est un peu mal estimé, l'image
+            // est mise à l'échelle sans déformation.
+            val fontScale = context.resources.configuration.fontScale
+            val chartHeight = ((size.height - TOP_BLOCK * fontScale).coerceAtLeast(48f) * density).roundToInt()
             views.setImageViewBitmap(
                 R.id.weather_curve,
                 WeatherGraphics.bars(
@@ -143,6 +147,12 @@ class WeatherWidget : NeonWidget() {
     }
 
     companion object {
+        /**
+         * Hauteur (dp, texte à 100 %) du bloc du haut, marges du widget et du
+         * graphique comprises : suivre widget_weather.
+         */
+        private const val TOP_BLOCK = 132f
+
         fun degrees(value: Double) = "${value.roundToInt()}°"
 
         private fun sector(degrees: Int) = (((degrees % 360) + 360) % 360 + 22) / 45 % 8
