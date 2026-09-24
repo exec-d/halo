@@ -50,6 +50,22 @@ Un appui long sur un widget ouvre ses réglages dans WUX (Android 12+).
 - `res/drawable-xxhdpi/*.png` : traits et icône d'alarme avec leur halo, en blanc,
   teintés par le widget ; générés par `tool/clock_assets.py`.
 
+## Fond d'écran animé
+
+**Circuit** (`wallpaper/`) : l'intérieur du téléphone en schéma néon, aux
+couleurs de Material You, pour l'accueil et l'écran de verrouillage.
+
+- trois plans (châssis et bobine, batterie, cartes et puces) décalés selon
+  l'inclinaison (capteur de gravité), avec un reflet de verre ;
+- la batterie dessinée suit le niveau réel et respire pendant la charge ;
+- des impulsions courent de l'antenne au processeur quand des données passent
+  (`TrafficStats`), les antennes brillent selon la force du signal ;
+- à l'allumage de l'écran, les circuits s'éclairent depuis le processeur.
+
+Les parties fixes sont rendues une fois en masques `ALPHA_8`, teintés au
+dessin. Rien ne tourne quand le fond est caché ; le dessin continu n'a lieu
+que pendant un mouvement, une impulsion, l'allumage ou une charge.
+
 ## Application
 
 - **Catalogue** : aperçu de chaque widget avec des données d'exemple ; un appui ouvre ses réglages.

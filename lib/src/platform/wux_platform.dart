@@ -31,6 +31,15 @@ abstract interface class WuxPlatform {
     bool sample = false,
   });
 
+  /// Le fond d'écran animé en image fixe, à [size] pixels, en PNG.
+  Future<Uint8List?> renderWallpaper(Size size);
+
+  /// Vrai si le fond d'écran Halo est celui du téléphone.
+  Future<bool> isWallpaperActive();
+
+  /// Ouvre l'écran système qui applique le fond d'écran ; faux s'il manque.
+  Future<bool> applyWallpaper();
+
   /// Vrai jusqu'à ce que [markLaunched] soit appelé une fois.
   Future<bool> isFirstLaunch();
 
@@ -115,6 +124,21 @@ class AndroidWuxPlatform implements WuxPlatform {
   });
 
   static const _launched = 'app.launched';
+
+  @override
+  Future<Uint8List?> renderWallpaper(Size size) =>
+      _channel.invokeMethod<Uint8List>('renderWallpaper', {
+        'width': size.width.round(),
+        'height': size.height.round(),
+      });
+
+  @override
+  Future<bool> isWallpaperActive() async =>
+      await _channel.invokeMethod<bool>('wallpaperActive') ?? false;
+
+  @override
+  Future<bool> applyWallpaper() async =>
+      await _channel.invokeMethod<bool>('applyWallpaper') ?? false;
 
   @override
   Future<bool> isFirstLaunch() async =>

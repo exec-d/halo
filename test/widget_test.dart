@@ -34,6 +34,22 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
+  testWidgets("le fond d'écran Circuit s'applique depuis son écran", (
+    tester,
+  ) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Circuit');
+    expect(find.text('Pas encore appliqué'), findsOneWidget);
+
+    await tester.ensureVisible(find.text("Appliquer le fond d'écran"));
+    await tester.tap(find.text("Appliquer le fond d'écran"));
+    await tester.pumpAndSettle();
+
+    expect(platform.wallpaperApplications, 1);
+    expect(find.text("Fond d'écran actuel"), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets("au premier lancement, l'accès à l'agenda est demandé", (
     tester,
   ) async {

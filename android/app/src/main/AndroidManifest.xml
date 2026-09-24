@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Lecture seule : les widgets agenda consultent, ils ne modifient rien. -->
+    <uses-feature android:name="android.software.live_wallpaper" android:required="false" />
+
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <!-- Certaines applications Horloge l'exigent pour s'ouvrir depuis le widget. -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
@@ -221,6 +223,19 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- Fond d'écran animé « Circuit ». -->
+        <service
+            android:name=".wallpaper.HaloWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper" />
+        </service>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

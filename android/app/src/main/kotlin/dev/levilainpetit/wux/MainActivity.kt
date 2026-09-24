@@ -2,6 +2,7 @@ package dev.levilainpetit.wux
 
 import android.Manifest
 import android.appwidget.AppWidgetManager
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -12,6 +13,7 @@ import android.os.PowerManager
 import android.net.Uri
 import android.provider.Settings
 import dev.levilainpetit.wux.calendar.CalendarRepository
+import dev.levilainpetit.wux.wallpaper.WallpaperPreview
 import dev.levilainpetit.wux.weather.Place
 import dev.levilainpetit.wux.weather.Weather
 import dev.levilainpetit.wux.weather.WeatherRefresh
@@ -146,6 +148,24 @@ open class MainActivity : FlutterActivity() {
                     result.success(WidgetPreviews.render(this, id, width, height, sample))
                 } catch (e: Exception) {
                     result.error("render", e.message, null)
+                }
+            }
+            "renderWallpaper" -> {
+                val width = call.argument<Number>("width")?.toInt() ?: 0
+                val height = call.argument<Number>("height")?.toInt() ?: 0
+                if (width <= 0 || height <= 0) {
+                    result.success(null)
+                } else {
+                    background(result) { WallpaperPreview.render(applicationContext, width, height) }
+                }
+            }
+            "wallpaperActive" -> result.success(WallpaperPreview.isActive(this))
+            "applyWallpaper" -> {
+                try {
+                    startActivity(WallpaperPreview.applyIntent(this))
+                    result.success(true)
+                } catch (e: ActivityNotFoundException) {
+                    result.success(false)
                 }
             }
             "widgetProvider" -> {

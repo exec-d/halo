@@ -62,6 +62,22 @@ class FakePlatform implements WuxPlatform {
     return null;
   }
 
+  var wallpaperActive = false;
+  var wallpaperApplications = 0;
+
+  @override
+  Future<Uint8List?> renderWallpaper(Size size) async => null;
+
+  @override
+  Future<bool> isWallpaperActive() async => wallpaperActive;
+
+  @override
+  Future<bool> applyWallpaper() async {
+    wallpaperApplications++;
+    wallpaperActive = true;
+    return true;
+  }
+
   @override
   Future<bool> isFirstLaunch() async => firstLaunch;
 

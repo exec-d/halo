@@ -7,10 +7,12 @@ import '../previews/widget_previews.dart';
 import 'about_screen.dart';
 import 'screen_frame.dart';
 import 'settings_screen.dart';
+import 'wallpaper_screen.dart';
 import 'widget_screen.dart';
 
-/// Liste des widgets disponibles, chacun avec un aperçu d'exemple ; toucher
-/// une carte ouvre ses réglages, avec l'aperçu de ses vraies données.
+/// Le fond d'écran animé, puis la liste des widgets disponibles, chacun avec
+/// un aperçu d'exemple ; toucher une carte ouvre ses réglages, avec l'aperçu
+/// de ses vraies données.
 ///
 /// Au premier lancement, demande l'accès à l'agenda, dont dépendent trois
 /// widgets. La position, qui ne sert qu'à la météo, est demandée là-bas.
@@ -59,7 +61,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ScreenFrame(
-        title: 'Mes widgets',
+        title: 'Halo',
         actions: [
           IuxIconButton(
             icon: Icons.settings_outlined,
@@ -84,37 +86,79 @@ class _CatalogScreenState extends State<CatalogScreen> {
             ),
           ),
         ],
-        child: IuxSection(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            for (final homeWidget in widgets) ...[
-              IuxCard.tappable(
-                semanticLabel: homeWidget.title,
-                hint: homeWidget.description,
-                onActivate: () => _open(context, homeWidget),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    WallpaperFrame(
-                      child: WidgetPreview(
-                        homeWidget: homeWidget,
-                        platform: platform,
-                        sample: true,
+            IuxSection(
+              title: "Fond d'écran",
+              children: [
+                IuxCard.tappable(
+                  semanticLabel: wallpaperTitle,
+                  hint: wallpaperDescription,
+                  onActivate: () => Navigator.of(context).push<void>(
+                    MaterialPageRoute<void>(
+                      builder: (_) => WallpaperScreen(platform: platform),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      WallpaperPreview(platform: platform, width: 96),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              wallpaperTitle,
+                              style: IuxTypographyTheme.of(context).title,
+                            ),
+                            Text(
+                              wallpaperDescription,
+                              style: IuxTypographyTheme.of(context).body,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const IuxGap.standard(),
-                    Text(
-                      homeWidget.title,
-                      style: IuxTypographyTheme.of(context).title,
-                    ),
-                    Text(
-                      homeWidget.description,
-                      style: IuxTypographyTheme.of(context).body,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const IuxGap.between(),
-            ],
+              ],
+            ),
+            const IuxGap.between(),
+            IuxSection(
+              title: 'Widgets',
+              children: [
+                for (final homeWidget in widgets) ...[
+                  IuxCard.tappable(
+                    semanticLabel: homeWidget.title,
+                    hint: homeWidget.description,
+                    onActivate: () => _open(context, homeWidget),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        WallpaperFrame(
+                          child: WidgetPreview(
+                            homeWidget: homeWidget,
+                            platform: platform,
+                            sample: true,
+                          ),
+                        ),
+                        const IuxGap.standard(),
+                        Text(
+                          homeWidget.title,
+                          style: IuxTypographyTheme.of(context).title,
+                        ),
+                        Text(
+                          homeWidget.description,
+                          style: IuxTypographyTheme.of(context).body,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const IuxGap.between(),
+                ],
+              ],
+            ),
           ],
         ),
       ),

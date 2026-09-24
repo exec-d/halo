@@ -249,6 +249,18 @@ object SystemStatus {
         )
     }
 
+    /**
+     * Force du réseau utilisé, de 0 à 4 : le Wi-Fi s'il est connecté, sinon le
+     * réseau mobile ; `null` si inconnue ou sans réseau.
+     */
+    fun signalLevel(context: Context): Int? {
+        val capabilities = capabilities(context) ?: return null
+        if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) return wifiLevel(capabilities)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return null
+        val telephony = context.getSystemService(TelephonyManager::class.java) ?: return null
+        return runCatching { telephony.signalStrength?.level }.getOrNull()
+    }
+
     private fun capabilities(context: Context): NetworkCapabilities? {
         val connectivity = context.getSystemService(ConnectivityManager::class.java) ?: return null
         return connectivity.getNetworkCapabilities(connectivity.activeNetwork)

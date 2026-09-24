@@ -180,4 +180,6 @@
         <item quantity="many">jours écoulés</item>
         <item quantity="other">jours écoulés</item>
     </plurals>
+    <string name="wallpaper_label">Halo · Circuit</string>
+    <string name="wallpaper_description">L\'intérieur du téléphone en néon, qui suit son inclinaison, sa batterie et son réseau.</string>
 </resources>
