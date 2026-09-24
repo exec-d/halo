@@ -4,11 +4,13 @@ import android.graphics.Bitmap
 import android.graphics.BlurMaskFilter
 import android.graphics.Canvas
 import android.graphics.DashPathEffect
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PointF
 import android.graphics.RectF
 import kotlin.math.hypot
+import kotlin.math.sqrt
 import kotlin.random.Random
 
 /**
@@ -19,7 +21,12 @@ import kotlin.random.Random
  * teintés au moment du dessin : la couleur suit le téléphone sans rien
  * redessiner. Trois plans à des profondeurs différentes donnent la parallaxe.
  *
+ * La disposition suit un Pixel 7 vu à travers l'écran : barre photo en haut,
+ * objectifs arrière à droite, caméra frontale au centre du poinçon, lecteur
+ * d'empreinte sous l'écran, boutons à droite et tiroir SIM à gauche.
+ *
  * Les coordonnées sont en « unités » : un centième de la largeur de l'écran.
+ * Tout est décrit vu de dos, puis retourné comme on le verrait par l'écran.
  */
 class CircuitScene private constructor(
     val width: Int,
@@ -95,6 +102,7 @@ class CircuitScene private constructor(
         const val CHASSIS = 0
         const val BATTERY = 1
         const val BOARD = 2
+        const val GLASS = 3
         const val GLOW_SCALE = 2
 
         fun build(width: Int, height: Int, density: Float): CircuitScene = Builder(width, height, density).build()
@@ -114,7 +122,6 @@ class CircuitScene private constructor(
         val thin = Paint(line).apply { strokeWidth = 0.7f * density }
         val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
 
-        fun x(v: Float) = v * u
         fun r(l: Float, t: Float, rt: Float, b: Float) = RectF(l * u, t * u, rt * u, b * u)
         fun p(px: Float, py: Float) = PointF(px * u, py * u)
 
@@ -126,8 +133,14 @@ class CircuitScene private constructor(
 
         // Composants de la carte mère, relatifs à son bord haut.
         val top = board.top / u
-        val camera1 = p(22f, top + 13f)
-        val camera2 = p(22f, top + 32f)
+        // Objectifs principal et ultra grand-angle côte à côte, dans leur
+        // pastille, puis le flash (vus de dos : à gauche).
+        val camera1 = p(18f, top + 13f)
+        val camera2 = p(34f, top + 13f)
+        val camera1Radius = 7.5f
+        val camera2Radius = 5.5f
+        val pill = r(9f, top + 4.5f, 41.5f, top + 21.5f)
+        val flash = p(43.5f, top + 17.5f)
         val soc = r(49f, top + 19f, 71f, top + 41f)
         val ram = r(49f, top + 44f, 71f, top + 52f)
         val modem = r(12f, top + 46f, 26f, top + 60f)
@@ -148,19 +161,22 @@ class CircuitScene private constructor(
                 layer(depth = 1f, alpha = 90) { chassis(it) },
                 layer(depth = 0.55f, alpha = 150) { battery(it) },
                 layer(depth = 0.2f, alpha = 230) { board(it) },
+                layer(depth = 0f, alpha = 170) { glass(it) },
             )
             val cell = RectF(battery).apply { inset(2.2f * u, 2.2f * u) }
+            val mirror = Matrix().apply { setScale(-1f, 1f, width / 2f, 0f) }
+            fun Route.mirrored() = Route(points.map { PointF(width - it.x, it.y) })
             return CircuitScene(
                 width = width,
                 height = height,
                 layers = layers,
-                batteryCell = cell,
-                origin = PointF(soc.centerX(), soc.centerY()),
-                parts = parts(),
-                antennas = antennas(),
-                networkRoutes = network,
-                dataRoutes = data,
-                innerRoutes = inner,
+                batteryCell = RectF(width - cell.right, cell.top, width - cell.left, cell.bottom),
+                origin = PointF(width - soc.centerX(), soc.centerY()),
+                parts = parts().onEach { it.path.transform(mirror) },
+                antennas = antennas().apply { transform(mirror) },
+                networkRoutes = network.map { it.mirrored() },
+                dataRoutes = data.map { it.mirrored() },
+                innerRoutes = inner.map { it.mirrored() },
                 density = density,
             )
         }
@@ -175,7 +191,8 @@ class CircuitScene private constructor(
             rect(usb, 2.7f)
             rect(motor, 2f)
             rect(battery, 4f, BATTERY)
-            for ((center, radius) in listOf(camera1 to 8f, camera2 to 6.5f)) {
+            rect(pill, 8.5f)
+            for ((center, radius) in listOf(camera1 to camera1Radius, camera2 to camera2Radius)) {
                 shapes += Path().apply { addCircle(center.x, center.y, radius * u, Path.Direction.CW) } to BOARD
             }
             traces.forEach { points ->
@@ -196,7 +213,8 @@ class CircuitScene private constructor(
 
         private fun layer(depth: Float, alpha: Int, draw: (Canvas) -> Unit): Layer {
             val core = Bitmap.createBitmap(width, height, Bitmap.Config.ALPHA_8)
-            draw(Canvas(core))
+            // Dessiné vu de dos, retourné pour être vu par l'écran.
+            draw(Canvas(core).apply { scale(-1f, 1f, width / 2f, 0f) })
             val small = Bitmap.createScaledBitmap(core, width / GLOW_SCALE, height / GLOW_SCALE, true)
             val offset = IntArray(2)
             val blur = Paint().apply { maskFilter = BlurMaskFilter(5f * density, BlurMaskFilter.Blur.NORMAL) }
@@ -219,6 +237,15 @@ class CircuitScene private constructor(
             canvas.drawRoundRect(frame, 11f * u, 11f * u, line)
             canvas.drawRoundRect(RectF(frame).apply { inset(1.4f * u, 1.4f * u) }, 9.6f * u, 9.6f * u, thin)
 
+            // La barre photo, qui traverse le dos.
+            canvas.drawRoundRect(r(margin + 0.8f, top + 2f, 100f - margin - 0.8f, top + 24f), 11f * u, 11f * u, thin)
+            // Vus de dos : boutons marche et volume à gauche, tiroir SIM à droite.
+            canvas.drawRoundRect(r(margin - 0.9f, 0.2f * h, margin + 0.5f, 0.245f * h), 0.6f * u, 0.6f * u, line)
+            canvas.drawRoundRect(r(margin - 0.9f, 0.285f * h, margin + 0.5f, 0.38f * h), 0.6f * u, 0.6f * u, line)
+            val sim = r(100f - margin - 0.5f, 0.13f * h, 100f - margin + 0.9f, 0.19f * h)
+            canvas.drawRoundRect(sim, 0.6f * u, 0.6f * u, thin)
+            canvas.drawCircle(sim.centerX(), sim.bottom - 1.2f * u, 0.35f * u, thin)
+
             val coil = PointF(battery.centerX(), battery.centerY())
             for (i in 0 until 8) canvas.drawCircle(coil.x, coil.y, (22f - i * 1.6f) * u, thin)
             canvas.drawLine(coil.x - 1.5f * u, coil.y + 22f * u, coil.x - 1.5f * u, coil.y + 27f * u, thin)
@@ -234,6 +261,34 @@ class CircuitScene private constructor(
             canvas.drawCircle(at.x, at.y, 1.3f * u, thin)
             canvas.drawLine(at.x - 0.7f * u, at.y, at.x + 0.7f * u, at.y, thin)
             canvas.drawLine(at.x, at.y - 0.7f * u, at.x, at.y + 0.7f * u, thin)
+        }
+
+        // ——— Sous le verre : caméra frontale, écouteur, lecteur d'empreinte ———
+
+        private fun glass(canvas: Canvas) {
+            val punch = p(50f, 0.034f * h)
+            canvas.drawCircle(punch.x, punch.y, 2.2f * u, line)
+            fill.alpha = 70
+            canvas.drawCircle(punch.x, punch.y, 1.1f * u, fill)
+            canvas.drawRoundRect(r(41f, margin + 0.9f, 59f, margin + 1.6f), 0.4f * u, 0.4f * u, thin)
+            val sensor = p(44.5f, 0.034f * h)
+            fill.alpha = 120
+            canvas.drawCircle(sensor.x, sensor.y, 0.5f * u, fill)
+            fill.alpha = 255
+
+            val print = p(50f, 0.775f * h)
+            canvas.drawCircle(print.x, print.y, 5.5f * u, thin)
+            for (k in 1..3) {
+                val radius = k * 1.3f * u
+                canvas.drawArc(
+                    RectF(print.x - radius, print.y - radius, print.x + radius, print.y + radius),
+                    200f + k * 8f, 150f - k * 16f, false, thin,
+                )
+                canvas.drawArc(
+                    RectF(print.x - radius, print.y - radius, print.x + radius, print.y + radius),
+                    20f + k * 8f, 150f - k * 16f, false, thin,
+                )
+            }
         }
 
         // ——— Plan du milieu : la batterie ———
@@ -260,14 +315,17 @@ class CircuitScene private constructor(
             canvas.drawRoundRect(bottom, 3f * u, 3f * u, line)
 
             // Appareils photo et flash.
-            for ((center, radius) in listOf(camera1 to 8f, camera2 to 6.5f)) {
+            canvas.drawRoundRect(pill, 8.5f * u, 8.5f * u, thin)
+            for ((center, radius) in listOf(camera1 to camera1Radius, camera2 to camera2Radius)) {
                 canvas.drawCircle(center.x, center.y, radius * u, line)
                 canvas.drawCircle(center.x, center.y, radius * 0.72f * u, thin)
                 canvas.drawCircle(center.x, center.y, radius * 0.38f * u, thin)
                 fill.alpha = 60
                 canvas.drawCircle(center.x, center.y, radius * 0.38f * u, fill)
             }
-            canvas.drawCircle(camera2.x, camera2.y + 10f * u, 1.6f * u, thin)
+            canvas.drawCircle(flash.x, flash.y, 1.5f * u, thin)
+            fill.alpha = 90
+            canvas.drawCircle(flash.x, flash.y, 0.8f * u, fill)
 
             // Blindage autour du processeur et de la mémoire.
             val shield = Paint(thin).apply { pathEffect = DashPathEffect(floatArrayOf(1.2f * u, 0.8f * u), 0f) }
@@ -296,17 +354,20 @@ class CircuitScene private constructor(
             while (gx <= 31f) {
                 var gy = bottomTop + 4f
                 while (gy <= bottomTop + 12f) {
-                    canvas.drawCircle(x(gx), x(gy), 0.55f * u, fill)
+                    val dot = p(gx, gy)
+                    canvas.drawCircle(dot.x, dot.y, 0.55f * u, fill)
                     gy += 2.4f
                 }
                 gx += 2.4f
             }
-            canvas.drawCircle(x(66f), x(bottomTop + 8f), 1f * u, thin)
+            val mic = p(66f, bottomTop + 8f)
+            canvas.drawCircle(mic.x, mic.y, 1f * u, thin)
 
             // Petits composants semés sur la carte mère, hors des grosses puces.
             val keepOut = listOf(
                 RectF(soc.left - 4f * u, soc.top - 4f * u, soc.right + 4f * u, ram.bottom + 4f * u),
-                RectF(camera1.x - 10f * u, camera1.y - 10f * u, camera1.x + 10f * u, camera2.y + 13f * u),
+                RectF(pill).apply { inset(-1.5f * u, -1.5f * u) },
+                RectF(flash.x - 2.5f * u, flash.y - 2.5f * u, flash.x + 2.5f * u, flash.y + 2.5f * u),
                 RectF(modem).apply { inset(-2f * u, -2f * u) },
                 RectF(pmic).apply { inset(-2f * u, -2f * u) },
                 RectF(connector).apply { inset(-2f * u, -2f * u) },
@@ -438,7 +499,10 @@ class CircuitScene private constructor(
                 val sx = soc.left / u + 4f + i * 2.5f
                 // Plus à droite, plus haut : les L s'emboîtent sans se croiser.
                 val cy = camera1.y / u - 1f - i * 2f
-                routes += Route(route(p(sx, soc.top / u), p(sx, cy), p(camera1.x / u + 8.5f, cy)))
+                // Jusqu'au bord de l'ultra grand-angle.
+                val dy = cy - camera2.y / u
+                val edge = camera2.x / u + sqrt(camera2Radius * camera2Radius - dy * dy) + 0.6f
+                routes += Route(route(p(sx, soc.top / u), p(sx, cy), p(edge, cy)))
             }
             // Processeur → mémoire.
             for (i in 0 until 5) {

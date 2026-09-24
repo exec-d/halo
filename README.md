@@ -55,7 +55,10 @@ Un appui long sur un widget ouvre ses réglages dans WUX (Android 12+).
 **Circuit** (`wallpaper/`) : l'intérieur du téléphone en schéma néon, aux
 couleurs de Material You, pour l'accueil et l'écran de verrouillage.
 
-- trois plans (châssis et bobine, batterie, cartes et puces) décalés selon
+- disposition d'un Pixel 7 vu à travers l'écran : barre photo et objectifs
+  à droite, caméra frontale dans le poinçon, lecteur d'empreinte, boutons
+  à droite, tiroir SIM à gauche ;
+- quatre plans (châssis et bobine, batterie, cartes et puces, verre) décalés selon
   l'inclinaison (capteur de gravité), avec un reflet de verre ;
 - la batterie dessinée suit le niveau réel et respire pendant la charge ;
 - des impulsions courent de l'antenne au processeur quand des données passent
