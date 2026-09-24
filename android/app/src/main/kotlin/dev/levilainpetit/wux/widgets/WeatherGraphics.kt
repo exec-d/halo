@@ -95,7 +95,7 @@ object WeatherGraphics {
         canvas.drawCircle(x(0), y(points[0].temperature), 4 * density, paint)
         paint.textSize = 9 * density
         paint.textAlign = Paint.Align.CENTER
-        for i in points.indices step 2 {
+        for (i in points.indices step 2) {
             val tx = x(i).coerceIn(left + 8 * density, right - 8 * density)
             val ty = (y(points[i].temperature) - 5 * density).coerceAtLeast(9 * density)
             canvas.drawText("${points[i].temperature.roundToInt()}°", tx, ty, paint)
