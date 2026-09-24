@@ -50,6 +50,13 @@ Un appui long sur un widget ouvre ses réglages dans WUX (Android 12+).
 - `res/drawable-xxhdpi/*.png` : traits et icône d'alarme avec leur halo, en blanc,
   teintés par le widget ; générés par `tool/clock_assets.py`.
 
+## Application
+
+- **Catalogue** : aperçu de chaque widget avec des données d'exemple ; un appui ouvre ses réglages.
+- **Réglages** : état des autorisations (agenda, position), exclusion de l'optimisation de batterie, lieu et fraîcheur des données météo, actualisation manuelle.
+- **À propos** : version, confidentialité (aucune donnée collectée, seuls les appels à Open-Meteo quittent le téléphone), sources et crédits, licences open source.
+- Écran de démarrage aux couleurs de Halo (API 31+ via `windowSplashScreen*`).
+
 ## Principe
 
 Un widget Android est une vue native affichée par le lanceur ; Flutter ne

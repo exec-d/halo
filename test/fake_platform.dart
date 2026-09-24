@@ -102,6 +102,32 @@ class FakePlatform implements WuxPlatform {
   Future<String?> locateWeatherPlace() async => place = 'Ma position';
 
   @override
+  Future<AppInfo> appInfo() async => const AppInfo(version: '1.0.0', build: 42);
+
+  var weatherRefreshes = 0;
+
+  @override
+  Future<AppStatus> status() async => AppStatus(
+    calendar: permission,
+    location: false,
+    batteryUnrestricted: false,
+    weatherPlace: place,
+    weatherUpdatedAt: place == null ? null : DateTime(2026, 9, 24, 8, 30),
+  );
+
+  @override
+  Future<bool> requestLocationPermission() async => true;
+
+  @override
+  Future<void> openBatterySettings() async {}
+
+  @override
+  Future<bool> refreshWeather() async {
+    weatherRefreshes++;
+    return true;
+  }
+
+  @override
   Future<WuxHomeWidget?> configuringWidget() async => null;
 
   @override

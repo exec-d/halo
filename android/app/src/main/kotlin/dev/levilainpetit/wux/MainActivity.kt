@@ -8,6 +8,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Build
+import android.os.PowerManager
 import android.net.Uri
 import android.provider.Settings
 import dev.levilainpetit.wux.calendar.CalendarRepository
@@ -38,6 +39,7 @@ open class MainActivity : FlutterActivity() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var pendingPermission: MethodChannel.Result? = null
     private var pendingLocation: MethodChannel.Result? = null
+    private var pendingLocationPermission: MethodChannel.Result? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -88,6 +90,48 @@ open class MainActivity : FlutterActivity() {
                 usePlace(place, result)
             }
             "weatherLocate" -> locate(result)
+            "appInfo" -> {
+                val info = packageManager.getPackageInfo(packageName, 0)
+                val code = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    info.longVersionCode
+                } else {
+                    @Suppress("DEPRECATION")
+                    info.versionCode.toLong()
+                }
+                result.success(mapOf("version" to info.versionName, "build" to code))
+            }
+            "status" -> result.success(
+                mapOf(
+                    "calendar" to repository.hasPermission(),
+                    "location" to (
+                        checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                            PackageManager.PERMISSION_GRANTED
+                        ),
+                    "batteryUnrestricted" to (
+                        getSystemService(PowerManager::class.java)?.isIgnoringBatteryOptimizations(packageName) == true
+                        ),
+                    "weatherPlace" to Weather.place(this)?.name,
+                    "weatherUpdatedAt" to Weather.fetchedAt(this),
+                ),
+            )
+            "requestLocationPermission" -> {
+                if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    result.success(true)
+                } else {
+                    pendingLocationPermission?.success(false)
+                    pendingLocationPermission = result
+                    requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_ONLY_REQUEST)
+                }
+            }
+            "openBatterySettings" -> {
+                startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+                result.success(null)
+            }
+            "refreshWeather" -> scope.launch {
+                val ok = withContext(Dispatchers.IO) { Weather.refresh(applicationContext) }
+                if (ok) WeatherRefresh.redraw(applicationContext)
+                result.success(ok)
+            }
             "calendars" -> background(result) {
                 repository.calendars().map {
                     mapOf("id" to it.id, "name" to it.name, "account" to it.account, "color" to it.color)
@@ -197,6 +241,11 @@ open class MainActivity : FlutterActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val granted = grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED
+        if (requestCode == LOCATION_ONLY_REQUEST) {
+            pendingLocationPermission?.success(granted)
+            pendingLocationPermission = null
+            return
+        }
         if (requestCode == LOCATION_REQUEST) {
             val pending = pendingLocation ?: return
             pendingLocation = null
@@ -218,5 +267,6 @@ open class MainActivity : FlutterActivity() {
         const val CHANNEL = "dev.levilainpetit.wux/native"
         const val CALENDAR_REQUEST = 4201
         const val LOCATION_REQUEST = 4202
+        const val LOCATION_ONLY_REQUEST = 4203
     }
 }

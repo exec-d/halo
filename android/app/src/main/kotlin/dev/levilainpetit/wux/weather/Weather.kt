@@ -172,6 +172,10 @@ object Weather {
         }.getOrNull()
     }
 
+    /** Heure du dernier téléchargement réussi, ou `null`. */
+    fun fetchedAt(context: Context): Long? =
+        HomeWidgetPlugin.getData(context).getLong(FETCHED, 0).takeIf { it > 0 }
+
     /**
      * Vrai si les prévisions gardées ont plus de [maxAgeMinutes] minutes, ou
      * viennent d'une version de WUX qui ne demandait pas tout ce qu'elle

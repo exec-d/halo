@@ -58,6 +58,19 @@ abstract interface class WuxPlatform {
   /// renvoie le nom du lieu, ou `null` si elle est refusée.
   Future<String?> locateWeatherPlace();
 
+  Future<AppInfo> appInfo();
+
+  Future<AppStatus> status();
+
+  /// Demande la position approximative ; renvoie la réponse.
+  Future<bool> requestLocationPermission();
+
+  /// Ouvre la liste des applications exclues de l'optimisation de batterie.
+  Future<void> openBatterySettings();
+
+  /// Retélécharge la météo ; faux si le réseau ou le service a échoué.
+  Future<bool> refreshWeather();
+
   /// Widget dont le lanceur a ouvert les réglages, ou `null`.
   Future<WuxHomeWidget?> configuringWidget();
 
@@ -169,6 +182,43 @@ class AndroidWuxPlatform implements WuxPlatform {
     );
     return result?['name'] as String?;
   }
+
+  @override
+  Future<AppInfo> appInfo() async {
+    final map = await _channel.invokeMapMethod<String, Object?>('appInfo');
+    return AppInfo(
+      version: map?['version'] as String? ?? '?',
+      build: (map?['build'] as num?)?.toInt() ?? 0,
+    );
+  }
+
+  @override
+  Future<AppStatus> status() async {
+    final map =
+        await _channel.invokeMapMethod<String, Object?>('status') ?? const {};
+    final updated = (map['weatherUpdatedAt'] as num?)?.toInt();
+    return AppStatus(
+      calendar: map['calendar'] == true,
+      location: map['location'] == true,
+      batteryUnrestricted: map['batteryUnrestricted'] == true,
+      weatherPlace: map['weatherPlace'] as String?,
+      weatherUpdatedAt: updated == null
+          ? null
+          : DateTime.fromMillisecondsSinceEpoch(updated),
+    );
+  }
+
+  @override
+  Future<bool> requestLocationPermission() async =>
+      await _channel.invokeMethod<bool>('requestLocationPermission') ?? false;
+
+  @override
+  Future<void> openBatterySettings() =>
+      _channel.invokeMethod<void>('openBatterySettings');
+
+  @override
+  Future<bool> refreshWeather() async =>
+      await _channel.invokeMethod<bool>('refreshWeather') ?? false;
 
   @override
   Future<WuxHomeWidget?> configuringWidget() async {

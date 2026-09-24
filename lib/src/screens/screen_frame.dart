@@ -12,6 +12,7 @@ class ScreenFrame extends StatelessWidget {
     required this.title,
     required this.child,
     this.canGoBack = false,
+    this.actions = const [],
   });
 
   final String title;
@@ -19,6 +20,9 @@ class ScreenFrame extends StatelessWidget {
 
   /// Affiche le bouton retour, pour un écran ouvert depuis le catalogue.
   final bool canGoBack;
+
+  /// Actions de l'écran, à droite de la barre.
+  final List<IuxIconButton> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,7 @@ class ScreenFrame extends StatelessWidget {
                     onActivate: () => Navigator.of(context).maybePop(),
                   )
                 : null,
+            actions: actions,
           ),
           MediaQuery.removePadding(
             context: context,

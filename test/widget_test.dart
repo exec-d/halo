@@ -168,4 +168,31 @@ void main() {
     expect(find.text('Prévisions pour Villars, Ain, France.'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
   });
+
+  testWidgets('à propos montre la version et les crédits', (tester) async {
+    await tester.pumpWidget(WuxApp(platform: FakePlatform()));
+    await tester.pumpAndSettle();
+    await tester.tap(find.bySemanticsLabel('À propos'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Version 1.0.0 (build 42)'), findsOneWidget);
+    expect(find.text('Confidentialité'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('les réglages actualisent la météo', (tester) async {
+    final platform = FakePlatform()..place = 'Lyon';
+    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpAndSettle();
+    await tester.tap(find.bySemanticsLabel('Réglages'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Agenda'), findsOneWidget);
+    await tester.ensureVisible(find.text('Actualiser maintenant'));
+    await tester.tap(find.text('Actualiser maintenant'));
+    await tester.pumpAndSettle();
+    expect(platform.weatherRefreshes, 1);
+    expect(find.text('Prévisions à jour.'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
 }

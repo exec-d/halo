@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Repli avant Android 12 ; values-v31 prend les couleurs du fond d'écran. -->
 <resources>
+    <color name="splash_background">#FF05070D</color>
     <!-- Horloge : cœur des traits, halo, lignes et barres. -->
     <color name="clock_core">#FFE6F6FF</color>
     <color name="clock_glow">#FF2F9BFF</color>

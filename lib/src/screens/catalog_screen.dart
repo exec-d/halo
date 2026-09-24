@@ -4,7 +4,9 @@ import 'package:iux_flutter/iux_flutter.dart';
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import '../previews/widget_previews.dart';
+import 'about_screen.dart';
 import 'screen_frame.dart';
+import 'settings_screen.dart';
 import 'widget_screen.dart';
 
 /// Liste des widgets disponibles, chacun avec un aperçu d'exemple ; toucher
@@ -58,6 +60,30 @@ class _CatalogScreenState extends State<CatalogScreen> {
     return Scaffold(
       body: ScreenFrame(
         title: 'Mes widgets',
+        actions: [
+          IuxIconButton(
+            icon: Icons.settings_outlined,
+            action: const IuxActionDescriptor(
+              semantics: IuxActionSemantics(label: 'Réglages'),
+            ),
+            onActivate: () => Navigator.of(context).push<void>(
+              MaterialPageRoute<void>(
+                builder: (_) => SettingsScreen(platform: platform),
+              ),
+            ),
+          ),
+          IuxIconButton(
+            icon: Icons.info_outline,
+            action: const IuxActionDescriptor(
+              semantics: IuxActionSemantics(label: 'À propos'),
+            ),
+            onActivate: () => Navigator.of(context).push<void>(
+              MaterialPageRoute<void>(
+                builder: (_) => AboutScreen(platform: platform),
+              ),
+            ),
+          ),
+        ],
         child: IuxSection(
           children: [
             for (final homeWidget in widgets) ...[

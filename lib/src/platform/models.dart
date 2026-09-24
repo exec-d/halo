@@ -40,3 +40,30 @@ class WeatherPlace {
   final double latitude;
   final double longitude;
 }
+
+/// Version installée, telle qu'Android la connaît.
+class AppInfo {
+  const AppInfo({required this.version, required this.build});
+
+  final String version;
+  final int build;
+}
+
+/// État de ce dont dépendent les widgets.
+class AppStatus {
+  const AppStatus({
+    required this.calendar,
+    required this.location,
+    required this.batteryUnrestricted,
+    this.weatherPlace,
+    this.weatherUpdatedAt,
+  });
+
+  final bool calendar;
+  final bool location;
+
+  /// Faux : Android peut retarder les mises à jour des widgets.
+  final bool batteryUnrestricted;
+  final String? weatherPlace;
+  final DateTime? weatherUpdatedAt;
+}
