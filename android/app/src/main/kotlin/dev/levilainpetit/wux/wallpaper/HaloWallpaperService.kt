@@ -136,6 +136,7 @@ class HaloWallpaperService : WallpaperService() {
             this.visible = visible
             if (visible) {
                 refreshPalette()
+                state.intensity = WallpaperSettings.intensity(this@HaloWallpaperService)
                 sensors?.let { manager ->
                     val sensor = manager.getDefaultSensor(Sensor.TYPE_GRAVITY)
                         ?: manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)

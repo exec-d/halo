@@ -11,7 +11,6 @@ import android.graphics.PointF
 import android.graphics.RadialGradient
 import android.graphics.RectF
 import android.graphics.Shader
-import android.graphics.Typeface
 import dev.levilainpetit.wux.R
 import kotlin.math.PI
 import kotlin.math.hypot
@@ -47,6 +46,12 @@ class FrameState {
     var signal = 0.75f
     var timeMillis = 0L
 
+    /**
+     * Intensité du décor, de 0 à 1 : discret par défaut, pour que les
+     * widgets et les icônes posés dessus restent lisibles.
+     */
+    var intensity = WallpaperSettings.DISCREET
+
     /** Écran de verrouillage : le haut est assombri pour l'horloge. */
     var locked = false
     val pulses = mutableListOf<Pulse>()
@@ -72,11 +77,6 @@ class CircuitPainter(private val scene: CircuitScene) {
         strokeCap = Paint.Cap.ROUND
     }
     private val fill = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val text = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        typeface = Typeface.MONOSPACE
-        textSize = 15f * density
-        isFakeBoldText = true
-    }
     private val pulseGlow = Paint(Paint.ANTI_ALIAS_FLAG)
     /** Le halo d'une impulsion, recréé quand la couleur du téléphone change. */
     private var pulseShader: RadialGradient? = null
@@ -123,7 +123,7 @@ class CircuitPainter(private val scene: CircuitScene) {
             canvas.save()
             canvas.translate(dx, dy)
             maskPaint.color = palette.glow
-            maskPaint.alpha = layer.alpha * 3 / 5
+            maskPaint.alpha = (layer.alpha * 0.35f * state.intensity).toInt()
             glowRect.set(
                 layer.glowOffsetX,
                 layer.glowOffsetY,
@@ -131,8 +131,8 @@ class CircuitPainter(private val scene: CircuitScene) {
                 layer.glowOffsetY + layer.glow.height * CircuitScene.GLOW_SCALE,
             )
             canvas.drawBitmap(layer.glow, null, glowRect, maskPaint)
-            maskPaint.color = if (index == CircuitScene.BOARD) palette.core else palette.line
-            maskPaint.alpha = layer.alpha
+            maskPaint.color = palette.line
+            maskPaint.alpha = (layer.alpha * state.intensity).toInt()
             canvas.drawBitmap(layer.core, 0f, 0f, maskPaint)
             when (index) {
                 CircuitScene.BATTERY -> battery(canvas, state, palette)
@@ -148,7 +148,7 @@ class CircuitPainter(private val scene: CircuitScene) {
             canvas.restore()
             // Le front de l'allumage.
             stroke.color = palette.core
-            stroke.alpha = ((1f - ignition) * 220).toInt()
+            stroke.alpha = ((1f - ignition) * 220 * state.intensity).toInt()
             stroke.strokeWidth = 2f * density
             canvas.drawCircle(scene.origin.x, scene.origin.y, radius, stroke)
         }
@@ -167,27 +167,22 @@ class CircuitPainter(private val scene: CircuitScene) {
         // En charge, le niveau respire.
         val breath = if (state.charging) (sin(state.timeMillis / 700.0 * PI).toFloat() + 1f) / 2f else 0f
         fill.color = palette.glow
-        fill.alpha = (34 + 40 * breath).toInt()
+        fill.alpha = ((22 + 30 * breath) * state.intensity).toInt()
         canvas.drawRect(cell.left, top, cell.right, cell.bottom, fill)
         stroke.color = palette.core
-        stroke.alpha = 220
+        stroke.alpha = (200 * state.intensity).toInt()
         stroke.strokeWidth = 1.4f * density
         canvas.drawLine(cell.left + 1.5f * density, top, cell.right - 1.5f * density, top, stroke)
-
-        text.color = palette.core
-        text.alpha = 230
-        val label = "${(level * 100).toInt()} %" + if (state.charging) "  ⚡" else ""
-        canvas.drawText(label, cell.left + 2f * density + cell.width() * 0.04f, cell.top + text.textSize * 1.6f, text)
     }
 
     private fun antennas(canvas: Canvas, state: FrameState, palette: CircuitPalette) {
         val strength = 0.25f + 0.75f * state.signal.coerceIn(0f, 1f)
         stroke.color = palette.glow
-        stroke.alpha = (70 * strength).toInt()
+        stroke.alpha = (60 * strength * state.intensity).toInt()
         stroke.strokeWidth = 7f * density
         canvas.drawPath(scene.antennas, stroke)
         stroke.color = palette.core
-        stroke.alpha = (90 + 150 * strength).toInt()
+        stroke.alpha = ((70 + 150 * strength) * state.intensity).toInt()
         stroke.strokeWidth = 1.6f * density
         canvas.drawPath(scene.antennas, stroke)
     }
@@ -203,6 +198,7 @@ class CircuitPainter(private val scene: CircuitScene) {
         }
         val shader = pulseShader!!
         pulseGlow.shader = shader
+        val strength = 0.4f + 0.6f * state.intensity
         for (pulse in state.pulses) {
             // Une traînée de quelques points qui s'estompent.
             for (k in 3 downTo 0) {
@@ -212,10 +208,10 @@ class CircuitPainter(private val scene: CircuitScene) {
                 val fade = 1f - k / 4f
                 pulseMatrix.setTranslate(point.x, point.y)
                 shader.setLocalMatrix(pulseMatrix)
-                pulseGlow.alpha = (150 * fade).toInt()
+                pulseGlow.alpha = (130 * fade * strength).toInt()
                 canvas.drawCircle(point.x, point.y, 9f * density * fade, pulseGlow)
                 fill.color = palette.core
-                fill.alpha = (255 * fade).toInt()
+                fill.alpha = (255 * fade * strength).toInt()
                 canvas.drawCircle(point.x, point.y, max(1f, 2.2f * density * fade), fill)
             }
         }

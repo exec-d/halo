@@ -62,6 +62,9 @@ couleurs de Material You, pour l'accueil et l'écran de verrouillage.
   (`TrafficStats`), les antennes brillent selon la force du signal ;
 - à l'allumage de l'écran, les circuits s'éclairent depuis le processeur.
 
+Une intensité (discret par défaut, normal, vif) garde widgets et icônes
+lisibles par-dessus ; le décor ne contient aucun texte.
+
 Les parties fixes sont rendues une fois en masques `ALPHA_8`, teintés au
 dessin. Rien ne tourne quand le fond est caché ; le dessin continu n'a lieu
 que pendant un mouvement, une impulsion, l'allumage ou une charge.

@@ -14,6 +14,7 @@ import android.net.Uri
 import android.provider.Settings
 import dev.levilainpetit.wux.calendar.CalendarRepository
 import dev.levilainpetit.wux.wallpaper.WallpaperPreview
+import dev.levilainpetit.wux.wallpaper.WallpaperSettings
 import dev.levilainpetit.wux.weather.Place
 import dev.levilainpetit.wux.weather.Weather
 import dev.levilainpetit.wux.weather.WeatherRefresh
@@ -158,6 +159,11 @@ open class MainActivity : FlutterActivity() {
                 } else {
                     background(result) { WallpaperPreview.render(applicationContext, width, height) }
                 }
+            }
+            "wallpaperIntensity" -> result.success(WallpaperSettings.intensityName(this))
+            "setWallpaperIntensity" -> {
+                WallpaperSettings.setIntensityName(this, call.argument<String>("value") ?: "discreet")
+                result.success(null)
             }
             "wallpaperActive" -> result.success(WallpaperPreview.isActive(this))
             "applyWallpaper" -> {

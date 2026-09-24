@@ -63,6 +63,14 @@ class FakePlatform implements WuxPlatform {
   }
 
   var wallpaperActive = false;
+  var intensity = 'discreet';
+
+  @override
+  Future<String> wallpaperIntensity() async => intensity;
+
+  @override
+  Future<void> setWallpaperIntensity(String value) async => intensity = value;
+
   var wallpaperApplications = 0;
 
   @override

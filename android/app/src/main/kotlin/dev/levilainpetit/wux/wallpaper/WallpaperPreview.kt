@@ -18,11 +18,12 @@ object WallpaperPreview {
      * allumé, au vrai niveau de batterie, avec quelques impulsions en route.
      */
     fun render(context: Context, widthPx: Int, heightPx: Int): ByteArray {
+        val intensity = WallpaperSettings.intensity(context)
         val metrics = context.resources.displayMetrics
         // Même rendu qu'à l'écran, réduit : les traits gardent leur proportion.
         val density = metrics.density * widthPx / metrics.widthPixels.coerceAtLeast(1)
         val scene = CircuitScene.build(widthPx, heightPx, density)
-        val state = FrameState()
+        val state = FrameState().apply { this.intensity = intensity }
         context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))?.let {
             val level = it.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
             val scale = it.getIntExtra(BatteryManager.EXTRA_SCALE, 100)

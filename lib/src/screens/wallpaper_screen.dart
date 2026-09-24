@@ -28,6 +28,10 @@ class _WallpaperScreenState extends State<WallpaperScreen>
   static const _apply = "Appliquer le fond d'écran";
 
   bool? _active;
+  String _intensity = 'discreet';
+
+  /// Augmentée à chaque réglage, pour redessiner l'aperçu.
+  int _revision = 0;
 
   /// L'écran système d'application manque (rare, sur certains téléphones).
   bool _unavailable = false;
@@ -55,7 +59,19 @@ class _WallpaperScreenState extends State<WallpaperScreen>
 
   Future<void> _refresh() async {
     final active = await _platform.isWallpaperActive();
-    if (mounted) setState(() => _active = active);
+    final intensity = await _platform.wallpaperIntensity();
+    if (mounted) {
+      setState(() {
+        _active = active;
+        _intensity = intensity;
+      });
+    }
+  }
+
+  Future<void> _setIntensity(String value) async {
+    setState(() => _intensity = value);
+    await _platform.setWallpaperIntensity(value);
+    if (mounted) setState(() => _revision++);
   }
 
   Future<void> _applyWallpaper() async {
@@ -78,7 +94,12 @@ class _WallpaperScreenState extends State<WallpaperScreen>
             IuxSection(
               description: wallpaperDescription,
               children: [
-                Center(child: WallpaperPreview(platform: _platform)),
+                Center(
+                  child: WallpaperPreview(
+                    platform: _platform,
+                    revision: _revision,
+                  ),
+                ),
                 const IuxGap.between(),
                 if (_active != null)
                   IuxStatusIndicator(
@@ -105,6 +126,28 @@ class _WallpaperScreenState extends State<WallpaperScreen>
                     style: typography.body,
                   ),
                 ],
+              ],
+            ),
+            const IuxGap.between(),
+            IuxSection(
+              title: 'Intensité',
+              children: [
+                IuxRadioGroup<String>(
+                  label: 'Intensité du fond',
+                  input: const IuxInputDescriptor(
+                    semantics: IuxInputSemantics(label: 'Intensité du fond'),
+                    helpText:
+                        'Discret garde les widgets et les icônes bien '
+                        'lisibles par-dessus.',
+                  ),
+                  value: _intensity,
+                  options: const [
+                    IuxRadioOption(value: 'discreet', label: 'Discret'),
+                    IuxRadioOption(value: 'normal', label: 'Normal'),
+                    IuxRadioOption(value: 'vivid', label: 'Vif'),
+                  ],
+                  onChanged: _setIntensity,
+                ),
               ],
             ),
             const IuxGap.between(),
@@ -161,9 +204,17 @@ class _WallpaperScreenState extends State<WallpaperScreen>
 /// Le fond d'écran dessiné par Android, en image fixe, au format d'un
 /// téléphone.
 class WallpaperPreview extends StatefulWidget {
-  const WallpaperPreview({super.key, required this.platform, this.width = 220});
+  const WallpaperPreview({
+    super.key,
+    required this.platform,
+    this.width = 220,
+    this.revision = 0,
+  });
 
   final WuxPlatform platform;
+
+  /// Redessiné quand elle change (un réglage vient de bouger).
+  final int revision;
 
   /// Largeur affichée ; la hauteur suit le format 9:20.
   final double width;
@@ -181,6 +232,16 @@ class _WallpaperPreviewState extends State<WallpaperPreview> {
     super.didChangeDependencies();
     if (_requested) return;
     _requested = true;
+    _render();
+  }
+
+  @override
+  void didUpdateWidget(WallpaperPreview old) {
+    super.didUpdateWidget(old);
+    if (old.revision != widget.revision) _render();
+  }
+
+  void _render() {
     final ratio = MediaQuery.devicePixelRatioOf(context);
     final size = Size(widget.width * ratio, widget.width * 20 / 9 * ratio);
     widget.platform.renderWallpaper(size).then((image) {

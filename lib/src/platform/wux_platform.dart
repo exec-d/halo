@@ -34,6 +34,11 @@ abstract interface class WuxPlatform {
   /// Le fond d'écran animé en image fixe, à [size] pixels, en PNG.
   Future<Uint8List?> renderWallpaper(Size size);
 
+  /// Intensité du fond d'écran : `discreet`, `normal` ou `vivid`.
+  Future<String> wallpaperIntensity();
+
+  Future<void> setWallpaperIntensity(String value);
+
   /// Vrai si le fond d'écran Halo est celui du téléphone.
   Future<bool> isWallpaperActive();
 
@@ -131,6 +136,14 @@ class AndroidWuxPlatform implements WuxPlatform {
         'width': size.width.round(),
         'height': size.height.round(),
       });
+
+  @override
+  Future<String> wallpaperIntensity() async =>
+      await _channel.invokeMethod<String>('wallpaperIntensity') ?? 'discreet';
+
+  @override
+  Future<void> setWallpaperIntensity(String value) =>
+      _channel.invokeMethod<void>('setWallpaperIntensity', {'value': value});
 
   @override
   Future<bool> isWallpaperActive() async =>

@@ -47,6 +47,11 @@ void main() {
 
     expect(platform.wallpaperApplications, 1);
     expect(find.text("Fond d'écran actuel"), findsOneWidget);
+
+    await tester.ensureVisible(find.text('Vif'));
+    await tester.tap(find.text('Vif'));
+    await tester.pumpAndSettle();
+    expect(platform.intensity, 'vivid');
     await tester.pumpWidget(const SizedBox());
   });
 

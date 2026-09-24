@@ -8,7 +8,6 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PointF
 import android.graphics.RectF
-import android.graphics.Typeface
 import kotlin.math.hypot
 import kotlin.random.Random
 
@@ -106,11 +105,6 @@ class CircuitScene private constructor(
         }
         val thin = Paint(line).apply { strokeWidth = 0.7f * density }
         val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
-        val text = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            typeface = Typeface.MONOSPACE
-            textSize = 8f * density
-            letterSpacing = 0.12f
-        }
 
         fun x(v: Float) = v * u
         fun r(l: Float, t: Float, rt: Float, b: Float) = RectF(l * u, t * u, rt * u, b * u)
@@ -219,11 +213,6 @@ class CircuitScene private constructor(
                 val cx = battery.left + (22f + i * 24f) * u
                 canvas.drawRect(RectF(cx - 3f * u, battery.bottom - 0.8f * u, cx + 3f * u, battery.bottom + 3f * u), thin)
             }
-            text.alpha = 170
-            val left = battery.left + 3.5f * u
-            canvas.drawText("HALO CELL · LI-ION", left, battery.bottom - 9.5f * u, text)
-            canvas.drawText("3,87 V · 4355 mAh", left, battery.bottom - 6f * u, text)
-            text.alpha = 255
         }
 
         // ——— Plan avant : cartes, puces, pistes ———
@@ -246,16 +235,16 @@ class CircuitScene private constructor(
             val shield = Paint(thin).apply { pathEffect = DashPathEffect(floatArrayOf(1.2f * u, 0.8f * u), 0f) }
             canvas.drawRoundRect(RectF(soc.left - 3f * u, soc.top - 3f * u, soc.right + 3f * u, ram.bottom + 2.5f * u), 2f * u, 2f * u, shield)
 
-            chip(canvas, soc, "HALO")
+            chip(canvas, soc)
             val die = RectF(soc).apply { inset(5f * u, 5f * u) }
             fill.alpha = 45
             canvas.drawRect(die, fill)
             canvas.drawRect(die, thin)
             pins(canvas, soc, 8)
-            chip(canvas, ram, "LPDDR5")
-            chip(canvas, modem, "5G")
+            chip(canvas, ram)
+            chip(canvas, modem)
             pins(canvas, modem, 5)
-            chip(canvas, pmic, "PMIC")
+            chip(canvas, pmic)
             connector(canvas, connector)
             connector(canvas, bottomConnector)
 
@@ -308,13 +297,9 @@ class CircuitScene private constructor(
             }
         }
 
-        private fun chip(canvas: Canvas, rect: RectF, label: String) {
+        // Pas de texte dans le décor : il se mêlerait à celui des widgets.
+        private fun chip(canvas: Canvas, rect: RectF) {
             canvas.drawRoundRect(rect, 0.8f * u, 0.8f * u, line)
-            text.alpha = 210
-            text.textAlign = Paint.Align.CENTER
-            canvas.drawText(label, rect.centerX(), rect.centerY() + text.textSize * 0.35f, text)
-            text.textAlign = Paint.Align.LEFT
-            text.alpha = 255
         }
 
         /** Des pattes sur les quatre côtés de [rect]. */
