@@ -3,12 +3,12 @@
 # canal   : où le public obtient le projet (obligatoire si phase = publié).
 #           Indépendant de la visibilité du dépôt sur GitHub.
 # jalon   : prochaine étape. Un jalon GitHub du même nom prime sur les tâches.
-phase: prototype
+phase: bêta
 canal: ""
 jalon: ""
-maj: 2026-09-23
+maj: 2026-09-24
 taches:
-  faites: [Setup du projet Flutter Android, Intégration d'IUX, Widget Horloge / date, Widget Agenda / rappels]
-  restantes: [Essai sur téléphone]
+  faites: [Setup du projet Flutter Android, Intégration d'IUX, Widget Horloge / date, Widget Agenda / rappels, Essai sur téléphone, Widgets système et météo, Pages Réglages et À propos]
+  restantes: []
 notes: |
-  Widgets horloge et agenda écrits ; jamais essayés sur un vrai téléphone.
+  v0.1.0 : app « Halo » (nom de code WUX), APK de debug pour usage personnel.
