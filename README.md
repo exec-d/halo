@@ -20,7 +20,7 @@ halo lumineux. Les couleurs suivent l'accent du fond d'écran
 | Compte à rebours | Les jours jusqu'à une date | Ouvre WUX |
 | Contrôles (4x1) | Lampe torche, Wi-Fi, Bluetooth, son, appareil photo | Bascule la lampe, ouvre le reste |
 | Mois (4x3) | Le mois en cours, jours avec événements marqués | Ouvre le jour dans l'agenda |
-| Météo (4x2) | Conditions actuelles, six prochaines heures (Open-Meteo) | Ouvre WUX |
+| Météo (4x3) | Tableau de bord : température et jauge du jour, relevés, courbe des 24 h | Ouvre WUX |
 | Soleil et Lune (4x1) | Lever, coucher, durée du jour, phase de la lune | Ouvre WUX |
 | Pluie (4x2) | Pluie en cours ou à venir, probabilités sur 12 h | Ouvre WUX |
 | Allergies (4x2) | Six pollens, qualité de l'air (Open-Meteo, Europe) | Ouvre WUX |

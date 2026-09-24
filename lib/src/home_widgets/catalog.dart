@@ -96,10 +96,11 @@ const weatherWidget = WuxHomeWidget(
   kind: WuxWidgetKind.weather,
   title: 'Météo',
   description:
-      "Le temps qu'il fait et les six prochaines heures, par Open-Meteo. "
-      'Mises à jour chaque heure.',
+      'Façon tableau de bord : température et jauge du jour, ressenti, vent, '
+      'humidité, UV, pluie, et la courbe des 24 heures. Open-Meteo, chaque '
+      'heure. Sur une rangée, une seule ligne.',
   androidProvider: '$_androidPackage.WeatherWidget',
-  previewSize: Size(340, 150),
+  previewSize: Size(340, 230),
 );
 
 const sunMoonWidget = WuxHomeWidget(

@@ -6,6 +6,7 @@ import dev.levilainpetit.wux.R
 import dev.levilainpetit.wux.calendar.AgendaDay
 import dev.levilainpetit.wux.calendar.AgendaLine
 import dev.levilainpetit.wux.weather.Air
+import dev.levilainpetit.wux.weather.CurvePoint
 import dev.levilainpetit.wux.weather.Day
 import dev.levilainpetit.wux.weather.Forecast
 import dev.levilainpetit.wux.weather.Hour
@@ -106,6 +107,19 @@ object SampleData {
             code = 2,
             isDay = now.hour in 7..20,
             wind = 12.0,
+            windDirection = 225,
+            humidity = 72,
+            uv = 4.0,
+            curve = (0 until 24).map { i ->
+                val time = now.plusHours(i.toLong())
+                CurvePoint(
+                    time,
+                    doubleArrayOf(18.0, 17.0, 16.0, 15.0, 14.0, 13.0, 13.0, 12.0, 12.0, 13.0, 15.0, 18.0,
+                        20.0, 22.0, 24.0, 25.0, 26.0, 26.0, 25.0, 23.0, 21.0, 20.0, 19.0, 18.0)[i],
+                    intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 30, 60, 70, 40, 20, 5, 0, 0, 0, 0)[i],
+                    time.hour in 7..20,
+                )
+            },
             hours = hours,
             rain = (0 until 12).map { i ->
                 RainHour(now.plusHours(i.toLong()), intArrayOf(5, 10, 20, 45, 70, 80, 60, 35, 20, 10, 5, 5)[i], if (i in 4..6) 0.8 else 0.0)

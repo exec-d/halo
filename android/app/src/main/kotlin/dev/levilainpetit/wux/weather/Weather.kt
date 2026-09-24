@@ -20,6 +20,9 @@ data class Hour(val time: LocalDateTime, val temperature: Double, val code: Int,
 /** Un jour de prévision. */
 data class Day(val date: LocalDate, val code: Int, val max: Double, val min: Double, val sunrise: LocalTime?, val sunset: LocalTime?)
 
+/** Un point de la courbe des 24 heures. */
+data class CurvePoint(val time: LocalDateTime, val temperature: Double, val rainProbability: Int, val isDay: Boolean)
+
 /** Une heure de pluie : probabilité (%) et cumul (mm). */
 data class RainHour(val time: LocalDateTime, val probability: Int, val millimeters: Double)
 
@@ -49,6 +52,12 @@ data class Forecast(
     val code: Int,
     val isDay: Boolean,
     val wind: Double,
+    /** D'où vient le vent, en degrés (0 : nord). */
+    val windDirection: Int = 0,
+    val humidity: Int = 0,
+    val uv: Double? = null,
+    /** Les 24 prochaines heures, pour la courbe. */
+    val curve: List<CurvePoint> = emptyList(),
     val hours: List<Hour>,
     val days: List<Day>,
     /** Les 12 prochaines heures. */
@@ -86,7 +95,8 @@ object Weather {
     fun refresh(context: Context): Boolean {
         val place = place(context) ?: return false
         val url = "https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}" +
-            "&current=temperature_2m,apparent_temperature,weather_code,is_day,wind_speed_10m" +
+            "&current=temperature_2m,apparent_temperature,weather_code,is_day,wind_speed_10m," +
+            "wind_direction_10m,relative_humidity_2m,uv_index" +
             "&hourly=temperature_2m,weather_code,is_day,precipitation_probability,precipitation" +
             "&minutely_15=precipitation&forecast_minutely_15=12" +
             "&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset" +
@@ -161,6 +171,16 @@ object Weather {
             if (time.isBefore(now.minusHours(1)) || probabilities == null || amounts == null) return@mapNotNull null
             RainHour(time, probabilities.optInt(i, 0), amounts.optDouble(i, 0.0))
         }.filter { !it.time.plusHours(1).isBefore(now) }.take(12)
+        val curve = (0 until times.length()).mapNotNull { i ->
+            val time = LocalDateTime.parse(times.getString(i))
+            if (time.plusHours(1).isBefore(now)) return@mapNotNull null
+            CurvePoint(
+                time,
+                hourly.getJSONArray("temperature_2m").getDouble(i),
+                probabilities?.optInt(i, 0) ?: 0,
+                hourly.getJSONArray("is_day").getInt(i) == 1,
+            )
+        }.take(24)
         val quarters = root.optJSONObject("minutely_15")
         val rainSoon = quarters?.let { q ->
             val qTimes = q.getJSONArray("time")
@@ -190,6 +210,10 @@ object Weather {
             code = current.getInt("weather_code"),
             isDay = current.getInt("is_day") == 1,
             wind = current.getDouble("wind_speed_10m"),
+            windDirection = current.optInt("wind_direction_10m", 0),
+            humidity = current.optInt("relative_humidity_2m", 0),
+            uv = if (current.isNull("uv_index")) null else current.optDouble("uv_index"),
+            curve = curve,
             hours = hours,
             days = days,
             rain = rain,
@@ -207,6 +231,18 @@ object Weather {
             connection.disconnect()
         }
     }.getOrNull()
+
+    /** Une phrase : pluie en cours, dans combien de temps, ou pas de pluie. */
+    fun rainSummary(context: Context, forecast: Forecast): String {
+        val wetQuarter = forecast.rainSoon.indexOfFirst { it >= 0.1 }
+        if (wetQuarter == 0) return context.getString(R.string.rain_now)
+        if (wetQuarter > 0) return context.getString(R.string.rain_in_minutes, wetQuarter * 15)
+        val likely = forecast.rain.firstOrNull { it.probability >= 50 }
+            ?: return context.getString(R.string.rain_none, forecast.rain.size.coerceAtLeast(1))
+        val pattern = if (android.text.format.DateFormat.is24HourFormat(context)) "HH'h'" else "h a"
+        val hour = java.time.format.DateTimeFormatter.ofPattern(pattern, java.util.Locale.getDefault()).format(likely.time)
+        return context.getString(R.string.rain_at, hour, likely.probability)
+    }
 
     /** Libellé du code météo WMO. */
     fun label(code: Int): Int = when (code) {

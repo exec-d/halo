@@ -6,7 +6,7 @@
     android:minWidth="250dp"
     android:minHeight="110dp"
     android:targetCellWidth="4"
-    android:targetCellHeight="2"
+    android:targetCellHeight="3"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
     android:configure="dev.levilainpetit.wux.WidgetConfigureActivity"

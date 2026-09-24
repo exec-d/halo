@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Une heure de prévision : heure, icône, température. -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="0dp"
+<!-- Un relevé du widget Météo : libellé, valeur. -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="2dp">
+
     <TextView
-        android:id="@+id/weather_hour_time"
-        android:layout_width="wrap_content"
+        android:id="@+id/weather_readout_label"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.42"
         android:ellipsize="end"
         android:fontFamily="monospace"
         android:includeFontPadding="false"
@@ -21,25 +24,20 @@
         android:textAllCaps="true"
         android:textColor="@color/clock_line"
         android:textSize="10sp" />
-    <ImageView
-        android:id="@+id/weather_hour_icon"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:importantForAccessibility="no"
-        android:tint="@color/clock_line" />
     <TextView
-        android:id="@+id/weather_hour_temperature"
-        android:layout_width="wrap_content"
+        android:id="@+id/weather_readout_value"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.58"
         android:ellipsize="end"
-        android:fontFamily="sans-serif"
+        android:fontFamily="monospace"
         android:includeFontPadding="false"
         android:maxLines="1"
         android:shadowColor="@color/clock_glow"
         android:shadowDx="0"
         android:shadowDy="0"
-        android:shadowRadius="20"
+        android:shadowRadius="10"
+        android:textAllCaps="true"
         android:textColor="@color/clock_core"
-        android:textFontWeight="800"
-        android:textSize="15sp" />
+        android:textSize="12sp" />
 </LinearLayout>

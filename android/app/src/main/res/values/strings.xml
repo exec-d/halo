@@ -63,11 +63,34 @@
     <string name="widget_month_description">Le mois en cours, les jours avec événements marqués.</string>
 
     <string name="widget_weather_label">Météo</string>
-    <string name="widget_weather_description">Le temps qu\'il fait, puis les prochaines heures.</string>
+    <string name="widget_weather_description">Température et jauge du jour, relevés, courbe des 24 heures.</string>
     <string name="weather_pick_place">Choisissez un lieu dans WUX</string>
     <string name="weather_loading">Prévisions en cours…</string>
     <string name="weather_my_position">Ma position</string>
-    <string name="weather_detail">Ressenti %1$s · %2$d km/h</string>
+    <string name="weather_now_at">Maintenant · %1$s</string>
+    <string name="readout_feels">Ressenti</string>
+    <string name="readout_wind">Vent</string>
+    <string name="readout_humidity">Humidité</string>
+    <string name="readout_uv">UV</string>
+    <string name="readout_rain">Pluie</string>
+    <string-array name="uv_levels">
+        <item>Faible</item>
+        <item>Modéré</item>
+        <item>Élevé</item>
+        <item>Très élevé</item>
+        <item>Extrême</item>
+    </string-array>
+    <!-- D'où vient le vent, par secteurs de 45° depuis le nord. -->
+    <string-array name="cardinals">
+        <item>N</item>
+        <item>NE</item>
+        <item>E</item>
+        <item>SE</item>
+        <item>S</item>
+        <item>SO</item>
+        <item>O</item>
+        <item>NO</item>
+    </string-array>
     <string name="weather_clear">Ciel dégagé</string>
     <string name="weather_partly">Peu nuageux</string>
     <string name="weather_cloudy">Couvert</string>

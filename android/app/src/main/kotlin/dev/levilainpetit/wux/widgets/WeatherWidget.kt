@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.RemoteViews
 import dev.levilainpetit.wux.MainActivity
 import dev.levilainpetit.wux.R
+import dev.levilainpetit.wux.weather.Forecast
 import dev.levilainpetit.wux.weather.Weather
 import dev.levilainpetit.wux.weather.WeatherRefresh
 import java.time.format.DateTimeFormatter
@@ -15,62 +16,117 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 /**
- * Météo : conditions actuelles, et, s'il y a la place, les six prochaines
- * heures. Toucher le widget ouvre ses réglages dans WUX.
+ * Météo façon tableau de bord : la température et sa jauge du jour, des
+ * relevés en colonne, puis la courbe des 24 heures avec la pluie et la nuit.
+ * Sur une rangée, une seule ligne ; sur deux, sans la courbe.
  */
 class WeatherWidget : NeonWidget() {
 
     override fun build(context: Context, size: SizeF, sample: Boolean): RemoteViews {
-        val views = RemoteViews(context.packageName, R.layout.widget_weather)
+        val compact = size.height < 100f
+        val views = RemoteViews(
+            context.packageName,
+            if (compact) R.layout.widget_weather_compact else R.layout.widget_weather,
+        )
         views.setOnClickPendingIntent(R.id.weather_root, activity(context, Intent(context, MainActivity::class.java), 60))
         val place = if (sample) SampleData.place else Weather.place(context)
         val forecast = if (sample) SampleData.forecast() else Weather.forecast(context)
         if (place == null || forecast == null) {
-            views.setImageViewResource(R.id.weather_icon, R.drawable.icon_cloud)
             views.setTextViewText(R.id.weather_temperature, "--°")
             views.setTextViewText(
                 R.id.weather_condition,
                 context.getString(if (place == null) R.string.weather_pick_place else R.string.weather_loading),
             )
-            views.setTextViewText(R.id.weather_place, place?.name.orEmpty())
-            views.setTextViewText(R.id.weather_detail, "")
-            views.setTextViewText(R.id.weather_range, "")
-            views.setViewVisibility(R.id.weather_hours, View.GONE)
+            views.setTextViewText(R.id.weather_place, place?.name?.substringBefore(',').orEmpty())
+            if (!compact) {
+                views.setViewVisibility(R.id.weather_readouts, View.GONE)
+                views.setViewVisibility(R.id.weather_curve_block, View.GONE)
+                views.setViewVisibility(R.id.weather_gauge_block, View.GONE)
+            }
             return views
         }
         val today = forecast.days.firstOrNull()
-        views.setImageViewResource(R.id.weather_icon, Weather.icon(forecast.code, forecast.isDay))
+        val condition = context.getString(Weather.label(forecast.code))
         views.setTextViewText(R.id.weather_temperature, degrees(forecast.temperature))
-        views.setTextViewText(R.id.weather_condition, context.getString(Weather.label(forecast.code)))
-        views.setTextViewText(R.id.weather_place, place.name.substringBefore(','))
+        views.setTextViewText(R.id.weather_condition, condition.uppercase(Locale.getDefault()))
         views.setTextViewText(
-            R.id.weather_detail,
-            context.getString(R.string.weather_detail, degrees(forecast.apparent), forecast.wind.roundToInt()),
+            R.id.weather_place,
+            context.getString(R.string.weather_now_at, place.name.substringBefore(',')),
         )
-        views.setTextViewText(
-            R.id.weather_range,
-            today?.let { "${degrees(it.max)} / ${degrees(it.min)}" }.orEmpty(),
-        )
+        if (compact) {
+            views.setTextViewText(
+                R.id.weather_line,
+                listOfNotNull(
+                    today?.let { "${degrees(it.min)} / ${degrees(it.max)}" },
+                    Weather.rainSummary(context, forecast),
+                ).joinToString(" · "),
+            )
+            return views
+        }
 
-        // Les heures seulement si le widget a plus d'une rangée.
-        val showHours = size.height >= 100f && forecast.hours.isNotEmpty()
-        views.setViewVisibility(R.id.weather_hours, if (showHours) View.VISIBLE else View.GONE)
-        views.removeAllViews(R.id.weather_hours)
-        if (showHours) {
-            val pattern = if (DateFormat.is24HourFormat(context)) "HH'h'" else "h a"
-            val format = DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
-            forecast.hours.forEach { hour ->
-                views.addView(
-                    R.id.weather_hours,
-                    RemoteViews(context.packageName, R.layout.weather_hour).apply {
-                        setTextViewText(R.id.weather_hour_time, format.format(hour.time))
-                        setImageViewResource(R.id.weather_hour_icon, Weather.icon(hour.code, hour.isDay))
-                        setTextViewText(R.id.weather_hour_temperature, degrees(hour.temperature))
-                    },
-                )
+        val density = context.resources.displayMetrics.density
+        if (today != null) {
+            val gaugeWidth = ((size.width * 0.42f - 16) * density).roundToInt()
+            views.setImageViewBitmap(
+                R.id.weather_gauge,
+                WeatherGraphics.gauge(today.min, today.max, forecast.temperature, gaugeWidth, density),
+            )
+            views.setTextViewText(R.id.weather_min, degrees(today.min))
+            views.setTextViewText(R.id.weather_max, degrees(today.max))
+        } else {
+            views.setViewVisibility(R.id.weather_gauge_block, View.GONE)
+        }
+
+        views.removeAllViews(R.id.weather_readouts)
+        readouts(context, forecast).forEach { (label, value) ->
+            views.addView(
+                R.id.weather_readouts,
+                RemoteViews(context.packageName, R.layout.weather_readout).apply {
+                    setTextViewText(R.id.weather_readout_label, label)
+                    setTextViewText(R.id.weather_readout_value, value)
+                },
+            )
+        }
+
+        val showCurve = size.height >= 190f && forecast.curve.size >= 2
+        views.setViewVisibility(R.id.weather_curve_block, if (showCurve) View.VISIBLE else View.GONE)
+        if (showCurve) {
+            val curveHeight = ((size.height - 150f).coerceIn(48f, 90f) * density).roundToInt()
+            views.setImageViewBitmap(
+                R.id.weather_curve,
+                WeatherGraphics.curve(forecast.curve, ((size.width - 16) * density).roundToInt(), curveHeight, density),
+            )
+            val format = DateTimeFormatter.ofPattern(if (DateFormat.is24HourFormat(context)) "HH'h'" else "h a", Locale.getDefault())
+            val points = forecast.curve
+            val ids = intArrayOf(R.id.weather_axis_0, R.id.weather_axis_1, R.id.weather_axis_2, R.id.weather_axis_3, R.id.weather_axis_4)
+            ids.forEachIndexed { i, id ->
+                val index = ((points.size - 1) * i / (ids.size - 1f)).roundToInt()
+                views.setTextViewText(id, format.format(points[index].time))
             }
         }
         return views
+    }
+
+    /** Les relevés : ressenti, vent, humidité, UV, pluie. */
+    private fun readouts(context: Context, forecast: Forecast): List<Pair<String, String>> {
+        val uv = forecast.uv?.let { value ->
+            val levels = context.resources.getStringArray(R.array.uv_levels)
+            val level = when {
+                value < 3 -> 0
+                value < 6 -> 1
+                value < 8 -> 2
+                value < 11 -> 3
+                else -> 4
+            }
+            "${value.roundToInt()} · ${levels[level]}"
+        }
+        return listOfNotNull(
+            context.getString(R.string.readout_feels) to degrees(forecast.apparent),
+            context.getString(R.string.readout_wind) to "${forecast.wind.roundToInt()} km/h ${arrow(forecast.windDirection)} ${cardinal(context, forecast.windDirection)}",
+            context.getString(R.string.readout_humidity) to "${forecast.humidity} %",
+            uv?.let { context.getString(R.string.readout_uv) to it },
+            context.getString(R.string.readout_rain) to Weather.rainSummary(context, forecast),
+        )
     }
 
     override fun onRendered(context: Context) {
@@ -80,5 +136,13 @@ class WeatherWidget : NeonWidget() {
 
     companion object {
         fun degrees(value: Double) = "${value.roundToInt()}°"
+
+        private fun sector(degrees: Int) = (((degrees % 360) + 360) % 360 + 22) / 45 % 8
+
+        /** Le vent vient de [degrees] : la flèche montre où il va. */
+        private fun arrow(degrees: Int) = arrayOf("↓", "↙", "←", "↖", "↑", "↗", "→", "↘")[sector(degrees)]
+
+        private fun cardinal(context: Context, degrees: Int) =
+            context.resources.getStringArray(R.array.cardinals)[sector(degrees)]
     }
 }

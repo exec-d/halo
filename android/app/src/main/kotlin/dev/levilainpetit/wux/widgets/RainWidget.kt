@@ -12,7 +12,6 @@ import android.view.View
 import android.widget.RemoteViews
 import dev.levilainpetit.wux.MainActivity
 import dev.levilainpetit.wux.R
-import dev.levilainpetit.wux.weather.Forecast
 import dev.levilainpetit.wux.weather.Weather
 import dev.levilainpetit.wux.weather.WeatherRefresh
 import java.time.format.DateTimeFormatter
@@ -43,7 +42,7 @@ class RainWidget : NeonWidget() {
             views.setViewVisibility(R.id.rain_axis, View.GONE)
             return views
         }
-        views.setTextViewText(R.id.rain_summary, summary(context, forecast))
+        views.setTextViewText(R.id.rain_summary, Weather.rainSummary(context, forecast))
         val total = forecast.rain.sumOf { it.millimeters }
         val peak = forecast.rain.maxOf { it.probability }
         views.setTextViewText(
@@ -67,18 +66,6 @@ class RainWidget : NeonWidget() {
 
     override fun onRendered(context: Context) {
         WeatherRefresh.schedule(context)
-    }
-
-    /** Une phrase : pluie en cours, dans combien de temps, ou pas de pluie. */
-    private fun summary(context: Context, forecast: Forecast): String {
-        val soon = forecast.rainSoon
-        val wetQuarter = soon.indexOfFirst { it >= 0.1 }
-        if (wetQuarter == 0) return context.getString(R.string.rain_now)
-        if (wetQuarter > 0) return context.getString(R.string.rain_in_minutes, wetQuarter * 15)
-        val likely = forecast.rain.firstOrNull { it.probability >= 50 }
-            ?: return context.getString(R.string.rain_none, forecast.rain.size)
-        val format = DateTimeFormatter.ofPattern(if (DateFormat.is24HourFormat(context)) "HH'h'" else "h a", Locale.getDefault())
-        return context.getString(R.string.rain_at, format.format(likely.time), likely.probability)
     }
 
     /** Histogramme : une barre par heure, hauteur = probabilité, base visible. */
