@@ -247,7 +247,7 @@ class _PermissionSection extends StatelessWidget {
       description: refused
           ? "L'accès a été refusé. S'il ne vous est plus proposé, activez "
                 "« Agenda » dans les autorisations de l'application."
-          : 'WUX lit vos événements pour les afficher. Il ne les modifie '
+          : 'Halo lit vos événements pour les afficher. Il ne les modifie '
                 'jamais et ne les envoie nulle part.',
       children: [
         IuxButton(

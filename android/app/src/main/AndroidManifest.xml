@@ -15,7 +15,7 @@
         android:name="android.permission.BLUETOOTH"
         android:maxSdkVersion="30" />
     <application
-        android:label="WUX"
+        android:label="Halo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

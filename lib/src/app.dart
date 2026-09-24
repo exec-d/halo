@@ -26,7 +26,7 @@ class WuxApp extends StatelessWidget {
     final configuring = this.configuring;
     return IuxFeedbackScope(
       child: MaterialApp(
-        title: 'WUX',
+        title: 'Halo',
         debugShowCheckedModeBanner: false,
         theme: IuxTheme.light(),
         darkTheme: IuxTheme.dark(),

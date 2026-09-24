@@ -51,7 +51,7 @@
     <string name="widget_countdown_label">Compte à rebours</string>
     <string name="widget_countdown_description">Les jours jusqu\'à une date.</string>
     <string name="countdown_default_title">Mon évènement</string>
-    <string name="countdown_pick_date">Choisissez une date dans WUX</string>
+    <string name="countdown_pick_date">Choisissez une date dans Halo</string>
     <string name="widget_controls_label">Contrôles</string>
     <string name="widget_controls_description">Lampe torche, Wi-Fi, Bluetooth, son, appareil photo.</string>
     <string name="controls_torch">Lampe</string>
@@ -64,7 +64,7 @@
 
     <string name="widget_weather_label">Météo</string>
     <string name="widget_weather_description">Température et jauge du jour, relevés, courbe des 24 heures.</string>
-    <string name="weather_pick_place">Choisissez un lieu dans WUX</string>
+    <string name="weather_pick_place">Choisissez un lieu dans Halo</string>
     <string name="weather_loading">Prévisions en cours…</string>
     <string name="weather_my_position">Ma position</string>
     <string name="weather_now_at">Maintenant · %1$s</string>
@@ -169,7 +169,7 @@
     <string name="agenda_until">Jusqu\'à %1$s</string>
     <string name="agenda_untitled">(Sans titre)</string>
     <string name="agenda_empty">Aucun événement</string>
-    <string name="agenda_permission_missing">Touchez pour autoriser WUX à lire votre agenda.</string>
+    <string name="agenda_permission_missing">Touchez pour autoriser Halo à lire votre agenda.</string>
     <plurals name="countdown_days_left">
         <item quantity="one">jour restant</item>
         <item quantity="many">jours restants</item>

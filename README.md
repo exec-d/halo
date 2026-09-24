@@ -1,7 +1,10 @@
-# WUX
+# Halo
+
+*Nom de code : WUX.*
 
 Application Android (Flutter) qui propose des **widgets d'écran d'accueil**
-pour personnaliser son téléphone.
+au style néon pour personnaliser son téléphone. Nom affiché : **Halo** ; le
+code, le paquet (`dev.levilainpetit.wux`) et le dépôt gardent le nom de code.
 
 ## Widgets
 

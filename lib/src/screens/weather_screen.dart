@@ -122,7 +122,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               onActivate: () => _run(
                 widget.platform.locateWeatherPlace,
                 "La position n'a pas pu être obtenue. Vérifiez que la "
-                'localisation est activée et autorisée pour WUX.',
+                'localisation est activée et autorisée pour Halo.',
               ),
             ),
             const IuxGap.standard(),
