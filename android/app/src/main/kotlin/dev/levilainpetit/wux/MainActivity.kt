@@ -45,6 +45,17 @@ open class MainActivity : FlutterActivity() {
             .setMethodCallHandler(::handle)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Ouvrir WUX rafraîchit des prévisions périmées.
+        if (Weather.place(this) != null && Weather.isStale(this)) {
+            scope.launch {
+                val ok = withContext(Dispatchers.IO) { Weather.refresh(applicationContext) }
+                if (ok) WeatherRefresh.redraw(applicationContext)
+            }
+        }
+    }
+
     override fun onDestroy() {
         scope.cancel()
         super.onDestroy()

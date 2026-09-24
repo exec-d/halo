@@ -40,7 +40,14 @@ abstract class NeonWidget : AppWidgetProvider(), PreviewableWidget {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         appWidgetIds.forEach { render(context, appWidgetManager, it) }
         onRendered(context)
+        onSystemUpdate(context) { goAsync() }
     }
+
+    /**
+     * Mise à jour demandée par le système (`updatePeriodMillis`) ou à la pose.
+     * [goAsync] prolonge le récepteur pour un travail court en arrière-plan.
+     */
+    open fun onSystemUpdate(context: Context, goAsync: () -> PendingResult) {}
 
     override fun onAppWidgetOptionsChanged(
         context: Context,

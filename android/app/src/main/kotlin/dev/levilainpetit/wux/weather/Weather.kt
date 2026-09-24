@@ -53,8 +53,8 @@ data class Forecast(
     val isDay: Boolean,
     val wind: Double,
     /** D'où vient le vent, en degrés (0 : nord). */
-    val windDirection: Int = 0,
-    val humidity: Int = 0,
+    val windDirection: Int? = null,
+    val humidity: Int? = null,
     val uv: Double? = null,
     /** Les 24 prochaines heures, pour la courbe. */
     val curve: List<CurvePoint> = emptyList(),
@@ -77,6 +77,10 @@ object Weather {
     private const val CACHE = "weather.cache"
     private const val FETCHED = "weather.fetched_at"
     private const val AIR = "weather.air"
+    private const val VERSION = "weather.cache_version"
+
+    /** À augmenter quand la requête demande de nouvelles données. */
+    private const val CACHE_VERSION = 2
 
     fun place(context: Context): Place? {
         val parts = HomeWidgetPlugin.getData(context).getString(PLACE, null)?.split('|') ?: return null
@@ -112,6 +116,7 @@ object Weather {
         val editor = HomeWidgetPlugin.getData(context).edit()
             .putString(CACHE, body)
             .putLong(FETCHED, System.currentTimeMillis())
+            .putInt(VERSION, CACHE_VERSION)
         if (air != null) editor.putString(AIR, air)
         editor.apply()
         return true
@@ -126,6 +131,19 @@ object Weather {
                 pollens = Pollen.entries.filter { !current.isNull(it.key) }.associateWith { current.getDouble(it.key) },
             )
         }.getOrNull()
+    }
+
+    /**
+     * Vrai si les prévisions gardées ont plus de [maxAgeMinutes] minutes, ou
+     * viennent d'une version de WUX qui ne demandait pas tout ce qu'elle
+     * affiche aujourd'hui.
+     */
+    fun isStale(context: Context, maxAgeMinutes: Long = 45): Boolean {
+        val prefs = HomeWidgetPlugin.getData(context)
+        val json = prefs.getString(CACHE, null) ?: return true
+        if (prefs.getInt(VERSION, 0) < CACHE_VERSION) return true
+        if (!json.contains("relative_humidity_2m")) return true
+        return System.currentTimeMillis() - prefs.getLong(FETCHED, 0) > maxAgeMinutes * 60_000
     }
 
     fun forecast(context: Context): Forecast? {
@@ -210,8 +228,8 @@ object Weather {
             code = current.getInt("weather_code"),
             isDay = current.getInt("is_day") == 1,
             wind = current.getDouble("wind_speed_10m"),
-            windDirection = current.optInt("wind_direction_10m", 0),
-            humidity = current.optInt("relative_humidity_2m", 0),
+            windDirection = if (current.has("wind_direction_10m")) current.optInt("wind_direction_10m") else null,
+            humidity = if (current.has("relative_humidity_2m")) current.optInt("relative_humidity_2m") else null,
             uv = if (current.isNull("uv_index")) null else current.optDouble("uv_index"),
             curve = curve,
             hours = hours,
@@ -223,8 +241,10 @@ object Weather {
 
     private fun get(url: String): String? = runCatching {
         val connection = URL(url).openConnection() as HttpURLConnection
-        connection.connectTimeout = 10_000
-        connection.readTimeout = 10_000
+        // Court : ce téléchargement peut se faire dans un récepteur de widget,
+        // qui n'a que quelques secondes.
+        connection.connectTimeout = 4_000
+        connection.readTimeout = 4_000
         try {
             if (connection.responseCode != 200) null else connection.inputStream.bufferedReader().use { it.readText() }
         } finally {

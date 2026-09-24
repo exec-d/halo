@@ -64,6 +64,9 @@ class RainWidget : NeonWidget() {
         return views
     }
 
+    override fun onSystemUpdate(context: Context, goAsync: () -> PendingResult) =
+        WeatherRefresh.refreshIfStale(context, goAsync)
+
     override fun onRendered(context: Context) {
         WeatherRefresh.schedule(context)
     }

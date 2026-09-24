@@ -122,12 +122,18 @@ class WeatherWidget : NeonWidget() {
         }
         return listOfNotNull(
             context.getString(R.string.readout_feels) to degrees(forecast.apparent),
-            context.getString(R.string.readout_wind) to "${forecast.wind.roundToInt()} km/h ${arrow(forecast.windDirection)} ${cardinal(context, forecast.windDirection)}",
-            context.getString(R.string.readout_humidity) to "${forecast.humidity} %",
+            context.getString(R.string.readout_wind) to (
+                "${forecast.wind.roundToInt()} km/h" +
+                    forecast.windDirection.let { if (it == null) "" else " ${arrow(it)} ${cardinal(context, it)}" }
+                ),
+            context.getString(R.string.readout_humidity) to (forecast.humidity?.let { "$it %" } ?: "—"),
             uv?.let { context.getString(R.string.readout_uv) to it },
             context.getString(R.string.readout_rain) to Weather.rainSummary(context, forecast),
         )
     }
+
+    override fun onSystemUpdate(context: Context, goAsync: () -> PendingResult) =
+        WeatherRefresh.refreshIfStale(context, goAsync)
 
     override fun onRendered(context: Context) {
         WeatherRefresh.schedule(context)
