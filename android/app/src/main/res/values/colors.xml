@@ -6,4 +6,6 @@
     <color name="clock_core">#FFE6F6FF</color>
     <color name="clock_glow">#FF2F9BFF</color>
     <color name="clock_line">#FF8AD2FF</color>
+    <!-- Ombre qui détache le texte de l'agenda d'un fond d'écran chargé. -->
+    <color name="agenda_shade">#E6000000</color>
 </resources>

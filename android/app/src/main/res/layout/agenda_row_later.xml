@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Un événement : trait à la couleur de son agenda, titre, horaire et lieu.
-     Une ombre sombre détache le texte d'un fond d'écran chargé.
-     Hauteur prévue : AgendaRenderer.ROW. -->
+<!-- Un événement qui suit celui en cours (agenda_row_now) : comme agenda_row,
+     légèrement estompé. Hauteur prévue : AgendaRenderer.ROW. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/agenda_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:alpha="0.72"
     android:orientation="horizontal"
     android:paddingVertical="3dp">
 

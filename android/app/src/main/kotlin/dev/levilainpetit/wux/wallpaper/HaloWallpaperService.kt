@@ -286,11 +286,11 @@ class HaloWallpaperService : WallpaperService() {
         const val MAX_PULSES = 14
 
         /** Écart de gravité (m/s²) qui donne le décalage maximal. */
-        const val TILT_RANGE = 3f
+        const val TILT_RANGE = 2.2f
         const val TILT_EPSILON = 0.004f
         const val TILT_SMOOTHING = 0.2f
 
         /** Part de l'écart rattrapée par la position de repos à chaque mesure. */
-        const val BASE_FOLLOW = 0.015f
+        const val BASE_FOLLOW = 0.006f
     }
 }

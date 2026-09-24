@@ -24,6 +24,8 @@ data class AgendaLine(
     val allDay: Boolean = false,
     /** Commencé et pas encore terminé : mis en avant. */
     val ongoing: Boolean = false,
+    /** Suit un événement en cours le même jour : légèrement estompé. */
+    val later: Boolean = false,
 ) {
     /** Seconde ligne affichée : l'horaire, puis le lieu s'il y en a un. */
     val detail: String
@@ -96,6 +98,10 @@ object AgendaBuilder {
                 .sortedWith(compareByDescending<CalendarEvent> { it.allDay }.thenBy { it.begin })
                 .map { it.toLine(context, dayStart, dayEnd, zone, timeFormat, nowMillis.takeIf { offset == 0 }) }
                 .filter { showAllDay || !it.allDay }
+                .let { lines ->
+                    // Estomper n'a de sens qu'à côté d'un événement mis en avant.
+                    if (lines.none { it.ongoing }) lines else lines.map { it.copy(later = !it.ongoing) }
+                }
             AgendaDay(date, dayLabel(context, offset, date), lines)
         }
     }

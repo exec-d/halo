@@ -64,7 +64,8 @@ class FrameState {
 class CircuitPainter(private val scene: CircuitScene) {
 
     private val density = scene.density
-    private val maxShift = 16f * density
+    /** Décalage du plan le plus profond à pleine inclinaison. */
+    private val maxShift = 36f * density
 
     private val maskPaint = Paint(Paint.FILTER_BITMAP_FLAG)
     private val glowRect = RectF()
@@ -84,7 +85,7 @@ class CircuitPainter(private val scene: CircuitScene) {
     private val glass = Paint().apply {
         shader = LinearGradient(
             0f, 0f, scene.width * 0.6f, scene.height * 0.35f,
-            intArrayOf(Color.TRANSPARENT, Color.argb(16, 255, 255, 255), Color.TRANSPARENT),
+            intArrayOf(Color.TRANSPARENT, Color.argb(30, 255, 255, 255), Color.TRANSPARENT),
             floatArrayOf(0.35f, 0.5f, 0.65f),
             Shader.TileMode.CLAMP,
         )
@@ -132,7 +133,7 @@ class CircuitPainter(private val scene: CircuitScene) {
             canvas.restore()
         }
 
-        glassMatrix.setTranslate(-state.tiltX * maxShift * 6f, -state.tiltY * maxShift * 6f)
+        glassMatrix.setTranslate(-state.tiltX * maxShift * 4f, -state.tiltY * maxShift * 4f)
         glass.shader.setLocalMatrix(glassMatrix)
         canvas.drawRect(0f, 0f, scene.width.toFloat(), scene.height.toFloat(), glass)
 

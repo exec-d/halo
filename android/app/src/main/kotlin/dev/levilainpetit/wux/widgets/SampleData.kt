@@ -72,7 +72,11 @@ object SampleData {
                     line("Dentiste", "17:15", "17:45", "", PINK),
                 ),
             ),
-        ).map { day -> day.copy(lines = day.lines.filter { showAllDay || !it.allDay }) }
+        ).mapIndexed { index, day ->
+            val lines = day.lines.filter { showAllDay || !it.allDay }
+            // Aujourd'hui, le standup est en cours : les autres sont estompés.
+            day.copy(lines = if (index == 0) lines.map { it.copy(later = !it.ongoing) } else lines)
+        }
     }
 
     private fun tile(label: String, value: String, detail: String, progress: Int?) =

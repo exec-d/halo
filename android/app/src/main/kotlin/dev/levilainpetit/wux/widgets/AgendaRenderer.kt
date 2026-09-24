@@ -162,7 +162,11 @@ object AgendaRenderer {
         }
         is Item.Event -> RemoteViews(
             context.packageName,
-            if (item.line.ongoing) R.layout.agenda_row_now else R.layout.agenda_row,
+            when {
+                item.line.ongoing -> R.layout.agenda_row_now
+                item.line.later -> R.layout.agenda_row_later
+                else -> R.layout.agenda_row
+            },
         ).apply {
             val line = item.line
             setTextViewText(R.id.agenda_row_title, line.title)
