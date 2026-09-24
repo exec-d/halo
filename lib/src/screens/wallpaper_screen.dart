@@ -195,8 +195,8 @@ class _WallpaperScreenState extends State<WallpaperScreen>
     ),
     (
       'Allumage',
-      "À chaque allumage de l'écran, les circuits s'éclairent depuis le "
-          'processeur.',
+      "À chaque allumage de l'écran, le fond est là tout de suite, puis "
+          "composants et pistes s'illuminent un à un depuis le processeur.",
     ),
   ];
 }

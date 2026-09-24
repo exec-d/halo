@@ -13,7 +13,6 @@ import android.graphics.RectF
 import android.graphics.Shader
 import dev.levilainpetit.wux.R
 import kotlin.math.PI
-import kotlin.math.hypot
 import kotlin.math.max
 import kotlin.math.sin
 
@@ -69,7 +68,6 @@ class CircuitPainter(private val scene: CircuitScene) {
 
     private val maskPaint = Paint(Paint.FILTER_BITMAP_FLAG)
     private val glowRect = RectF()
-    private val clip = Path()
     private val point = PointF()
 
     private val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -100,22 +98,11 @@ class CircuitPainter(private val scene: CircuitScene) {
         )
     }
 
-    /** Portée de l'allumage : la distance du processeur au coin le plus loin. */
-    private val reach = listOf(0f to 0f, scene.width.toFloat() to 0f, 0f to scene.height.toFloat(), scene.width.toFloat() to scene.height.toFloat())
-        .maxOf { (x, y) -> hypot(x - scene.origin.x, y - scene.origin.y) }
 
     fun draw(canvas: Canvas, state: FrameState, palette: CircuitPalette) {
         canvas.drawColor(BACKGROUND)
 
-        val ignition = ease(state.ignition)
-        val radius = ignition * reach
         val igniting = state.ignition < 1f
-        if (igniting) {
-            canvas.save()
-            clip.rewind()
-            clip.addCircle(scene.origin.x, scene.origin.y, radius, Path.Direction.CW)
-            canvas.clipPath(clip)
-        }
 
         scene.layers.forEachIndexed { index, layer ->
             val dx = state.tiltX * maxShift * layer.depth
@@ -134,6 +121,7 @@ class CircuitPainter(private val scene: CircuitScene) {
             maskPaint.color = palette.line
             maskPaint.alpha = (layer.alpha * state.intensity).toInt()
             canvas.drawBitmap(layer.core, 0f, 0f, maskPaint)
+            if (igniting) ignite(canvas, index, state, palette)
             when (index) {
                 CircuitScene.BATTERY -> battery(canvas, state, palette)
                 CircuitScene.BOARD -> {
@@ -142,15 +130,6 @@ class CircuitPainter(private val scene: CircuitScene) {
                 }
             }
             canvas.restore()
-        }
-
-        if (igniting) {
-            canvas.restore()
-            // Le front de l'allumage.
-            stroke.color = palette.core
-            stroke.alpha = ((1f - ignition) * 220 * state.intensity).toInt()
-            stroke.strokeWidth = 2f * density
-            canvas.drawCircle(scene.origin.x, scene.origin.y, radius, stroke)
         }
 
         glassMatrix.setTranslate(-state.tiltX * maxShift * 6f, -state.tiltY * maxShift * 6f)
@@ -217,13 +196,35 @@ class CircuitPainter(private val scene: CircuitScene) {
         }
     }
 
-    private fun ease(t: Float): Float {
-        val c = t.coerceIn(0f, 1f)
-        return 1f - (1f - c) * (1f - c) * (1f - c)
+    /**
+     * L'allumage : le décor est déjà là, et chaque composant ou piste
+     * s'illumine à son tour, du processeur vers les bords, puis retombe.
+     */
+    private fun ignite(canvas: Canvas, layer: Int, state: FrameState, palette: CircuitPalette) {
+        val strength = 0.5f + 0.5f * state.intensity
+        for (part in scene.parts) {
+            if (part.layer != layer) continue
+            // Chaque éclat dure FLASH ; le dernier finit à la fin de l'allumage.
+            val t = (state.ignition - part.delay * (1f - FLASH)) / FLASH
+            if (t <= 0f || t >= 1f) continue
+            // Montée rapide, descente douce.
+            val a = if (t < 0.25f) t / 0.25f else 1f - (t - 0.25f) / 0.75f
+            stroke.color = palette.glow
+            stroke.alpha = (110 * a * strength).toInt()
+            stroke.strokeWidth = 6f * density
+            canvas.drawPath(part.path, stroke)
+            stroke.color = palette.core
+            stroke.alpha = (255 * a * strength).toInt()
+            stroke.strokeWidth = 1.6f * density
+            canvas.drawPath(part.path, stroke)
+        }
     }
 
     companion object {
         /** Le fond de la nuit des widgets (`splash_background`). */
         val BACKGROUND = Color.rgb(5, 7, 13)
+
+        /** Durée d'un éclat, en part de l'allumage. */
+        const val FLASH = 0.3f
     }
 }

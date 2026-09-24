@@ -32,7 +32,8 @@ import kotlin.random.Random
  * - la batterie dessinée suit le vrai niveau et respire pendant la charge ;
  * - des impulsions courent sur les pistes quand le réseau échange des données,
  *   et les antennes s'allument selon la force du signal ;
- * - à l'allumage de l'écran, les circuits s'allument depuis le processeur.
+ * - à l'allumage de l'écran, composants et pistes s'illuminent un à un
+ *   depuis le processeur.
  *
  * Pour la batterie, rien ne tourne quand le fond n'est pas visible, et l'on ne
  * dessine en continu que pendant une animation ; au repos, seule une nouvelle
@@ -281,7 +282,7 @@ class HaloWallpaperService : WallpaperService() {
         const val FRAME_MILLIS = 33L
         const val SAMPLE_MILLIS = 1000L
         const val SIGNAL_MILLIS = 5000L
-        const val IGNITION_MILLIS = 1100L
+        const val IGNITION_MILLIS = 1300L
         const val MAX_PULSES = 14
 
         /** Écart de gravité (m/s²) qui donne le décalage maximal. */

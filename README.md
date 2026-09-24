@@ -60,7 +60,8 @@ couleurs de Material You, pour l'accueil et l'écran de verrouillage.
 - la batterie dessinée suit le niveau réel et respire pendant la charge ;
 - des impulsions courent de l'antenne au processeur quand des données passent
   (`TrafficStats`), les antennes brillent selon la force du signal ;
-- à l'allumage de l'écran, les circuits s'éclairent depuis le processeur.
+- à l'allumage de l'écran, composants et pistes s'illuminent un à un depuis
+  le processeur, le décor étant déjà affiché.
 
 Une intensité (discret par défaut, normal, vif) garde widgets et icônes
 lisibles par-dessus ; le décor ne contient aucun texte.

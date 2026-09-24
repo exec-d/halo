@@ -30,6 +30,8 @@ class CircuitScene private constructor(
     val batteryCell: RectF,
     /** Centre du processeur : l'allumage part de là. */
     val origin: PointF,
+    /** Composants et pistes qui s'illuminent à l'allumage, du plus proche du processeur au plus loin. */
+    val parts: List<Part>,
     /** Antennes le long du châssis (plan [BOARD]), allumées selon le signal. */
     val antennas: Path,
     /** Parcours des impulsions liées au réseau : antenne → modem → processeur. */
@@ -52,6 +54,12 @@ class CircuitScene private constructor(
         /** Intensité du plan (0–255) : le fond est plus sombre. */
         val alpha: Int,
     )
+
+    /**
+     * Un élément qui s'illumine à l'allumage : sa forme, son plan, et son
+     * moment, de 0 (le processeur) à 1 (le plus loin).
+     */
+    class Part(val path: Path, val layer: Int, val delay: Float)
 
     /** Une ligne brisée parcourue par une impulsion. */
     class Route(val points: List<PointF>) {
@@ -148,12 +156,42 @@ class CircuitScene private constructor(
                 layers = layers,
                 batteryCell = cell,
                 origin = PointF(soc.centerX(), soc.centerY()),
+                parts = parts(),
                 antennas = antennas(),
                 networkRoutes = network,
                 dataRoutes = data,
                 innerRoutes = inner,
                 density = density,
             )
+        }
+
+        private fun parts(): List<Part> {
+            val shapes = mutableListOf<Pair<Path, Int>>()
+            fun rect(rect: RectF, radius: Float, layer: Int = BOARD) {
+                shapes += Path().apply { addRoundRect(rect, radius * u, radius * u, Path.Direction.CW) } to layer
+            }
+            listOf(soc, ram, modem, pmic).forEach { rect(it, 0.8f) }
+            listOf(connector, bottomConnector).forEach { rect(it, 0f) }
+            rect(usb, 2.7f)
+            rect(motor, 2f)
+            rect(battery, 4f, BATTERY)
+            for ((center, radius) in listOf(camera1 to 8f, camera2 to 6.5f)) {
+                shapes += Path().apply { addCircle(center.x, center.y, radius * u, Path.Direction.CW) } to BOARD
+            }
+            traces.forEach { points ->
+                shapes += Path().apply {
+                    moveTo(points[0].x, points[0].y)
+                    points.drop(1).forEach { lineTo(it.x, it.y) }
+                } to BOARD
+            }
+            val origin = PointF(soc.centerX(), soc.centerY())
+            val bounds = RectF()
+            val sorted = shapes.sortedBy { (path, _) ->
+                path.computeBounds(bounds, true)
+                hypot(bounds.centerX() - origin.x, bounds.centerY() - origin.y)
+            }
+            val last = (sorted.size - 1).coerceAtLeast(1).toFloat()
+            return sorted.mapIndexed { i, (path, layer) -> Part(path, layer, i / last) }
         }
 
         private fun layer(depth: Float, alpha: Int, draw: (Canvas) -> Unit): Layer {
