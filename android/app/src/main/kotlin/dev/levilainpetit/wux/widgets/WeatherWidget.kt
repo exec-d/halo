@@ -91,19 +91,20 @@ class WeatherWidget : NeonWidget() {
         val showCurve = size.height >= 190f && forecast.curve.size >= 2
         views.setViewVisibility(R.id.weather_curve_block, if (showCurve) View.VISIBLE else View.GONE)
         if (showCurve) {
-            // La courbe remplit ce qui reste sous la partie haute (~135 dp) et l'axe.
-            val curveHeight = ((size.height - 160f).coerceAtLeast(40f) * density).roundToInt()
+            // Une barre toutes les deux heures, sur 24 heures.
+            val points = forecast.curve.filterIndexed { i, _ -> i % 2 == 0 }
+            val format = DateTimeFormatter.ofPattern(if (DateFormat.is24HourFormat(context)) "HH'h'" else "ha", Locale.getDefault())
+            val chartHeight = ((size.height - 150f).coerceIn(48f, 72f) * density).roundToInt()
             views.setImageViewBitmap(
                 R.id.weather_curve,
-                WeatherGraphics.curve(forecast.curve, ((size.width - 16) * density).roundToInt(), curveHeight, density),
+                WeatherGraphics.bars(
+                    points,
+                    points.map { format.format(it.time) },
+                    ((size.width - 16) * density).roundToInt(),
+                    chartHeight,
+                    density,
+                ),
             )
-            val format = DateTimeFormatter.ofPattern(if (DateFormat.is24HourFormat(context)) "HH'h'" else "h a", Locale.getDefault())
-            val points = forecast.curve
-            val ids = intArrayOf(R.id.weather_axis_0, R.id.weather_axis_1, R.id.weather_axis_2, R.id.weather_axis_3, R.id.weather_axis_4)
-            ids.forEachIndexed { i, id ->
-                val index = ((points.size - 1) * i / (ids.size - 1f)).roundToInt()
-                views.setTextViewText(id, format.format(points[index].time))
-            }
         }
         return views
     }

@@ -4,6 +4,7 @@
     android:id="@+id/weather_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/agenda_padding"
     android:paddingVertical="4dp">
@@ -140,109 +141,18 @@
     <LinearLayout
         android:id="@+id/weather_curve_block"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/weather_curve"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:importantForAccessibility="no"
             android:scaleType="fitXY"
             android:tint="@color/clock_line" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <TextView
-            android:id="@+id/weather_axis_0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="start"
-            android:ellipsize="end"
-            android:fontFamily="monospace"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:shadowColor="@color/clock_glow"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="10"
-            android:textAllCaps="true"
-            android:textColor="@color/clock_line"
-            android:textSize="9sp" />
-        <TextView
-            android:id="@+id/weather_axis_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:ellipsize="end"
-            android:fontFamily="monospace"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:shadowColor="@color/clock_glow"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="10"
-            android:textAllCaps="true"
-            android:textColor="@color/clock_line"
-            android:textSize="9sp" />
-        <TextView
-            android:id="@+id/weather_axis_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:ellipsize="end"
-            android:fontFamily="monospace"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:shadowColor="@color/clock_glow"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="10"
-            android:textAllCaps="true"
-            android:textColor="@color/clock_line"
-            android:textSize="9sp" />
-        <TextView
-            android:id="@+id/weather_axis_3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:ellipsize="end"
-            android:fontFamily="monospace"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:shadowColor="@color/clock_glow"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="10"
-            android:textAllCaps="true"
-            android:textColor="@color/clock_line"
-            android:textSize="9sp" />
-        <TextView
-            android:id="@+id/weather_axis_4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:ellipsize="end"
-            android:fontFamily="monospace"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:shadowColor="@color/clock_glow"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="10"
-            android:textAllCaps="true"
-            android:textColor="@color/clock_line"
-            android:textSize="9sp" />
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

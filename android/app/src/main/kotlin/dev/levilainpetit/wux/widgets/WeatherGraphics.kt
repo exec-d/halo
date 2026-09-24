@@ -39,66 +39,42 @@ object WeatherGraphics {
     }
 
     /**
-     * Les 24 heures : la nuit en hachures au pied, la pluie en barres
-     * estompées, la température en courbe, un point sur « maintenant » et la
-     * température écrite au-dessus de la courbe toutes les deux heures.
+     * Les 24 heures en 12 barres, une toutes les deux heures : la hauteur suit
+     * la température (écrite au-dessus), l'heure est écrite dessous, les
+     * barres de nuit sont estompées, et une marque sous la base signale une
+     * pluie probable (au moins 30 %), d'autant plus longue qu'elle est sûre.
      */
-    fun curve(points: List<CurvePoint>, widthPx: Int, heightPx: Int, density: Float): Bitmap {
+    fun bars(points: List<CurvePoint>, hourLabels: List<String>, widthPx: Int, heightPx: Int, density: Float): Bitmap {
         val bitmap = Bitmap.createBitmap(widthPx.coerceAtLeast(1), heightPx.coerceAtLeast(1), Bitmap.Config.ALPHA_8)
-        if (points.size < 2) return bitmap
+        if (points.isEmpty()) return bitmap
         val canvas = Canvas(bitmap)
-        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        val pad = 6 * density
-        val labelSpace = 14 * density
-        val bottom = heightPx - 2 * density
-        val top = labelSpace
-        val left = pad
-        val right = widthPx - pad
-        val step = (right - left) / (points.size - 1)
-        fun x(i: Int) = left + step * i
-
-        // Nuit : hachures au pied du graphique.
-        paint.alpha = 110
-        paint.strokeWidth = density
-        points.forEachIndexed { i, point ->
-            if (point.isDay) return@forEachIndexed
-            var hx = x(i) - step / 2
-            while (hx < x(i) + step / 2) {
-                canvas.drawLine(hx, bottom, hx, bottom - 4 * density, paint)
-                hx += 3 * density
-            }
-        }
-        // Pluie : barres estompées, jusqu'à 60 % de la hauteur.
-        paint.alpha = 120
-        points.forEachIndexed { i, point ->
-            if (point.rainProbability <= 0) return@forEachIndexed
-            val h = (bottom - top) * 0.6f * point.rainProbability / 100f
-            canvas.drawRect(RectF(x(i) - step * 0.3f, bottom - h, x(i) + step * 0.3f, bottom), paint)
-        }
-        // Base.
-        paint.alpha = 255
-        canvas.drawLine(left, bottom, right, bottom, paint)
-
-        // Température.
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
+        val labelSize = 9 * density
+        val top = labelSize + 3 * density
+        val hoursBand = labelSize + 3 * density
+        val rainBand = 5 * density
+        val base = heightPx - hoursBand - rainBand
+        val slot = widthPx / points.size.toFloat()
+        val barWidth = slot * 0.55f
         val min = points.minOf { it.temperature }
         val max = points.maxOf { it.temperature }
         val span = (max - min).takeIf { it > 0.5 } ?: 1.0
-        fun y(t: Double) = (bottom - 6 * density - (bottom - 6 * density - top) * ((t - min) / span)).toFloat()
-        val path = Path()
-        points.forEachIndexed { i, p -> if (i == 0) path.moveTo(x(i), y(p.temperature)) else path.lineTo(x(i), y(p.temperature)) }
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 2 * density
-        paint.strokeJoin = Paint.Join.ROUND
-        canvas.drawPath(path, paint)
-
-        paint.style = Paint.Style.FILL
-        canvas.drawCircle(x(0), y(points[0].temperature), 4 * density, paint)
-        paint.textSize = 9 * density
-        paint.textAlign = Paint.Align.CENTER
-        for (i in points.indices step 2) {
-            val tx = x(i).coerceIn(left + 8 * density, right - 8 * density)
-            val ty = (y(points[i].temperature) - 5 * density).coerceAtLeast(9 * density)
-            canvas.drawText("${points[i].temperature.roundToInt()}°", tx, ty, paint)
+        paint.textSize = labelSize
+        points.forEachIndexed { i, point ->
+            val cx = slot * i + slot / 2
+            // Au moins un quart de hauteur, pour que la plus froide se voie.
+            val ratio = 0.25 + 0.75 * (point.temperature - min) / span
+            val barTop = (base - (base - top) * ratio).toFloat()
+            paint.alpha = if (point.isDay) 255 else 110
+            canvas.drawRoundRect(RectF(cx - barWidth / 2, barTop, cx + barWidth / 2, base), 2 * density, 2 * density, paint)
+            paint.alpha = 255
+            canvas.drawText("${point.temperature.roundToInt()}°", cx, barTop - 3 * density, paint)
+            if (point.rainProbability >= 30) {
+                val length = barWidth * point.rainProbability / 100f
+                canvas.drawRect(RectF(cx - length / 2, base + 2 * density, cx + length / 2, base + 4 * density), paint)
+            }
+            paint.alpha = 200
+            hourLabels.getOrNull(i)?.let { canvas.drawText(it, cx, heightPx - 2 * density, paint) }
         }
         return bitmap
     }
