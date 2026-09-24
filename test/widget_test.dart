@@ -94,6 +94,24 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
+  testWidgets('masquer les événements « toute la journée » est enregistré', (
+    tester,
+  ) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Agenda');
+
+    await tester.ensureVisible(find.text('Toute la journée'));
+    await tester.tap(find.text('Toute la journée'));
+    await tester.pumpAndSettle();
+    expect(platform.data['agenda_one_column.allDay'], '0');
+
+    // Les réafficher revient au réglage par défaut.
+    await tester.tap(find.text('Toute la journée'));
+    await tester.pumpAndSettle();
+    expect(platform.data.containsKey('agenda_one_column.allDay'), isFalse);
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets("sans autorisation, l'écran la demande", (tester) async {
     final platform = FakePlatform(permission: false);
     await _open(tester, platform, 'Agenda');

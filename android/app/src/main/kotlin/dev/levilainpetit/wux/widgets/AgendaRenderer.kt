@@ -160,7 +160,10 @@ object AgendaRenderer {
             )
             setOnClickPendingIntent(R.id.agenda_heading, activity(context, open, millis.hashCode()))
         }
-        is Item.Event -> RemoteViews(context.packageName, R.layout.agenda_row).apply {
+        is Item.Event -> RemoteViews(
+            context.packageName,
+            if (item.line.ongoing) R.layout.agenda_row_now else R.layout.agenda_row,
+        ).apply {
             val line = item.line
             setTextViewText(R.id.agenda_row_title, line.title)
             setTextViewText(R.id.agenda_row_detail, line.detail)

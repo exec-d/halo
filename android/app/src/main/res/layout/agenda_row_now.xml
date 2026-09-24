@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Un événement à venir : trait à la couleur de son agenda, titre, horaire
-     et lieu, légèrement estompés pour laisser ressortir celui en cours
-     (agenda_row_now). Hauteur prévue : AgendaRenderer.ROW. -->
+<!-- Un événement en cours : comme agenda_row, sans estompage, titre en gras
+     et halo plus large. Hauteur prévue : AgendaRenderer.ROW. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/agenda_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:alpha="0.6"
     android:orientation="horizontal"
     android:paddingVertical="3dp">
 
@@ -36,9 +34,10 @@
             android:shadowColor="@color/clock_glow"
         android:shadowDx="0"
             android:shadowDy="0"
-            android:shadowRadius="10"
+            android:shadowRadius="16"
             android:textColor="@color/clock_core"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/agenda_row_detail"
@@ -53,8 +52,8 @@
             android:shadowColor="@color/clock_glow"
         android:shadowDx="0"
             android:shadowDy="0"
-            android:shadowRadius="10"
-            android:textColor="@color/clock_line"
+            android:shadowRadius="14"
+            android:textColor="@color/clock_core"
             android:textSize="11sp" />
     </LinearLayout>
 </LinearLayout>

@@ -20,6 +20,10 @@ data class AgendaLine(
     val title: String,
     val location: String,
     val color: Int,
+    /** Occupe toute la journée affichée (événement « toute la journée » ou sur plusieurs jours). */
+    val allDay: Boolean = false,
+    /** Commencé et pas encore terminé : mis en avant. */
+    val ongoing: Boolean = false,
 ) {
     /** Seconde ligne affichée : l'horaire, puis le lieu s'il y en a un. */
     val detail: String
@@ -52,6 +56,7 @@ object AgendaBuilder {
         repository: CalendarRepository,
         days: Int,
         calendarIds: Set<Long>?,
+        showAllDay: Boolean = true,
         now: ZonedDateTime = ZonedDateTime.now(),
     ): List<AgendaDay> {
         val zone = now.zone
@@ -89,25 +94,30 @@ object AgendaBuilder {
                 // Sur le jour même, un événement terminé n'a plus d'intérêt.
                 .filter { offset > 0 || it.allDay || it.end > nowMillis }
                 .sortedWith(compareByDescending<CalendarEvent> { it.allDay }.thenBy { it.begin })
-                .map { it.toLine(context, dayStart, dayEnd, zone, timeFormat) }
+                .map { it.toLine(context, dayStart, dayEnd, zone, timeFormat, nowMillis.takeIf { offset == 0 }) }
+                .filter { showAllDay || !it.allDay }
             AgendaDay(date, dayLabel(context, offset, date), lines)
         }
     }
 
     /**
      * Prochain instant où l'agenda affiché change sans que le calendrier ne
-     * bouge : la fin d'un événement du jour, ou le passage en fin de journée.
+     * bouge : le début d'un événement du jour (il passe « en cours »), sa fin,
+     * ou le passage en fin de journée.
      * Tous agendas confondus, ce qui peut réveiller le widget pour rien, jamais
      * trop tard.
      */
     fun nextChange(repository: CalendarRepository, now: ZonedDateTime = ZonedDateTime.now()): ZonedDateTime? {
         val nowMillis = now.toInstant().toEpochMilli()
         val todayEnd = now.toLocalDate().plusDays(1).atStartOfDay(now.zone)
-        val ends = repository.events(nowMillis, todayEnd.toInstant().toEpochMilli(), null)
-            .filter { !it.allDay && it.end > nowMillis && it.end < todayEnd.toInstant().toEpochMilli() }
-            .map { Instant.ofEpochMilli(it.end).atZone(now.zone) }
+        val limit = todayEnd.toInstant().toEpochMilli()
+        val changes = repository.events(nowMillis, limit, null)
+            .filter { !it.allDay }
+            .flatMap { listOf(it.begin, it.end) }
+            .filter { it in (nowMillis + 1) until limit }
+            .map { Instant.ofEpochMilli(it).atZone(now.zone) }
         val endOfDay = now.toLocalDate().atTime(END_OF_DAY_HOUR, 0).atZone(now.zone)
-        return (ends + listOfNotNull(endOfDay.takeIf { it.isAfter(now) })).minOrNull()
+        return (changes + listOfNotNull(endOfDay.takeIf { it.isAfter(now) })).minOrNull()
     }
 
     private fun CalendarEvent.occursOn(
@@ -132,14 +142,17 @@ object AgendaBuilder {
         dayEnd: ZonedDateTime,
         zone: ZoneId,
         timeFormat: DateTimeFormatter,
+        /** `null` hors du jour même : rien n'y est « en cours ». */
+        nowMillis: Long?,
     ): AgendaLine {
         val from = dayStart.toInstant().toEpochMilli()
         val to = dayEnd.toInstant().toEpochMilli()
         fun format(millis: Long) = timeFormat.format(Instant.ofEpochMilli(millis).atZone(zone))
         val startsBefore = begin < from
         val endsAfter = end > to
+        val wholeDay = allDay || (startsBefore && endsAfter)
         val time = when {
-            allDay || (startsBefore && endsAfter) -> context.getString(R.string.agenda_all_day)
+            wholeDay -> context.getString(R.string.agenda_all_day)
             startsBefore -> context.getString(R.string.agenda_until, format(end))
             endsAfter -> context.getString(R.string.agenda_from, format(begin))
             begin == end -> format(begin)
@@ -153,6 +166,8 @@ object AgendaBuilder {
             title = title.ifBlank { context.getString(R.string.agenda_untitled) },
             location = location,
             color = color,
+            allDay = wholeDay,
+            ongoing = !wholeDay && nowMillis != null && begin <= nowMillis && nowMillis < end,
         )
     }
 

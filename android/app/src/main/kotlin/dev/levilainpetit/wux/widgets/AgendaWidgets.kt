@@ -51,14 +51,21 @@ abstract class AgendaWidgetProvider(
     }
 
     override fun preview(context: Context, size: SizeF, sample: Boolean) =
-        AgendaRenderer.render(context, if (sample) SampleData.agenda(context) else agenda(context), size, columns)
+        AgendaRenderer.render(
+            context,
+            if (sample) SampleData.agenda(context, settings(context).showAllDay) else agenda(context),
+            size,
+            columns,
+        )
+
+    private fun settings(context: Context) = AgendaSettings.read(HomeWidgetPlugin.getData(context), widgetId)
 
     /** `null` : l'accès au calendrier n'est pas accordé. */
     private fun agenda(context: Context): List<AgendaDay>? {
-        val settings = AgendaSettings.read(HomeWidgetPlugin.getData(context), widgetId)
+        val settings = settings(context)
         val repository = CalendarRepository(context)
         if (!repository.hasPermission()) return null
-        return AgendaBuilder.build(context, repository, settings.days, settings.calendarIds)
+        return AgendaBuilder.build(context, repository, settings.days, settings.calendarIds, settings.showAllDay)
     }
 }
 

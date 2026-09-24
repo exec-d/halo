@@ -30,10 +30,17 @@ object SampleData {
     private const val YELLOW = 0xFFF2C14E.toInt()
     private const val PINK = 0xFFF06292.toInt()
 
-    fun agenda(context: Context): List<AgendaDay> {
+    fun agenda(context: Context, showAllDay: Boolean = true): List<AgendaDay> {
         val today = LocalDate.now()
         val range = context.getString(R.string.agenda_range, "%s", "%s")
-        fun line(title: String, from: String?, to: String?, location: String, color: Int) = AgendaLine(
+        fun line(
+            title: String,
+            from: String?,
+            to: String?,
+            location: String,
+            color: Int,
+            ongoing: Boolean = false,
+        ) = AgendaLine(
             eventId = 0,
             begin = 0,
             end = 0,
@@ -41,6 +48,8 @@ object SampleData {
             title = title,
             location = location,
             color = color,
+            allDay = from == null,
+            ongoing = ongoing,
         )
         val locale = Locale.getDefault()
         return listOf(
@@ -49,7 +58,7 @@ object SampleData {
                 context.getString(R.string.agenda_today).uppercase(locale),
                 listOf(
                     line("Bureau", null, null, "", CYAN),
-                    line("Standup", "09:30", "09:45", "Visio", CYAN),
+                    line("Standup", "09:30", "09:45", "Visio", CYAN, ongoing = true),
                     line("Déjeuner avec Léa", "12:30", "14:00", "Le Comptoir", PINK),
                     line("Karaté des enfants", "18:00", "19:00", "Gymnase", YELLOW),
                 ),
@@ -63,7 +72,7 @@ object SampleData {
                     line("Dentiste", "17:15", "17:45", "", PINK),
                 ),
             ),
-        )
+        ).map { day -> day.copy(lines = day.lines.filter { showAllDay || !it.allDay }) }
     }
 
     private fun tile(label: String, value: String, detail: String, progress: Int?) =

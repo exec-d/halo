@@ -11,6 +11,8 @@ data class AgendaSettings(
     val calendarIds: Set<Long>?,
     /** 1 : aujourd'hui ; 2 : aujourd'hui et demain (par défaut). */
     val days: Int,
+    /** Faux : les événements « toute la journée » sont masqués. */
+    val showAllDay: Boolean,
 ) {
     companion object {
         fun read(prefs: SharedPreferences, widgetId: String): AgendaSettings {
@@ -18,6 +20,7 @@ data class AgendaSettings(
             return AgendaSettings(
                 calendarIds = calendars?.split(',')?.mapNotNull { it.trim().toLongOrNull() }?.toSet(),
                 days = if (prefs.getString("$widgetId.days", null) == "1") 1 else 2,
+                showAllDay = prefs.getString("$widgetId.allDay", null) != "0",
             )
         }
     }

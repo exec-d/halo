@@ -6,7 +6,8 @@ import '../platform/wux_platform.dart';
 import '../previews/widget_previews.dart';
 import 'screen_frame.dart';
 
-/// Réglages d'un widget agenda : accès au calendrier, jours et agendas affichés.
+/// Réglages d'un widget agenda : accès au calendrier, jours, événements
+/// « toute la journée » et agendas affichés.
 ///
 /// Chaque changement s'applique tout de suite au widget et à l'aperçu ; il n'y
 /// a pas de bouton « Enregistrer ».
@@ -31,6 +32,7 @@ class AgendaScreen extends StatefulWidget {
 class _AgendaScreenState extends State<AgendaScreen> {
   static const _calendarsKey = 'calendars';
   static const _daysKey = 'days';
+  static const _allDayKey = 'allDay';
 
   bool? _permission;
 
@@ -50,6 +52,10 @@ class _AgendaScreenState extends State<AgendaScreen> {
   /// 1 : aujourd'hui ; 2 : aujourd'hui et demain. Relu par `AgendaSettings.kt`.
   int _days = 2;
 
+  /// Faux : les événements « toute la journée » sont masqués. Relu par
+  /// `AgendaSettings.kt` (`'0'` pour les masquer).
+  bool _showAllDay = true;
+
   WuxPlatform get _platform => widget.platform;
 
   @override
@@ -63,11 +69,13 @@ class _AgendaScreenState extends State<AgendaScreen> {
     final canPin = await _platform.canPin();
     final stored = await _platform.read(widget.homeWidget, _calendarsKey);
     final days = await _platform.read(widget.homeWidget, _daysKey);
+    final allDay = await _platform.read(widget.homeWidget, _allDayKey);
     if (!mounted) return;
     setState(() {
       _permission = permission;
       _canPin = canPin;
       _days = days == '1' ? 1 : 2;
+      _showAllDay = allDay != '0';
       _selected = stored == null
           ? null
           : {for (final part in stored.split(',')) ?int.tryParse(part)};
@@ -115,6 +123,12 @@ class _AgendaScreenState extends State<AgendaScreen> {
   Future<void> _setDays(int days) async {
     setState(() => _days = days);
     await _platform.write(widget.homeWidget, _daysKey, '$days');
+    _refreshPreview();
+  }
+
+  Future<void> _setShowAllDay(bool shown) async {
+    setState(() => _showAllDay = shown);
+    await _platform.write(widget.homeWidget, _allDayKey, shown ? null : '0');
     _refreshPreview();
   }
 
@@ -172,6 +186,33 @@ class _AgendaScreenState extends State<AgendaScreen> {
                     IuxRadioOption(value: 2, label: "Aujourd'hui et demain"),
                   ],
                   onChanged: _setDays,
+                ),
+              ],
+            ),
+            const IuxGap.between(),
+            IuxSection(
+              title: 'Événements',
+              description:
+                  "L'événement en cours est mis en avant, les suivants "
+                  'sont légèrement estompés.',
+              children: [
+                IuxSelectionGroup(
+                  label: 'Événements affichés',
+                  children: [
+                    IuxSwitch(
+                      label: 'Toute la journée',
+                      input: const IuxInputDescriptor(
+                        semantics: IuxInputSemantics(
+                          label: 'Afficher les événements toute la journée',
+                        ),
+                        helpText:
+                            'Anniversaires, congés, jours fériés… et les '
+                            'événements sur plusieurs jours.',
+                      ),
+                      value: IuxSelectionState.fromSelected(_showAllDay),
+                      onChanged: _setShowAllDay,
+                    ),
+                  ],
                 ),
               ],
             ),
