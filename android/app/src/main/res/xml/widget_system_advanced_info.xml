@@ -13,4 +13,4 @@
     android:widgetFeatures="reconfigurable|configuration_optional"
     android:minResizeWidth="180dp"
     android:minResizeHeight="90dp"
-    android:widgetCategory="home_screen" />
+    android:widgetCategory="home_screen|keyguard" />
