@@ -91,7 +91,8 @@ class WeatherWidget : NeonWidget() {
         val showCurve = size.height >= 190f && forecast.curve.size >= 2
         views.setViewVisibility(R.id.weather_curve_block, if (showCurve) View.VISIBLE else View.GONE)
         if (showCurve) {
-            val curveHeight = ((size.height - 150f).coerceIn(48f, 90f) * density).roundToInt()
+            // La courbe remplit ce qui reste sous la partie haute (~135 dp) et l'axe.
+            val curveHeight = ((size.height - 160f).coerceAtLeast(40f) * density).roundToInt()
             views.setImageViewBitmap(
                 R.id.weather_curve,
                 WeatherGraphics.curve(forecast.curve, ((size.width - 16) * density).roundToInt(), curveHeight, density),

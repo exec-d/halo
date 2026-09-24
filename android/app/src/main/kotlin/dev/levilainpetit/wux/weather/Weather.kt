@@ -26,22 +26,47 @@ data class CurvePoint(val time: LocalDateTime, val temperature: Double, val rain
 /** Une heure de pluie : probabilité (%) et cumul (mm). */
 data class RainHour(val time: LocalDateTime, val probability: Int, val millimeters: Double)
 
-/** Pollens (grains/m³) et indice européen de qualité de l'air, par Open-Meteo. */
-data class Air(val aqi: Int?, val pollens: Map<Pollen, Double>)
+/** Les familles de pollens, regroupées comme dans l'application Météo de Google. */
+enum class PollenGroup(val label: Int) {
+    GRASS(R.string.pollen_group_grass),
+    TREES(R.string.pollen_group_trees),
+    WEEDS(R.string.pollen_group_weeds),
+}
 
 /** Les pollens suivis, avec leurs seuils (grains/m³) faible, moyen, élevé, très élevé. */
-enum class Pollen(val key: String, val label: Int, val thresholds: DoubleArray) {
-    GRASS("grass_pollen", R.string.pollen_grass, doubleArrayOf(1.0, 5.0, 25.0, 100.0)),
-    BIRCH("birch_pollen", R.string.pollen_birch, doubleArrayOf(1.0, 10.0, 50.0, 500.0)),
-    ALDER("alder_pollen", R.string.pollen_alder, doubleArrayOf(1.0, 10.0, 50.0, 500.0)),
-    OLIVE("olive_pollen", R.string.pollen_olive, doubleArrayOf(1.0, 10.0, 50.0, 200.0)),
-    MUGWORT("mugwort_pollen", R.string.pollen_mugwort, doubleArrayOf(1.0, 10.0, 30.0, 100.0)),
-    RAGWEED("ragweed_pollen", R.string.pollen_ragweed, doubleArrayOf(1.0, 5.0, 20.0, 50.0)),
+enum class Pollen(val key: String, val label: Int, val group: PollenGroup, val thresholds: DoubleArray) {
+    GRASS("grass_pollen", R.string.pollen_grass, PollenGroup.GRASS, doubleArrayOf(1.0, 5.0, 25.0, 100.0)),
+    BIRCH("birch_pollen", R.string.pollen_birch, PollenGroup.TREES, doubleArrayOf(1.0, 10.0, 50.0, 500.0)),
+    ALDER("alder_pollen", R.string.pollen_alder, PollenGroup.TREES, doubleArrayOf(1.0, 10.0, 50.0, 500.0)),
+    OLIVE("olive_pollen", R.string.pollen_olive, PollenGroup.TREES, doubleArrayOf(1.0, 10.0, 50.0, 200.0)),
+    MUGWORT("mugwort_pollen", R.string.pollen_mugwort, PollenGroup.WEEDS, doubleArrayOf(1.0, 10.0, 30.0, 100.0)),
+    RAGWEED("ragweed_pollen", R.string.pollen_ragweed, PollenGroup.WEEDS, doubleArrayOf(1.0, 5.0, 20.0, 50.0)),
     ;
 
     /** Niveau 0 (aucun) à 4 (très élevé). */
     fun level(value: Double) = thresholds.count { value >= it }
 }
+
+/**
+ * Un jour de pollens : le maximum de la journée pour chaque espèce. Les
+ * concentrations suivent le soleil, quasi nulles la nuit : la valeur de
+ * l'heure en cours donnerait « aucun » chaque matin.
+ */
+data class PollenDay(val date: LocalDate, val values: Map<Pollen, Double>) {
+    fun level(pollen: Pollen) = values[pollen]?.let { pollen.level(it) }
+
+    /** Niveau d'une famille : celui de son espèce la plus présente. */
+    fun level(group: PollenGroup) = Pollen.entries.filter { it.group == group }.mapNotNull { level(it) }.maxOrNull()
+
+    val highest: Pollen?
+        get() = values.keys.maxWithOrNull(compareBy<Pollen> { level(it) ?: 0 }.thenBy { values[it] ?: 0.0 })
+            ?.takeIf { (level(it) ?: 0) > 0 }
+
+    val overall: Int? get() = values.keys.mapNotNull { level(it) }.maxOrNull()
+}
+
+/** Pollens sur trois jours et indice européen de qualité de l'air, par Open-Meteo. */
+data class Air(val aqi: Int?, val days: List<PollenDay>)
 
 /** Les prévisions telles que le widget les affiche. */
 data class Forecast(
@@ -80,7 +105,7 @@ object Weather {
     private const val VERSION = "weather.cache_version"
 
     /** À augmenter quand la requête demande de nouvelles données. */
-    private const val CACHE_VERSION = 2
+    private const val CACHE_VERSION = 3
 
     fun place(context: Context): Place? {
         val parts = HomeWidgetPlugin.getData(context).getString(PLACE, null)?.split('|') ?: return null
@@ -110,8 +135,8 @@ object Weather {
         // Europe, pas de pollens).
         val air = get(
             "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${place.latitude}" +
-                "&longitude=${place.longitude}&timezone=auto" +
-                "&current=european_aqi," + Pollen.entries.joinToString(",") { it.key },
+                "&longitude=${place.longitude}&timezone=auto&forecast_days=3" +
+                "&current=european_aqi&hourly=" + Pollen.entries.joinToString(",") { it.key },
         )
         val editor = HomeWidgetPlugin.getData(context).edit()
             .putString(CACHE, body)
@@ -125,10 +150,24 @@ object Weather {
     fun air(context: Context): Air? {
         val json = HomeWidgetPlugin.getData(context).getString(AIR, null) ?: return null
         return runCatching {
-            val current = JSONObject(json).getJSONObject("current")
+            val root = JSONObject(json)
+            val current = root.getJSONObject("current")
+            val hourly = root.getJSONObject("hourly")
+            val times = hourly.getJSONArray("time")
+            val byDay = sortedMapOf<LocalDate, MutableMap<Pollen, Double>>()
+            for (i in 0 until times.length()) {
+                val date = LocalDateTime.parse(times.getString(i)).toLocalDate()
+                val day = byDay.getOrPut(date) { mutableMapOf() }
+                Pollen.entries.forEach { pollen ->
+                    val values = hourly.optJSONArray(pollen.key) ?: return@forEach
+                    if (values.isNull(i)) return@forEach
+                    val value = values.getDouble(i)
+                    day[pollen] = maxOf(day[pollen] ?: 0.0, value)
+                }
+            }
             Air(
                 aqi = if (current.isNull("european_aqi")) null else current.getDouble("european_aqi").toInt(),
-                pollens = Pollen.entries.filter { !current.isNull(it.key) }.associateWith { current.getDouble(it.key) },
+                days = byDay.map { (date, values) -> PollenDay(date, values) }.filter { !it.date.isBefore(LocalDate.now()) },
             )
         }.getOrNull()
     }

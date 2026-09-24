@@ -41,7 +41,7 @@ object WeatherGraphics {
     /**
      * Les 24 heures : la nuit en hachures au pied, la pluie en barres
      * estompées, la température en courbe, un point sur « maintenant » et la
-     * valeur la plus haute écrite au-dessus de son sommet.
+     * température écrite au-dessus de la courbe toutes les deux heures.
      */
     fun curve(points: List<CurvePoint>, widthPx: Int, heightPx: Int, density: Float): Bitmap {
         val bitmap = Bitmap.createBitmap(widthPx.coerceAtLeast(1), heightPx.coerceAtLeast(1), Bitmap.Config.ALPHA_8)
@@ -93,12 +93,13 @@ object WeatherGraphics {
 
         paint.style = Paint.Style.FILL
         canvas.drawCircle(x(0), y(points[0].temperature), 4 * density, paint)
-        val peak = points.indices.maxByOrNull { points[it].temperature } ?: 0
-        paint.textSize = 10 * density
+        paint.textSize = 9 * density
         paint.textAlign = Paint.Align.CENTER
-        val label = "${points[peak].temperature.roundToInt()}°"
-        val lx = x(peak).coerceIn(left + 10 * density, right - 10 * density)
-        canvas.drawText(label, lx, (y(points[peak].temperature) - 5 * density).coerceAtLeast(10 * density), paint)
+        for i in points.indices step 2 {
+            val tx = x(i).coerceIn(left + 8 * density, right - 8 * density)
+            val ty = (y(points[i].temperature) - 5 * density).coerceAtLeast(9 * density)
+            canvas.drawText("${points[i].temperature.roundToInt()}°", tx, ty, paint)
+        }
         return bitmap
     }
 }

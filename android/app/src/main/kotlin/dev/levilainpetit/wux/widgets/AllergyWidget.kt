@@ -9,12 +9,17 @@ import dev.levilainpetit.wux.MainActivity
 import dev.levilainpetit.wux.R
 import dev.levilainpetit.wux.weather.Air
 import dev.levilainpetit.wux.weather.Pollen
+import dev.levilainpetit.wux.weather.PollenGroup
 import dev.levilainpetit.wux.weather.Weather
 import dev.levilainpetit.wux.weather.WeatherRefresh
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 /**
- * Allergies : niveau de six pollens au lieu de la météo, et indice européen
- * de qualité de l'air (Open-Meteo, Europe seulement pour les pollens).
+ * Allergies : les pollens regroupés comme dans l'application Météo de Google
+ * (herbe, arbres, herbacées), sur trois jours, au lieu de la météo, et
+ * l'indice européen de qualité de l'air (Open-Meteo, pollens en Europe
+ * seulement). Chaque niveau est le maximum de la journée.
  */
 class AllergyWidget : NeonWidget() {
 
@@ -33,37 +38,57 @@ class AllergyWidget : NeonWidget() {
             return views
         }
         val levels = context.resources.getStringArray(R.array.pollen_levels)
-        val highest = air.pollens.maxByOrNull { (pollen, value) -> pollen.level(value) }
+        val today = air.days.firstOrNull()
+        val highest = today?.highest
         views.setTextViewText(
             R.id.allergy_summary,
-            if (air.pollens.isEmpty()) {
+            if (today == null || today.values.isEmpty()) {
                 context.getString(R.string.pollen_unavailable)
             } else {
-                context.getString(R.string.pollen_highest, levels[highest!!.key.level(highest.value)])
+                context.getString(R.string.pollen_highest, levels[today.overall ?: 0])
             },
         )
-        views.setTextViewText(R.id.allergy_detail, aqi(context, air))
-        val tiles = Pollen.entries.map { pollen ->
-            val value = air.pollens[pollen]
-            val level = value?.let { pollen.level(it) }
+        views.setTextViewText(
+            R.id.allergy_detail,
+            listOfNotNull(
+                highest?.let { context.getString(R.string.pollen_most_present, context.getString(it.label)) },
+                aqi(context, air).ifBlank { null },
+            ).joinToString(" · "),
+        )
+        val showTiles = size.height >= 100f && today != null
+        views.setViewVisibility(R.id.system_row1, if (showTiles) View.VISIBLE else View.GONE)
+        views.setViewVisibility(R.id.system_row2, if (showTiles) View.VISIBLE else View.GONE)
+        if (!showTiles || today == null) return views
+
+        // Rangée 1 : les trois familles, aujourd'hui.
+        val groups = PollenGroup.entries.map { group ->
+            val level = today.level(group)
+            val top = Pollen.entries.filter { it.group == group }
+                .maxByOrNull { today.values[it] ?: -1.0 }
+                ?.takeIf { (today.level(it) ?: 0) > 0 }
             SystemTile(
-                label = context.getString(pollen.label),
+                label = context.getString(group.label),
                 value = level?.let { levels[it] } ?: "—",
-                detail = value?.let { context.getString(R.string.pollen_grains, it.toInt()) }.orEmpty(),
+                detail = top?.let { context.getString(it.label) }.orEmpty(),
                 progress = level?.times(25),
                 action = Intent(),
             )
         }
-        val showTiles = size.height >= 100f
-        views.setViewVisibility(R.id.system_row1, if (showTiles) View.VISIBLE else View.GONE)
-        views.setViewVisibility(R.id.system_row2, if (showTiles) View.VISIBLE else View.GONE)
-        if (showTiles) {
-            tiles.chunked(3).forEachIndexed { r, row ->
-                val id = if (r == 0) R.id.system_row1 else R.id.system_row2
-                row.forEachIndexed { i, tile ->
-                    if (i > 0) views.addView(id, RemoteViews(context.packageName, R.layout.system_divider))
-                    views.addView(id, tileView(context, tile))
-                }
+        // Rangée 2 : aujourd'hui et les deux jours suivants.
+        val dayFormat = DateTimeFormatter.ofPattern("EEE d", Locale.getDefault())
+        val days = air.days.take(3).mapIndexed { i, day ->
+            SystemTile(
+                label = if (i == 0) context.getString(R.string.agenda_today) else dayFormat.format(day.date),
+                value = day.overall?.let { levels[it] } ?: "—",
+                detail = day.highest?.let { context.getString(it.label) }.orEmpty(),
+                progress = day.overall?.times(25),
+                action = Intent(),
+            )
+        }
+        listOf(R.id.system_row1 to groups, R.id.system_row2 to days).forEach { (id, row) ->
+            row.forEachIndexed { i, tile ->
+                if (i > 0) views.addView(id, RemoteViews(context.packageName, R.layout.system_divider))
+                views.addView(id, tileView(context, tile))
             }
         }
         return views

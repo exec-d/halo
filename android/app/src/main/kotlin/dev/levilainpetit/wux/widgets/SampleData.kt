@@ -12,6 +12,7 @@ import dev.levilainpetit.wux.weather.Forecast
 import dev.levilainpetit.wux.weather.Hour
 import dev.levilainpetit.wux.weather.Place
 import dev.levilainpetit.wux.weather.Pollen
+import dev.levilainpetit.wux.weather.PollenDay
 import dev.levilainpetit.wux.weather.RainHour
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -132,17 +133,21 @@ object SampleData {
         )
     }
 
-    fun air() = Air(
-        aqi = 32,
-        pollens = mapOf(
-            Pollen.GRASS to 18.0,
-            Pollen.BIRCH to 4.0,
-            Pollen.ALDER to 0.0,
-            Pollen.OLIVE to 0.0,
-            Pollen.MUGWORT to 12.0,
-            Pollen.RAGWEED to 26.0,
-        ),
-    )
+    fun air(): Air {
+        val today = LocalDate.now()
+        fun day(offset: Long, grass: Double, birch: Double, mugwort: Double, ragweed: Double) = PollenDay(
+            today.plusDays(offset),
+            mapOf(
+                Pollen.GRASS to grass,
+                Pollen.BIRCH to birch,
+                Pollen.ALDER to 0.0,
+                Pollen.OLIVE to 0.0,
+                Pollen.MUGWORT to mugwort,
+                Pollen.RAGWEED to ragweed,
+            ),
+        )
+        return Air(aqi = 25, days = listOf(day(0, 3.0, 0.0, 6.0, 14.0), day(1, 4.0, 0.0, 8.0, 18.0), day(2, 2.0, 0.0, 5.0, 9.0)))
+    }
 
     fun busyDays(month: YearMonth): Set<LocalDate> =
         listOf(3, 8, 11, 15, 16, 22, 23, 29).filter { it <= month.lengthOfMonth() }.map { month.atDay(it) }.toSet()

@@ -168,7 +168,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="10"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_core"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -208,7 +207,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="10"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_core"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -248,7 +246,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="10"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_core"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -288,7 +285,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="10"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_core"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -328,7 +324,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="10"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_core"
                 android:textSize="12sp" />
         </LinearLayout>

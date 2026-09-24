@@ -4,7 +4,6 @@
     android:id="@+id/weather_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/agenda_padding"
     android:paddingVertical="4dp">
@@ -141,14 +140,16 @@
     <LinearLayout
         android:id="@+id/weather_curve_block"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="6dp"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/weather_curve"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:importantForAccessibility="no"
             android:scaleType="fitXY"
             android:tint="@color/clock_line" />
