@@ -34,7 +34,7 @@
                 android:shadowRadius="10"
                 android:textAllCaps="true"
                 android:textColor="@color/clock_line"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
             <TextView
                 android:id="@+id/weather_temperature"
                 android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                 android:shadowRadius="20"
                 android:textColor="@color/clock_core"
                 android:textFontWeight="800"
-                android:textSize="48sp" />
+                android:textSize="66sp" />
             <TextView
                 android:id="@+id/weather_condition"
                 android:layout_width="wrap_content"
@@ -64,13 +64,13 @@
                 android:shadowRadius="10"
                 android:textAllCaps="true"
                 android:textColor="@color/clock_core"
-                android:textSize="12sp" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:id="@+id/weather_gauge_block"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -99,7 +99,7 @@
                         android:shadowDy="0"
                         android:shadowRadius="10"
                         android:textColor="@color/clock_line"
-                        android:textSize="9sp" />
+                        android:textSize="11sp" />
                     <TextView
                         android:id="@+id/weather_max"
                         android:layout_width="0dp"
@@ -115,7 +115,7 @@
                         android:shadowDy="0"
                         android:shadowRadius="10"
                         android:textColor="@color/clock_line"
-                        android:textSize="9sp" />
+                        android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

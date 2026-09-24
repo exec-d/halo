@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingVertical="2dp">
+    android:paddingVertical="4dp">
 
     <TextView
         android:id="@+id/weather_readout_label"
@@ -23,7 +23,7 @@
         android:shadowRadius="10"
         android:textAllCaps="true"
         android:textColor="@color/clock_line"
-        android:textSize="10sp" />
+        android:textSize="12sp" />
     <TextView
         android:id="@+id/weather_readout_value"
         android:layout_width="0dp"
@@ -38,5 +38,5 @@
         android:shadowDy="0"
         android:shadowRadius="10"
         android:textColor="@color/clock_core"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 </LinearLayout>

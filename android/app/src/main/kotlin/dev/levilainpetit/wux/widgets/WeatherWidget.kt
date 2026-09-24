@@ -88,7 +88,7 @@ class WeatherWidget : NeonWidget() {
             )
         }
 
-        val showCurve = size.height >= 190f && forecast.curve.size >= 2
+        val showCurve = size.height >= 210f && forecast.curve.size >= 2
         views.setViewVisibility(R.id.weather_curve_block, if (showCurve) View.VISIBLE else View.GONE)
         if (showCurve) {
             // Une barre toutes les deux heures, sur 24 heures.
@@ -151,7 +151,7 @@ class WeatherWidget : NeonWidget() {
          * Hauteur (dp, texte à 100 %) du bloc du haut, marges du widget et du
          * graphique comprises : suivre widget_weather.
          */
-        private const val TOP_BLOCK = 132f
+        private const val TOP_BLOCK = 164f
 
         fun degrees(value: Double) = "${value.roundToInt()}°"
 
