@@ -222,18 +222,58 @@ class _CatalogScreenState extends State<CatalogScreen>
                 onChanged: (value) => setState(() => _query = value),
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: _Hero(
-              platform: platform,
-              wallpaper: active,
-              active: _active != null,
-              onOpen: () => _openWallpaper(active),
-              onChange: () => setState(() => _tab = 1),
+          // Pendant une recherche, seuls les widgets restent : c'est eux
+          // qu'elle filtre.
+          if (_query == null) ...[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: _Hero(
+                platform: platform,
+                wallpaper: active,
+                active: _active != null,
+                onOpen: () => _openWallpaper(active),
+                onChange: () => setState(() => _tab = 1),
+              ),
+            ),
+            _SectionHeader(
+              title: l10n.catalogWallpapers,
+              trailing: _TextLink(
+                label: l10n.catalogSeeAll,
+                onTap: () => setState(() => _tab = 1),
+              ),
+            ),
+            // Tous construits (pas de liste paresseuse) : six fonds.
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final (i, wallpaper) in haloWallpapers.indexed) ...[
+                    if (i > 0) const SizedBox(width: 12),
+                    _WallpaperTile(
+                      platform: platform,
+                      wallpaper: wallpaper,
+                      active: wallpaper == _active,
+                      width: 118,
+                      height: 200,
+                      onOpen: () => _openWallpaper(wallpaper),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+          _SectionHeader(
+            key: _widgetsKey,
+            title: l10n.catalogWidgets,
+            trailing: Text(
+              l10n.catalogWidgetCount(shown.length),
+              style: _Neon.mono(12, color: _Neon.faint),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 18, 16, 6),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 14),
             child: Semantics(
               label: l10n.catalogFilterLabel,
               container: true,
@@ -254,42 +294,6 @@ class _CatalogScreenState extends State<CatalogScreen>
                   ],
                 ),
               ),
-            ),
-          ),
-          _SectionHeader(
-            title: l10n.catalogWallpapers,
-            trailing: _TextLink(
-              label: l10n.catalogSeeAll,
-              onTap: () => setState(() => _tab = 1),
-            ),
-          ),
-          // Tous construits (pas de liste paresseuse) : six fonds.
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (final (i, wallpaper) in haloWallpapers.indexed) ...[
-                  if (i > 0) const SizedBox(width: 12),
-                  _WallpaperTile(
-                    platform: platform,
-                    wallpaper: wallpaper,
-                    active: wallpaper == _active,
-                    width: 118,
-                    height: 200,
-                    onOpen: () => _openWallpaper(wallpaper),
-                  ),
-                ],
-              ],
-            ),
-          ),
-          _SectionHeader(
-            key: _widgetsKey,
-            title: l10n.catalogWidgets,
-            trailing: Text(
-              l10n.catalogWidgetCount(shown.length),
-              style: _Neon.mono(12, color: _Neon.faint),
             ),
           ),
           Padding(

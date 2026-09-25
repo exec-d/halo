@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wux/l10n/app_localizations.dart';
 import 'package:wux/src/app.dart';
@@ -55,6 +55,21 @@ void main() {
     await tester.tap(find.text('Tout'));
     await tester.pumpAndSettle();
     expect(find.text('Horloge'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('la recherche ne montre que les widgets trouvés', (tester) async {
+    await tester.pumpWidget(WuxApp(platform: FakePlatform(), locale: _fr));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Rechercher un widget'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'pluie');
+    await tester.pumpAndSettle();
+    expect(find.text('Pluie'), findsOneWidget);
+    expect(find.text('Horloge'), findsNothing);
+    // Le fond du moment et le carrousel s'effacent pendant la recherche.
+    expect(find.text('Circuit'), findsNothing);
     await tester.pumpWidget(const SizedBox());
   });
 
