@@ -47,11 +47,30 @@ open class MainActivity : FlutterActivity() {
     private var pendingLocation: MethodChannel.Result? = null
     private var pendingLocationPermission: MethodChannel.Result? = null
     private var pendingBluetoothPermission: MethodChannel.Result? = null
+    private var channel: MethodChannel? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
-            .setMethodCallHandler(::handle)
+        channel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
+            .apply { setMethodCallHandler(::handle) }
+    }
+
+    /** Raccourci touché alors que Halo était déjà ouvert : l'écran demandé. */
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        launchTarget()?.let { channel?.invokeMethod("open", it) }
+    }
+
+    /**
+     * L'écran demandé par un raccourci de l'icône (`halo://wallpaper`…), une
+     * seule fois : il est effacé une fois lu.
+     */
+    private fun launchTarget(): String? {
+        val data = intent?.data ?: return null
+        if (data.scheme != "halo") return null
+        intent = Intent(intent).setData(null)
+        return data.host
     }
 
     override fun onResume() {
@@ -132,6 +151,7 @@ open class MainActivity : FlutterActivity() {
                     requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_ONLY_REQUEST)
                 }
             }
+            "launchTarget" -> result.success(launchTarget())
             "hasUsageAccess" -> result.success(UsageAccess.granted(this))
             "openUsageAccess" -> {
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).apply {

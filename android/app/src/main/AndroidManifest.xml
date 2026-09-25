@@ -55,6 +55,10 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- Raccourcis de l'icône (appui long). -->
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
         <!-- Paramètres d'un widget, depuis un appui long sur l'écran d'accueil. -->
         <activity

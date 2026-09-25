@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Raccourcis de l'icône Halo (appui long). Chacun ouvre l'application sur
+     un écran, par l'adresse halo://<écran> (MainActivity.launchTarget). -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="wallpaper"
+        android:enabled="true"
+        android:icon="@drawable/shortcut_wallpaper"
+        android:shortcutShortLabel="@string/shortcut_wallpaper">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="halo://wallpaper"
+            android:targetClass="dev.levilainpetit.wux.MainActivity"
+            android:targetPackage="dev.levilainpetit.wux" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="widgets"
+        android:enabled="true"
+        android:icon="@drawable/shortcut_widgets"
+        android:shortcutShortLabel="@string/shortcut_widgets">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="halo://widgets"
+            android:targetClass="dev.levilainpetit.wux.MainActivity"
+            android:targetPackage="dev.levilainpetit.wux" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="settings"
+        android:enabled="true"
+        android:icon="@drawable/shortcut_settings"
+        android:shortcutShortLabel="@string/shortcut_settings">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="halo://settings"
+            android:targetClass="dev.levilainpetit.wux.MainActivity"
+            android:targetPackage="dev.levilainpetit.wux" />
+    </shortcut>
+</shortcuts>

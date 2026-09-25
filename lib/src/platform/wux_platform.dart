@@ -98,6 +98,14 @@ abstract interface class WuxPlatform {
   /// Retélécharge la météo ; faux si le réseau ou le service a échoué.
   Future<bool> refreshWeather();
 
+  /// L'écran demandé par un raccourci de l'icône (`wallpaper`, `widgets`,
+  /// `settings`) au lancement, ou `null`.
+  Future<String?> launchTarget();
+
+  /// [handler] reçoit l'écran demandé par un raccourci touché pendant que
+  /// Halo est ouvert.
+  void onOpen(void Function(String target) handler);
+
   /// Widget dont le lanceur a ouvert les réglages, ou `null`.
   Future<WuxHomeWidget?> configuringWidget();
 
@@ -165,6 +173,19 @@ class AndroidWuxPlatform implements WuxPlatform {
   @override
   Future<bool> applyWallpaper() async =>
       await _channel.invokeMethod<bool>('applyWallpaper') ?? false;
+
+  @override
+  Future<String?> launchTarget() =>
+      _channel.invokeMethod<String>('launchTarget');
+
+  @override
+  void onOpen(void Function(String target) handler) {
+    _channel.setMethodCallHandler((call) async {
+      if (call.method == 'open' && call.arguments is String) {
+        handler(call.arguments as String);
+      }
+    });
+  }
 
   @override
   Future<bool> hasUsageAccess() async =>

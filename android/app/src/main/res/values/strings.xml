@@ -236,4 +236,7 @@
     <string name="mobile_data_average">Par jour</string>
     <string name="mobile_data_quota">/ %1$s</string>
     <string name="mobile_data_detail">Aujourd\'hui %1$s · reprise dans %2$d j</string>
+    <string name="shortcut_wallpaper">Fond d\'écran</string>
+    <string name="shortcut_widgets">Widgets</string>
+    <string name="shortcut_settings">Réglages</string>
 </resources>

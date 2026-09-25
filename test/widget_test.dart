@@ -89,6 +89,21 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
+  testWidgets("le raccourci « Fond d'écran » ouvre l'écran Circuit", (
+    tester,
+  ) async {
+    final platform = FakePlatform()..target = 'wallpaper';
+    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpAndSettle();
+    expect(find.text("Appliquer le fond d'écran"), findsOneWidget);
+
+    // Touché alors que Halo est ouvert : les réglages.
+    platform.openHandler!('settings');
+    await tester.pumpAndSettle();
+    expect(find.text('Réglages'), findsWidgets);
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets("au premier lancement, l'accès à l'agenda est demandé", (
     tester,
   ) async {

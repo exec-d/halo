@@ -37,7 +37,44 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _firstLaunch());
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _firstLaunch();
+      final target = await platform.launchTarget();
+      if (target != null) _openTarget(target);
+    });
+    platform.onOpen(_openTarget);
+  }
+
+  final _widgetsKey = GlobalKey();
+
+  /// Un raccourci de l'icône : le fond d'écran, les réglages, ou la liste des
+  /// widgets.
+  void _openTarget(String target) {
+    if (!mounted) return;
+    final navigator = Navigator.of(context);
+    navigator.popUntil((route) => route.isFirst);
+    switch (target) {
+      case 'wallpaper':
+        navigator.push<void>(
+          MaterialPageRoute<void>(
+            builder: (_) => WallpaperScreen(platform: platform),
+          ),
+        );
+      case 'settings':
+        navigator.push<void>(
+          MaterialPageRoute<void>(
+            builder: (_) => SettingsScreen(platform: platform),
+          ),
+        );
+      case 'widgets':
+        final section = _widgetsKey.currentContext;
+        if (section != null) {
+          Scrollable.ensureVisible(
+            section,
+            duration: const Duration(milliseconds: 300),
+          );
+        }
+    }
   }
 
   Future<void> _firstLaunch() async {
@@ -126,6 +163,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
             ),
             const IuxGap.between(),
             IuxSection(
+              key: _widgetsKey,
               title: 'Widgets',
               children: [
                 for (final homeWidget in widgets) ...[

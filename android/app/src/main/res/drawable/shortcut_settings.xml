@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Raccourci « Réglages » : trois curseurs. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp" android:viewportWidth="48" android:viewportHeight="48">
+    <path android:fillColor="@color/splash_background" android:pathData="M24,0a24,24 0,1 1,0 48a24,24 0,1 1,0 -48z" />
+    <path android:strokeColor="@color/clock_line" android:strokeWidth="1.8" android:pathData="M13,16h22M13,24h22M13,32h22" />
+    <path android:fillColor="@color/clock_line" android:pathData="M27,16m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0M18,24m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0M30,32m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0" />
+</vector>

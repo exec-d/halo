@@ -86,6 +86,19 @@ class FakePlatform implements WuxPlatform {
     return true;
   }
 
+  String? target;
+  void Function(String target)? openHandler;
+
+  @override
+  Future<String?> launchTarget() async {
+    final value = target;
+    target = null;
+    return value;
+  }
+
+  @override
+  void onOpen(void Function(String target) handler) => openHandler = handler;
+
   var usageAccess = false;
   var usageSettingsOpened = 0;
   var bluetooth = false;

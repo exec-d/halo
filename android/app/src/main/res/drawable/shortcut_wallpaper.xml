@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Raccourci « Fond d'écran » : un téléphone et une piste lumineuse. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp" android:viewportWidth="48" android:viewportHeight="48">
+    <path android:fillColor="@color/splash_background" android:pathData="M24,0a24,24 0,1 1,0 48a24,24 0,1 1,0 -48z" />
+    <path android:strokeColor="@color/clock_line" android:strokeWidth="1.8" android:pathData="M18,11h12a2,2 0,0 1,2 2v22a2,2 0,0 1,-2 2h-12a2,2 0,0 1,-2 -2v-22a2,2 0,0 1,2 -2z" />
+    <path android:strokeColor="@color/clock_line" android:strokeWidth="1.4" android:pathData="M20,17h4l2,2v6l2,2h1M20,31h5" />
+    <path android:fillColor="@color/clock_line" android:pathData="M28,16h2v2h-2z" />
+</vector>
