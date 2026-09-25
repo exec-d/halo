@@ -36,6 +36,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get catalogWidgets => 'Widgets';
 
   @override
+  String get catalogFilterLabel => 'Catégories de widgets';
+
+  @override
+  String get catalogFilterAll => 'Tout';
+
+  @override
+  String get catalogFilterTime => 'Heure et agenda';
+
+  @override
+  String get catalogFilterWeather => 'Météo et ciel';
+
+  @override
+  String get catalogFilterSystem => 'Système et appareils';
+
+  @override
+  String get catalogFilterMedia => 'Médias et contrôles';
+
+  @override
+  String get catalogActive => 'Actif';
+
+  @override
+  String get catalogFeatured => 'À découvrir';
+
+  @override
   String get dreamTitle => 'Écran de veille';
 
   @override

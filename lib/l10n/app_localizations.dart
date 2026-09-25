@@ -146,6 +146,54 @@ abstract class AppLocalizations {
   /// **'Widgets'**
   String get catalogWidgets;
 
+  /// No description provided for @catalogFilterLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégories de widgets'**
+  String get catalogFilterLabel;
+
+  /// No description provided for @catalogFilterAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout'**
+  String get catalogFilterAll;
+
+  /// No description provided for @catalogFilterTime.
+  ///
+  /// In fr, this message translates to:
+  /// **'Heure et agenda'**
+  String get catalogFilterTime;
+
+  /// No description provided for @catalogFilterWeather.
+  ///
+  /// In fr, this message translates to:
+  /// **'Météo et ciel'**
+  String get catalogFilterWeather;
+
+  /// No description provided for @catalogFilterSystem.
+  ///
+  /// In fr, this message translates to:
+  /// **'Système et appareils'**
+  String get catalogFilterSystem;
+
+  /// No description provided for @catalogFilterMedia.
+  ///
+  /// In fr, this message translates to:
+  /// **'Médias et contrôles'**
+  String get catalogFilterMedia;
+
+  /// No description provided for @catalogActive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actif'**
+  String get catalogActive;
+
+  /// No description provided for @catalogFeatured.
+  ///
+  /// In fr, this message translates to:
+  /// **'À découvrir'**
+  String get catalogFeatured;
+
   /// Nom de l'écran de veille.
   ///
   /// In fr, this message translates to:

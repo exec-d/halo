@@ -41,7 +41,7 @@ gardent ce nom.*
 charge), trois tuiles de réglages rapides (Météo, Fond Halo, Batterie) et des
 raccourcis sur l'icône (Fonds d'écran, Widgets, Réglages).
 
-**L'application** : catalogue avec aperçus, réglages de chaque widget (aussi
+**L'application** : galerie avec aperçus (fonds en carrousel, widgets filtrables par famille), réglages de chaque widget (aussi
 par un appui long sur le widget), autorisations, à propos et licences, en
 français et en anglais.
 

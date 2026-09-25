@@ -37,6 +37,14 @@
   "@catalogWidgets": {
     "description": "Section des widgets du catalogue."
   },
+  "catalogFilterLabel": "Catégories de widgets",
+  "catalogFilterAll": "Tout",
+  "catalogFilterTime": "Heure et agenda",
+  "catalogFilterWeather": "Météo et ciel",
+  "catalogFilterSystem": "Système et appareils",
+  "catalogFilterMedia": "Médias et contrôles",
+  "catalogActive": "Actif",
+  "catalogFeatured": "À découvrir",
   "dreamTitle": "Écran de veille",
   "@dreamTitle": {
     "description": "Nom de l'écran de veille."

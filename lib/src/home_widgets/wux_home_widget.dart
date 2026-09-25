@@ -36,11 +36,27 @@ enum WuxWidgetKind {
   timer,
 }
 
+/// Famille d'un widget, pour les filtres de la galerie.
+enum WuxWidgetCategory {
+  /// Heure, agenda, dates.
+  time,
+
+  /// Météo, ciel et air.
+  weather,
+
+  /// Batterie, appareil, réseau, usage.
+  system,
+
+  /// Musique et raccourcis.
+  media,
+}
+
 /// Description, côté Dart, d'un widget d'écran d'accueil déclaré côté Android.
 class WuxHomeWidget {
   const WuxHomeWidget({
     required this.id,
     required this.kind,
+    required this.category,
     required this.title,
     required this.description,
     required this.androidProvider,
@@ -52,6 +68,8 @@ class WuxHomeWidget {
   final String id;
 
   final WuxWidgetKind kind;
+
+  final WuxWidgetCategory category;
 
   /// Nom affiché, dans la langue de l'application.
   final String Function(AppLocalizations l10n) title;

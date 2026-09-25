@@ -13,6 +13,9 @@ mineure peut changer des réglages.
   analogique, Éphéméride, Chronomètre et minuteur.
 - **Cinq fonds d'écran animés** inspirés de la science-fiction : Grille,
   Mégapole, Code, Néon, Sentinelle.
+- **Galerie** : le fond du moment en grand, les fonds animés en carrousel,
+  les widgets filtrables par famille (heure et agenda, météo et ciel,
+  système et appareils, médias et contrôles).
 - **Écran de veille** Halo, pendant la charge.
 - **Tuiles de réglages rapides** : Météo, Fond Halo, Batterie.
 - **Raccourcis de l'icône** : Fond d'écran, Widgets, Réglages.

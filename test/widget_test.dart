@@ -39,6 +39,25 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
+  testWidgets('la galerie filtre les widgets par famille', (tester) async {
+    final platform = FakePlatform();
+    await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Météo et ciel'));
+    await tester.tap(find.text('Météo et ciel'));
+    await tester.pumpAndSettle();
+    expect(find.text('Prévisions 5 jours'), findsOneWidget);
+    expect(find.text('Horloge'), findsNothing);
+    expect(find.text('Batterie détaillée'), findsNothing);
+
+    await tester.ensureVisible(find.text('Tout'));
+    await tester.tap(find.text('Tout'));
+    await tester.pumpAndSettle();
+    expect(find.text('Horloge'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets("le fond d'écran Circuit s'applique depuis son écran", (
     tester,
   ) async {

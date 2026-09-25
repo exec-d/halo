@@ -11,6 +11,7 @@ const _androidPackage = 'dev.levilainpetit.wux.widgets';
 const clockWidget = WuxHomeWidget(
   id: 'clock',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.time,
   title: _clockTitle,
   description: _clockDescription,
   androidProvider: '$_androidPackage.ClockWidgetProvider',
@@ -22,6 +23,7 @@ String _clockDescription(AppLocalizations l) => l.widgetClockDescription;
 const oneColumnAgendaWidget = WuxHomeWidget(
   id: 'agenda_one_column',
   kind: WuxWidgetKind.agenda,
+  category: WuxWidgetCategory.time,
   title: _oneColumnAgendaTitle,
   description: _oneColumnAgendaDescription,
   androidProvider: '$_androidPackage.OneColumnAgendaWidget',
@@ -35,6 +37,7 @@ String _oneColumnAgendaDescription(AppLocalizations l) =>
 const twoColumnAgendaWidget = WuxHomeWidget(
   id: 'agenda_two_columns',
   kind: WuxWidgetKind.agenda,
+  category: WuxWidgetCategory.time,
   title: _twoColumnAgendaTitle,
   description: _twoColumnAgendaDescription,
   androidProvider: '$_androidPackage.TwoColumnAgendaWidget',
@@ -48,6 +51,7 @@ String _twoColumnAgendaDescription(AppLocalizations l) =>
 const systemWidget = WuxHomeWidget(
   id: 'system',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.system,
   title: _systemTitle,
   description: _systemDescription,
   androidProvider: '$_androidPackage.SystemWidget',
@@ -59,6 +63,7 @@ String _systemDescription(AppLocalizations l) => l.widgetSystemDescription;
 const advancedSystemWidget = WuxHomeWidget(
   id: 'system_advanced',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.system,
   title: _advancedSystemTitle,
   description: _advancedSystemDescription,
   androidProvider: '$_androidPackage.AdvancedSystemWidget',
@@ -71,6 +76,7 @@ String _advancedSystemDescription(AppLocalizations l) =>
 const batteryWidget = WuxHomeWidget(
   id: 'battery',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.system,
   title: _batteryTitle,
   description: _batteryDescription,
   androidProvider: '$_androidPackage.BatteryWidget',
@@ -82,6 +88,7 @@ String _batteryDescription(AppLocalizations l) => l.widgetBatteryDescription;
 const deviceWidget = WuxHomeWidget(
   id: 'device',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.system,
   title: _deviceTitle,
   description: _deviceDescription,
   androidProvider: '$_androidPackage.DeviceWidget',
@@ -93,6 +100,7 @@ String _deviceDescription(AppLocalizations l) => l.widgetDeviceDescription;
 const bluetoothDevicesWidget = WuxHomeWidget(
   id: 'bt_devices',
   kind: WuxWidgetKind.bluetooth,
+  category: WuxWidgetCategory.system,
   title: _bluetoothDevicesTitle,
   description: _bluetoothDevicesDescription,
   androidProvider: '$_androidPackage.BluetoothDevicesWidget',
@@ -106,6 +114,7 @@ String _bluetoothDevicesDescription(AppLocalizations l) =>
 const screenTimeWidget = WuxHomeWidget(
   id: 'screen_time',
   kind: WuxWidgetKind.usage,
+  category: WuxWidgetCategory.system,
   title: _screenTimeTitle,
   description: _screenTimeDescription,
   androidProvider: '$_androidPackage.ScreenTimeWidget',
@@ -118,6 +127,7 @@ String _screenTimeDescription(AppLocalizations l) =>
 const mobileDataWidget = WuxHomeWidget(
   id: 'mobile_data',
   kind: WuxWidgetKind.mobileData,
+  category: WuxWidgetCategory.system,
   title: _mobileDataTitle,
   description: _mobileDataDescription,
   androidProvider: '$_androidPackage.MobileDataWidget',
@@ -130,6 +140,7 @@ String _mobileDataDescription(AppLocalizations l) =>
 const forecastWidget = WuxHomeWidget(
   id: 'forecast',
   kind: WuxWidgetKind.weather,
+  category: WuxWidgetCategory.weather,
   title: _forecastTitle,
   description: _forecastDescription,
   androidProvider: '$_androidPackage.ForecastWidget',
@@ -141,6 +152,7 @@ String _forecastDescription(AppLocalizations l) => l.widgetForecastDescription;
 const analogClockWidget = WuxHomeWidget(
   id: 'analog',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.time,
   title: _analogClockTitle,
   description: _analogClockDescription,
   androidProvider: '$_androidPackage.AnalogClockWidget',
@@ -153,6 +165,7 @@ String _analogClockDescription(AppLocalizations l) =>
 const ephemerisWidget = WuxHomeWidget(
   id: 'ephemeris',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.time,
   title: _ephemerisTitle,
   description: _ephemerisDescription,
   androidProvider: '$_androidPackage.EphemerisWidget',
@@ -165,6 +178,7 @@ String _ephemerisDescription(AppLocalizations l) =>
 const timerWidget = WuxHomeWidget(
   id: 'timer',
   kind: WuxWidgetKind.timer,
+  category: WuxWidgetCategory.time,
   title: _timerTitle,
   description: _timerDescription,
   androidProvider: '$_androidPackage.TimerWidget',
@@ -176,6 +190,7 @@ String _timerDescription(AppLocalizations l) => l.widgetTimerDescription;
 const mediaWidget = WuxHomeWidget(
   id: 'media',
   kind: WuxWidgetKind.media,
+  category: WuxWidgetCategory.media,
   title: _mediaTitle,
   description: _mediaDescription,
   androidProvider: '$_androidPackage.MediaWidget',
@@ -187,6 +202,7 @@ String _mediaDescription(AppLocalizations l) => l.widgetMediaDescription;
 const worldClockWidget = WuxHomeWidget(
   id: 'world_clock',
   kind: WuxWidgetKind.worldClock,
+  category: WuxWidgetCategory.time,
   title: _worldClockTitle,
   description: _worldClockDescription,
   androidProvider: '$_androidPackage.WorldClockWidget',
@@ -199,6 +215,7 @@ String _worldClockDescription(AppLocalizations l) =>
 const countdownWidget = WuxHomeWidget(
   id: 'countdown',
   kind: WuxWidgetKind.countdown,
+  category: WuxWidgetCategory.time,
   title: _countdownTitle,
   description: _countdownDescription,
   androidProvider: '$_androidPackage.CountdownWidget',
@@ -211,6 +228,7 @@ String _countdownDescription(AppLocalizations l) =>
 const controlsWidget = WuxHomeWidget(
   id: 'controls',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.media,
   title: _controlsTitle,
   description: _controlsDescription,
   androidProvider: '$_androidPackage.ControlsWidget',
@@ -222,6 +240,7 @@ String _controlsDescription(AppLocalizations l) => l.widgetControlsDescription;
 const monthWidget = WuxHomeWidget(
   id: 'month',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.time,
   title: _monthTitle,
   description: _monthDescription,
   androidProvider: '$_androidPackage.MonthWidget',
@@ -233,6 +252,7 @@ String _monthDescription(AppLocalizations l) => l.widgetMonthDescription;
 const weatherWidget = WuxHomeWidget(
   id: 'weather',
   kind: WuxWidgetKind.weather,
+  category: WuxWidgetCategory.weather,
   title: _weatherTitle,
   description: _weatherDescription,
   androidProvider: '$_androidPackage.WeatherWidget',
@@ -244,6 +264,7 @@ String _weatherDescription(AppLocalizations l) => l.widgetWeatherDescription;
 const sunMoonWidget = WuxHomeWidget(
   id: 'sun_moon',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.weather,
   title: _sunMoonTitle,
   description: _sunMoonDescription,
   androidProvider: '$_androidPackage.SunMoonWidget',
@@ -255,6 +276,7 @@ String _sunMoonDescription(AppLocalizations l) => l.widgetSunMoonDescription;
 const rainWidget = WuxHomeWidget(
   id: 'rain',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.weather,
   title: _rainTitle,
   description: _rainDescription,
   androidProvider: '$_androidPackage.RainWidget',
@@ -266,6 +288,7 @@ String _rainDescription(AppLocalizations l) => l.widgetRainDescription;
 const allergyWidget = WuxHomeWidget(
   id: 'allergy',
   kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.weather,
   title: _allergyTitle,
   description: _allergyDescription,
   androidProvider: '$_androidPackage.AllergyWidget',

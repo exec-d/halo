@@ -36,6 +36,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catalogWidgets => 'Widgets';
 
   @override
+  String get catalogFilterLabel => 'Widget categories';
+
+  @override
+  String get catalogFilterAll => 'All';
+
+  @override
+  String get catalogFilterTime => 'Time and calendar';
+
+  @override
+  String get catalogFilterWeather => 'Weather and sky';
+
+  @override
+  String get catalogFilterSystem => 'System and devices';
+
+  @override
+  String get catalogFilterMedia => 'Media and controls';
+
+  @override
+  String get catalogActive => 'Active';
+
+  @override
+  String get catalogFeatured => 'Featured';
+
+  @override
   String get dreamTitle => 'Screen saver';
 
   @override
