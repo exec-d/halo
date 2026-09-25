@@ -672,11 +672,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperNebuchadnezzarDescription =>
-      'The Nebuchadnezzar, Morpheus\'s hovercraft.';
+      'The Nebuchadnezzar, after the set drawing of its deck: the catwalk and the core room.';
 
   @override
   String get wallpaperNebuchadnezzarMotion =>
-      'The electromagnetic thrusters light up one after another.';
+      'A pulse runs along the catwalk, the core room\'s hub and the barrel turn.';
 
   @override
   String get wallpaperHalTitle => '2001';

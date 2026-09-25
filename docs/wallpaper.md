@@ -85,7 +85,7 @@ les couleurs du téléphone.
 | --- | --- | --- | --- | --- |
 | 01 | Tron : l'héritage | Moto de lumière | Roues, liseré, ruban de lumière | `LightCycle.kt` |
 | 02 | Blade Runner | Spinner | Vol, rampe du toit, turbine | `Spinner.kt` |
-| 03 | Matrix | Nebuchadnezzar | Propulseurs | `Hovercraft.kt` |
+| 03 | Matrix | Nebuchadnezzar (plan du pont) | Impulsion, moyeu, fût | `Hovercraft.kt` |
 | 04 | 2001 | HAL 9000 | L'œil, les rayons | `Hal.kt` |
 | 05 | Retour vers le futur | Convecteur temporel | Impulsions, charge, heure présente | `FluxCapacitor.kt` |
 | 06 | Interstellar | Endurance | L'anneau tourne | `Endurance.kt` |

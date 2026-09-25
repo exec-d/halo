@@ -1246,13 +1246,13 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperNebuchadnezzarDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Le Nebuchadnezzar, l\'aéroglisseur de Morpheus.'**
+  /// **'Le Nebuchadnezzar, d\'après le plan de décor du pont : la passerelle et la salle du cœur.'**
   String get wallpaperNebuchadnezzarDescription;
 
   /// No description provided for @wallpaperNebuchadnezzarMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Les propulseurs électromagnétiques s\'allument l\'un après l\'autre.'**
+  /// **'Une impulsion parcourt la passerelle, le moyeu de la salle du cœur et le fût tournent.'**
   String get wallpaperNebuchadnezzarMotion;
 
   /// No description provided for @wallpaperHalTitle.

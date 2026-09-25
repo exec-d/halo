@@ -676,11 +676,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get wallpaperNebuchadnezzarDescription =>
-      'Le Nebuchadnezzar, l\'aéroglisseur de Morpheus.';
+      'Le Nebuchadnezzar, d\'après le plan de décor du pont : la passerelle et la salle du cœur.';
 
   @override
   String get wallpaperNebuchadnezzarMotion =>
-      'Les propulseurs électromagnétiques s\'allument l\'un après l\'autre.';
+      'Une impulsion parcourt la passerelle, le moyeu de la salle du cœur et le fût tournent.';
 
   @override
   String get wallpaperHalTitle => '2001';

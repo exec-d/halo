@@ -83,7 +83,7 @@ the phone's colors.
 | --- | --- | --- | --- | --- |
 | 01 | Tron: Legacy | Light cycle | Wheels, light strip, light ribbon | `LightCycle.kt` |
 | 02 | Blade Runner | Spinner | Hovering, roof light bar, turbine | `Spinner.kt` |
-| 03 | The Matrix | Nebuchadnezzar | Thrusters | `Hovercraft.kt` |
+| 03 | The Matrix | Nebuchadnezzar (deck plan) | Pulse, hub, barrel | `Hovercraft.kt` |
 | 04 | 2001 | HAL 9000 | The eye, the rays | `Hal.kt` |
 | 05 | Back to the Future | Flux capacitor | Pulses, charge, present time | `FluxCapacitor.kt` |
 | 06 | Interstellar | Endurance | The ring turns | `Endurance.kt` |
