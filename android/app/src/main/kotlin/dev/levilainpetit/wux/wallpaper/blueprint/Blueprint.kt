@@ -237,6 +237,10 @@ class Pen {
     private var turned = false
     private var span = 0f
 
+    /** Le coin haut-gauche de la vue, en unités (pour laisser des marges). */
+    private var bx = 0f
+    private var by = 0f
+
     private val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
@@ -262,6 +266,8 @@ class Pen {
         oy = top
         k = scale
         turned = false
+        bx = 0f
+        by = 0f
     }
 
     /**
@@ -269,7 +275,17 @@ class Pen {
      * [turn] : la vue tournée d'un quart de tour, sa longueur dans la
      * hauteur de l'écran (pour les objets longs, sur un écran en portrait).
      */
-    fun fit(w: Float, h: Float, left: Float, top: Float, right: Float, bottom: Float, turn: Boolean = false) {
+    fun fit(
+        w: Float,
+        h: Float,
+        left: Float,
+        top: Float,
+        right: Float,
+        bottom: Float,
+        turn: Boolean = false,
+        x0: Float = 0f,
+        y0: Float = 0f,
+    ) {
         // De la place sous la vue pour sa légende (voir [caption]).
         val room = bottom - CAPTION * density
         val sw = if (turn) h else w
@@ -278,6 +294,8 @@ class Pen {
         view(left + ((right - left) - sw * scale) / 2, top + ((room - top) - sh * scale) / 2, scale)
         turned = turn
         span = h
+        bx = x0
+        by = y0
         box = floatArrayOf(left, top, right, bottom, ox, oy + sh * scale)
     }
 
@@ -307,18 +325,20 @@ class Pen {
 
     /** Dessine [block] en pixels d'écran, puis revient à la vue courante. */
     fun screen(block: () -> Unit) {
-        val saved = listOf(ox, oy, k, span)
+        val saved = listOf(ox, oy, k, span, bx, by)
         val wasTurned = turned
         view(0f, 0f, 1f)
         block()
         view(saved[0], saved[1], saved[2])
         turned = wasTurned
         span = saved[3]
+        bx = saved[4]
+        by = saved[5]
     }
 
     /** Un point de la vue, à l'écran. */
-    fun px(x: Float, y: Float) = if (turned) ox + (span - y) * k else ox + x * k
-    fun py(x: Float, y: Float) = if (turned) oy + x * k else oy + y * k
+    fun px(x: Float, y: Float) = if (turned) ox + (span - (y - by)) * k else ox + (x - bx) * k
+    fun py(x: Float, y: Float) = if (turned) oy + (x - bx) * k else oy + (y - by) * k
 
     /** Un angle de la vue, à l'écran (degrés). */
     private fun angle(degrees: Float) = if (turned) degrees + 90f else degrees
@@ -488,6 +508,30 @@ class Pen {
         text(tx, ty + 2.6f * density / k, "$number", 7f, Paint.Align.CENTER)
     }
 
+    /**
+     * Une note de dessinateur : une flèche sur la pièce en ([x], [y]), un
+     * trait de rappel jusqu'à ([tx], [ty]), puis le texte, une ligne par « | ».
+     * [left] : le texte part vers la gauche du point d'arrivée.
+     */
+    fun note(x: Float, y: Float, tx: Float, ty: Float, value: String, left: Boolean = false) {
+        line(tx, ty, x, y, Weight.HAIR)
+        arrow(x, y, tx, ty)
+        val lines = value.split('|')
+        val step = 8.5f * density / k
+        label.textSize = 5.5f * density
+        label.letterSpacing = 0.08f
+        val shelf = (lines.maxOf { label.measureText(it) } + 6f * density) / k
+        val end = if (left) tx - shelf else tx + shelf
+        line(tx, ty, end, ty, Weight.HAIR)
+        // Les lignes s'empilent en s'éloignant de la pièce : au-dessus du trait
+        // si la note est au-dessus, dessous sinon.
+        val below = ty > y
+        for ((i, part) in lines.withIndex()) {
+            val ly = if (below) ty + step * (i + 1) - 2f * density / k else ty - 3f * density / k - (lines.size - 1 - i) * step
+            text(if (left) tx - 3f * density / k else tx + 3f * density / k, ly, part, 5.5f, if (left) Paint.Align.RIGHT else Paint.Align.LEFT, alpha = 190)
+        }
+    }
+
     /** Un texte, en coordonnées de la vue ; [size] en dp. */
     fun text(x: Float, y: Float, value: String, size: Float, align: Paint.Align = Paint.Align.LEFT, bold: Boolean = false, alpha: Int = 210) {
         if (spend(value.length * size * density * 0.5f) <= 0f) return
@@ -497,7 +541,17 @@ class Pen {
         paint.alpha = (alpha * strength).toInt()
         paint.textAlign = align
         paint.letterSpacing = 0.08f
-        canvas.drawText(value, px(x, y), py(x, y), paint)
+        val tx = px(x, y)
+        val ty = py(x, y)
+        if (turned) {
+            // Dans une vue tournée, le texte tourne avec elle, comme sur une planche pivotée.
+            canvas.save()
+            canvas.rotate(90f, tx, ty)
+            canvas.drawText(value, tx, ty, paint)
+            canvas.restore()
+        } else {
+            canvas.drawText(value, tx, ty, paint)
+        }
     }
 
     /** Un point plein ; [size] en dp. */
