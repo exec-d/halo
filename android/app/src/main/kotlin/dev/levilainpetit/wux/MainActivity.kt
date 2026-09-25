@@ -13,6 +13,9 @@ import android.os.PowerManager
 import android.net.Uri
 import android.provider.Settings
 import dev.levilainpetit.wux.calendar.CalendarRepository
+import dev.levilainpetit.wux.system.BluetoothDevices
+import dev.levilainpetit.wux.system.SystemRefresh
+import dev.levilainpetit.wux.system.UsageAccess
 import dev.levilainpetit.wux.wallpaper.WallpaperPreview
 import dev.levilainpetit.wux.wallpaper.WallpaperSettings
 import dev.levilainpetit.wux.weather.Place
@@ -43,6 +46,7 @@ open class MainActivity : FlutterActivity() {
     private var pendingPermission: MethodChannel.Result? = null
     private var pendingLocation: MethodChannel.Result? = null
     private var pendingLocationPermission: MethodChannel.Result? = null
+    private var pendingBluetoothPermission: MethodChannel.Result? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -52,6 +56,8 @@ open class MainActivity : FlutterActivity() {
 
     override fun onResume() {
         super.onResume()
+        // De retour des réglages : un accès vient peut-être d'être accordé.
+        scope.launch(Dispatchers.IO) { SystemRefresh.redraw(applicationContext) }
         // Ouvrir WUX rafraîchit des prévisions périmées.
         if (Weather.place(this) != null && Weather.isStale(this)) {
             scope.launch {
@@ -124,6 +130,29 @@ open class MainActivity : FlutterActivity() {
                     pendingLocationPermission?.success(false)
                     pendingLocationPermission = result
                     requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_ONLY_REQUEST)
+                }
+            }
+            "hasUsageAccess" -> result.success(UsageAccess.granted(this))
+            "openUsageAccess" -> {
+                val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).apply {
+                    // Android 10+ ouvre directement la fiche de Halo.
+                    data = Uri.fromParts("package", packageName, null)
+                }
+                try {
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+                }
+                result.success(null)
+            }
+            "hasBluetoothPermission" -> result.success(BluetoothDevices.hasPermission(this))
+            "requestBluetoothPermission" -> {
+                if (BluetoothDevices.hasPermission(this) || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                    result.success(true)
+                } else {
+                    pendingBluetoothPermission?.success(false)
+                    pendingBluetoothPermission = result
+                    requestPermissions(arrayOf(Manifest.permission.BLUETOOTH_CONNECT), BLUETOOTH_REQUEST)
                 }
             }
             "openBatterySettings" -> {
@@ -267,6 +296,12 @@ open class MainActivity : FlutterActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val granted = grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED
+        if (requestCode == BLUETOOTH_REQUEST) {
+            pendingBluetoothPermission?.success(granted)
+            pendingBluetoothPermission = null
+            scope.launch(Dispatchers.IO) { SystemRefresh.redraw(applicationContext) }
+            return
+        }
         if (requestCode == LOCATION_ONLY_REQUEST) {
             pendingLocationPermission?.success(granted)
             pendingLocationPermission = null
@@ -294,5 +329,6 @@ open class MainActivity : FlutterActivity() {
         const val CALENDAR_REQUEST = 4201
         const val LOCATION_REQUEST = 4202
         const val LOCATION_ONLY_REQUEST = 4203
+        const val BLUETOOTH_REQUEST = 4204
     }
 }

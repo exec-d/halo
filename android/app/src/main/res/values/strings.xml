@@ -182,4 +182,58 @@
     </plurals>
     <string name="wallpaper_label">Halo · Circuit</string>
     <string name="wallpaper_description">L\'intérieur du téléphone en néon, qui suit son inclinaison, sa batterie et son réseau.</string>
+    <!-- Widgets système détaillés -->
+    <string name="widget_battery_label">Batterie détaillée</string>
+    <string name="widget_battery_description">Niveau sur 24 heures, prévision, température et cycles.</string>
+    <string name="widget_device_label">Appareil</string>
+    <string name="widget_device_description">Fiche du téléphone façon console, et depuis quand il tourne.</string>
+    <string name="widget_bt_devices_label">Écouteurs et montre</string>
+    <string name="widget_bt_devices_description">La batterie des appareils Bluetooth connectés.</string>
+    <string name="widget_screen_time_label">Temps d\'écran</string>
+    <string name="widget_screen_time_description">La journée en cadran : quand l\'écran était allumé, et les applis les plus utilisées.</string>
+    <string name="widget_mobile_data_label">Données mobiles</string>
+    <string name="widget_mobile_data_description">La consommation de la période, face au forfait.</string>
+
+    <string name="battery_title">Batterie · 24 h</string>
+    <string name="battery_temperature">Temp.</string>
+    <string name="battery_voltage">Tension</string>
+    <string name="battery_cycles">Cycles</string>
+    <string name="battery_health">Santé</string>
+    <string name="battery_full">Chargée</string>
+    <string name="battery_full_in">Pleine dans %1$s</string>
+    <string name="battery_left">Encore environ %1$s</string>
+    <string name="battery_estimating_charge">En charge</string>
+    <string name="battery_estimating">Estimation en cours</string>
+    <string-array name="battery_health_names">
+        <item>—</item>
+        <item>—</item>
+        <item>Bonne</item>
+        <item>Surchauffe</item>
+        <item>Usée</item>
+        <item>Surtension</item>
+        <item>Défaut</item>
+        <item>Froide</item>
+    </string-array>
+
+    <string name="device_prompt">%1$s@%2$s:~$ %3$s</string>
+    <string name="device_days">%1$d j %2$d h</string>
+    <string name="device_hours">depuis le démarrage</string>
+    <string name="device_patch">correctif %1$s</string>
+    <string name="device_memory">%1$d Go</string>
+
+    <string name="bt_none">Aucun appareil Bluetooth connecté</string>
+    <string name="bt_off">Bluetooth désactivé</string>
+    <string name="bt_permission">Touchez pour autoriser Halo à voir vos appareils Bluetooth.</string>
+    <string name="bt_unknown_level">—</string>
+
+    <string name="screen_time_title">Temps d\'écran</string>
+    <string name="screen_time_unlocks">%1$d déverr.</string>
+    <string name="screen_time_no_apps">Rien d\'utilisé plus d\'une minute pour l\'instant.</string>
+    <string name="usage_permission">Touchez pour autoriser Halo à lire l\'utilisation du téléphone.</string>
+
+    <string name="mobile_data_title">Données mobiles</string>
+    <string name="mobile_data_projection">Projection</string>
+    <string name="mobile_data_average">Par jour</string>
+    <string name="mobile_data_quota">/ %1$s</string>
+    <string name="mobile_data_detail">Aujourd\'hui %1$s · reprise dans %2$d j</string>
 </resources>

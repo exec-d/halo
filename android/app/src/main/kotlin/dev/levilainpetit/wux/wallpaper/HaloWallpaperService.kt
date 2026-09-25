@@ -20,9 +20,11 @@ import android.os.SystemClock
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 import androidx.annotation.RequiresApi
+import dev.levilainpetit.wux.system.BatteryHistory
 import dev.levilainpetit.wux.widgets.SystemStatus
 import kotlin.math.abs
 import kotlin.math.log10
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 /**
@@ -192,6 +194,8 @@ class HaloWallpaperService : WallpaperService() {
             val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100)
             if (level >= 0 && scale > 0) state.batteryLevel = level / scale.toFloat()
             state.charging = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) != 0
+            // Tant que le fond est là, la courbe du widget Batterie profite de chaque changement.
+            BatteryHistory.record(this@HaloWallpaperService, (state.batteryLevel * 100).roundToInt(), state.charging)
         }
 
         private fun sampleTraffic() {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu du lanceur, données d'exemple : widget_bt_devices -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_bt_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="4dp">
+
+    <LinearLayout
+        android:id="@+id/preview_bt_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center_vertical" android:orientation="horizontal">
+            <ImageView android:layout_width="28dp" android:layout_height="28dp" android:importantForAccessibility="no" android:src="@drawable/sample_glyph_headphones" android:tint="@color/clock_core" />
+            <ImageView android:layout_width="11dp" android:layout_height="36dp" android:layout_marginStart="6dp" android:importantForAccessibility="no" android:src="@drawable/sample_cells_70" android:tint="@color/clock_line" />
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:layout_weight="1" android:orientation="vertical">
+                <TextView style="@style/HaloValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="70 %" />
+                <TextView style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Pixel Buds Pro" android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center_vertical" android:orientation="horizontal">
+            <ImageView android:layout_width="28dp" android:layout_height="28dp" android:importantForAccessibility="no" android:src="@drawable/sample_glyph_watch" android:tint="@color/clock_core" />
+            <ImageView android:layout_width="11dp" android:layout_height="36dp" android:layout_marginStart="6dp" android:importantForAccessibility="no" android:src="@drawable/sample_cells_45" android:tint="@color/clock_line" />
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:layout_weight="1" android:orientation="vertical">
+                <TextView style="@style/HaloValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="45 %" />
+                <TextView style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Pixel Watch" android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/preview_bt_empty"
+        style="@style/HaloDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:textColor="@color/clock_core"
+        android:visibility="gone" />
+</FrameLayout>

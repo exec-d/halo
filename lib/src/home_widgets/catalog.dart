@@ -51,6 +51,59 @@ const advancedSystemWidget = WuxHomeWidget(
   previewSize: Size(340, 150),
 );
 
+const batteryWidget = WuxHomeWidget(
+  id: 'battery',
+  kind: WuxWidgetKind.simple,
+  title: 'Batterie détaillée',
+  description:
+      'La courbe des 24 dernières heures et la suite prévue, la '
+      'température, la tension et les cycles.',
+  androidProvider: '$_androidPackage.BatteryWidget',
+  previewSize: Size(340, 150),
+);
+
+const deviceWidget = WuxHomeWidget(
+  id: 'device',
+  kind: WuxWidgetKind.simple,
+  title: 'Appareil',
+  description:
+      'La fiche du téléphone façon console, et depuis combien de temps il '
+      'tourne, à la seconde.',
+  androidProvider: '$_androidPackage.DeviceWidget',
+  previewSize: Size(340, 150),
+);
+
+const bluetoothDevicesWidget = WuxHomeWidget(
+  id: 'bt_devices',
+  kind: WuxWidgetKind.bluetooth,
+  title: 'Écouteurs et montre',
+  description: 'La batterie des appareils Bluetooth connectés.',
+  androidProvider: '$_androidPackage.BluetoothDevicesWidget',
+  previewSize: Size(340, 72),
+);
+
+const screenTimeWidget = WuxHomeWidget(
+  id: 'screen_time',
+  kind: WuxWidgetKind.usage,
+  title: "Temps d'écran",
+  description:
+      "La journée en cadran de 24 heures : quand l'écran était allumé, les "
+      'déverrouillages et les applis les plus utilisées.',
+  androidProvider: '$_androidPackage.ScreenTimeWidget',
+  previewSize: Size(340, 150),
+);
+
+const mobileDataWidget = WuxHomeWidget(
+  id: 'mobile_data',
+  kind: WuxWidgetKind.mobileData,
+  title: 'Données mobiles',
+  description:
+      'La consommation de la période face au forfait, avec la projection '
+      'en fin de période.',
+  androidProvider: '$_androidPackage.MobileDataWidget',
+  previewSize: Size(340, 150),
+);
+
 const worldClockWidget = WuxHomeWidget(
   id: 'world_clock',
   kind: WuxWidgetKind.worldClock,
@@ -143,6 +196,11 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   twoColumnAgendaWidget,
   systemWidget,
   advancedSystemWidget,
+  batteryWidget,
+  deviceWidget,
+  bluetoothDevicesWidget,
+  screenTimeWidget,
+  mobileDataWidget,
   worldClockWidget,
   countdownWidget,
   controlsWidget,

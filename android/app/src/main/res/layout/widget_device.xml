@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Appareil, façon console : durée depuis le démarrage (qui défile seule),
+     système, matériel, et l'invite qui attend (DeviceWidget). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/device_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="6dp">
+
+    <TextView android:id="@+id/device_prompt_uptime" style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:baselineAligned="true"
+        android:orientation="horizontal">
+        <Chronometer
+            android:id="@+id/device_uptime"
+            style="@style/HaloConsole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/device_uptime_days"
+            style="@style/HaloDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+    <TextView android:id="@+id/device_prompt_os" style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" />
+    <TextView android:id="@+id/device_os" style="@style/HaloConsole" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" />
+    <TextView android:id="@+id/device_prompt_hw" style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" />
+    <TextView android:id="@+id/device_hw" style="@style/HaloConsole" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" />
+    <TextView android:id="@+id/device_cursor" style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" />
+</LinearLayout>

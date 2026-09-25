@@ -16,6 +16,16 @@ enum WuxWidgetKind {
 
   /// Le lieu des prévisions.
   weather,
+
+  /// Les appareils Bluetooth : l'autorisation « Appareils à proximité ».
+  bluetooth,
+
+  /// Le temps d'écran : l'accès aux données d'utilisation.
+  usage,
+
+  /// Les données mobiles : l'accès aux données d'utilisation, le forfait et
+  /// son jour de reprise.
+  mobileData,
 }
 
 /// Description, côté Dart, d'un widget d'écran d'accueil déclaré côté Android.

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu du lanceur, données d'exemple : widget_device -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_device_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="6dp">
+
+    <TextView android:id="@+id/preview_device_prompt_uptime"
+    android:text="halo@pixel7:~$ uptime" style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:baselineAligned="true"
+        android:orientation="horizontal">
+        <Chronometer
+            android:id="@+id/preview_device_uptime"
+    android:text="76:12:03"
+            style="@style/HaloConsole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/preview_device_uptime_days"
+    android:text="3 j 4 h"
+            style="@style/HaloDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+    <TextView android:id="@+id/preview_device_prompt_os"
+    android:text="halo@pixel7:~$ os" style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" />
+    <TextView android:id="@+id/preview_device_os"
+    android:text="Android 17 · API 37 · correctif 5 sept. 2026" style="@style/HaloConsole" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" />
+    <TextView android:id="@+id/preview_device_prompt_hw"
+    android:text="halo@pixel7:~$ hw" style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" />
+    <TextView android:id="@+id/preview_device_hw"
+    android:text="Google Pixel 7 · Tensor G2 · 8 Go" style="@style/HaloConsole" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" />
+    <TextView android:id="@+id/preview_device_cursor"
+    android:text="halo@pixel7:~$ █" style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" />
+</LinearLayout>

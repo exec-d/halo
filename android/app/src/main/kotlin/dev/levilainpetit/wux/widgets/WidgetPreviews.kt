@@ -46,6 +46,11 @@ object WidgetPreviews {
         "sun_moon" -> SunMoonWidget()
         "rain" -> RainWidget()
         "allergy" -> AllergyWidget()
+        "battery" -> BatteryWidget()
+        "device" -> DeviceWidget()
+        "bt_devices" -> BluetoothDevicesWidget()
+        "screen_time" -> ScreenTimeWidget()
+        "mobile_data" -> MobileDataWidget()
         else -> null
     }
 

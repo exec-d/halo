@@ -78,7 +78,9 @@ class _AboutScreenState extends State<AboutScreen> {
               description:
                   'Halo ne crée aucun compte, ne contient ni publicité ni '
                   "mesure d'audience, et n'envoie rien à ses auteurs. Votre "
-                  'agenda est lu sur le téléphone et n\'en sort pas. Pour la '
+                  'agenda, le temps d\'écran, la consommation de données et '
+                  'les appareils Bluetooth sont lus sur le téléphone et n\'en '
+                  'sortent pas. Pour la '
                   'météo, la pluie, les pollens et la qualité de l\'air, '
                   'seules les coordonnées du lieu choisi sont envoyées à '
                   'Open-Meteo. Vos réglages restent sur le téléphone.',

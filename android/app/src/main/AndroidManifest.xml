@@ -1,7 +1,16 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Lecture seule : les widgets agenda consultent, ils ne modifient rien. -->
     <uses-feature android:name="android.software.live_wallpaper" android:required="false" />
 
+    <!-- Temps d'écran et données mobiles : accès accordé dans les réglages. -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <!-- Écouteurs et montre : appareils Bluetooth connectés (Android 12+). -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <!-- Appareil : redessiné après un redémarrage. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <!-- Certaines applications Horloge l'exigent pour s'ouvrir depuis le widget. -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
@@ -223,6 +232,69 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <receiver
+            android:name=".widgets.BatteryWidget"
+            android:exported="false"
+            android:label="@string/widget_battery_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_battery_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.DeviceWidget"
+            android:exported="false"
+            android:label="@string/widget_device_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_device_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.BluetoothDevicesWidget"
+            android:exported="false"
+            android:label="@string/widget_bt_devices_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+                <action android:name="android.bluetooth.device.action.BATTERY_LEVEL_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_bt_devices_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.ScreenTimeWidget"
+            android:exported="false"
+            android:label="@string/widget_screen_time_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_screen_time_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.MobileDataWidget"
+            android:exported="false"
+            android:label="@string/widget_mobile_data_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_mobile_data_info" />
+        </receiver>
         <!-- Fond d'écran animé « Circuit ». -->
         <service
             android:name=".wallpaper.HaloWallpaperService"

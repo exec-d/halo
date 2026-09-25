@@ -55,6 +55,40 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
+  testWidgets('données mobiles : accès aux données et forfait', (tester) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Données mobiles');
+    expect(find.text('Non accordé'), findsOneWidget);
+
+    await tester.ensureVisible(
+      find.text("Ouvrir l'accès aux données d'utilisation"),
+    );
+    await tester.tap(find.text("Ouvrir l'accès aux données d'utilisation"));
+    await tester.pumpAndSettle();
+    expect(platform.usageSettingsOpened, 1);
+
+    // Accordé dans les réglages, puis retour dans Halo.
+    platform.usageAccess = true;
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+    expect(find.text('Accordé'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('écouteurs et montre : autorisation Bluetooth', (tester) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Écouteurs et montre');
+    await tester.ensureVisible(
+      find.text('Autoriser « Appareils à proximité »'),
+    );
+    await tester.tap(find.text('Autoriser « Appareils à proximité »'));
+    await tester.pumpAndSettle();
+    expect(platform.bluetooth, isTrue);
+    expect(find.text('Accordé'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets("au premier lancement, l'accès à l'agenda est demandé", (
     tester,
   ) async {

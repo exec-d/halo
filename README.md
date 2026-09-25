@@ -9,7 +9,7 @@ code, le paquet (`dev.levilainpetit.wux`) et le dépôt gardent le nom de code.
 ## Widgets
 
 Style néon d'après les maquettes : heure en Roboto extra gras, texte mono,
-halo lumineux. Les couleurs suivent l'accent du fond d'écran
+ombre sombre sous les textes, halo sur les traits. Les couleurs suivent l'accent du fond d'écran
 (Material You, Android 12+), un bleu fixe avant.
 
 | Widget | Contenu | Toucher |
@@ -19,6 +19,11 @@ halo lumineux. Les couleurs suivent l'accent du fond d'écran
 | Agenda 2 colonnes | Idem en deux colonnes | Idem |
 | Système (4x1) | Batterie, réseau, stockage | Ouvre le réglage correspondant |
 | Système avancé (4x2) | Signal, Wi-Fi, Bluetooth, batterie, mémoire, stockage, localisation, son | Idem |
+| Batterie détaillée (4x2) | Courbe des 24 h (charges en plein) et suite prévue, estimation, température, tension, cycles, santé | Ouvre l'utilisation de la batterie |
+| Appareil (4x2) | Console : durée depuis le démarrage (chronomètre), Android et correctif, modèle, puce, mémoire | Ouvre « À propos du téléphone » |
+| Écouteurs et montre (4x1) | Appareils Bluetooth connectés : silhouette, pile de cellules, niveau (autorisation « Appareils à proximité ») | Ouvre les réglages Bluetooth |
+| Temps d'écran (4x2) | Cadran de 24 h des périodes écran allumé, total, déverrouillages, trois applis en silhouette (accès aux données d'utilisation) | Ouvre Bien-être numérique |
+| Données mobiles (4x2) | Cumul de la période face au forfait, rythme idéal, projection, barre par jour (accès aux données d'utilisation) | Ouvre la consommation des données |
 | Fuseaux horaires (4x1) | L'heure de trois villes au choix | Ouvre l'horloge |
 | Compte à rebours | Les jours jusqu'à une date | Ouvre WUX |
 | Contrôles (4x1) | Lampe torche, Wi-Fi, Bluetooth, son, appareil photo | Bascule la lampe, ouvre le reste |

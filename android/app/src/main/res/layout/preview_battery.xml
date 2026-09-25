@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu du lanceur, données d'exemple : widget_battery -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_battery_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                style="@style/HaloLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/battery_title" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:baselineAligned="true"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/preview_battery_level"
+    android:text="82"
+                    style="@style/HaloValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="38sp" />
+                <TextView
+                    style="@style/HaloValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:text="%"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/preview_battery_estimate"
+    android:text="Encore environ 9 h 35"
+                style="@style/HaloDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/clock_core" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical">
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+                <TextView style="@style/HaloLabel" android:layout_width="64dp" android:layout_height="wrap_content" android:text="@string/battery_temperature" />
+                <TextView android:id="@+id/preview_battery_temperature"
+    android:text="31,2 °C" style="@style/HaloDetail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/clock_core" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:orientation="horizontal">
+                <TextView style="@style/HaloLabel" android:layout_width="64dp" android:layout_height="wrap_content" android:text="@string/battery_voltage" />
+                <TextView android:id="@+id/preview_battery_voltage"
+    android:text="4,21 V" style="@style/HaloDetail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/clock_core" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:orientation="horizontal">
+                <TextView style="@style/HaloLabel" android:layout_width="64dp" android:layout_height="wrap_content" android:text="@string/battery_cycles" />
+                <TextView android:id="@+id/preview_battery_cycles"
+    android:text="412" style="@style/HaloDetail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/clock_core" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:orientation="horizontal">
+                <TextView style="@style/HaloLabel" android:layout_width="64dp" android:layout_height="wrap_content" android:text="@string/battery_health" />
+                <TextView android:id="@+id/preview_battery_health"
+    android:text="Bonne" style="@style/HaloDetail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/clock_core" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/preview_battery_chart"
+    android:src="@drawable/sample_battery_chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:layout_weight="1"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        android:tint="@color/clock_line" />
+</LinearLayout>

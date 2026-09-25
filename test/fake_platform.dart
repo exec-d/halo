@@ -86,6 +86,22 @@ class FakePlatform implements WuxPlatform {
     return true;
   }
 
+  var usageAccess = false;
+  var usageSettingsOpened = 0;
+  var bluetooth = false;
+
+  @override
+  Future<bool> hasUsageAccess() async => usageAccess;
+
+  @override
+  Future<void> openUsageAccess() async => usageSettingsOpened++;
+
+  @override
+  Future<bool> hasBluetoothPermission() async => bluetooth;
+
+  @override
+  Future<bool> requestBluetoothPermission() async => bluetooth = true;
+
   @override
   Future<bool> isFirstLaunch() async => firstLaunch;
 

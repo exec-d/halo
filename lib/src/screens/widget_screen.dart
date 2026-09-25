@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
+import 'access_screen.dart';
 import 'agenda_screen.dart';
 import 'countdown_screen.dart';
 import 'simple_screen.dart';
@@ -49,6 +50,13 @@ class WidgetScreen extends StatelessWidget {
         allowPin: !configuring,
       ),
       WuxWidgetKind.weather => WeatherScreen(
+        homeWidget: homeWidget,
+        platform: platform,
+        allowPin: !configuring,
+      ),
+      WuxWidgetKind.bluetooth ||
+      WuxWidgetKind.usage ||
+      WuxWidgetKind.mobileData => AccessScreen(
         homeWidget: homeWidget,
         platform: platform,
         allowPin: !configuring,

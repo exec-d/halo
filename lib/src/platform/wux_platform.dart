@@ -79,6 +79,19 @@ abstract interface class WuxPlatform {
   /// Demande la position approximative ; renvoie la réponse.
   Future<bool> requestLocationPermission();
 
+  /// Vrai si l'accès aux données d'utilisation est accordé (temps d'écran,
+  /// données mobiles).
+  Future<bool> hasUsageAccess();
+
+  /// Ouvre le réglage d'Android qui accorde cet accès.
+  Future<void> openUsageAccess();
+
+  /// Vrai si Halo peut voir les appareils Bluetooth connectés.
+  Future<bool> hasBluetoothPermission();
+
+  /// Affiche la demande « Appareils à proximité » ; renvoie la réponse.
+  Future<bool> requestBluetoothPermission();
+
   /// Ouvre la liste des applications exclues de l'optimisation de batterie.
   Future<void> openBatterySettings();
 
@@ -152,6 +165,22 @@ class AndroidWuxPlatform implements WuxPlatform {
   @override
   Future<bool> applyWallpaper() async =>
       await _channel.invokeMethod<bool>('applyWallpaper') ?? false;
+
+  @override
+  Future<bool> hasUsageAccess() async =>
+      await _channel.invokeMethod<bool>('hasUsageAccess') ?? false;
+
+  @override
+  Future<void> openUsageAccess() =>
+      _channel.invokeMethod<void>('openUsageAccess');
+
+  @override
+  Future<bool> hasBluetoothPermission() async =>
+      await _channel.invokeMethod<bool>('hasBluetoothPermission') ?? false;
+
+  @override
+  Future<bool> requestBluetoothPermission() async =>
+      await _channel.invokeMethod<bool>('requestBluetoothPermission') ?? false;
 
   @override
   Future<bool> isFirstLaunch() async =>
