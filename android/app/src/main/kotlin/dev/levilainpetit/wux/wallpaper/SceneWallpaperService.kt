@@ -56,7 +56,7 @@ interface LiveScene {
 }
 
 /**
- * Base des fonds d'écran Horizon et Ciel : cadence des images, capteurs
+ * Base des fonds d'écran animés autres que Circuit : cadence des images, capteurs
  * (seulement quand le fond est visible), intensité, couleurs du téléphone.
  */
 abstract class SceneWallpaperService : WallpaperService() {

@@ -26,14 +26,12 @@ gardent ce nom.*
 | Musique | Lecture en cours (pochette néon, commandes) |
 | Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo) |
 
-**Trois fonds d'écran animés** :
+**Fond d'écran animé** :
 
 - **Circuit** : l'intérieur d'un Pixel 7 en schéma néon, qui réagit à
   l'inclinaison, suit la vraie batterie, s'illumine au passage des données et
-  s'allume composant par composant avec l'écran ;
-- **Horizon** : un paysage néon qui suit la vraie journée et la vraie météo ;
-- **Ciel** : les vraies étoiles et la vraie Lune au-dessus de vous, dans la
-  direction du téléphone.
+  s'allume composant par composant avec l'écran. D'autres fonds, néon et
+  cyberpunk, sont en préparation.
 
 **Ailleurs dans Android** : un écran de veille (horloge néon pendant la
 charge), trois tuiles de réglages rapides (Météo, Fond Halo, Batterie) et des
@@ -73,7 +71,7 @@ Toutes sont facultatives ; chacune ne sert qu'aux widgets indiqués.
 | Autorisation | Pour | Demandée |
 | --- | --- | --- |
 | Agenda (lecture) | Agenda, Agenda 2 colonnes, Mois | Au premier lancement |
-| Position approximative | Météo, Prévisions, Pluie, Allergies, Soleil et Lune, fonds Horizon et Ciel — seulement si vous choisissez « Ma position » | Dans l'écran Météo |
+| Position approximative | Météo, Prévisions, Pluie, Allergies, Soleil et Lune — seulement si vous choisissez « Ma position » | Dans l'écran Météo |
 | Appareils à proximité | Écouteurs et montre | Dans l'écran du widget |
 | Données d'utilisation | Temps d'écran, Données mobiles | Dans les réglages d'Android |
 | Accès aux notifications | Lecture en cours (pour voir ce qui joue ; aucune notification lue) | Dans les réglages d'Android |

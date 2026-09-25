@@ -11,8 +11,6 @@ mineure peut changer des réglages.
 
 - **Cinq widgets** : Lecture en cours, Prévisions 5 jours, Horloge
   analogique, Éphéméride, Chronomètre et minuteur.
-- **Deux fonds d'écran animés** : Horizon (la vraie journée et la vraie
-  météo) et Ciel (les vraies étoiles, dans la direction du téléphone).
 - **Écran de veille** Halo, pendant la charge.
 - **Tuiles de réglages rapides** : Météo, Fond Halo, Batterie.
 - **Raccourcis de l'icône** : Fond d'écran, Widgets, Réglages.

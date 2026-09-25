@@ -26,14 +26,12 @@ keep that name.*
 | Music | Now playing (neon cover art, controls) |
 | Shortcuts | Controls (flashlight, Wi-Fi, Bluetooth, sound, camera) |
 
-**Three animated wallpapers**:
+**Animated wallpaper**:
 
 - **Circuit**: the inside of a Pixel 7 as a neon schematic, which reacts to
   tilt, follows the real battery, lights up as data flows and powers on
-  component by component with the screen;
-- **Horizon**: a neon landscape that follows the real day and the real weather;
-- **Sky**: the real stars and the real Moon above you, in the direction the
-  phone is pointing.
+  component by component with the screen. More wallpapers, neon and
+  cyberpunk, are on the way.
 
 **Elsewhere in Android**: a screen saver (neon clock while charging), three
 quick settings tiles (Weather, Halo wallpaper, Battery) and icon shortcuts
@@ -71,7 +69,7 @@ All are optional; each one is used only by the widgets listed.
 | Permission | For | Requested |
 | --- | --- | --- |
 | Calendar (read) | Agenda, Agenda 2 columns, Month | On first launch |
-| Approximate location | Weather, Forecast, Rain, Allergies, Sun and Moon, Horizon and Sky wallpapers — only if you choose "My location" | In the Weather screen |
+| Approximate location | Weather, Forecast, Rain, Allergies, Sun and Moon — only if you choose "My location" | In the Weather screen |
 | Nearby devices | Earbuds and watch | In the widget's screen |
 | Usage data | Screen time, Mobile data | In Android settings |
 | Notification access | Now playing (to see what is playing; no notification is read) | In Android settings |

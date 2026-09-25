@@ -2,9 +2,9 @@
 
 *[Français](../wallpaper.md)*
 
-Halo offers three animated wallpapers (Circuit, Horizon, Sky), a screen saver,
-three quick settings tiles and shortcuts on its icon. The intensity (Subtle,
-Normal, Vivid) is shared by the three wallpapers.
+Halo offers an animated wallpaper (Circuit), a screen saver,
+three quick settings tiles and shortcuts on its icon. The intensity can be set to
+Subtle, Normal or Vivid.
 
 ## Circuit
 
@@ -64,39 +64,6 @@ and icons on top readable.
 | `HaloWallpaperService.kt` | Sensor, battery, traffic, signal, frame rate |
 | `WallpaperPreview.kt` | The in-app preview and opening the system screen |
 | `WallpaperSettings.kt` | The intensity |
-
-## Horizon
-
-A neon landscape that follows the real day and the real weather of the place
-chosen in Weather:
-
-- the **sun**, striped 80s-style, rises, crosses the sky and sets at the real
-  times; at **night**, the moon in its phase and twinkling stars;
-- the **weather**: drifting clouds, rain, snow, thunderstorm with lightning,
-  or mist, depending on the current weather code;
-- two ridges of **mountains** and a **grid floor** in perspective, which
-  slide when you tilt the phone.
-
-In clear weather, the image changes slowly (a few times per second); in rain
-or snow, it animates more. Code: `HorizonScene.kt`.
-
-## Sky
-
-The brightest stars (about a hundred) and the outlines of well-known
-constellations, in their real place for the chosen location and time, and
-the Moon in its phase:
-
-- the sky follows the **direction of the phone** (rotation sensor, like a
-  compass): turning around shows the sky on that side, raising the phone
-  moves up towards the zenith; held as usual, you look at the sky above the
-  horizon;
-- the real **horizon** is drawn, with a marker at north and at the other
-  three cardinal points;
-- during the **day**, the sky brightens and the stars fade.
-
-Positions are calculated on the phone (sidereal time, simplified formulas
-for the Moon and the Sun: accurate to about one degree). Code: `SkyScene.kt`,
-`Stars.kt`.
 
 ## Screen saver
 

@@ -17,7 +17,7 @@ Everything Halo reads is shown on the phone and never leaves it:
 | Connected Bluetooth devices (name, type, battery) | Earbuds and watch | Nearby devices |
 | App usage time, unlocks, mobile data usage | Screen time, Mobile data | Usage data access |
 | List of installed apps (name, icon) | Screen time | Not requested (declared) |
-| Phone tilt and orientation | Circuit, Horizon, Sky wallpapers | None |
+| Phone tilt and orientation | Circuit wallpaper | None |
 | Current track (title, artist, cover art, app) | Now playing | Notification access (no notification is read) |
 
 Halo's settings and battery history (26 hours) are kept in the app's

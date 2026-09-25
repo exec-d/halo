@@ -293,29 +293,6 @@
     <string name="media_play">Lecture ou pause</string>
     <string name="media_next">Suivant</string>
     <string name="media_listener">Halo · Lecture en cours</string>
-    <string name="wallpaper_horizon_label">Halo · Horizon</string>
-    <string name="wallpaper_horizon_description">Un horizon néon qui suit l\'heure et la vraie météo.</string>
-    <string name="wallpaper_sky_label">Halo · Ciel</string>
-    <string name="wallpaper_sky_description">Les vraies étoiles au-dessus de vous, dans la direction du téléphone.</string>
     <string name="battery_chart_now">maint.</string>
-    <!-- Constellations nommées par le fond Ciel (Stars.CONSTELLATIONS). -->
-    <string name="constellation_orion">Orion</string>
-    <string name="constellation_big_dipper">Grande Ourse</string>
-    <string name="constellation_little_dipper">Petite Ourse</string>
-    <string name="constellation_cassiopeia">Cassiopée</string>
-    <string name="constellation_cygnus">Cygne</string>
-    <string name="constellation_lyra">Lyre</string>
-    <string name="constellation_aquila">Aigle</string>
-    <string name="constellation_leo">Lion</string>
-    <string name="constellation_scorpius">Scorpion</string>
-    <string name="constellation_pegasus">Pégase</string>
-    <string name="constellation_andromeda">Andromède</string>
-    <string name="constellation_gemini">Gémeaux</string>
-    <string name="constellation_crux">Croix du Sud</string>
-    <string name="constellation_sagittarius">Sagittaire</string>
-    <string name="constellation_taurus">Taureau</string>
-    <string name="constellation_canis_major">Grand Chien</string>
-    <string name="constellation_auriga">Cocher</string>
-    <string name="constellation_bootes">Bouvier</string>
     <string name="wallpaper_author" translatable="false">Halo</string>
 </resources>

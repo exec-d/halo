@@ -46,40 +46,8 @@ List<(String, String)> _circuitFeatures(AppLocalizations l) => [
 ];
 String _circuitBattery(AppLocalizations l) => l.wallpaperCircuitBattery;
 
-const horizonWallpaper = HaloWallpaper(
-  id: 'horizon',
-  title: _horizonTitle,
-  description: _horizonDescription,
-  features: _horizonFeatures,
-  battery: _horizonBattery,
-);
-String _horizonTitle(AppLocalizations l) => l.wallpaperHorizonTitle;
-String _horizonDescription(AppLocalizations l) => l.wallpaperHorizonDescription;
-List<(String, String)> _horizonFeatures(AppLocalizations l) => [
-  (l.wallpaperHorizonDayTitle, l.wallpaperHorizonDayText),
-  (l.wallpaperHorizonWeatherTitle, l.wallpaperHorizonWeatherText),
-  (l.wallpaperHorizonTiltTitle, l.wallpaperHorizonTiltText),
-];
-String _horizonBattery(AppLocalizations l) => l.wallpaperHorizonBattery;
-
-const skyWallpaper = HaloWallpaper(
-  id: 'sky',
-  title: _skyTitle,
-  description: _skyDescription,
-  features: _skyFeatures,
-  battery: _skyBattery,
-);
-String _skyTitle(AppLocalizations l) => l.wallpaperSkyTitle;
-String _skyDescription(AppLocalizations l) => l.wallpaperSkyDescription;
-List<(String, String)> _skyFeatures(AppLocalizations l) => [
-  (l.wallpaperSkyRealTitle, l.wallpaperSkyRealText),
-  (l.wallpaperSkyCompassTitle, l.wallpaperSkyCompassText),
-  (l.wallpaperSkyDayTitle, l.wallpaperSkyDayText),
-];
-String _skyBattery(AppLocalizations l) => l.wallpaperSkyBattery;
-
 /// Les fonds d'écran animés, dans l'ordre du catalogue.
-const haloWallpapers = [circuitWallpaper, horizonWallpaper, skyWallpaper];
+const haloWallpapers = [circuitWallpaper];
 
 /// Un fond d'écran animé : aperçu, ce qu'il montre, son intensité et son
 /// application à l'accueil et à l'écran de verrouillage.

@@ -2,9 +2,9 @@
 
 *[English](en/wallpaper.md)*
 
-Halo propose trois fonds d'écran animés (Circuit, Horizon, Ciel), un écran de
+Halo propose un fond d'écran animé (Circuit), un écran de
 veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
-L'intensité (Discret, Normal, Vif) est commune aux trois fonds.
+L'intensité se règle en Discret, Normal ou Vif.
 
 ## Circuit
 
@@ -67,40 +67,6 @@ widgets et les icônes lisibles par-dessus.
 | `HaloWallpaperService.kt` | Capteur, batterie, trafic, signal, cadence des images |
 | `WallpaperPreview.kt` | L'aperçu de l'application et l'ouverture de l'écran système |
 | `WallpaperSettings.kt` | L'intensité |
-
-## Horizon
-
-Un paysage néon qui suit la vraie journée et la vraie météo du lieu choisi
-dans Météo :
-
-- le **soleil**, rayé façon années 80, se lève, traverse le ciel et se couche
-  aux vraies heures ; la **nuit**, la lune dans sa phase et des étoiles qui
-  scintillent ;
-- la **météo** : nuages qui dérivent, pluie, neige, orage avec éclairs, ou
-  brume, selon le code météo du moment ;
-- deux crêtes de **montagnes** et un **sol quadrillé** en perspective, qui
-  glissent quand on penche le téléphone.
-
-Par temps clair, l'image change lentement (quelques fois par seconde) ; sous
-la pluie ou la neige, elle s'anime davantage. Code : `HorizonScene.kt`.
-
-## Ciel
-
-Les étoiles les plus brillantes (une centaine) et les tracés des
-constellations connues, à leur vraie place pour le lieu choisi et l'heure, et
-la Lune dans sa phase :
-
-- le ciel suit la **direction du téléphone** (capteur de rotation, comme une
-  boussole) : se tourner montre le ciel de ce côté, lever le téléphone monte
-  vers le zénith ; tenu comme d'habitude, on regarde le ciel au-dessus de
-  l'horizon ;
-- l'**horizon** réel est tracé, avec un repère au nord et aux trois autres
-  points cardinaux ;
-- le **jour**, le ciel s'éclaircit et les étoiles pâlissent.
-
-Positions calculées sur le téléphone (temps sidéral, formules simplifiées
-pour la Lune et le Soleil : à un degré près). Code : `SkyScene.kt`,
-`Stars.kt`.
 
 ## Écran de veille
 

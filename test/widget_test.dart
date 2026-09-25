@@ -316,7 +316,7 @@ void main() {
 
     expect(find.text('Live wallpapers'), findsOneWidget);
     expect(find.text('Screen saver'), findsWidgets);
-    expect(find.text('Sky'), findsOneWidget);
+    expect(find.text('Circuit'), findsWidgets);
     expect(find.text('Earbuds and watch'), findsOneWidget);
     expect(find.text('Now playing'), findsOneWidget);
     expect(find.bySemanticsLabel('Settings'), findsOneWidget);
