@@ -44,12 +44,27 @@ class SkyScene(private val context: Context) : LiveScene {
         strokeCap = Paint.Cap.ROUND
     }
     private val fill = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val label = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        typeface = android.graphics.Typeface.MONOSPACE
+        textAlign = Paint.Align.CENTER
+        letterSpacing = 0.12f
+    }
+
+    /** Chaque constellation : son nom traduit, et les indices de ses étoiles. */
+    private val names = Stars.ALL.withIndex().associate { it.value.name to it.index }.let { index ->
+        Stars.CONSTELLATIONS.map { (key, stars) ->
+            val id = context.resources.getIdentifier("constellation_$key", "string", context.packageName)
+            val name = if (id != 0) context.getString(id) else key
+            name.uppercase() to stars.mapNotNull { index[it] }
+        }
+    }
     private val lockShade = Paint()
 
     override fun resize(width: Int, height: Int, density: Float) {
         this.width = width
         this.height = height
         this.density = density
+        label.textSize = 10f * density
         lockShade.shader = LinearGradient(0f, 0f, 0f, height * 0.34f, Color.argb(170, 0, 0, 0), Color.TRANSPARENT, Shader.TileMode.CLAMP)
     }
 
@@ -77,7 +92,7 @@ class SkyScene(private val context: Context) : LiveScene {
         val daylight = ((sunAltitude + 12) / 18).coerceIn(0.0, 1.0).toFloat()
         canvas.drawColor(CircuitPainter.BACKGROUND)
         fill.color = palette.glow
-        fill.alpha = (70 * daylight * strength).toInt()
+        fill.alpha = (45 * daylight * strength).toInt()
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), fill)
 
         // Positions à l'écran.
@@ -90,12 +105,13 @@ class SkyScene(private val context: Context) : LiveScene {
                 points[i * 2 + 1] = p.second
             }
         }
-        val starStrength = strength * (1f - 0.8f * daylight)
+        // Le jour les pâlit, sans les effacer.
+        val starStrength = (0.5f + 0.5f * frame.intensity) * (1f - 0.45f * daylight)
 
-        // Constellations.
+        // Constellations : les tracés, puis leur nom au milieu.
         stroke.color = palette.line
-        stroke.strokeWidth = 1f * density
-        stroke.alpha = (80 * starStrength).toInt()
+        stroke.strokeWidth = 1.3f * density
+        stroke.alpha = (170 * starStrength).toInt()
         for ((i, j) in lines) {
             if (visible[i] && visible[j]) canvas.drawLine(points[i * 2], points[i * 2 + 1], points[j * 2], points[j * 2 + 1], stroke)
         }
@@ -111,6 +127,18 @@ class SkyScene(private val context: Context) : LiveScene {
             fill.color = palette.core
             fill.alpha = (255 * twinkle * starStrength).toInt()
             canvas.drawCircle(points[i * 2], points[i * 2 + 1], size, fill)
+        }
+
+        label.color = palette.line
+        label.alpha = (190 * starStrength).toInt()
+        label.setShadowLayer(4f * density, 0f, 0f, Color.BLACK)
+        for ((name, stars) in names) {
+            val shown = stars.filter { visible[it] }
+            if (shown.size < 2) continue
+            val x = shown.map { points[it * 2] }.average().toFloat()
+            // Sous le groupe, pour ne pas couvrir ses étoiles.
+            val y = shown.maxOf { points[it * 2 + 1] } + label.textSize * 1.6f
+            canvas.drawText(name, x, y, label)
         }
 
         drawMoon(canvas, view, d, palette, strength)

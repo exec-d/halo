@@ -2,5 +2,6 @@
 <!-- Fond d'écran animé Halo · Horizon. -->
 <wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/wallpaper_horizon_description"
-    android:thumbnail="@drawable/ic_launcher_foreground"
+    android:author="@string/wallpaper_author"
+    android:thumbnail="@drawable/wallpaper_thumb_horizon"
     android:showMetadataInPreview="false" />

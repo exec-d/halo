@@ -294,4 +294,23 @@
     <string name="wallpaper_sky_label">Halo · Sky</string>
     <string name="wallpaper_sky_description">The real stars above you, in the direction the phone is facing.</string>
     <string name="battery_chart_now">now</string>
+    <!-- Constellations nommées par le fond Ciel (Stars.CONSTELLATIONS). -->
+    <string name="constellation_orion">Orion</string>
+    <string name="constellation_big_dipper">Big Dipper</string>
+    <string name="constellation_little_dipper">Little Dipper</string>
+    <string name="constellation_cassiopeia">Cassiopeia</string>
+    <string name="constellation_cygnus">Cygnus</string>
+    <string name="constellation_lyra">Lyra</string>
+    <string name="constellation_aquila">Aquila</string>
+    <string name="constellation_leo">Leo</string>
+    <string name="constellation_scorpius">Scorpius</string>
+    <string name="constellation_pegasus">Pegasus</string>
+    <string name="constellation_andromeda">Andromeda</string>
+    <string name="constellation_gemini">Gemini</string>
+    <string name="constellation_crux">Southern Cross</string>
+    <string name="constellation_sagittarius">Sagittarius</string>
+    <string name="constellation_taurus">Taurus</string>
+    <string name="constellation_canis_major">Canis Major</string>
+    <string name="constellation_auriga">Auriga</string>
+    <string name="constellation_bootes">Boötes</string>
 </resources>

@@ -116,6 +116,31 @@ object Stars {
         "Capella" to "Menkalinan",
     )
 
+    /**
+     * Les constellations nommées à l'écran : le nom (ressource) et les étoiles
+     * autour desquelles il se place.
+     */
+    val CONSTELLATIONS = listOf(
+        "orion" to listOf("Betelgeuse", "Bellatrix", "Alnilam", "Rigel", "Saiph"),
+        "big_dipper" to listOf("Dubhe", "Merak", "Phecda", "Megrez", "Alioth", "Mizar", "Alkaid"),
+        "little_dipper" to listOf("Polaris", "Kochab", "Pherkad"),
+        "cassiopeia" to listOf("Caph", "Schedar", "GammaCas", "Ruchbah", "Segin"),
+        "cygnus" to listOf("Deneb", "Sadr", "Albireo", "GienahCyg", "DeltaCyg"),
+        "lyra" to listOf("Vega", "Sheliak", "Sulafat"),
+        "aquila" to listOf("Altair", "Tarazed", "Alshain"),
+        "leo" to listOf("Regulus", "Algieba", "Zosma", "Denebola", "Chort", "EtaLeo"),
+        "scorpius" to listOf("Antares", "Dschubba", "Acrab", "Shaula", "Sargas", "EpsSco"),
+        "pegasus" to listOf("Markab", "Scheat", "Alpheratz", "Algenib"),
+        "andromeda" to listOf("Mirach", "Almach"),
+        "gemini" to listOf("Castor", "Pollux", "Alhena", "Mebsuta"),
+        "crux" to listOf("Acrux", "Mimosa", "Gacrux", "DeltaCru"),
+        "sagittarius" to listOf("KausAustralis", "KausMedia", "Nunki", "Ascella", "PhiSgr"),
+        "taurus" to listOf("Aldebaran", "Elnath", "Alcyone"),
+        "canis_major" to listOf("Sirius", "Mirzam", "Wezen", "Adhara"),
+        "auriga" to listOf("Capella", "Menkalinan"),
+        "bootes" to listOf("Arcturus", "Izar"),
+    )
+
     private const val RAD = PI / 180
 
     /** Jours depuis J2000,0. */
