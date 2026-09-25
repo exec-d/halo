@@ -66,7 +66,7 @@ class WeatherWidget : NeonWidget() {
 
         val density = context.resources.displayMetrics.density
         if (today != null) {
-            val gaugeWidth = ((size.width * 0.42f - 16) * density).roundToInt()
+            val gaugeWidth = ((size.width * 0.42f - 24) * density).roundToInt()
             views.setImageViewBitmap(
                 R.id.weather_gauge,
                 WeatherGraphics.gauge(today.min, today.max, forecast.temperature, gaugeWidth, density),
@@ -104,7 +104,7 @@ class WeatherWidget : NeonWidget() {
                 WeatherGraphics.bars(
                     points,
                     points.map { format.format(it.time) },
-                    ((size.width - 16) * density).roundToInt(),
+                    ((size.width - 24) * density).roundToInt(),
                     chartHeight,
                     density,
                 ),
@@ -151,7 +151,7 @@ class WeatherWidget : NeonWidget() {
          * Hauteur (dp, texte à 100 %) du bloc du haut, marges du widget et du
          * graphique comprises : suivre widget_weather.
          */
-        private const val TOP_BLOCK = 164f
+        private const val TOP_BLOCK = 172f
 
         fun degrees(value: Double) = "${value.roundToInt()}°"
 

@@ -69,7 +69,7 @@ class BatteryWidget : NeonWidget() {
 
         // Assez haut : la courbe ; sinon, seulement les chiffres.
         val scale = fontScale(context)
-        val chartHeight = size.height - 12 - 92 * scale
+        val chartHeight = size.height - 16 - 92 * scale
         val showChart = chartHeight >= 36
         views.setViewVisibility(R.id.battery_chart, if (showChart) View.VISIBLE else View.GONE)
         if (showChart) {
@@ -78,7 +78,7 @@ class BatteryWidget : NeonWidget() {
                 R.id.battery_chart,
                 SystemGraphics.batteryChart(
                     info.history, info.level, info.charging, info.minutesLeft, System.currentTimeMillis(),
-                    ((size.width - 16) * d).roundToInt(), (chartHeight * d).roundToInt(), d,
+                    ((size.width - 24) * d).roundToInt(), (chartHeight * d).roundToInt(), d,
                 ),
             )
         }
@@ -213,7 +213,7 @@ class ScreenTimeWidget : NeonWidget() {
         val now = System.currentTimeMillis()
         val data = if (sample) ScreenTime.sample(now) else ScreenTime.today(context, now)
         val d = density(context)
-        val dialSize = ((size.height - 8).coerceIn(60f, 180f) * d).roundToInt()
+        val dialSize = ((size.height - 16).coerceIn(60f, 180f) * d).roundToInt()
         views.removeAllViews(R.id.st_apps)
 
         if (data == null) {
@@ -310,14 +310,14 @@ class MobileDataWidget : NeonWidget() {
         views.setTextViewText(R.id.md_projection, "≈ ${SystemGraphics.formatBytes(data.projected)}")
         views.setTextViewText(R.id.md_average, SystemGraphics.formatBytes(if (data.days.isEmpty()) 0L else data.used / data.days.size))
 
-        val chartHeight = size.height - 12 - 72 * fontScale(context)
+        val chartHeight = size.height - 16 - 72 * fontScale(context)
         val showChart = chartHeight >= 32
         views.setViewVisibility(R.id.md_chart, if (showChart) View.VISIBLE else View.GONE)
         if (showChart) {
             val d = density(context)
             views.setImageViewBitmap(
                 R.id.md_chart,
-                SystemGraphics.dataChart(data, ((size.width - 16) * d).roundToInt(), (chartHeight * d).roundToInt(), d),
+                SystemGraphics.dataChart(data, ((size.width - 24) * d).roundToInt(), (chartHeight * d).roundToInt(), d),
             )
         }
         return views

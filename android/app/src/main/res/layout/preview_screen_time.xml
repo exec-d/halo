@@ -7,7 +7,7 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/agenda_padding"
-    android:paddingVertical="4dp">
+    android:paddingVertical="@dimen/widget_padding_vertical">
 
     <FrameLayout
         android:layout_width="wrap_content"

@@ -74,7 +74,7 @@ data class ScreenTime(
                     val info = runCatching { pm.getApplicationInfo(pkg, 0) }.getOrNull()
                     AppUsage(
                         packageName = pkg,
-                        label = info?.let { pm.getApplicationLabel(it).toString() } ?: pkg,
+                        label = info?.let { pm.getApplicationLabel(it).toString() } ?: readable(pkg),
                         millis = millis,
                         icon = info?.let { runCatching { pm.getApplicationIcon(it) }.getOrNull() },
                     )
@@ -108,6 +108,10 @@ data class ScreenTime(
                 dayStart = start,
             )
         }
+
+        /** Faute de nom : `com.google.android.youtube` → « Youtube ». */
+        private fun readable(pkg: String): String =
+            pkg.substringAfterLast('.').replaceFirstChar { it.titlecase() }
 
         /** L'écran d'accueil et l'interface système ne comptent pas comme des applis. */
         private fun ignoredPackages(context: Context): Set<String> {

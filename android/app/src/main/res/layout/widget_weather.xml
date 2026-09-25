@@ -8,7 +8,7 @@
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/agenda_padding"
-    android:paddingVertical="4dp">
+    android:paddingVertical="@dimen/widget_padding_vertical">
 
     <LinearLayout
         android:layout_width="match_parent"

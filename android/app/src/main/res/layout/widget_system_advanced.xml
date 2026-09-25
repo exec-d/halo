@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/agenda_padding"
-    android:paddingVertical="4dp">
+    android:paddingVertical="@dimen/widget_padding_vertical">
 
     <LinearLayout
         android:id="@+id/system_row1"

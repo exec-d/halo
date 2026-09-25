@@ -8,7 +8,7 @@
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/agenda_padding"
-    android:paddingVertical="6dp">
+    android:paddingVertical="@dimen/widget_padding_vertical">
 
     <TextView android:id="@+id/device_prompt_uptime" style="@style/HaloDetail" android:layout_width="match_parent" android:layout_height="wrap_content" />
     <LinearLayout

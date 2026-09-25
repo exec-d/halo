@@ -7,6 +7,11 @@
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
+    <!-- Temps d'écran : le nom et l'icône des applis utilisées (Android 11+
+         cache sinon les autres applis). Appli personnelle, hors Play Store. -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
     <!-- Écouteurs et montre : appareils Bluetooth connectés (Android 12+). -->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <!-- Appareil : redessiné après un redémarrage. -->
