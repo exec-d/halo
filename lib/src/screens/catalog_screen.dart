@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../home_widgets/catalog.dart';
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import '../previews/widget_previews.dart';
@@ -47,8 +48,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
   final _widgetsKey = GlobalKey();
 
-  /// Un raccourci de l'icône : le fond d'écran, les réglages, ou la liste des
-  /// widgets.
+  /// Un raccourci de l'icône ou une tuile des réglages rapides : le fond
+  /// d'écran, les réglages, la météo, ou la liste des widgets.
   void _openTarget(String target) {
     if (!mounted) return;
     final navigator = Navigator.of(context);
@@ -64,6 +65,13 @@ class _CatalogScreenState extends State<CatalogScreen> {
         navigator.push<void>(
           MaterialPageRoute<void>(
             builder: (_) => SettingsScreen(platform: platform),
+          ),
+        );
+      case 'weather':
+        navigator.push<void>(
+          MaterialPageRoute<void>(
+            builder: (_) =>
+                WidgetScreen(homeWidget: weatherWidget, platform: platform),
           ),
         );
       case 'widgets':

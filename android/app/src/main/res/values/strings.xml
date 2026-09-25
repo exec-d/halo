@@ -239,4 +239,12 @@
     <string name="shortcut_wallpaper">Fond d\'écran</string>
     <string name="shortcut_widgets">Widgets</string>
     <string name="shortcut_settings">Réglages</string>
+    <string name="tile_weather">Météo</string>
+    <string name="tile_weather_pick">Choisir un lieu</string>
+    <string name="tile_wallpaper">Fond Circuit</string>
+    <string name="tile_wallpaper_off">Non appliqué</string>
+    <string name="tile_intensity_discreet">Discret</string>
+    <string name="tile_intensity_normal">Normal</string>
+    <string name="tile_intensity_vivid">Vif</string>
+    <string name="tile_battery">Batterie</string>
 </resources>

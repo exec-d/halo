@@ -304,6 +304,37 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_mobile_data_info" />
         </receiver>
+        <!-- Tuiles des réglages rapides. -->
+        <service
+            android:name=".tiles.WeatherTile"
+            android:exported="true"
+            android:icon="@drawable/icon_partly_cloudy"
+            android:label="@string/tile_weather"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".tiles.WallpaperTile"
+            android:exported="true"
+            android:icon="@drawable/tile_wallpaper"
+            android:label="@string/tile_wallpaper"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".tiles.BatteryTile"
+            android:exported="true"
+            android:icon="@drawable/tile_battery"
+            android:label="@string/tile_battery"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
         <!-- Fond d'écran animé « Circuit ». -->
         <service
             android:name=".wallpaper.HaloWallpaperService"
