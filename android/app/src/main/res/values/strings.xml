@@ -297,4 +297,5 @@
     <string name="wallpaper_horizon_description">Un horizon néon qui suit l\'heure et la vraie météo.</string>
     <string name="wallpaper_sky_label">Halo · Ciel</string>
     <string name="wallpaper_sky_description">Les vraies étoiles au-dessus de vous, dans la direction du téléphone.</string>
+    <string name="battery_chart_now">maint.</string>
 </resources>

@@ -42,7 +42,7 @@ object BluetoothDevices {
                 .map { device ->
                     ConnectedDevice(
                         name = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) device.alias else null)
-                            ?: device.name ?: "Appareil",
+                            ?: device.name ?: "Bluetooth",
                         kind = kind(device.bluetoothClass),
                         level = batteryLevel(device),
                     )

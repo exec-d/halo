@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_clock_label">Clock</string>
+    <string name="widget_clock_description">The time and date. Tap to open the clock.</string>
+
+    <string name="widget_agenda_one_column_label">Agenda</string>
+    <string name="widget_agenda_one_column_description">Today\'s events, in one column.</string>
+    <string name="widget_agenda_two_columns_label">Agenda 2 columns</string>
+    <string name="widget_agenda_two_columns_description">Today\'s events, in two columns.</string>
+
+    <string name="widget_system_label">System</string>
+    <string name="widget_system_description">Battery, network and storage.</string>
+    <string name="system_battery">BATTERY</string>
+    <string name="system_charging">Charging</string>
+    <string name="system_on_battery">On battery</string>
+    <string name="system_network">NETWORK</string>
+    <string name="system_wifi">Wi-Fi</string>
+    <string name="system_mobile">Mobile</string>
+    <string name="system_ethernet">Ethernet</string>
+    <string name="system_mobile_data">Mobile data</string>
+    <string name="system_connected">Connected</string>
+    <string name="system_signal">Signal %1$d/4</string>
+    <string name="system_offline">Offline</string>
+    <string name="system_airplane">Airplane mode</string>
+    <string name="system_no_network">No network</string>
+    <string name="system_storage">STORAGE</string>
+    <string name="system_free_of">Free of %1$s</string>
+    <string name="widget_system_advanced_label">Advanced system</string>
+    <string name="widget_system_advanced_description">Signal, Wi-Fi, Bluetooth, battery, memory, storage, location, sound.</string>
+    <string name="system_cellular">SIGNAL</string>
+    <string name="system_no_sim">No SIM</string>
+    <string name="system_wifi_label">WI-FI</string>
+    <string name="system_on">On</string>
+    <string name="system_off">Off</string>
+    <string name="system_not_connected">Not connected</string>
+    <string name="system_unavailable">Unavailable</string>
+    <string name="system_bluetooth">BLUETOOTH</string>
+    <string name="system_memory">MEMORY</string>
+    <string name="system_location">LOCATION</string>
+    <string name="system_sound">SOUND</string>
+    <string name="system_ring">Ring</string>
+    <string name="system_vibrate">Vibrate</string>
+    <string name="system_silent">Silent</string>
+    <string name="system_dnd">Do not disturb</string>
+
+    <string name="widget_world_clock_label">World clock</string>
+    <string name="widget_world_clock_description">The time in three cities.</string>
+    <string name="widget_countdown_label">Countdown</string>
+    <string name="widget_countdown_description">Days until a date.</string>
+    <string name="countdown_default_title">My event</string>
+    <string name="countdown_pick_date">Pick a date in Halo</string>
+    <string name="widget_controls_label">Controls</string>
+    <string name="widget_controls_description">Flashlight, Wi-Fi, Bluetooth, sound, camera.</string>
+    <string name="controls_torch">Torch</string>
+    <string name="controls_wifi">Wi-Fi</string>
+    <string name="controls_bluetooth">Bluetooth</string>
+    <string name="controls_sound">Sound</string>
+    <string name="controls_camera">Camera</string>
+    <string name="widget_month_label">Month</string>
+    <string name="widget_month_description">The current month, with event days marked.</string>
+
+    <string name="widget_weather_label">Weather</string>
+    <string name="widget_weather_description">Temperature and daily gauge, readings, 24-hour curve.</string>
+    <string name="weather_pick_place">Pick a place in Halo</string>
+    <string name="weather_loading">Loading forecast…</string>
+    <string name="weather_my_position">My location</string>
+    <string name="weather_now_at">Now · %1$s</string>
+    <string name="readout_feels">Feels like</string>
+    <string name="readout_wind">Wind</string>
+    <string name="readout_humidity">Humidity</string>
+    <string name="readout_uv">UV</string>
+    <string name="readout_rain">Rain</string>
+    <string-array name="uv_levels">
+        <item>Low</item>
+        <item>Moderate</item>
+        <item>High</item>
+        <item>Very high</item>
+        <item>Extreme</item>
+    </string-array>
+    <!-- Where the wind comes from, in 45° sectors from north. -->
+    <string-array name="cardinals">
+        <item>N</item>
+        <item>NE</item>
+        <item>E</item>
+        <item>SE</item>
+        <item>S</item>
+        <item>SW</item>
+        <item>W</item>
+        <item>NW</item>
+    </string-array>
+    <string name="weather_clear">Clear sky</string>
+    <string name="weather_partly">Partly cloudy</string>
+    <string name="weather_cloudy">Overcast</string>
+    <string name="weather_fog">Fog</string>
+    <string name="weather_drizzle">Drizzle</string>
+    <string name="weather_rain">Rain</string>
+    <string name="weather_snow">Snow</string>
+    <string name="weather_showers">Showers</string>
+    <string name="weather_snow_showers">Snow showers</string>
+    <string name="weather_storm">Thunderstorm</string>
+    <string name="weather_unknown">—</string>
+    <string name="widget_sun_moon_label">Sun and Moon</string>
+    <string name="widget_sun_moon_description">Sunrise and sunset, moon phase.</string>
+    <string name="sun_day_length">Daylight %1$d h %2$02d</string>
+    <string name="sun_pick_place">Place in Weather</string>
+    <string name="moon_illumination">%1$d%% lit</string>
+    <string-array name="moon_phases">
+        <item>New moon</item>
+        <item>Waxing crescent</item>
+        <item>First quarter</item>
+        <item>Waxing gibbous</item>
+        <item>Full moon</item>
+        <item>Waning gibbous</item>
+        <item>Last quarter</item>
+        <item>Waning crescent</item>
+    </string-array>
+
+    <string name="widget_rain_label">Rain</string>
+    <string name="widget_rain_description">Incoming rain, and the next 12 hours.</string>
+    <string name="rain_now">Raining</string>
+    <string name="rain_in_minutes">Rain in %1$d min</string>
+    <string name="rain_at">Rain likely at %1$s (%2$d%%)</string>
+    <string name="rain_none">No rain for %1$d h</string>
+    <string name="rain_detail">12 h total %1$s mm · max %2$d%%</string>
+    <string name="widget_allergy_label">Allergies</string>
+    <string name="widget_allergy_description">Six pollens and air quality.</string>
+    <string name="pollen_grass">Grasses</string>
+    <string name="pollen_birch">Birch</string>
+    <string name="pollen_alder">Alder</string>
+    <string name="pollen_olive">Olive</string>
+    <string name="pollen_mugwort">Mugwort</string>
+    <string name="pollen_ragweed">Ragweed</string>
+    <string name="pollen_group_grass">Grass</string>
+    <string name="pollen_group_trees">Trees</string>
+    <string name="pollen_group_weeds">Weeds</string>
+    <string name="pollen_most_present">Mostly: %1$s</string>
+    <string name="pollen_highest">Pollen: %1$s</string>
+    <string name="pollen_unavailable">No pollen data here</string>
+    <string name="aqi">Air quality %1$s · %2$d</string>
+    <string-array name="pollen_levels">
+        <item>None</item>
+        <item>Low</item>
+        <item>Moderate</item>
+        <item>High</item>
+        <item>Very high</item>
+    </string-array>
+    <string-array name="aqi_levels">
+        <item>good</item>
+        <item>fair</item>
+        <item>moderate</item>
+        <item>poor</item>
+        <item>very poor</item>
+        <item>extremely poor</item>
+    </string-array>
+
+    <!-- Widget picker previews. -->
+    <string name="sample_alarm">Thu 07:00</string>
+    <string name="sample_countdown">Holidays</string>
+
+    <string name="agenda_today">Today</string>
+    <string name="agenda_tomorrow">Tomorrow</string>
+    <string name="agenda_all_day">All day</string>
+    <string name="agenda_range">%1$s – %2$s</string>
+    <string name="agenda_from">From %1$s</string>
+    <string name="agenda_until">Until %1$s</string>
+    <string name="agenda_untitled">(Untitled)</string>
+    <string name="agenda_empty">No events</string>
+    <string name="agenda_permission_missing">Tap to let Halo read your calendar.</string>
+    <plurals name="countdown_days_left">
+        <item quantity="one">day left</item>
+        <item quantity="many">days left</item>
+        <item quantity="other">days left</item>
+    </plurals>
+    <plurals name="countdown_days_ago">
+        <item quantity="one">day ago</item>
+        <item quantity="many">days ago</item>
+        <item quantity="other">days ago</item>
+    </plurals>
+    <string name="wallpaper_label">Halo · Circuit</string>
+    <string name="wallpaper_description">The inside of the phone in neon, following its tilt, battery and network.</string>
+    <!-- Detailed system widgets -->
+    <string name="widget_battery_label">Battery details</string>
+    <string name="widget_battery_description">Level over 24 hours, forecast, temperature and cycles.</string>
+    <string name="widget_device_label">Device</string>
+    <string name="widget_device_description">A console-style spec sheet of the phone, and how long it has been running.</string>
+    <string name="widget_bt_devices_label">Earbuds and watch</string>
+    <string name="widget_bt_devices_description">Battery of connected Bluetooth devices.</string>
+    <string name="widget_screen_time_label">Screen time</string>
+    <string name="widget_screen_time_description">Your day as a dial: when the screen was on, and your most used apps.</string>
+    <string name="widget_mobile_data_label">Mobile data</string>
+    <string name="widget_mobile_data_description">Usage for the period, against your plan.</string>
+
+    <string name="battery_title">Battery · 24 h</string>
+    <string name="battery_temperature">Temp.</string>
+    <string name="battery_voltage">Voltage</string>
+    <string name="battery_cycles">Cycles</string>
+    <string name="battery_health">Health</string>
+    <string name="battery_full">Charged</string>
+    <string name="battery_full_in">Full in %1$s</string>
+    <string name="battery_left">About %1$s left</string>
+    <string name="battery_estimating_charge">Charging</string>
+    <string name="battery_estimating">Estimating</string>
+    <string-array name="battery_health_names">
+        <item>—</item>
+        <item>—</item>
+        <item>Good</item>
+        <item>Overheat</item>
+        <item>Worn out</item>
+        <item>Overvoltage</item>
+        <item>Failure</item>
+        <item>Cold</item>
+    </string-array>
+
+    <string name="device_prompt">%1$s@%2$s:~$ %3$s</string>
+    <string name="device_days">%1$d d %2$d h</string>
+    <string name="device_hours">since boot</string>
+    <string name="device_patch">patch %1$s</string>
+    <string name="device_memory">%1$d GB</string>
+
+    <string name="bt_none">No Bluetooth device connected</string>
+    <string name="bt_off">Bluetooth off</string>
+    <string name="bt_permission">Tap to let Halo see your Bluetooth devices.</string>
+    <string name="bt_unknown_level">—</string>
+
+    <string name="screen_time_title">Screen time</string>
+    <string name="screen_time_unlocks">%1$d unlocks</string>
+    <string name="screen_time_no_apps">Nothing used for more than a minute yet.</string>
+    <string name="usage_permission">Tap to let Halo read phone usage.</string>
+
+    <string name="mobile_data_title">Mobile data</string>
+    <string name="mobile_data_projection">Projection</string>
+    <string name="mobile_data_average">Per day</string>
+    <string name="mobile_data_quota">/ %1$s</string>
+    <string name="mobile_data_detail">Today %1$s · resets in %2$d d</string>
+    <string name="shortcut_wallpaper">Wallpaper</string>
+    <string name="shortcut_widgets">Widgets</string>
+    <string name="shortcut_settings">Settings</string>
+    <string name="tile_weather">Weather</string>
+    <string name="tile_weather_pick">Pick a place</string>
+    <string name="tile_wallpaper">Halo wallpaper</string>
+    <string name="tile_wallpaper_off">Not applied</string>
+    <string name="tile_intensity_discreet">Subtle</string>
+    <string name="tile_intensity_normal">Normal</string>
+    <string name="tile_intensity_vivid">Vivid</string>
+    <string name="tile_battery">Battery</string>
+    <string name="dream_label">Halo</string>
+    <string name="widget_forecast_label">5-day forecast</string>
+    <string name="widget_forecast_description">Five days of weather, and where each one sits in the week.</string>
+    <string name="forecast_title">5 days · %1$s</string>
+    <string name="forecast_today">Today</string>
+    <string name="widget_analog_label">Analog clock</string>
+    <string name="widget_analog_description">A neon dial with glowing hands.</string>
+    <string name="widget_ephemeris_label">Ephemeris</string>
+    <string name="widget_ephemeris_description">Today\'s name day, the week, the year going by and the next public holiday.</string>
+    <string name="ephemeris_title">Today</string>
+    <string name="ephemeris_saint">Name day: %1$s</string>
+    <string name="ephemeris_numbers">Week %1$d · day %2$d of %3$d</string>
+    <string name="ephemeris_holiday">%1$s in %2$d d</string>
+    <string name="ephemeris_holiday_today">%1$s today</string>
+    <string name="ephemeris_holiday_tomorrow">%1$s tomorrow</string>
+    <!-- Public holidays in France, in the order of EphemerisWidget.holidays. -->
+    <string-array name="holidays">
+        <item>New Year\'s Day</item>
+        <item>Easter Monday</item>
+        <item>Labour Day</item>
+        <item>Victory in Europe Day</item>
+        <item>Ascension Day</item>
+        <item>Whit Monday</item>
+        <item>Bastille Day</item>
+        <item>Assumption Day</item>
+        <item>All Saints\' Day</item>
+        <item>Armistice Day</item>
+        <item>Christmas Day</item>
+    </string-array>
+    <string name="widget_timer_label">Stopwatch and timer</string>
+    <string name="widget_timer_description">A stopwatch, and one-tap 1, 5, 10 and 25 minute timers.</string>
+    <string name="timer_stopwatch">Stopwatch</string>
+    <string name="timer_countdown">Timer · %1$d min</string>
+    <string name="timer_done">Timer done</string>
+    <string name="timer_done_detail">%1$d minutes are up.</string>
+    <string name="timer_channel">Timer</string>
+    <string name="timer_toggle">Start or pause</string>
+    <string name="timer_reset">Reset</string>
+    <string name="widget_media_label">Now playing</string>
+    <string name="widget_media_description">What\'s playing, with its neon cover art, and the controls.</string>
+    <string name="media_permission">Tap to let Halo see what\'s playing.</string>
+    <string name="media_nothing">Nothing playing</string>
+    <string name="media_previous">Previous</string>
+    <string name="media_play">Play or pause</string>
+    <string name="media_next">Next</string>
+    <string name="media_listener">Halo · Now playing</string>
+    <string name="wallpaper_horizon_label">Halo · Horizon</string>
+    <string name="wallpaper_horizon_description">A neon horizon that follows the time and the real weather.</string>
+    <string name="wallpaper_sky_label">Halo · Sky</string>
+    <string name="wallpaper_sky_description">The real stars above you, in the direction the phone is facing.</string>
+    <string name="battery_chart_now">now</string>
+</resources>

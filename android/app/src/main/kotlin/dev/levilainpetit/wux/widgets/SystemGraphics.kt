@@ -58,6 +58,8 @@ object SystemGraphics {
         charging: Boolean,
         minutesLeft: Int?,
         now: Long,
+        /** L'étiquette de « maintenant » sous la courbe. */
+        nowLabel: String,
         widthPx: Int,
         heightPx: Int,
         density: Float,
@@ -129,7 +131,7 @@ object SystemGraphics {
         canvas.drawText("-24 h", 0f, baseline, text)
         text.textAlign = Paint.Align.CENTER
         canvas.drawText("-12 h", x(now - 12 * hour.toLong()), baseline, text)
-        canvas.drawText("maint.", nowX, baseline, text)
+        canvas.drawText(nowLabel, nowX, baseline, text)
         text.textAlign = Paint.Align.RIGHT
         canvas.drawText("+6 h", widthPx.toFloat(), baseline, text)
         return bitmap
@@ -380,13 +382,17 @@ object SystemGraphics {
         return bitmap
     }
 
-    /** 320 Mo, 12,4 Go, 150 Go. */
+    /** 320 Mo, 12,4 Go, 150 Go — ou MB et GB hors du français. */
     fun formatBytes(bytes: Long): String {
+        val locale = java.util.Locale.getDefault()
+        val french = locale.language == "fr"
+        val mbUnit = if (french) "Mo" else "MB"
+        val gbUnit = if (french) "Go" else "GB"
         val mb = bytes / 1_000_000.0
         return when {
-            mb < 1000 -> "${mb.roundToInt()} Mo"
-            mb < 100_000 -> String.format(java.util.Locale.FRANCE, "%.1f Go", mb / 1000)
-            else -> "${(mb / 1000).roundToInt()} Go"
+            mb < 1000 -> "${mb.roundToInt()} $mbUnit"
+            mb < 100_000 -> String.format(locale, "%.1f %s", mb / 1000, gbUnit)
+            else -> "${(mb / 1000).roundToInt()} $gbUnit"
         }
     }
 

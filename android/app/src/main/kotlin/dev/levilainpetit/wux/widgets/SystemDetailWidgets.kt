@@ -78,6 +78,7 @@ class BatteryWidget : NeonWidget() {
                 R.id.battery_chart,
                 SystemGraphics.batteryChart(
                     info.history, info.level, info.charging, info.minutesLeft, System.currentTimeMillis(),
+                    context.getString(R.string.battery_chart_now),
                     ((size.width - 24) * d).roundToInt(), (chartHeight * d).roundToInt(), d,
                 ),
             )
