@@ -5,8 +5,7 @@ import '../../l10n/app_localizations.dart';
 
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
-import '../previews/widget_previews.dart';
-import 'screen_frame.dart';
+import 'settings_scaffold.dart';
 
 /// Réglages d'un widget agenda : accès au calendrier, jours, événements
 /// « toute la journée » et agendas affichés.
@@ -42,7 +41,6 @@ class _AgendaScreenState extends State<AgendaScreen> {
   /// plus, il faut alors passer par la fiche de l'application.
   bool _refused = false;
 
-  bool _canPin = false;
   List<CalendarInfo> _calendars = const [];
 
   /// `null` : tous les agendas, y compris ceux ajoutés plus tard.
@@ -68,14 +66,12 @@ class _AgendaScreenState extends State<AgendaScreen> {
 
   Future<void> _load() async {
     final permission = await _platform.hasCalendarPermission();
-    final canPin = await _platform.canPin();
     final stored = await _platform.read(widget.homeWidget, _calendarsKey);
     final days = await _platform.read(widget.homeWidget, _daysKey);
     final allDay = await _platform.read(widget.homeWidget, _allDayKey);
     if (!mounted) return;
     setState(() {
       _permission = permission;
-      _canPin = canPin;
       _days = days == '1' ? 1 : 2;
       _showAllDay = allDay != '0';
       _selected = stored == null
@@ -137,111 +133,83 @@ class _AgendaScreenState extends State<AgendaScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      body: ScreenFrame(
-        title: widget.homeWidget.title(l10n),
-        canGoBack: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return SettingsScaffold(
+      homeWidget: widget.homeWidget,
+      platform: _platform,
+      allowPin: widget.allowPin,
+      revision: _revision,
+      preview: _permission ?? false ? null : const _PreviewPlaceholder(),
+      sections: [
+        if (_permission == false) ...[
+          _PermissionSection(
+            refused: _refused,
+            onRequest: _requestPermission,
+            onOpenSettings: _platform.openAppSettings,
+          ),
+        ],
+        IuxSection(
+          title: l10n.agendaDaysTitle,
           children: [
-            IuxSection(
-              description: widget.homeWidget.description(l10n),
-              children: [
-                WallpaperFrame(
-                  child: _permission ?? false
-                      ? WidgetPreview(
-                          homeWidget: widget.homeWidget,
-                          platform: _platform,
-                          revision: _revision,
-                        )
-                      : const _PreviewPlaceholder(),
-                ),
-                const IuxGap.between(),
-                PinButton(
-                  visible: _canPin && widget.allowPin,
-                  onPin: () => _platform.pin(widget.homeWidget),
-                ),
-              ],
-            ),
-            const IuxGap.between(),
-            if (_permission == false) ...[
-              _PermissionSection(
-                refused: _refused,
-                onRequest: _requestPermission,
-                onOpenSettings: _platform.openAppSettings,
+            IuxRadioGroup<int>(
+              label: l10n.agendaDaysShown,
+              input: IuxInputDescriptor(
+                semantics: IuxInputSemantics(label: l10n.agendaDaysShown),
+                helpText: l10n.agendaDaysHelp,
               ),
-              const IuxGap.between(),
-            ],
-            IuxSection(
-              title: l10n.agendaDaysTitle,
-              children: [
-                IuxRadioGroup<int>(
-                  label: l10n.agendaDaysShown,
-                  input: IuxInputDescriptor(
-                    semantics: IuxInputSemantics(label: l10n.agendaDaysShown),
-                    helpText: l10n.agendaDaysHelp,
-                  ),
-                  value: _days,
-                  options: [
-                    IuxRadioOption(value: 1, label: l10n.agendaToday),
-                    IuxRadioOption(value: 2, label: l10n.agendaTodayTomorrow),
-                  ],
-                  onChanged: _setDays,
-                ),
+              value: _days,
+              options: [
+                IuxRadioOption(value: 1, label: l10n.agendaToday),
+                IuxRadioOption(value: 2, label: l10n.agendaTodayTomorrow),
               ],
+              onChanged: _setDays,
             ),
-            const IuxGap.between(),
-            IuxSection(
-              title: l10n.agendaEventsTitle,
-              description: l10n.agendaEventsDescription,
-              children: [
-                IuxSelectionGroup(
-                  label: l10n.agendaEventsShown,
-                  children: [
-                    IuxSwitch(
-                      label: l10n.agendaAllDay,
-                      input: IuxInputDescriptor(
-                        semantics: IuxInputSemantics(
-                          label: l10n.agendaAllDaySemantics,
-                        ),
-                        helpText: l10n.agendaAllDayHelp,
-                      ),
-                      value: IuxSelectionState.fromSelected(_showAllDay),
-                      onChanged: _setShowAllDay,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const IuxGap.between(),
-            if (_calendars.isNotEmpty) ...[
-              IuxSection(
-                title: l10n.agendaCalendarsTitle,
-                children: [
-                  IuxSelectionGroup(
-                    label: l10n.agendaCalendarsShown,
-                    children: [
-                      for (final calendar in _calendars)
-                        IuxSwitch(
-                          label: calendar.name,
-                          input: IuxInputDescriptor(
-                            semantics: IuxInputSemantics(label: calendar.name),
-                            helpText: calendar.account,
-                          ),
-                          value: IuxSelectionState.fromSelected(
-                            _isShown(calendar),
-                          ),
-                          onChanged: (shown) => _toggle(calendar, shown),
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-              const IuxGap.between(),
-            ],
           ],
         ),
-      ),
+        IuxSection(
+          title: l10n.agendaEventsTitle,
+          description: l10n.agendaEventsDescription,
+          children: [
+            IuxSelectionGroup(
+              label: l10n.agendaEventsShown,
+              children: [
+                IuxSwitch(
+                  label: l10n.agendaAllDay,
+                  input: IuxInputDescriptor(
+                    semantics: IuxInputSemantics(
+                      label: l10n.agendaAllDaySemantics,
+                    ),
+                    helpText: l10n.agendaAllDayHelp,
+                  ),
+                  value: IuxSelectionState.fromSelected(_showAllDay),
+                  onChanged: _setShowAllDay,
+                ),
+              ],
+            ),
+          ],
+        ),
+        if (_calendars.isNotEmpty) ...[
+          IuxSection(
+            title: l10n.agendaCalendarsTitle,
+            children: [
+              IuxSelectionGroup(
+                label: l10n.agendaCalendarsShown,
+                children: [
+                  for (final calendar in _calendars)
+                    IuxSwitch(
+                      label: calendar.name,
+                      input: IuxInputDescriptor(
+                        semantics: IuxInputSemantics(label: calendar.name),
+                        helpText: calendar.account,
+                      ),
+                      value: IuxSelectionState.fromSelected(_isShown(calendar)),
+                      onChanged: (shown) => _toggle(calendar, shown),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ],
     );
   }
 }

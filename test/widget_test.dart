@@ -259,6 +259,7 @@ void main() {
     await _open(tester, platform, 'Agenda');
 
     expect(find.text('Personnel'), findsNothing);
+    await tester.ensureVisible(find.text("Autoriser l'accès à l'agenda"));
     await tester.tap(find.text("Autoriser l'accès à l'agenda"));
     await tester.pumpAndSettle();
 
@@ -271,6 +272,7 @@ void main() {
     final platform = FakePlatform(permission: false, grantOnRequest: false);
     await _open(tester, platform, 'Agenda');
 
+    await tester.ensureVisible(find.text("Autoriser l'accès à l'agenda"));
     await tester.tap(find.text("Autoriser l'accès à l'agenda"));
     await tester.pumpAndSettle();
 

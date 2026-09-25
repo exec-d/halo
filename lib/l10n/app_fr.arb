@@ -68,6 +68,18 @@
   "catalogMineNoWidgets": "Aucun widget Halo n'est posé pour l'instant. Touchez un widget dans la galerie pour l'ajouter.",
   "catalogHeroApplied": "Appliqué sur ce téléphone",
   "catalogNoMatch": "Aucun widget ne correspond.",
+  "detailOnWallpaper": "Sur {name}",
+  "@detailOnWallpaper": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "detailLockScreen": "Verrouillage",
+  "detailTagHome": "Accueil",
+  "detailTagLock": "Verrouillage",
+  "detailBackgrounds": "Fond de l'aperçu",
   "dreamTitle": "Écran de veille",
   "@dreamTitle": {
     "description": "Nom de l'écran de veille."

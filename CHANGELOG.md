@@ -17,6 +17,9 @@ mineure peut changer des réglages.
   moment en grand, les fonds animés en carrousel, les widgets en mosaïque,
   filtrables par famille et par recherche), Fonds (les six fonds en grand et
   l'écran de veille), Mes ajouts (le fond appliqué et les widgets posés).
+- **Fiche d'un widget** : l'aperçu en grand, posé sur le fond Halo de son
+  choix ou sur l'écran de verrouillage, ses étiquettes, ses réglages et le
+  bouton « Ajouter à l'écran d'accueil » toujours en bas.
 - **Écran de veille** Halo, pendant la charge.
 - **Tuiles de réglages rapides** : Météo, Fond Halo, Batterie.
 - **Raccourcis de l'icône** : Fond d'écran, Widgets, Réglages.

@@ -7,6 +7,7 @@ import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import '../previews/widget_previews.dart';
 import 'dream_screen.dart';
+import 'neon.dart';
 import 'settings_screen.dart';
 import 'wallpaper_screen.dart';
 import 'widget_screen.dart';
@@ -148,11 +149,11 @@ class _CatalogScreenState extends State<CatalogScreen>
     return Theme(
       data: Theme.of(context).copyWith(
         textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: _Neon.amber,
+          cursorColor: Neon.amber,
         ),
       ),
       child: Scaffold(
-        backgroundColor: _Neon.background,
+        backgroundColor: Neon.background,
         body: SafeArea(
           bottom: false,
           child: switch (_tab) {
@@ -269,7 +270,7 @@ class _CatalogScreenState extends State<CatalogScreen>
             title: l10n.catalogWidgets,
             trailing: Text(
               l10n.catalogWidgetCount(shown.length),
-              style: _Neon.mono(12, color: _Neon.faint),
+              style: Neon.mono(12, color: Neon.faint),
             ),
           ),
           Padding(
@@ -285,7 +286,7 @@ class _CatalogScreenState extends State<CatalogScreen>
                     for (final (i, (category, label))
                         in categories.indexed) ...[
                       if (i > 0) const SizedBox(width: 8),
-                      _Chip(
+                      NeonChip(
                         label: label,
                         selected: _category == category,
                         onSelect: () => setState(() => _category = category),
@@ -299,7 +300,7 @@ class _CatalogScreenState extends State<CatalogScreen>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: shown.isEmpty
-                ? Text(l10n.catalogNoMatch, style: _Neon.body(14))
+                ? Text(l10n.catalogNoMatch, style: Neon.body(14))
                 : _Mosaic(
                     widgets: shown,
                     platform: platform,
@@ -307,102 +308,6 @@ class _CatalogScreenState extends State<CatalogScreen>
                   ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Les couleurs et les polices de la galerie : fond nuit, ambre de Halo,
-/// cyan pour les nouveautés.
-abstract final class _Neon {
-  static const background = Color(0xFF05070D);
-  static const surface = Color(0xFF0C111C);
-  static const stage = Color(0xFF070B14);
-  static const line = Color(0xFF1B2333);
-  static const outline = Color(0xFF2A3346);
-  static const navigation = Color(0xFF0A0E18);
-  static const text = Color(0xFFE8ECF4);
-  static const muted = Color(0xFFB4BCCC);
-  static const faint = Color(0xFF9AA3B5);
-  static const amber = Color(0xFFF2C178);
-  static const onAmber = Color(0xFF1A1206);
-  static const cyan = Color(0xFF5CE1E6);
-  static const onCyan = Color(0xFF03181A);
-
-  static TextStyle display(
-    double size, {
-    FontWeight weight = FontWeight.w600,
-    Color color = text,
-  }) => TextStyle(
-    fontFamily: 'ChakraPetch',
-    fontSize: size,
-    fontWeight: weight,
-    color: color,
-    height: 1.15,
-  );
-
-  static TextStyle body(
-    double size, {
-    FontWeight weight = FontWeight.w400,
-    Color color = muted,
-  }) => TextStyle(
-    fontFamily: 'IBMPlexSans',
-    fontSize: size,
-    fontWeight: weight,
-    color: color,
-    height: 1.35,
-  );
-
-  static TextStyle mono(
-    double size, {
-    FontWeight weight = FontWeight.w400,
-    Color color = amber,
-    double spacing = 0,
-  }) => TextStyle(
-    fontFamily: 'JetBrainsMono',
-    fontSize: size,
-    fontWeight: weight,
-    color: color,
-    letterSpacing: spacing,
-  );
-}
-
-/// Une zone qu'on touche : un bouton pour les lecteurs d'écran, un reflet au
-/// toucher.
-class _Tappable extends StatelessWidget {
-  const _Tappable({
-    required this.label,
-    required this.onTap,
-    required this.child,
-    this.hint,
-    this.radius = 20,
-    this.selected,
-  });
-
-  final String label;
-  final String? hint;
-  final VoidCallback onTap;
-  final Widget child;
-  final double radius;
-  final bool? selected;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      selected: selected,
-      label: label,
-      hint: hint,
-      excludeSemantics: true,
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(radius),
-          splashColor: _Neon.amber.withValues(alpha: 0.12),
-          highlightColor: _Neon.amber.withValues(alpha: 0.06),
-          child: child,
-        ),
       ),
     );
   }
@@ -433,7 +338,7 @@ class _Header extends StatelessWidget {
               height: 26,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: _Neon.amber, width: 2.4),
+                border: Border.all(color: Neon.amber, width: 2.4),
               ),
               alignment: Alignment.center,
               child: Container(
@@ -441,7 +346,7 @@ class _Header extends StatelessWidget {
                 height: 8,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: _Neon.amber,
+                  color: Neon.amber,
                 ),
               ),
             ),
@@ -454,7 +359,7 @@ class _Header extends StatelessWidget {
               excludeSemantics: true,
               child: Text(
                 'HALO',
-                style: _Neon.display(
+                style: Neon.display(
                   26,
                   weight: FontWeight.w700,
                 ).copyWith(letterSpacing: 1),
@@ -490,14 +395,14 @@ class _IconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Tappable(
+    return NeonTappable(
       label: label,
       onTap: onTap,
       radius: 24,
       child: SizedBox(
         width: 48,
         height: 48,
-        child: Icon(icon, color: _Neon.text, size: 22),
+        child: Icon(icon, color: Neon.text, size: 22),
       ),
     );
   }
@@ -514,21 +419,21 @@ class _SearchField extends StatelessWidget {
     return TextField(
       autofocus: true,
       onChanged: onChanged,
-      style: _Neon.body(15, color: _Neon.text),
+      style: Neon.body(15, color: Neon.text),
       decoration: InputDecoration(
         hintText: l10n.catalogSearch,
-        hintStyle: _Neon.body(15, color: _Neon.faint),
-        prefixIcon: const Icon(Icons.search, color: _Neon.faint),
+        hintStyle: Neon.body(15, color: Neon.faint),
+        prefixIcon: const Icon(Icons.search, color: Neon.faint),
         filled: true,
-        fillColor: _Neon.surface,
+        fillColor: Neon.surface,
         contentPadding: const EdgeInsets.symmetric(vertical: 14),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(22),
-          borderSide: const BorderSide(color: _Neon.outline),
+          borderSide: const BorderSide(color: Neon.outline),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(22),
-          borderSide: const BorderSide(color: _Neon.amber, width: 1.5),
+          borderSide: const BorderSide(color: Neon.amber, width: 1.5),
         ),
       ),
     );
@@ -561,7 +466,7 @@ class _Hero extends StatelessWidget {
         position: DecorationPosition.foreground,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: _Neon.line),
+          border: Border.all(color: Neon.line),
         ),
         child: SizedBox(
           height: 300,
@@ -569,13 +474,13 @@ class _Hero extends StatelessWidget {
             builder: (context, constraints) => Stack(
               fit: StackFit.expand,
               children: [
-                _Tappable(
+                NeonTappable(
                   label: title,
                   hint: wallpaper.description(l10n),
                   radius: 28,
                   onTap: onOpen,
                   child: ColoredBox(
-                    color: _Neon.stage,
+                    color: Neon.stage,
                     child: OverflowBox(
                       maxHeight: constraints.maxWidth * 20 / 9,
                       child: WallpaperPreview(
@@ -609,10 +514,10 @@ class _Hero extends StatelessWidget {
                           children: [
                             Text(
                               '● ${(active ? l10n.catalogActive : l10n.catalogFeatured).toUpperCase()}',
-                              style: _Neon.mono(11, spacing: 1.8),
+                              style: Neon.mono(11, spacing: 1.8),
                             ),
                             const SizedBox(height: 4),
-                            Text(title, style: _Neon.display(28)),
+                            Text(title, style: Neon.display(28)),
                             const SizedBox(height: 2),
                             Text(
                               active
@@ -620,7 +525,7 @@ class _Hero extends StatelessWidget {
                                   : wallpaper.description(l10n),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: _Neon.body(13),
+                              style: Neon.body(13),
                             ),
                           ],
                         ),
@@ -631,87 +536,9 @@ class _Hero extends StatelessWidget {
                 Positioned(
                   right: 20,
                   bottom: 18,
-                  child: _Pill(label: l10n.catalogChange, onTap: onChange),
+                  child: NeonPill(label: l10n.catalogChange, onTap: onChange),
                 ),
               ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Le bouton ambre de la galerie.
-class _Pill extends StatelessWidget {
-  const _Pill({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: _Neon.amber,
-      borderRadius: BorderRadius.circular(22),
-      child: _Tappable(
-        label: label,
-        onTap: onTap,
-        radius: 22,
-        child: Container(
-          height: 44,
-          padding: const EdgeInsets.symmetric(horizontal: 18),
-          alignment: Alignment.center,
-          child: Text(
-            label,
-            style: _Neon.body(
-              14,
-              weight: FontWeight.w600,
-              color: _Neon.onAmber,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Un filtre : plein et ambré quand il est choisi.
-class _Chip extends StatelessWidget {
-  const _Chip({
-    required this.label,
-    required this.selected,
-    required this.onSelect,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onSelect;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: selected ? _Neon.amber : Colors.transparent,
-      shape: StadiumBorder(
-        side: selected
-            ? BorderSide.none
-            : const BorderSide(color: _Neon.outline),
-      ),
-      child: _Tappable(
-        label: label,
-        selected: selected,
-        onTap: onSelect,
-        radius: 22,
-        child: Container(
-          height: 44,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          alignment: Alignment.center,
-          child: Text(
-            label,
-            style: _Neon.body(
-              14,
-              weight: selected ? FontWeight.w600 : FontWeight.w400,
-              color: selected ? _Neon.onAmber : _Neon.text,
             ),
           ),
         ),
@@ -736,7 +563,7 @@ class _SectionHeader extends StatelessWidget {
           Expanded(
             child: Semantics(
               header: true,
-              child: Text(title, style: _Neon.display(20)),
+              child: Text(title, style: Neon.display(20)),
             ),
           ),
           ?trailing,
@@ -754,7 +581,7 @@ class _TextLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Tappable(
+    return NeonTappable(
       label: label,
       onTap: onTap,
       radius: 8,
@@ -766,11 +593,7 @@ class _TextLink extends StatelessWidget {
             widthFactor: 1,
             child: Text(
               label,
-              style: _Neon.body(
-                14,
-                weight: FontWeight.w500,
-                color: _Neon.amber,
-              ),
+              style: Neon.body(14, weight: FontWeight.w500, color: Neon.amber),
             ),
           ),
         ),
@@ -806,13 +629,13 @@ class _WallpaperTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final badge = active
-        ? (l10n.catalogActive, _Neon.amber, _Neon.onAmber)
+        ? (l10n.catalogActive, Neon.amber, Neon.onAmber)
         : _newWallpapers.contains(wallpaper.id)
-        ? (l10n.catalogNew, _Neon.cyan, _Neon.onCyan)
+        ? (l10n.catalogNew, Neon.cyan, Neon.onCyan)
         : null;
     return SizedBox(
       width: width,
-      child: _Tappable(
+      child: NeonTappable(
         label: wallpaper.title(l10n),
         hint: wallpaper.description(l10n),
         onTap: onOpen,
@@ -824,8 +647,8 @@ class _WallpaperTile extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: active
-                    ? Border.all(color: _Neon.amber, width: 2)
-                    : Border.all(color: _Neon.line),
+                    ? Border.all(color: Neon.amber, width: 2)
+                    : Border.all(color: Neon.line),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
@@ -836,7 +659,7 @@ class _WallpaperTile extends StatelessWidget {
                     fit: StackFit.expand,
                     children: [
                       ColoredBox(
-                        color: _Neon.stage,
+                        color: Neon.stage,
                         child: OverflowBox(
                           maxHeight: width * 20 / 9,
                           child: WallpaperPreview(
@@ -861,7 +684,7 @@ class _WallpaperTile extends StatelessWidget {
                             ),
                             child: Text(
                               badge.$1.toUpperCase(),
-                              style: _Neon.mono(
+                              style: Neon.mono(
                                 10,
                                 weight: FontWeight.w600,
                                 color: badge.$3,
@@ -879,10 +702,10 @@ class _WallpaperTile extends StatelessWidget {
               wallpaper.title(l10n),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: _Neon.body(
+              style: Neon.body(
                 subtitle == null ? 14 : 15,
                 weight: subtitle == null ? FontWeight.w500 : FontWeight.w600,
-                color: _Neon.text,
+                color: Neon.text,
               ),
             ),
             if (subtitle != null)
@@ -890,7 +713,7 @@ class _WallpaperTile extends StatelessWidget {
                 subtitle!,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: _Neon.body(12),
+                style: Neon.body(12),
               ),
           ],
         ),
@@ -975,7 +798,7 @@ class _WidgetTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return _Tappable(
+    return NeonTappable(
       label: homeWidget.title(l10n),
       hint: homeWidget.description(l10n),
       onTap: () => onOpen(),
@@ -985,9 +808,9 @@ class _WidgetTile extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(_Mosaic._padding),
             decoration: BoxDecoration(
-              color: _Neon.surface,
+              color: Neon.surface,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: _Neon.line),
+              border: Border.all(color: Neon.line),
             ),
             child: Center(
               child: WidgetPreview(
@@ -1002,7 +825,7 @@ class _WidgetTile extends StatelessWidget {
             homeWidget.title(l10n),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: _Neon.body(14, weight: FontWeight.w500, color: _Neon.text),
+            style: Neon.body(14, weight: FontWeight.w500, color: Neon.text),
           ),
           const SizedBox(height: 4),
         ],
@@ -1035,10 +858,10 @@ class _WallpapersTab extends StatelessWidget {
         children: [
           Semantics(
             header: true,
-            child: Text(l10n.catalogWallpapers, style: _Neon.display(24)),
+            child: Text(l10n.catalogWallpapers, style: Neon.display(24)),
           ),
           const SizedBox(height: 6),
-          Text(l10n.catalogWallpapersIntro, style: _Neon.body(14)),
+          Text(l10n.catalogWallpapersIntro, style: Neon.body(14)),
           const SizedBox(height: 16),
           LayoutBuilder(
             builder: (context, constraints) {
@@ -1064,23 +887,23 @@ class _WallpapersTab extends StatelessWidget {
           const SizedBox(height: 28),
           Semantics(
             header: true,
-            child: Text(l10n.dreamTitle, style: _Neon.display(20)),
+            child: Text(l10n.dreamTitle, style: Neon.display(20)),
           ),
           const SizedBox(height: 10),
-          _Tappable(
+          NeonTappable(
             label: l10n.dreamTitle,
             hint: l10n.dreamDescription,
             onTap: onDream,
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: _Neon.surface,
+                color: Neon.surface,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: _Neon.line),
+                border: Border.all(color: Neon.line),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.nightlight_outlined, color: _Neon.amber),
+                  const Icon(Icons.nightlight_outlined, color: Neon.amber),
                   const SizedBox(width: 14),
                   Expanded(
                     child: Column(
@@ -1088,17 +911,17 @@ class _WallpapersTab extends StatelessWidget {
                       children: [
                         Text(
                           l10n.dreamTitle,
-                          style: _Neon.body(
+                          style: Neon.body(
                             15,
                             weight: FontWeight.w600,
-                            color: _Neon.text,
+                            color: Neon.text,
                           ),
                         ),
-                        Text(l10n.dreamDescription, style: _Neon.body(13)),
+                        Text(l10n.dreamDescription, style: Neon.body(13)),
                       ],
                     ),
                   ),
-                  const Icon(Icons.chevron_right, color: _Neon.faint),
+                  const Icon(Icons.chevron_right, color: Neon.faint),
                 ],
               ),
             ),
@@ -1137,13 +960,13 @@ class _MineTab extends StatelessWidget {
         children: [
           Semantics(
             header: true,
-            child: Text(l10n.catalogNavMine, style: _Neon.display(24)),
+            child: Text(l10n.catalogNavMine, style: Neon.display(24)),
           ),
           const SizedBox(height: 20),
-          Text(l10n.catalogMineWallpaper, style: _Neon.display(18)),
+          Text(l10n.catalogMineWallpaper, style: Neon.display(18)),
           const SizedBox(height: 10),
           if (active == null)
-            Text(l10n.catalogMineNoWallpaper, style: _Neon.body(14))
+            Text(l10n.catalogMineNoWallpaper, style: Neon.body(14))
           else
             Align(
               alignment: Alignment.centerLeft,
@@ -1158,10 +981,10 @@ class _MineTab extends StatelessWidget {
               ),
             ),
           const SizedBox(height: 28),
-          Text(l10n.catalogMineWidgets, style: _Neon.display(18)),
+          Text(l10n.catalogMineWidgets, style: Neon.display(18)),
           const SizedBox(height: 10),
           if (placed.isEmpty)
-            Text(l10n.catalogMineNoWidgets, style: _Neon.body(14))
+            Text(l10n.catalogMineNoWidgets, style: Neon.body(14))
           else
             _Mosaic(widgets: placed, platform: platform, onOpen: onOpenWidget),
         ],
@@ -1187,8 +1010,8 @@ class _NavigationBar extends StatelessWidget {
     ];
     return DecoratedBox(
       decoration: const BoxDecoration(
-        color: _Neon.navigation,
-        border: Border(top: BorderSide(color: _Neon.line)),
+        color: Neon.navigation,
+        border: Border(top: BorderSide(color: Neon.line)),
       ),
       child: SafeArea(
         top: false,
@@ -1198,7 +1021,7 @@ class _NavigationBar extends StatelessWidget {
             children: [
               for (final (i, (icon, label)) in items.indexed)
                 Expanded(
-                  child: _Tappable(
+                  child: NeonTappable(
                     label: label,
                     selected: i == selected,
                     radius: 16,
@@ -1211,25 +1034,25 @@ class _NavigationBar extends StatelessWidget {
                           height: 30,
                           decoration: BoxDecoration(
                             color: i == selected
-                                ? _Neon.amber.withValues(alpha: 0.18)
+                                ? Neon.amber.withValues(alpha: 0.18)
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Icon(
                             icon,
                             size: 20,
-                            color: i == selected ? _Neon.amber : _Neon.muted,
+                            color: i == selected ? Neon.amber : Neon.muted,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           label,
-                          style: _Neon.body(
+                          style: Neon.body(
                             12,
                             weight: i == selected
                                 ? FontWeight.w600
                                 : FontWeight.w400,
-                            color: i == selected ? _Neon.amber : _Neon.muted,
+                            color: i == selected ? Neon.amber : Neon.muted,
                           ),
                         ),
                       ],

@@ -6,6 +6,7 @@ import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RadialGradient
+import android.graphics.RectF
 import android.graphics.Shader
 import kotlin.math.PI
 import kotlin.math.cos
@@ -37,6 +38,8 @@ class MegacityScene : LiveScene {
     private var cars = emptyList<Car>()
     private var rain = FloatArray(0)
     private var billboard = FloatArray(4)
+    private var glyphs = emptyList<FloatArray>()
+    private val sign = RectF()
 
     private val fill = Paint(Paint.ANTI_ALIAS_FLAG)
     private val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -80,7 +83,12 @@ class MegacityScene : LiveScene {
         pyramid.lineTo(cx + half, base)
         pyramid.close()
         pyramidBands = FloatArray(7) { i -> top + (base - top) * (i + 1) / 8f }
-        billboard = floatArrayOf(width * 0.08f, height * 0.36f, width * 0.24f, height * 0.56f)
+        // Une enseigne verticale, fixée à une tour : cinq caractères lumineux.
+        billboard = floatArrayOf(width * 0.12f, height * 0.33f, width * 0.2f, height * 0.53f)
+        glyphs = List(5) {
+            val strokes = STROKES.shuffled(random).take(2 + random.nextInt(2))
+            FloatArray(strokes.size * 4) { i -> strokes[i / 4][i % 4] }
+        }
         flares = List(3) { i ->
             Flare(x = width * (0.2f + 0.3f * i) + random.nextFloat() * width * 0.1f, y = ground - height * (0.1f + random.nextFloat() * 0.05f), next = 1f + i * 2.7f)
         }
@@ -193,24 +201,85 @@ class MegacityScene : LiveScene {
 
     private fun drawBillboard(canvas: Canvas, strength: Float) {
         val (left, top, right, bottom) = billboard.toList()
-        val hue = (time * 12f) % 360f
-        val color = Color.HSVToColor(floatArrayOf(hue, 0.75f, 1f))
-        // Un grésillement de temps en temps.
-        val flicker = if (sin(time * 23f) > 0.97f) 0.35f else 1f
-        fill.color = color
-        fill.alpha = (70 * strength * flicker).toInt()
-        canvas.drawRect(left - 8 * density, top - 8 * density, right + 8 * density, bottom + 8 * density, fill)
-        fill.alpha = (170 * strength * flicker).toInt()
-        canvas.drawRect(left, top, right, bottom, fill)
-        // Des lignes de balayage, comme sur un écran.
-        fill.color = Color.BLACK
-        fill.alpha = 70
-        var y = top
-        while (y < bottom) {
-            canvas.drawRect(left, y, right, y + density, fill)
-            y += 4 * density
+        // Du magenta au cyan, lentement ; un grésillement de temps en temps.
+        val mix = (0.5f + 0.5f * sin(time * 0.6f)).coerceIn(0f, 1f)
+        val color = blend(PINK, TEAL, mix)
+        val flicker = if (sin(time * 23f) > 0.97f || sin(time * 7.3f) > 0.995f) 0.3f else 1f
+        val glow = strength * flicker
+        val radius = 3f * density
+
+        // La tour qui porte l'enseigne, avec quelques fenêtres.
+        fill.shader = null
+        val towerRight = left - 10 * density
+        val towerLeft = towerRight - width * 0.11f
+        val towerTop = top - height * 0.035f
+        fill.color = Color.rgb(15, 11, 18)
+        canvas.drawRect(towerLeft, towerTop, towerRight, height.toFloat(), fill)
+        val window = 2.2f * density
+        var wy = towerTop + 8 * density
+        var row = 0
+        while (wy < height) {
+            var wx = towerLeft + 5 * density
+            var column = 0
+            while (wx < towerRight - 5 * density) {
+                if ((row * 7 + column * 13) % 11 == 0) {
+                    fill.color = if ((row + column) % 3 == 0) TEAL else AMBER
+                    fill.alpha = (150 * strength).toInt()
+                    canvas.drawRect(wx, wy, wx + window, wy + window * 0.8f, fill)
+                }
+                wx += 7 * density
+                column++
+            }
+            wy += 10 * density
+            row++
+        }
+
+        // Les attaches, puis le halo autour du caisson.
+        fill.color = Color.rgb(10, 8, 14)
+        canvas.drawRect(left - 10 * density, top + 12 * density, left, top + 16 * density, fill)
+        canvas.drawRect(left - 10 * density, bottom - 16 * density, left, bottom - 12 * density, fill)
+        sign.set(left, top, right, bottom)
+        stroke.color = color
+        for ((size, alpha) in listOf(14f to 18, 8f to 34, 4f to 70)) {
+            stroke.strokeWidth = size * density
+            stroke.alpha = (alpha * glow).toInt()
+            canvas.drawRoundRect(sign, radius, radius, stroke)
+        }
+        fill.color = Color.rgb(11, 7, 16)
+        canvas.drawRoundRect(sign, radius, radius, fill)
+        stroke.strokeWidth = 1.6f * density
+        stroke.alpha = (230 * glow).toInt()
+        canvas.drawRoundRect(sign, radius, radius, stroke)
+
+        // Les caractères, allumés un à un de haut en bas, puis tous ensemble.
+        val cell = (right - left) * 0.62f
+        val step = (bottom - top - cell * 0.3f) / glyphs.size
+        val chase = ((time * 1.6f) % (glyphs.size + 3)).toInt()
+        for ((i, glyph) in glyphs.withIndex()) {
+            val x0 = (left + right) / 2 - cell / 2
+            val y0 = top + cell * 0.25f + i * step
+            val on = if (chase < glyphs.size) i <= chase else true
+            val level = if (on) 1f else 0.25f
+            for ((size, alpha) in listOf(6f to 40, 2.2f to 255)) {
+                stroke.strokeWidth = size * density
+                stroke.alpha = (alpha * glow * level).toInt()
+                for (k in glyph.indices step 4) {
+                    canvas.drawLine(
+                        x0 + glyph[k] * cell, y0 + glyph[k + 1] * cell,
+                        x0 + glyph[k + 2] * cell, y0 + glyph[k + 3] * cell,
+                        stroke,
+                    )
+                }
+            }
         }
     }
+
+    /** Entre [a] (0) et [b] (1). */
+    private fun blend(a: Int, b: Int, t: Float): Int = Color.rgb(
+        (Color.red(a) + (Color.red(b) - Color.red(a)) * t).toInt(),
+        (Color.green(a) + (Color.green(b) - Color.green(a)) * t).toInt(),
+        (Color.blue(a) + (Color.blue(b) - Color.blue(a)) * t).toInt(),
+    )
 
     private fun drawCars(canvas: Canvas, dt: Float, strength: Float) {
         for (car in cars) {
@@ -324,6 +393,19 @@ class MegacityScene : LiveScene {
     private companion object {
         val AMBER = Color.rgb(255, 170, 70)
         val TEAL = Color.rgb(80, 210, 230)
+        val PINK = Color.rgb(255, 63, 164)
+
+        /** Les traits dont sont faits les caractères de l'enseigne (x0, y0, x1, y1). */
+        val STROKES = listOf(
+            floatArrayOf(0.15f, 0.2f, 0.85f, 0.2f),
+            floatArrayOf(0.2f, 0.5f, 0.8f, 0.5f),
+            floatArrayOf(0.1f, 0.85f, 0.9f, 0.85f),
+            floatArrayOf(0.5f, 0.1f, 0.5f, 0.9f),
+            floatArrayOf(0.25f, 0.2f, 0.25f, 0.8f),
+            floatArrayOf(0.8f, 0.25f, 0.3f, 0.9f),
+            floatArrayOf(0.3f, 0.35f, 0.7f, 0.65f),
+            floatArrayOf(0.7f, 0.1f, 0.85f, 0.3f),
+        )
         val BACKGROUND = Color.rgb(4, 5, 10)
     }
 }

@@ -290,6 +290,36 @@ abstract class AppLocalizations {
   /// **'Aucun widget ne correspond.'**
   String get catalogNoMatch;
 
+  /// No description provided for @detailOnWallpaper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sur {name}'**
+  String detailOnWallpaper(String name);
+
+  /// No description provided for @detailLockScreen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Verrouillage'**
+  String get detailLockScreen;
+
+  /// No description provided for @detailTagHome.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accueil'**
+  String get detailTagHome;
+
+  /// No description provided for @detailTagLock.
+  ///
+  /// In fr, this message translates to:
+  /// **'Verrouillage'**
+  String get detailTagLock;
+
+  /// No description provided for @detailBackgrounds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fond de l\'aperçu'**
+  String get detailBackgrounds;
+
   /// Nom de l'écran de veille.
   ///
   /// In fr, this message translates to:

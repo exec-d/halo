@@ -118,6 +118,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catalogNoMatch => 'No widget matches.';
 
   @override
+  String detailOnWallpaper(String name) {
+    return 'On $name';
+  }
+
+  @override
+  String get detailLockScreen => 'Lock screen';
+
+  @override
+  String get detailTagHome => 'Home screen';
+
+  @override
+  String get detailTagLock => 'Lock screen';
+
+  @override
+  String get detailBackgrounds => 'Preview background';
+
+  @override
   String get dreamTitle => 'Screen saver';
 
   @override

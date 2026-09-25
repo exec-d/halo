@@ -52,6 +52,8 @@ class WuxApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: IuxTheme.light(),
         darkTheme: IuxTheme.dark(),
+        // Halo est une appli de néons : sombre, comme ses fonds et ses widgets.
+        themeMode: ThemeMode.dark,
         home: configuring == null
             ? CatalogScreen(widgets: wuxHomeWidgets, platform: platform)
             : WidgetScreen(

@@ -94,9 +94,28 @@ def megacity():
                     wx += 6
                 wy += 8
             x += w + 3
-    d.rectangle((30, 230, 90, 350), fill=(200, 40, 170))
-    for y in range(230, 350, 4):
-        d.line((30, y, 90, y), fill=(120, 20, 100))
+    # L'enseigne verticale : un caisson sombre bordé de néon, cinq caractères.
+    pink = (255, 63, 164)
+    left, top, right, bottom = 43, 211, 72, 339
+    d.rectangle((left - 4 - 40, top - 22, left - 4, H), fill=(15, 11, 18))
+    for y in range(top - 14, H, 10):
+        for x in range(left - 40, left - 8, 7):
+            if (x * 7 + y * 13) % 11 == 0:
+                d.rectangle((x, y, x + 2, y + 1), fill=(255, 170, 70))
+    d.rectangle((left - 4, top + 12, left, top + 15), fill=(10, 8, 14))
+    d.rectangle((left - 4, bottom - 15, left, bottom - 12), fill=(10, 8, 14))
+    for grow, shade in ((7, 5), (4, 3), (2, 2)):
+        d.rounded_rectangle((left - grow, top - grow, right + grow, bottom + grow), radius=4, outline=tuple(c // shade for c in pink), width=2)
+    d.rounded_rectangle((left, top, right, bottom), radius=3, fill=(11, 7, 16), outline=pink, width=2)
+    strokes = [(0.15, 0.2, 0.85, 0.2), (0.2, 0.5, 0.8, 0.5), (0.1, 0.85, 0.9, 0.85), (0.5, 0.1, 0.5, 0.9),
+               (0.25, 0.2, 0.25, 0.8), (0.8, 0.25, 0.3, 0.9), (0.3, 0.35, 0.7, 0.65), (0.7, 0.1, 0.85, 0.3)]
+    cell = (right - left) * 0.62
+    step = (bottom - top - cell * 0.3) / 5
+    for i in range(5):
+        x0 = (left + right) / 2 - cell / 2
+        y0 = top + cell * 0.25 + i * step
+        for a, b, c, e in rnd.sample(strokes, 2 + rnd.randint(0, 1)):
+            d.line((x0 + a * cell, y0 + b * cell, x0 + c * cell, y0 + e * cell), fill=pink, width=2)
     d.polygon([(110, 520), (40, 0), (90, 0)], fill=(20, 45, 55))
     d.ellipse((215, 400, 245, 430), fill=(255, 150, 50))
     for _ in range(90):
