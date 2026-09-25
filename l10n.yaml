@@ -1,0 +1,8 @@
+# Traductions de l'application : français (modèle), anglais.
+# `flutter pub get` et `flutter gen-l10n` régénèrent lib/l10n/app_localizations*.dart.
+arb-dir: lib/l10n
+template-arb-file: app_fr.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+output-dir: lib/l10n
+nullable-getter: false

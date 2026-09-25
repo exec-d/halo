@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../platform/wux_platform.dart';
 import 'about_screen.dart';
 import 'screen_frame.dart';
@@ -21,7 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen>
     with WidgetsBindingObserver {
   AppStatus? _status;
   bool _refreshing = false;
-  String? _refreshMessage;
+  String Function(AppLocalizations l10n)? _refreshMessage;
 
   WuxPlatform get _platform => widget.platform;
 
@@ -82,8 +84,8 @@ class _SettingsScreenState extends State<SettingsScreen>
     setState(() {
       _refreshing = false;
       _refreshMessage = ok
-          ? 'Prévisions à jour.'
-          : 'Échec du téléchargement : vérifiez la connexion.';
+          ? (l10n) => l10n.settingsWeatherUpToDate
+          : (l10n) => l10n.settingsWeatherFailed;
     });
     await _load();
   }
@@ -91,9 +93,12 @@ class _SettingsScreenState extends State<SettingsScreen>
   @override
   Widget build(BuildContext context) {
     final status = _status;
+    final l10n = AppLocalizations.of(context);
+    final batteryLabel = l10n.settingsBatteryButton;
+    final refreshLabel = l10n.settingsWeatherRefresh;
     return Scaffold(
       body: ScreenFrame(
-        title: 'Réglages',
+        title: l10n.catalogSettings,
         canGoBack: true,
         child: status == null
             ? const SizedBox.shrink()
@@ -101,22 +106,19 @@ class _SettingsScreenState extends State<SettingsScreen>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   IuxSection(
-                    title: 'Autorisations',
-                    description:
-                        'Halo ne demande que ce dont ses widgets ont besoin.',
+                    title: l10n.settingsPermissionsTitle,
+                    description: l10n.settingsPermissionsDescription,
                     children: [
                       _Permission(
-                        title: 'Agenda',
-                        use: 'Agendas et widget Mois, en lecture seule.',
+                        title: l10n.settingsCalendarTitle,
+                        use: l10n.settingsCalendarUse,
                         granted: status.calendar,
                         onActivate: _calendar,
                       ),
                       const IuxGap.standard(),
                       _Permission(
-                        title: 'Position approximative',
-                        use:
-                            'Seulement pour « Utiliser ma position » dans '
-                            'Météo. Une ville choisie à la main suffit.',
+                        title: l10n.settingsLocationTitle,
+                        use: l10n.settingsLocationUse,
                         granted: status.location,
                         onActivate: _location,
                       ),
@@ -124,20 +126,15 @@ class _SettingsScreenState extends State<SettingsScreen>
                   ),
                   const IuxGap.between(),
                   IuxSection(
-                    title: 'Batterie',
+                    title: l10n.settingsBatteryTitle,
                     description: status.batteryUnrestricted
-                        ? "Halo n'est pas limité par l'optimisation de la "
-                              'batterie : ses widgets se mettent à jour à '
-                              "l'heure."
-                        : 'Android peut retarder les mises à jour des '
-                              'widgets pour économiser la batterie. Les '
-                              'exclure de cette optimisation les garde à '
-                              "l'heure, pour un coût minime.",
+                        ? l10n.settingsBatteryUnrestricted
+                        : l10n.settingsBatteryRestricted,
                     children: [
                       IuxButton(
-                        label: _batteryLabel,
-                        action: const IuxActionDescriptor(
-                          semantics: IuxActionSemantics(label: _batteryLabel),
+                        label: batteryLabel,
+                        action: IuxActionDescriptor(
+                          semantics: IuxActionSemantics(label: batteryLabel),
                         ),
                         expand: true,
                         onActivate: _platform.openBatterySettings,
@@ -146,18 +143,18 @@ class _SettingsScreenState extends State<SettingsScreen>
                   ),
                   const IuxGap.between(),
                   IuxSection(
-                    title: 'Données météo',
-                    description: _weatherDescription(status),
+                    title: l10n.settingsWeatherTitle,
+                    description: _weatherDescription(l10n, status),
                     children: [
                       IuxButton(
-                        label: _refreshLabel,
+                        label: refreshLabel,
                         action: IuxActionDescriptor(
                           semantics: IuxActionSemantics(
-                            label: _refreshLabel,
+                            label: refreshLabel,
                             unavailabilityReason: status.weatherPlace == null
-                                ? 'Aucun lieu choisi dans Météo'
+                                ? l10n.settingsWeatherNoPlaceReason
                                 : _refreshing
-                                ? 'Téléchargement en cours'
+                                ? l10n.settingsWeatherDownloading
                                 : null,
                           ),
                           availability:
@@ -168,7 +165,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                         expand: true,
                         onActivate: _refresh,
                       ),
-                      if (_refreshMessage case final message?) ...[
+                      if (_refreshMessage?.call(l10n) case final message?) ...[
                         const IuxGap.standard(),
                         Text(
                           message,
@@ -181,8 +178,8 @@ class _SettingsScreenState extends State<SettingsScreen>
                   IuxListGroup(
                     children: [
                       IuxListItem.tappable(
-                        title: 'À propos de Halo',
-                        subtitle: 'Version, confidentialité, crédits, licences',
+                        title: l10n.settingsAboutTitle,
+                        subtitle: l10n.settingsAboutSubtitle,
                         disclosure: IuxListItemDisclosure.opensScreen,
                         onActivate: () => Navigator.of(context).push<void>(
                           MaterialPageRoute<void>(
@@ -198,21 +195,20 @@ class _SettingsScreenState extends State<SettingsScreen>
     );
   }
 
-  static const _batteryLabel = "Gérer l'optimisation de la batterie";
-  static const _refreshLabel = 'Actualiser maintenant';
-
-  String _weatherDescription(AppStatus status) {
+  String _weatherDescription(AppLocalizations l10n, AppStatus status) {
     final place = status.weatherPlace;
-    if (place == null) {
-      return 'Aucun lieu choisi : ouvrez le widget Météo pour en choisir un.';
-    }
+    if (place == null) return l10n.settingsWeatherNoPlace;
     final updated = status.weatherUpdatedAt;
-    if (updated == null) return 'Lieu : $place. Pas encore de prévisions.';
+    if (updated == null) return l10n.settingsWeatherNoForecast(place);
     final time = TimeOfDay.fromDateTime(updated).format(context);
-    final today = DateUtils.isSameDay(updated, DateTime.now());
-    return 'Lieu : $place. Mises à jour ${today ? "à $time" : "le "
-                  "${updated.day}/${updated.month} à $time"}, puis toutes les '
-        '30 minutes environ.';
+    return DateUtils.isSameDay(updated, DateTime.now())
+        ? l10n.settingsWeatherUpdatedToday(place, time)
+        : l10n.settingsWeatherUpdatedOn(
+            place,
+            updated.day,
+            updated.month,
+            time,
+          );
   }
 }
 
@@ -233,13 +229,16 @@ class _Permission extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final label = granted ? 'Gérer' : 'Autoriser';
+    final l10n = AppLocalizations.of(context);
+    final label = granted ? l10n.permissionManage : l10n.permissionAllow;
     return IuxCard(
       actions: [
         IuxButton(
           label: label,
           action: IuxActionDescriptor(
-            semantics: IuxActionSemantics(label: '$label : $title'),
+            semantics: IuxActionSemantics(
+              label: l10n.permissionActionSemantics(label, title),
+            ),
           ),
           onActivate: onActivate,
         ),
@@ -251,8 +250,8 @@ class _Permission extends StatelessWidget {
           const SizedBox(height: 4),
           IuxStatusIndicator(
             status: granted
-                ? const IuxStatus.success('Accordée')
-                : const IuxStatus.neutral('Non accordée'),
+                ? IuxStatus.success(l10n.permissionGranted)
+                : IuxStatus.neutral(l10n.permissionNotGranted),
           ),
           const SizedBox(height: 4),
           Text(use, style: IuxTypographyTheme.of(context).body),

@@ -1,16 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wux/l10n/app_localizations.dart';
 import 'package:wux/src/app.dart';
 import 'package:wux/src/home_widgets/catalog.dart';
 
 import 'fake_platform.dart';
+
+/// Le français, langue par défaut : les textes cherchés ci-dessous.
+const _fr = Locale('fr');
 
 Future<void> _open(
   WidgetTester tester,
   FakePlatform platform,
   String title,
 ) async {
-  await tester.pumpWidget(WuxApp(platform: platform));
+  await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));
   await tester.pumpAndSettle();
   await tester.ensureVisible(find.text(title).first);
   await tester.tap(find.text(title).first);
@@ -22,11 +26,12 @@ void main() {
     tester,
   ) async {
     final platform = FakePlatform();
-    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));
     await tester.pumpAndSettle();
 
+    final l10n = lookupAppLocalizations(_fr);
     for (final widget in wuxHomeWidgets) {
-      expect(find.text(widget.title), findsOneWidget);
+      expect(find.text(widget.title(l10n)), findsOneWidget);
       expect(platform.sampleRenders, contains(widget.id));
     }
     expect(platform.renders, isEmpty);
@@ -93,7 +98,7 @@ void main() {
     tester,
   ) async {
     final platform = FakePlatform()..target = 'wallpaper';
-    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));
     await tester.pumpAndSettle();
     expect(find.text("Appliquer le fond d'écran"), findsOneWidget);
 
@@ -106,7 +111,7 @@ void main() {
 
   testWidgets("l'écran de veille ouvre les réglages d'Android", (tester) async {
     final platform = FakePlatform();
-    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));
     await tester.pumpAndSettle();
     // Le titre de section, puis celui de la carte : on touche la carte.
     await tester.ensureVisible(find.text('Écran de veille').last);
@@ -122,13 +127,13 @@ void main() {
     tester,
   ) async {
     final platform = FakePlatform(permission: false)..firstLaunch = true;
-    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));
     await tester.pumpAndSettle();
     expect(platform.permissionRequests, 1);
 
     // Pas une seconde fois.
     await tester.pumpWidget(const SizedBox());
-    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));
     await tester.pumpAndSettle();
     expect(platform.permissionRequests, 1);
     await tester.pumpWidget(const SizedBox());
@@ -225,7 +230,11 @@ void main() {
   ) async {
     final platform = FakePlatform();
     await tester.pumpWidget(
-      WuxApp(platform: platform, configuring: oneColumnAgendaWidget),
+      WuxApp(
+        platform: platform,
+        configuring: oneColumnAgendaWidget,
+        locale: _fr,
+      ),
     );
     await tester.pumpAndSettle();
 
@@ -272,7 +281,7 @@ void main() {
   });
 
   testWidgets('à propos montre la version et les crédits', (tester) async {
-    await tester.pumpWidget(WuxApp(platform: FakePlatform()));
+    await tester.pumpWidget(WuxApp(platform: FakePlatform(), locale: _fr));
     await tester.pumpAndSettle();
     await tester.tap(find.bySemanticsLabel('À propos'));
     await tester.pumpAndSettle();
@@ -284,7 +293,7 @@ void main() {
 
   testWidgets('les réglages actualisent la météo', (tester) async {
     final platform = FakePlatform()..place = 'Lyon';
-    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));
     await tester.pumpAndSettle();
     await tester.tap(find.bySemanticsLabel('Réglages'));
     await tester.pumpAndSettle();
@@ -296,5 +305,32 @@ void main() {
     expect(platform.weatherRefreshes, 1);
     expect(find.text('Prévisions à jour.'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('en anglais, le catalogue est traduit', (tester) async {
+    final platform = FakePlatform();
+    await tester.pumpWidget(
+      WuxApp(platform: platform, locale: const Locale('en')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Live wallpapers'), findsOneWidget);
+    expect(find.text('Screen saver'), findsWidgets);
+    expect(find.text('Sky'), findsOneWidget);
+    expect(find.text('Earbuds and watch'), findsOneWidget);
+    expect(find.text('Now playing'), findsOneWidget);
+    expect(find.bySemanticsLabel('Settings'), findsOneWidget);
+    expect(find.text("Fonds d'écran animés"), findsNothing);
+
+    final l10n = lookupAppLocalizations(const Locale('en'));
+    for (final widget in wuxHomeWidgets) {
+      expect(find.text(widget.title(l10n)), findsOneWidget);
+    }
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  test('le français passe en premier, pour les langues non traduites', () {
+    expect(WuxApp.supportedLocales.first, const Locale('fr'));
+    expect(WuxApp.supportedLocales, contains(const Locale('en')));
   });
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../home_widgets/catalog.dart';
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
@@ -105,14 +107,15 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: ScreenFrame(
-        title: 'Halo',
+        title: l10n.appTitle,
         actions: [
           IuxIconButton(
             icon: Icons.settings_outlined,
-            action: const IuxActionDescriptor(
-              semantics: IuxActionSemantics(label: 'Réglages'),
+            action: IuxActionDescriptor(
+              semantics: IuxActionSemantics(label: l10n.catalogSettings),
             ),
             onActivate: () => Navigator.of(context).push<void>(
               MaterialPageRoute<void>(
@@ -122,8 +125,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ),
           IuxIconButton(
             icon: Icons.info_outline,
-            action: const IuxActionDescriptor(
-              semantics: IuxActionSemantics(label: 'À propos'),
+            action: IuxActionDescriptor(
+              semantics: IuxActionSemantics(label: l10n.catalogAbout),
             ),
             onActivate: () => Navigator.of(context).push<void>(
               MaterialPageRoute<void>(
@@ -136,12 +139,12 @@ class _CatalogScreenState extends State<CatalogScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             IuxSection(
-              title: "Fonds d'écran animés",
+              title: l10n.catalogWallpapers,
               children: [
                 for (final wallpaper in haloWallpapers) ...[
                   IuxCard.tappable(
-                    semanticLabel: wallpaper.title,
-                    hint: wallpaper.description,
+                    semanticLabel: wallpaper.title(l10n),
+                    hint: wallpaper.description(l10n),
                     onActivate: () => Navigator.of(context).push<void>(
                       MaterialPageRoute<void>(
                         builder: (_) => WallpaperScreen(
@@ -163,11 +166,11 @@ class _CatalogScreenState extends State<CatalogScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                wallpaper.title,
+                                wallpaper.title(l10n),
                                 style: IuxTypographyTheme.of(context).title,
                               ),
                               Text(
-                                wallpaper.description,
+                                wallpaper.description(l10n),
                                 style: IuxTypographyTheme.of(context).body,
                               ),
                             ],
@@ -182,11 +185,11 @@ class _CatalogScreenState extends State<CatalogScreen> {
             ),
             const IuxGap.between(),
             IuxSection(
-              title: dreamTitle,
+              title: l10n.dreamTitle,
               children: [
                 IuxCard.tappable(
-                  semanticLabel: dreamTitle,
-                  hint: dreamDescription,
+                  semanticLabel: l10n.dreamTitle,
+                  hint: l10n.dreamDescription,
                   onActivate: () => Navigator.of(context).push<void>(
                     MaterialPageRoute<void>(
                       builder: (_) => DreamScreen(platform: platform),
@@ -196,11 +199,11 @@ class _CatalogScreenState extends State<CatalogScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dreamTitle,
+                        l10n.dreamTitle,
                         style: IuxTypographyTheme.of(context).title,
                       ),
                       Text(
-                        dreamDescription,
+                        l10n.dreamDescription,
                         style: IuxTypographyTheme.of(context).body,
                       ),
                     ],
@@ -211,12 +214,12 @@ class _CatalogScreenState extends State<CatalogScreen> {
             const IuxGap.between(),
             IuxSection(
               key: _widgetsKey,
-              title: 'Widgets',
+              title: l10n.catalogWidgets,
               children: [
                 for (final homeWidget in widgets) ...[
                   IuxCard.tappable(
-                    semanticLabel: homeWidget.title,
-                    hint: homeWidget.description,
+                    semanticLabel: homeWidget.title(l10n),
+                    hint: homeWidget.description(l10n),
                     onActivate: () => _open(context, homeWidget),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -230,11 +233,11 @@ class _CatalogScreenState extends State<CatalogScreen> {
                         ),
                         const IuxGap.standard(),
                         Text(
-                          homeWidget.title,
+                          homeWidget.title(l10n),
                           style: IuxTypographyTheme.of(context).title,
                         ),
                         Text(
-                          homeWidget.description,
+                          homeWidget.description(l10n),
                           style: IuxTypographyTheme.of(context).body,
                         ),
                       ],

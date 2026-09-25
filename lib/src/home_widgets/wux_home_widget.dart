@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import '../../l10n/app_localizations.dart';
+
 /// Nature d'un widget, qui décide de son écran de réglage et de son aperçu.
 enum WuxWidgetKind {
   /// Pas de réglage : un aperçu et le bouton d'épinglage.
@@ -51,9 +53,11 @@ class WuxHomeWidget {
 
   final WuxWidgetKind kind;
 
-  final String title;
+  /// Nom affiché, dans la langue de l'application.
+  final String Function(AppLocalizations l10n) title;
 
-  final String description;
+  /// Description affichée, dans la langue de l'application.
+  final String Function(AppLocalizations l10n) description;
 
   /// Nom complet de la classe Kotlin qui reçoit les mises à jour du widget.
   final String androidProvider;

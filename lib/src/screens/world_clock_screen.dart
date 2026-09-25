@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../home_widgets/cities.dart';
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
@@ -57,6 +59,7 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final options = [
       for (final (name, zone) in worldCities)
         IuxRadioOption<String>(value: zone, label: name),
@@ -68,14 +71,16 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
       revision: _revision,
       sections: [
         IuxSection(
-          title: 'Villes',
+          title: l10n.worldClockCities,
           children: [
             for (var i = 0; i < 3; i++) ...[
               if (i > 0) const IuxGap.standard(),
               IuxSelectField<String>(
-                label: 'Ville ${i + 1}',
+                label: l10n.worldClockCity(i + 1),
                 input: IuxInputDescriptor(
-                  semantics: IuxInputSemantics(label: 'Ville ${i + 1}'),
+                  semantics: IuxInputSemantics(
+                    label: l10n.worldClockCity(i + 1),
+                  ),
                 ),
                 value: _zones[i],
                 options: options,

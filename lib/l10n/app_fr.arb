@@ -1,0 +1,524 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Halo",
+  "@appTitle": {
+    "description": "Nom de l'application."
+  },
+  "back": "Retour",
+  "@back": {
+    "description": "Bouton retour de la barre d'application."
+  },
+  "pinToHome": "Ajouter à l'écran d'accueil",
+  "@pinToHome": {
+    "description": "Bouton qui épingle un widget sur l'écran d'accueil."
+  },
+  "widgetPreviewSemantics": "Aperçu du widget {title}",
+  "@widgetPreviewSemantics": {
+    "description": "Libellé d'accessibilité de l'aperçu d'un widget.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "catalogSettings": "Réglages",
+  "@catalogSettings": {
+    "description": "Bouton et titre des réglages."
+  },
+  "catalogAbout": "À propos",
+  "@catalogAbout": {
+    "description": "Bouton et titre de « À propos »."
+  },
+  "catalogWallpapers": "Fonds d'écran animés",
+  "@catalogWallpapers": {
+    "description": "Section des fonds d'écran animés du catalogue."
+  },
+  "catalogWidgets": "Widgets",
+  "@catalogWidgets": {
+    "description": "Section des widgets du catalogue."
+  },
+  "dreamTitle": "Écran de veille",
+  "@dreamTitle": {
+    "description": "Nom de l'écran de veille."
+  },
+  "dreamDescription": "Pendant la charge : une grande horloge néon sur le décor Circuit.",
+  "@dreamDescription": {
+    "description": "Description courte de l'écran de veille, dans le catalogue."
+  },
+  "dreamOpenSettings": "Ouvrir les réglages de l'écran de veille",
+  "dreamIntro": "Quand le téléphone charge, ou est posé sur un socle, Android peut afficher un écran de veille. Celui de Halo montre l'heure en grand sur le décor Circuit, avec la prochaine alarme, le prochain événement et la météo. Le texte se déplace un peu chaque minute pour ne pas marquer l'écran ; un toucher réveille le téléphone.",
+  "dreamHowToTitle": "Pour l'activer",
+  "dreamStep1": "1. Dans les réglages qui s'ouvrent, activez « Utiliser l'écran de veille ».",
+  "dreamStep2": "2. Choisissez « Halo » dans la liste.",
+  "dreamStep3": "3. Dans « Quand l'activer », choisissez « Pendant la charge » (ou sur un socle).",
+  "settingsPermissionsTitle": "Autorisations",
+  "settingsPermissionsDescription": "Halo ne demande que ce dont ses widgets ont besoin.",
+  "settingsCalendarTitle": "Agenda",
+  "@settingsCalendarTitle": {
+    "description": "L'autorisation d'accès à l'agenda."
+  },
+  "settingsCalendarUse": "Agendas et widget Mois, en lecture seule.",
+  "settingsLocationTitle": "Position approximative",
+  "settingsLocationUse": "Seulement pour « Utiliser ma position » dans Météo. Une ville choisie à la main suffit.",
+  "settingsBatteryTitle": "Batterie",
+  "settingsBatteryUnrestricted": "Halo n'est pas limité par l'optimisation de la batterie : ses widgets se mettent à jour à l'heure.",
+  "settingsBatteryRestricted": "Android peut retarder les mises à jour des widgets pour économiser la batterie. Les exclure de cette optimisation les garde à l'heure, pour un coût minime.",
+  "settingsBatteryButton": "Gérer l'optimisation de la batterie",
+  "settingsWeatherTitle": "Données météo",
+  "settingsWeatherRefresh": "Actualiser maintenant",
+  "settingsWeatherNoPlaceReason": "Aucun lieu choisi dans Météo",
+  "@settingsWeatherNoPlaceReason": {
+    "description": "Pourquoi l'actualisation est indisponible."
+  },
+  "settingsWeatherDownloading": "Téléchargement en cours",
+  "@settingsWeatherDownloading": {
+    "description": "Pourquoi l'actualisation est indisponible."
+  },
+  "settingsWeatherUpToDate": "Prévisions à jour.",
+  "settingsWeatherFailed": "Échec du téléchargement : vérifiez la connexion.",
+  "settingsWeatherNoPlace": "Aucun lieu choisi : ouvrez le widget Météo pour en choisir un.",
+  "settingsWeatherNoForecast": "Lieu : {place}. Pas encore de prévisions.",
+  "@settingsWeatherNoForecast": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsWeatherUpdatedToday": "Lieu : {place}. Mises à jour à {time}, puis toutes les 30 minutes environ.",
+  "@settingsWeatherUpdatedToday": {
+    "description": "Dernière mise à jour aujourd'hui ; {time} est déjà formatée.",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsWeatherUpdatedOn": "Lieu : {place}. Mises à jour le {day}/{month} à {time}, puis toutes les 30 minutes environ.",
+  "@settingsWeatherUpdatedOn": {
+    "description": "Dernière mise à jour un autre jour.",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAboutTitle": "À propos de Halo",
+  "settingsAboutSubtitle": "Version, confidentialité, crédits, licences",
+  "permissionManage": "Gérer",
+  "permissionAllow": "Autoriser",
+  "permissionActionSemantics": "{action} : {permission}",
+  "@permissionActionSemantics": {
+    "description": "Libellé d'accessibilité du bouton d'une autorisation.",
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "permission": {
+        "type": "String"
+      }
+    }
+  },
+  "permissionGranted": "Accordée",
+  "@permissionGranted": {
+    "description": "Une autorisation (féminin)."
+  },
+  "permissionNotGranted": "Non accordée",
+  "@permissionNotGranted": {
+    "description": "Une autorisation (féminin)."
+  },
+  "aboutIconSemantics": "Icône de Halo",
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutVersionBuild": "{version} (build {build})",
+  "@aboutVersionBuild": {
+    "description": "Version et numéro de build.",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "build": {
+        "type": "int"
+      }
+    }
+  },
+  "aboutHaloDescription": "Des widgets d'écran d'accueil au style néon, aux couleurs de votre fond d'écran : horloge, agendas, météo, pluie, allergies, système, et plus. Nom de code : WUX.",
+  "aboutPrivacyTitle": "Confidentialité",
+  "aboutPrivacyDescription": "Halo ne crée aucun compte, ne contient ni publicité ni mesure d'audience, et n'envoie rien à ses auteurs. Votre agenda, le temps d'écran, la consommation de données et les appareils Bluetooth sont lus sur le téléphone et n'en sortent pas. Pour la météo, la pluie, les pollens et la qualité de l'air, seules les coordonnées du lieu choisi sont envoyées à Open-Meteo. Vos réglages restent sur le téléphone.",
+  "aboutCreditsTitle": "Sources et crédits",
+  "aboutCreditWeatherTitle": "Météo, pluie, pollens, qualité de l'air",
+  "aboutCreditWeatherDetail": "Open-Meteo.com, sous licence CC BY 4.0. Pollens et qualité de l'air : Copernicus Atmosphere Monitoring Service (CAMS), modèle européen.",
+  "aboutCreditCitiesTitle": "Recherche de villes",
+  "aboutCreditCitiesDetail": "Géocodage Open-Meteo, données GeoNames (CC BY 4.0).",
+  "aboutCreditIconsTitle": "Icônes",
+  "aboutCreditIconsDetail": "Material Icons de Google, licence Apache 2.0.",
+  "aboutCreditInterfaceTitle": "Interface",
+  "aboutCreditInterfaceDetail": "Flutter, et IUX pour les composants accessibles de l'application.",
+  "aboutCreditSourceTitle": "Code source",
+  "aboutCreditSourceDetail": "Halo est un logiciel libre, sous licence MIT : github.com/exec-d/halo.",
+  "aboutLicenses": "Licences des logiciels utilisés",
+  "accessTitle": "Accès",
+  "accessGranted": "Accordé",
+  "@accessGranted": {
+    "description": "Un accès (masculin)."
+  },
+  "accessNotGranted": "Non accordé",
+  "@accessNotGranted": {
+    "description": "Un accès (masculin)."
+  },
+  "accessOpenAppInfo": "Ouvrir la fiche de Halo",
+  "accessRestrictedHelp": "Si Android répond « L'accès a été refusé à cette appli » : Halo, installé hors du Play Store, relève des paramètres restreints. Dans sa fiche, touchez ⋮ puis « Autoriser les paramètres restreints », confirmez, et revenez activer l'accès.",
+  "accessBluetoothButton": "Autoriser « Appareils à proximité »",
+  "accessBluetoothDescription": "Halo lit le nom, le type et la batterie des appareils Bluetooth connectés. Rien ne quitte le téléphone.",
+  "accessMediaButton": "Ouvrir l'accès aux notifications",
+  "accessMediaDescription": "Android ne dit ce qui joue, et ne laisse le piloter, qu'aux applis autorisées à « accéder aux notifications ». Halo n'en lit aucune : il suit seulement la lecture. Rien ne quitte le téléphone.",
+  "accessTimerButton": "Autoriser les notifications",
+  "accessTimerDescription": "À la fin d'un minuteur, Halo sonne et affiche une notification. Sans cette autorisation, le widget indique seulement « Minuteur terminé ».",
+  "accessUsageButton": "Ouvrir l'accès aux données d'utilisation",
+  "accessUsageDescription": "Android réserve la durée d'utilisation des applis et la consommation de données aux applis autorisées dans ses réglages : activez Halo dans la liste. Rien ne quitte le téléphone.",
+  "mobileDataPlanTitle": "Forfait",
+  "mobileDataIncluded": "Données incluses",
+  "mobileDataIncludedHelp": "Le widget trace le rythme qui mène pile au forfait.",
+  "mobileDataNoPlan": "Pas de forfait",
+  "mobileDataGigabytes": "{gb} Go",
+  "@mobileDataGigabytes": {
+    "description": "Taille de forfait, en gigaoctets.",
+    "placeholders": {
+      "gb": {
+        "type": "int"
+      }
+    }
+  },
+  "mobileDataCycleDay": "Jour de reprise",
+  "mobileDataCycleDayHelp": "Le jour du mois où le forfait repart à zéro.",
+  "mobileDataFirstOfMonth": "1er du mois",
+  "mobileDataDayOfMonth": "Le {day}",
+  "@mobileDataDayOfMonth": {
+    "description": "Jour de reprise du forfait, du 2 au 28.",
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "agendaDaysTitle": "Jours",
+  "agendaDaysShown": "Jours affichés",
+  "agendaDaysHelp": "À partir de 18 h, une journée terminée laisse place au lendemain.",
+  "agendaToday": "Aujourd'hui",
+  "agendaTodayTomorrow": "Aujourd'hui et demain",
+  "agendaEventsTitle": "Événements",
+  "agendaEventsDescription": "L'événement en cours est mis en avant, les suivants sont légèrement estompés.",
+  "agendaEventsShown": "Événements affichés",
+  "agendaAllDay": "Toute la journée",
+  "agendaAllDaySemantics": "Afficher les événements toute la journée",
+  "agendaAllDayHelp": "Anniversaires, congés, jours fériés… et les événements sur plusieurs jours.",
+  "agendaCalendarsTitle": "Agendas",
+  "agendaCalendarsShown": "Agendas affichés",
+  "agendaPreviewPlaceholder": "L'aperçu apparaîtra une fois l'agenda autorisé.",
+  "agendaAllowAccess": "Autoriser l'accès à l'agenda",
+  "agendaOpenSettings": "Ouvrir les réglages",
+  "agendaAccessTitle": "Accès à l'agenda",
+  "agendaAccessRefused": "L'accès a été refusé. S'il ne vous est plus proposé, activez « Agenda » dans les autorisations de l'application.",
+  "agendaAccessExplanation": "Halo lit vos événements pour les afficher. Il ne les modifie jamais et ne les envoie nulle part.",
+  "countdownDay": "Jour",
+  "countdownMonth": "Mois",
+  "countdownYear": "Année",
+  "countdownEventTitle": "Évènement",
+  "countdownTitleLabel": "Titre",
+  "countdownTitleHelp": "Par exemple « Vacances ».",
+  "countdownDateLabel": "Date",
+  "countdownDateHelp": "Jour, mois et année.",
+  "countdownDateInvalid": "Cette date n'existe pas.",
+  "weatherUseLocation": "Utiliser ma position",
+  "weatherSearch": "Rechercher",
+  "weatherSearching": "Recherche en cours",
+  "weatherNoResult": "Aucun lieu trouvé pour « {query} ».",
+  "@weatherNoResult": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "weatherPlaceTitle": "Lieu",
+  "weatherNoPlace": "Aucun lieu choisi pour le moment.",
+  "weatherForecastFor": "Prévisions pour {place}.",
+  "@weatherForecastFor": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "weatherLocationFailed": "La position n'a pas pu être obtenue. Vérifiez que la localisation est activée et autorisée pour Halo.",
+  "weatherCityLabel": "Ville",
+  "weatherCityHelp": "Ou cherchez une ville par son nom.",
+  "weatherPlaceUnavailable": "Les prévisions de ce lieu ne sont pas disponibles.",
+  "worldClockCities": "Villes",
+  "worldClockCity": "Ville {number}",
+  "@worldClockCity": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "wallpaperApply": "Appliquer le fond d'écran",
+  "wallpaperActive": "Fond d'écran actuel",
+  "wallpaperNotApplied": "Pas encore appliqué",
+  "wallpaperUnavailable": "Ce téléphone ne propose pas l'écran d'application. Choisissez « Halo · {title} » dans Fond d'écran et style, rubrique Fonds d'écran animés.",
+  "@wallpaperUnavailable": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "wallpaperIntensityTitle": "Intensité",
+  "wallpaperIntensityLabel": "Intensité du fond",
+  "wallpaperIntensityHelp": "Discret garde les widgets et les icônes bien lisibles par-dessus.",
+  "wallpaperIntensityDiscreet": "Discret",
+  "wallpaperIntensityNormal": "Normal",
+  "wallpaperIntensityVivid": "Vif",
+  "wallpaperFeaturesTitle": "Ce qui bouge",
+  "wallpaperBatteryTitle": "Batterie",
+  "wallpaperPreviewSemantics": "Aperçu du fond d'écran {title}",
+  "@wallpaperPreviewSemantics": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "wallpaperCircuitTitle": "Circuit",
+  "wallpaperCircuitDescription": "L'intérieur du téléphone en néon, aux couleurs du téléphone.",
+  "wallpaperCircuitTiltTitle": "Inclinaison",
+  "wallpaperCircuitTiltText": "Les plans du téléphone glissent quand vous le penchez, et le reflet du verre suit.",
+  "wallpaperCircuitBatteryTitle": "Vraie batterie",
+  "wallpaperCircuitBatteryText": "La batterie dessinée affiche le niveau réel et respire pendant la charge.",
+  "wallpaperCircuitNetworkTitle": "Réseau",
+  "wallpaperCircuitNetworkText": "Des impulsions courent de l'antenne au processeur quand des données passent ; les antennes brillent selon la force du signal.",
+  "wallpaperCircuitWakeTitle": "Allumage",
+  "wallpaperCircuitWakeText": "À chaque allumage de l'écran, le fond est là tout de suite, puis composants et pistes s'illuminent un à un depuis le processeur.",
+  "wallpaperCircuitBattery": "L'animation s'arrête dès que le fond n'est plus visible, et ne tourne en continu que pendant un mouvement, une impulsion ou une charge.",
+  "wallpaperHorizonTitle": "Horizon",
+  "wallpaperHorizonDescription": "Un horizon néon qui suit l'heure et la vraie météo du lieu choisi.",
+  "wallpaperHorizonDayTitle": "La journée",
+  "wallpaperHorizonDayText": "Le soleil se lève, traverse le ciel et se couche aux vraies heures ; la nuit, la lune dans sa phase et les étoiles.",
+  "wallpaperHorizonWeatherTitle": "La météo",
+  "wallpaperHorizonWeatherText": "Nuages, pluie, neige, orage ou brume, selon le temps qu'il fait au lieu choisi dans Météo.",
+  "wallpaperHorizonTiltTitle": "Inclinaison",
+  "wallpaperHorizonTiltText": "Montagnes et sol quadrillé glissent quand vous penchez le téléphone.",
+  "wallpaperHorizonBattery": "L'animation s'arrête dès que le fond n'est plus visible ; elle ralentit par temps clair, et ne va vite que sous la pluie ou la neige.",
+  "wallpaperSkyTitle": "Ciel",
+  "wallpaperSkyDescription": "Les vraies étoiles et la vraie Lune au-dessus de vous, dans la direction du téléphone.",
+  "wallpaperSkyRealTitle": "Le vrai ciel",
+  "wallpaperSkyRealText": "Les étoiles les plus brillantes et les constellations, à leur place pour le lieu choisi dans Météo et pour cette heure.",
+  "wallpaperSkyCompassTitle": "Boussole",
+  "wallpaperSkyCompassText": "Tournez-vous : le ciel suit la direction du téléphone. Levez-le : vous montez vers le zénith.",
+  "wallpaperSkyDayTitle": "Le jour",
+  "wallpaperSkyDayText": "Le ciel s'éclaircit et les étoiles pâlissent quand le soleil est levé.",
+  "wallpaperSkyBattery": "L'animation et la boussole s'arrêtent dès que le fond n'est plus visible.",
+  "widgetClockTitle": "Horloge",
+  "@widgetClockTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetClockDescription": "L'heure et la date. Touchez-le pour ouvrir l'horloge.",
+  "@widgetClockDescription": {
+    "description": "Description du widget."
+  },
+  "widgetOneColumnAgendaTitle": "Agenda",
+  "@widgetOneColumnAgendaTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetOneColumnAgendaDescription": "Les événements du jour, en une colonne.",
+  "@widgetOneColumnAgendaDescription": {
+    "description": "Description du widget."
+  },
+  "widgetTwoColumnAgendaTitle": "Agenda 2 colonnes",
+  "@widgetTwoColumnAgendaTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetTwoColumnAgendaDescription": "Les événements du jour, en deux colonnes.",
+  "@widgetTwoColumnAgendaDescription": {
+    "description": "Description du widget."
+  },
+  "widgetSystemTitle": "Système",
+  "@widgetSystemTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetSystemDescription": "Batterie, réseau et stockage, sur une rangée.",
+  "@widgetSystemDescription": {
+    "description": "Description du widget."
+  },
+  "widgetAdvancedSystemTitle": "Système avancé",
+  "@widgetAdvancedSystemTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetAdvancedSystemDescription": "Signal, Wi-Fi, Bluetooth, batterie, mémoire, stockage, localisation et son, sur deux rangées.",
+  "@widgetAdvancedSystemDescription": {
+    "description": "Description du widget."
+  },
+  "widgetBatteryTitle": "Batterie détaillée",
+  "@widgetBatteryTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetBatteryDescription": "La courbe des 24 dernières heures et la suite prévue, la température, la tension et les cycles.",
+  "@widgetBatteryDescription": {
+    "description": "Description du widget."
+  },
+  "widgetDeviceTitle": "Appareil",
+  "@widgetDeviceTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetDeviceDescription": "La fiche du téléphone façon console, et depuis combien de temps il tourne, à la seconde.",
+  "@widgetDeviceDescription": {
+    "description": "Description du widget."
+  },
+  "widgetBluetoothDevicesTitle": "Écouteurs et montre",
+  "@widgetBluetoothDevicesTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetBluetoothDevicesDescription": "La batterie des appareils Bluetooth connectés.",
+  "@widgetBluetoothDevicesDescription": {
+    "description": "Description du widget."
+  },
+  "widgetScreenTimeTitle": "Temps d'écran",
+  "@widgetScreenTimeTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetScreenTimeDescription": "La journée en cadran de 24 heures : quand l'écran était allumé, les déverrouillages et les applis les plus utilisées.",
+  "@widgetScreenTimeDescription": {
+    "description": "Description du widget."
+  },
+  "widgetMobileDataTitle": "Données mobiles",
+  "@widgetMobileDataTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetMobileDataDescription": "La consommation de la période face au forfait, avec la projection en fin de période.",
+  "@widgetMobileDataDescription": {
+    "description": "Description du widget."
+  },
+  "widgetForecastTitle": "Prévisions 5 jours",
+  "@widgetForecastTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetForecastDescription": "Cinq jours de météo, et une capsule qui place chacun dans la semaine, du plus frais au plus chaud.",
+  "@widgetForecastDescription": {
+    "description": "Description du widget."
+  },
+  "widgetAnalogClockTitle": "Horloge analogique",
+  "@widgetAnalogClockTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetAnalogClockDescription": "Un cadran néon aux aiguilles lumineuses, et la date.",
+  "@widgetAnalogClockDescription": {
+    "description": "Description du widget."
+  },
+  "widgetEphemerisTitle": "Éphéméride",
+  "@widgetEphemerisTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetEphemerisDescription": "La fête du jour, la semaine, l'année en douze mois et le prochain jour férié.",
+  "@widgetEphemerisDescription": {
+    "description": "Description du widget."
+  },
+  "widgetTimerTitle": "Chronomètre et minuteur",
+  "@widgetTimerTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetTimerDescription": "Un chronomètre, et un minuteur de 1, 5, 10 ou 25 minutes d'un toucher, qui sonne à la fin.",
+  "@widgetTimerDescription": {
+    "description": "Description du widget."
+  },
+  "widgetMediaTitle": "Lecture en cours",
+  "@widgetMediaTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetMediaDescription": "Ce qui joue, sa pochette en néon, et précédent, lecture ou pause, suivant.",
+  "@widgetMediaDescription": {
+    "description": "Description du widget."
+  },
+  "widgetWorldClockTitle": "Fuseaux horaires",
+  "@widgetWorldClockTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetWorldClockDescription": "L'heure de trois villes, sur une rangée.",
+  "@widgetWorldClockDescription": {
+    "description": "Description du widget."
+  },
+  "widgetCountdownTitle": "Compte à rebours",
+  "@widgetCountdownTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetCountdownDescription": "Les jours jusqu'à une date qui compte.",
+  "@widgetCountdownDescription": {
+    "description": "Description du widget."
+  },
+  "widgetControlsTitle": "Contrôles",
+  "@widgetControlsTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetControlsDescription": "Lampe torche en un geste ; Wi-Fi, Bluetooth, son et appareil photo à portée de doigt.",
+  "@widgetControlsDescription": {
+    "description": "Description du widget."
+  },
+  "widgetMonthTitle": "Mois",
+  "@widgetMonthTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetMonthDescription": "Le mois en cours ; un point sous chaque jour qui a un événement. Il lit l'agenda : autorisez-le depuis un widget Agenda.",
+  "@widgetMonthDescription": {
+    "description": "Description du widget."
+  },
+  "widgetWeatherTitle": "Météo",
+  "@widgetWeatherTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetWeatherDescription": "Façon tableau de bord : température et jauge du jour, ressenti, vent, humidité, UV, pluie, et la courbe des 24 heures. Open-Meteo, chaque heure. Sur une rangée, une seule ligne.",
+  "@widgetWeatherDescription": {
+    "description": "Description du widget."
+  },
+  "widgetSunMoonTitle": "Soleil et Lune",
+  "@widgetSunMoonTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetSunMoonDescription": "Lever et coucher du soleil au lieu choisi dans Météo, durée du jour et phase de la lune.",
+  "@widgetSunMoonDescription": {
+    "description": "Description du widget."
+  },
+  "widgetRainTitle": "Pluie",
+  "@widgetRainTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetRainDescription": "Si la pluie arrive et quand, puis les probabilités des 12 prochaines heures, au lieu choisi dans Météo.",
+  "@widgetRainDescription": {
+    "description": "Description du widget."
+  },
+  "widgetAllergyTitle": "Allergies",
+  "@widgetAllergyTitle": {
+    "description": "Nom du widget, dans le catalogue et en titre de son écran."
+  },
+  "widgetAllergyDescription": "Graminées, bouleau, aulne, olivier, armoise, ambroisie et qualité de l'air, au lieu choisi dans Météo. Pollens : Europe seulement.",
+  "@widgetAllergyDescription": {
+    "description": "Description du widget."
+  }
+}

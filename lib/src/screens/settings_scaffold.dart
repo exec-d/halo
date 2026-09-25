@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import '../previews/widget_previews.dart';
@@ -47,15 +49,16 @@ class _SettingsScaffoldState extends State<SettingsScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: ScreenFrame(
-        title: widget.homeWidget.title,
+        title: widget.homeWidget.title(l10n),
         canGoBack: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             IuxSection(
-              description: widget.homeWidget.description,
+              description: widget.homeWidget.description(l10n),
               children: [
                 WallpaperFrame(
                   child:

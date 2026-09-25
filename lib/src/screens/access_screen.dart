@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import 'settings_scaffold.dart';
@@ -100,6 +102,7 @@ class _AccessScreenState extends State<AccessScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return SettingsScaffold(
       homeWidget: widget.homeWidget,
       platform: _platform,
@@ -114,38 +117,41 @@ class _AccessScreenState extends State<AccessScreen>
         ),
         if (_mobileData)
           IuxSection(
-            title: 'Forfait',
+            title: l10n.mobileDataPlanTitle,
             children: [
               IuxSelectField<int>(
-                label: 'Données incluses',
-                input: const IuxInputDescriptor(
-                  semantics: IuxInputSemantics(label: 'Données incluses'),
-                  helpText:
-                      'Le widget trace le rythme qui mène pile au forfait.',
+                label: l10n.mobileDataIncluded,
+                input: IuxInputDescriptor(
+                  semantics: IuxInputSemantics(label: l10n.mobileDataIncluded),
+                  helpText: l10n.mobileDataIncludedHelp,
                 ),
                 value: _quota,
                 options: [
                   for (final gb in _quotas)
                     IuxRadioOption<int>(
                       value: gb,
-                      label: gb == 0 ? 'Pas de forfait' : '$gb Go',
+                      label: gb == 0
+                          ? l10n.mobileDataNoPlan
+                          : l10n.mobileDataGigabytes(gb),
                     ),
                 ],
                 onChanged: _setQuota,
               ),
               const IuxGap.standard(),
               IuxSelectField<int>(
-                label: 'Jour de reprise',
-                input: const IuxInputDescriptor(
-                  semantics: IuxInputSemantics(label: 'Jour de reprise'),
-                  helpText: 'Le jour du mois où le forfait repart à zéro.',
+                label: l10n.mobileDataCycleDay,
+                input: IuxInputDescriptor(
+                  semantics: IuxInputSemantics(label: l10n.mobileDataCycleDay),
+                  helpText: l10n.mobileDataCycleDayHelp,
                 ),
                 value: _cycleDay,
                 options: [
                   for (var day = 1; day <= 28; day++)
                     IuxRadioOption<int>(
                       value: day,
-                      label: day == 1 ? '1er du mois' : 'Le $day',
+                      label: day == 1
+                          ? l10n.mobileDataFirstOfMonth
+                          : l10n.mobileDataDayOfMonth(day),
                     ),
                 ],
                 onChanged: _setCycleDay,
@@ -169,8 +175,8 @@ class _Access {
 
   final Future<bool> Function() has;
   final Future<void> Function() request;
-  final String button;
-  final String description;
+  final String Function(AppLocalizations l10n) button;
+  final String Function(AppLocalizations l10n) description;
 
   /// Accordé dans les réglages d'Android, que les « paramètres restreints »
   /// bloquent d'abord pour une appli installée hors du Play Store.
@@ -180,40 +186,27 @@ class _Access {
     WuxWidgetKind.bluetooth => _Access(
       has: platform.hasBluetoothPermission,
       request: platform.requestBluetoothPermission,
-      button: 'Autoriser « Appareils à proximité »',
-      description:
-          'Halo lit le nom, le type et la batterie des appareils '
-          'Bluetooth connectés. Rien ne quitte le téléphone.',
+      button: (l10n) => l10n.accessBluetoothButton,
+      description: (l10n) => l10n.accessBluetoothDescription,
     ),
     WuxWidgetKind.media => _Access(
       has: platform.hasMediaAccess,
       request: platform.openMediaAccess,
-      button: "Ouvrir l'accès aux notifications",
-      description:
-          "Android ne dit ce qui joue, et ne laisse le piloter, qu'aux "
-          'applis autorisées à « accéder aux notifications ». Halo n\'en lit '
-          'aucune : il suit seulement la lecture. Rien ne quitte le '
-          'téléphone.',
+      button: (l10n) => l10n.accessMediaButton,
+      description: (l10n) => l10n.accessMediaDescription,
       restricted: true,
     ),
     WuxWidgetKind.timer => _Access(
       has: platform.hasNotificationPermission,
       request: platform.requestNotificationPermission,
-      button: 'Autoriser les notifications',
-      description:
-          'À la fin d\'un minuteur, Halo sonne et affiche une '
-          'notification. Sans cette autorisation, le widget indique '
-          'seulement « Minuteur terminé ».',
+      button: (l10n) => l10n.accessTimerButton,
+      description: (l10n) => l10n.accessTimerDescription,
     ),
     _ => _Access(
       has: platform.hasUsageAccess,
       request: platform.openUsageAccess,
-      button: "Ouvrir l'accès aux données d'utilisation",
-      description:
-          "Android réserve la durée d'utilisation des applis et la "
-          'consommation de données aux applis autorisées dans ses '
-          'réglages : activez Halo dans la liste. Rien ne quitte le '
-          'téléphone.',
+      button: (l10n) => l10n.accessUsageButton,
+      description: (l10n) => l10n.accessUsageDescription,
       restricted: true,
     ),
   };
@@ -232,20 +225,20 @@ class _AccessSection extends StatelessWidget {
   final VoidCallback onRequest;
   final VoidCallback onOpenAppSettings;
 
-  static const _appSettings = 'Ouvrir la fiche de Halo';
-
   @override
   Widget build(BuildContext context) {
-    final label = access.button;
+    final l10n = AppLocalizations.of(context);
+    final label = access.button(l10n);
+    final appSettings = l10n.accessOpenAppInfo;
     return IuxSection(
-      title: 'Accès',
-      description: access.description,
+      title: l10n.accessTitle,
+      description: access.description(l10n),
       children: [
         if (granted != null)
           IuxStatusIndicator(
             status: granted!
-                ? const IuxStatus.success('Accordé')
-                : const IuxStatus.neutral('Non accordé'),
+                ? IuxStatus.success(l10n.accessGranted)
+                : IuxStatus.neutral(l10n.accessNotGranted),
           ),
         if (granted == false) ...[
           const IuxGap.standard(),
@@ -261,18 +254,14 @@ class _AccessSection extends StatelessWidget {
           if (access.restricted) ...[
             const IuxGap.standard(),
             Text(
-              "Si Android répond « L'accès a été refusé à cette appli » : "
-              'Halo, installé hors du Play Store, relève des paramètres '
-              'restreints. Dans sa fiche, touchez ⋮ puis « Autoriser les '
-              'paramètres restreints », confirmez, et revenez activer '
-              "l'accès.",
+              l10n.accessRestrictedHelp,
               style: IuxTypographyTheme.of(context).body,
             ),
             const IuxGap.standard(),
             IuxButton(
-              label: _appSettings,
-              action: const IuxActionDescriptor(
-                semantics: IuxActionSemantics(label: _appSettings),
+              label: appSettings,
+              action: IuxActionDescriptor(
+                semantics: IuxActionSemantics(label: appSettings),
               ),
               expand: true,
               onActivate: onOpenAppSettings,

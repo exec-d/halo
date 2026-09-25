@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import '../previews/widget_previews.dart';
@@ -134,15 +136,16 @@ class _AgendaScreenState extends State<AgendaScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: ScreenFrame(
-        title: widget.homeWidget.title,
+        title: widget.homeWidget.title(l10n),
         canGoBack: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             IuxSection(
-              description: widget.homeWidget.description,
+              description: widget.homeWidget.description(l10n),
               children: [
                 WallpaperFrame(
                   child: _permission ?? false
@@ -170,20 +173,18 @@ class _AgendaScreenState extends State<AgendaScreen> {
               const IuxGap.between(),
             ],
             IuxSection(
-              title: 'Jours',
+              title: l10n.agendaDaysTitle,
               children: [
                 IuxRadioGroup<int>(
-                  label: 'Jours affichés',
-                  input: const IuxInputDescriptor(
-                    semantics: IuxInputSemantics(label: 'Jours affichés'),
-                    helpText:
-                        'À partir de 18 h, une journée terminée laisse '
-                        'place au lendemain.',
+                  label: l10n.agendaDaysShown,
+                  input: IuxInputDescriptor(
+                    semantics: IuxInputSemantics(label: l10n.agendaDaysShown),
+                    helpText: l10n.agendaDaysHelp,
                   ),
                   value: _days,
-                  options: const [
-                    IuxRadioOption(value: 1, label: "Aujourd'hui"),
-                    IuxRadioOption(value: 2, label: "Aujourd'hui et demain"),
+                  options: [
+                    IuxRadioOption(value: 1, label: l10n.agendaToday),
+                    IuxRadioOption(value: 2, label: l10n.agendaTodayTomorrow),
                   ],
                   onChanged: _setDays,
                 ),
@@ -191,23 +192,19 @@ class _AgendaScreenState extends State<AgendaScreen> {
             ),
             const IuxGap.between(),
             IuxSection(
-              title: 'Événements',
-              description:
-                  "L'événement en cours est mis en avant, les suivants "
-                  'sont légèrement estompés.',
+              title: l10n.agendaEventsTitle,
+              description: l10n.agendaEventsDescription,
               children: [
                 IuxSelectionGroup(
-                  label: 'Événements affichés',
+                  label: l10n.agendaEventsShown,
                   children: [
                     IuxSwitch(
-                      label: 'Toute la journée',
-                      input: const IuxInputDescriptor(
+                      label: l10n.agendaAllDay,
+                      input: IuxInputDescriptor(
                         semantics: IuxInputSemantics(
-                          label: 'Afficher les événements toute la journée',
+                          label: l10n.agendaAllDaySemantics,
                         ),
-                        helpText:
-                            'Anniversaires, congés, jours fériés… et les '
-                            'événements sur plusieurs jours.',
+                        helpText: l10n.agendaAllDayHelp,
                       ),
                       value: IuxSelectionState.fromSelected(_showAllDay),
                       onChanged: _setShowAllDay,
@@ -219,10 +216,10 @@ class _AgendaScreenState extends State<AgendaScreen> {
             const IuxGap.between(),
             if (_calendars.isNotEmpty) ...[
               IuxSection(
-                title: 'Agendas',
+                title: l10n.agendaCalendarsTitle,
                 children: [
                   IuxSelectionGroup(
-                    label: 'Agendas affichés',
+                    label: l10n.agendaCalendarsShown,
                     children: [
                       for (final calendar in _calendars)
                         IuxSwitch(
@@ -254,13 +251,13 @@ class _PreviewPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       height: 120,
       child: Center(
         child: Text(
-          "L'aperçu apparaîtra une fois l'agenda autorisé.",
+          AppLocalizations.of(context).agendaPreviewPlaceholder,
           textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontSize: 15),
+          style: const TextStyle(color: Colors.white, fontSize: 15),
         ),
       ),
     );
@@ -278,23 +275,21 @@ class _PermissionSection extends StatelessWidget {
   final VoidCallback onRequest;
   final VoidCallback onOpenSettings;
 
-  static const _allow = "Autoriser l'accès à l'agenda";
-  static const _settings = 'Ouvrir les réglages';
-
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final allow = l10n.agendaAllowAccess;
+    final settings = l10n.agendaOpenSettings;
     return IuxSection(
-      title: "Accès à l'agenda",
+      title: l10n.agendaAccessTitle,
       description: refused
-          ? "L'accès a été refusé. S'il ne vous est plus proposé, activez "
-                "« Agenda » dans les autorisations de l'application."
-          : 'Halo lit vos événements pour les afficher. Il ne les modifie '
-                'jamais et ne les envoie nulle part.',
+          ? l10n.agendaAccessRefused
+          : l10n.agendaAccessExplanation,
       children: [
         IuxButton(
-          label: _allow,
-          action: const IuxActionDescriptor.primary(
-            semantics: IuxActionSemantics(label: _allow),
+          label: allow,
+          action: IuxActionDescriptor.primary(
+            semantics: IuxActionSemantics(label: allow),
             role: IuxActionRole.custom,
           ),
           expand: true,
@@ -303,9 +298,9 @@ class _PermissionSection extends StatelessWidget {
         if (refused) ...[
           const IuxGap.standard(),
           IuxButton(
-            label: _settings,
-            action: const IuxActionDescriptor(
-              semantics: IuxActionSemantics(label: _settings),
+            label: settings,
+            action: IuxActionDescriptor(
+              semantics: IuxActionSemantics(label: settings),
             ),
             expand: true,
             onActivate: onOpenSettings,

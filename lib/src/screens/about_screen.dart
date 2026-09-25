@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../platform/wux_platform.dart';
 import 'screen_frame.dart';
 
@@ -26,17 +28,20 @@ class _AboutScreenState extends State<AboutScreen> {
     });
   }
 
-  String get _version {
+  String _version(AppLocalizations l10n) {
     final info = _info;
-    return info == null ? '' : '${info.version} (build ${info.build})';
+    return info == null ? '' : l10n.aboutVersionBuild(info.version, info.build);
   }
 
   @override
   Widget build(BuildContext context) {
     final type = IuxTypographyTheme.of(context);
+    final l10n = AppLocalizations.of(context);
+    final version = _version(l10n);
+    final licenses = l10n.aboutLicenses;
     return Scaffold(
       body: ScreenFrame(
-        title: 'À propos',
+        title: l10n.catalogAbout,
         canGoBack: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,7 +53,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     'assets/icon.png',
                     width: 72,
                     height: 72,
-                    semanticLabel: 'Icône de Halo',
+                    semanticLabel: l10n.aboutIconSemantics,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -56,80 +61,62 @@ class _AboutScreenState extends State<AboutScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Halo', style: type.title),
-                      Text('Version $_version', style: type.body),
+                      Text(l10n.appTitle, style: type.title),
+                      Text(l10n.aboutVersion(version), style: type.body),
                     ],
                   ),
                 ),
               ],
             ),
             const IuxGap.between(),
-            const IuxSection(
-              title: 'Halo',
-              description:
-                  "Des widgets d'écran d'accueil au style néon, aux couleurs "
-                  'de votre fond d\'écran : horloge, agendas, météo, pluie, '
-                  'allergies, système, et plus. Nom de code : WUX.',
+            IuxSection(
+              title: l10n.appTitle,
+              description: l10n.aboutHaloDescription,
               children: [],
             ),
             const IuxGap.between(),
-            const IuxSection(
-              title: 'Confidentialité',
-              description:
-                  'Halo ne crée aucun compte, ne contient ni publicité ni '
-                  "mesure d'audience, et n'envoie rien à ses auteurs. Votre "
-                  'agenda, le temps d\'écran, la consommation de données et '
-                  'les appareils Bluetooth sont lus sur le téléphone et n\'en '
-                  'sortent pas. Pour la '
-                  'météo, la pluie, les pollens et la qualité de l\'air, '
-                  'seules les coordonnées du lieu choisi sont envoyées à '
-                  'Open-Meteo. Vos réglages restent sur le téléphone.',
+            IuxSection(
+              title: l10n.aboutPrivacyTitle,
+              description: l10n.aboutPrivacyDescription,
               children: [],
             ),
             const IuxGap.between(),
-            const IuxSection(
-              title: 'Sources et crédits',
+            IuxSection(
+              title: l10n.aboutCreditsTitle,
               children: [
                 _Credit(
-                  title: 'Météo, pluie, pollens, qualité de l\'air',
-                  detail:
-                      'Open-Meteo.com, sous licence CC BY 4.0. Pollens et '
-                      "qualité de l'air : Copernicus Atmosphere Monitoring "
-                      'Service (CAMS), modèle européen.',
+                  title: l10n.aboutCreditWeatherTitle,
+                  detail: l10n.aboutCreditWeatherDetail,
                 ),
                 _Credit(
-                  title: 'Recherche de villes',
-                  detail: 'Géocodage Open-Meteo, données GeoNames (CC BY 4.0).',
+                  title: l10n.aboutCreditCitiesTitle,
+                  detail: l10n.aboutCreditCitiesDetail,
                 ),
                 _Credit(
-                  title: 'Icônes',
-                  detail: 'Material Icons de Google, licence Apache 2.0.',
+                  title: l10n.aboutCreditIconsTitle,
+                  detail: l10n.aboutCreditIconsDetail,
                 ),
                 _Credit(
-                  title: 'Interface',
-                  detail:
-                      'Flutter, et IUX pour les composants accessibles de '
-                      "l'application.",
+                  title: l10n.aboutCreditInterfaceTitle,
+                  detail: l10n.aboutCreditInterfaceDetail,
                 ),
                 _Credit(
-                  title: 'Code source',
-                  detail:
-                      'Halo est un logiciel libre, sous licence MIT : '
-                      'github.com/exec-d/halo.',
+                  title: l10n.aboutCreditSourceTitle,
+                  detail: l10n.aboutCreditSourceDetail,
                 ),
               ],
             ),
             const IuxGap.between(),
             IuxButton(
-              label: _licenses,
-              action: const IuxActionDescriptor(
-                semantics: IuxActionSemantics(label: _licenses),
+              label: licenses,
+              action: IuxActionDescriptor(
+                semantics: IuxActionSemantics(label: licenses),
               ),
               expand: true,
               onActivate: () => showLicensePage(
                 context: context,
-                applicationName: 'Halo',
-                applicationVersion: _version,
+                applicationName: l10n.appTitle,
+                applicationVersion: version,
                 applicationIcon: Padding(
                   padding: const EdgeInsets.all(8),
                   child: ClipOval(
@@ -143,8 +130,6 @@ class _AboutScreenState extends State<AboutScreen> {
       ),
     );
   }
-
-  static const _licenses = 'Licences des logiciels utilisés';
 }
 
 class _Credit extends StatelessWidget {

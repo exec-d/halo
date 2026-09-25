@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 
@@ -93,9 +95,10 @@ class _WidgetPreviewState extends State<WidgetPreview> {
   Widget build(BuildContext context) {
     final size = widget.homeWidget.previewSize;
     final image = _image;
+    final l10n = AppLocalizations.of(context);
     return Semantics(
       image: true,
-      label: 'Aperçu du widget ${widget.homeWidget.title}',
+      label: l10n.widgetPreviewSemantics(widget.homeWidget.title(l10n)),
       // Taille réelle du widget, réduite seulement si la place manque :
       // agrandi, un widget étroit aurait un texte démesuré.
       child: FittedBox(

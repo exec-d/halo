@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import 'settings_scaffold.dart';
@@ -27,12 +29,6 @@ class _CountdownScreenState extends State<CountdownScreen> {
   final _title = TextEditingController();
   IuxDateParts _date = const IuxDateParts.empty();
   int _revision = 0;
-
-  static const _labels = IuxDateFieldLabels(
-    day: 'Jour',
-    month: 'Mois',
-    year: 'Année',
-  );
 
   @override
   void initState() {
@@ -84,6 +80,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
   @override
   Widget build(BuildContext context) {
     final invalid = _date.isComplete && _date.date == null;
+    final l10n = AppLocalizations.of(context);
     return SettingsScaffold(
       homeWidget: widget.homeWidget,
       platform: widget.platform,
@@ -91,12 +88,12 @@ class _CountdownScreenState extends State<CountdownScreen> {
       revision: _revision,
       sections: [
         IuxSection(
-          title: 'Évènement',
+          title: l10n.countdownEventTitle,
           children: [
             IuxTextField(
-              input: const IuxInputDescriptor(
-                semantics: IuxInputSemantics(label: 'Titre'),
-                helpText: 'Par exemple « Vacances ».',
+              input: IuxInputDescriptor(
+                semantics: IuxInputSemantics(label: l10n.countdownTitleLabel),
+                helpText: l10n.countdownTitleHelp,
               ),
               controller: _title,
               onChanged: _saveTitle,
@@ -104,15 +101,17 @@ class _CountdownScreenState extends State<CountdownScreen> {
             const IuxGap.standard(),
             IuxDateField(
               input: IuxInputDescriptor(
-                semantics: const IuxInputSemantics(label: 'Date'),
-                helpText: 'Jour, mois et année.',
+                semantics: IuxInputSemantics(label: l10n.countdownDateLabel),
+                helpText: l10n.countdownDateHelp,
                 validation: invalid
-                    ? const IuxInputValidation.invalid(
-                        "Cette date n'existe pas.",
-                      )
+                    ? IuxInputValidation.invalid(l10n.countdownDateInvalid)
                     : const IuxInputValidation.notValidated(),
               ),
-              labels: _labels,
+              labels: IuxDateFieldLabels(
+                day: l10n.countdownDay,
+                month: l10n.countdownMonth,
+                year: l10n.countdownYear,
+              ),
               value: _date,
               onChanged: _saveDate,
             ),

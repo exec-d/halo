@@ -1,246 +1,278 @@
 import 'dart:ui';
 
+import '../../l10n/app_localizations.dart';
 import 'wux_home_widget.dart';
 
 const _androidPackage = 'dev.levilainpetit.wux.widgets';
 
+// Nom et description de chaque widget : des fonctions qui lisent la
+// traduction (lib/l10n), pour que le catalogue reste constant.
+
 const clockWidget = WuxHomeWidget(
   id: 'clock',
   kind: WuxWidgetKind.simple,
-  title: 'Horloge',
-  description: "L'heure et la date. Touchez-le pour ouvrir l'horloge.",
+  title: _clockTitle,
+  description: _clockDescription,
   androidProvider: '$_androidPackage.ClockWidgetProvider',
   previewSize: Size(340, 120),
 );
+String _clockTitle(AppLocalizations l) => l.widgetClockTitle;
+String _clockDescription(AppLocalizations l) => l.widgetClockDescription;
 
 const oneColumnAgendaWidget = WuxHomeWidget(
   id: 'agenda_one_column',
   kind: WuxWidgetKind.agenda,
-  title: 'Agenda',
-  description: 'Les événements du jour, en une colonne.',
+  title: _oneColumnAgendaTitle,
+  description: _oneColumnAgendaDescription,
   androidProvider: '$_androidPackage.OneColumnAgendaWidget',
   previewSize: Size(200, 280),
 );
+String _oneColumnAgendaTitle(AppLocalizations l) =>
+    l.widgetOneColumnAgendaTitle;
+String _oneColumnAgendaDescription(AppLocalizations l) =>
+    l.widgetOneColumnAgendaDescription;
 
 const twoColumnAgendaWidget = WuxHomeWidget(
   id: 'agenda_two_columns',
   kind: WuxWidgetKind.agenda,
-  title: 'Agenda 2 colonnes',
-  description: 'Les événements du jour, en deux colonnes.',
+  title: _twoColumnAgendaTitle,
+  description: _twoColumnAgendaDescription,
   androidProvider: '$_androidPackage.TwoColumnAgendaWidget',
   previewSize: Size(340, 280),
 );
+String _twoColumnAgendaTitle(AppLocalizations l) =>
+    l.widgetTwoColumnAgendaTitle;
+String _twoColumnAgendaDescription(AppLocalizations l) =>
+    l.widgetTwoColumnAgendaDescription;
 
 const systemWidget = WuxHomeWidget(
   id: 'system',
   kind: WuxWidgetKind.simple,
-  title: 'Système',
-  description: 'Batterie, réseau et stockage, sur une rangée.',
+  title: _systemTitle,
+  description: _systemDescription,
   androidProvider: '$_androidPackage.SystemWidget',
   previewSize: Size(340, 72),
 );
+String _systemTitle(AppLocalizations l) => l.widgetSystemTitle;
+String _systemDescription(AppLocalizations l) => l.widgetSystemDescription;
 
 const advancedSystemWidget = WuxHomeWidget(
   id: 'system_advanced',
   kind: WuxWidgetKind.simple,
-  title: 'Système avancé',
-  description:
-      'Signal, Wi-Fi, Bluetooth, batterie, mémoire, stockage, localisation '
-      'et son, sur deux rangées.',
+  title: _advancedSystemTitle,
+  description: _advancedSystemDescription,
   androidProvider: '$_androidPackage.AdvancedSystemWidget',
   previewSize: Size(340, 150),
 );
+String _advancedSystemTitle(AppLocalizations l) => l.widgetAdvancedSystemTitle;
+String _advancedSystemDescription(AppLocalizations l) =>
+    l.widgetAdvancedSystemDescription;
 
 const batteryWidget = WuxHomeWidget(
   id: 'battery',
   kind: WuxWidgetKind.simple,
-  title: 'Batterie détaillée',
-  description:
-      'La courbe des 24 dernières heures et la suite prévue, la '
-      'température, la tension et les cycles.',
+  title: _batteryTitle,
+  description: _batteryDescription,
   androidProvider: '$_androidPackage.BatteryWidget',
   previewSize: Size(340, 150),
 );
+String _batteryTitle(AppLocalizations l) => l.widgetBatteryTitle;
+String _batteryDescription(AppLocalizations l) => l.widgetBatteryDescription;
 
 const deviceWidget = WuxHomeWidget(
   id: 'device',
   kind: WuxWidgetKind.simple,
-  title: 'Appareil',
-  description:
-      'La fiche du téléphone façon console, et depuis combien de temps il '
-      'tourne, à la seconde.',
+  title: _deviceTitle,
+  description: _deviceDescription,
   androidProvider: '$_androidPackage.DeviceWidget',
   previewSize: Size(340, 150),
 );
+String _deviceTitle(AppLocalizations l) => l.widgetDeviceTitle;
+String _deviceDescription(AppLocalizations l) => l.widgetDeviceDescription;
 
 const bluetoothDevicesWidget = WuxHomeWidget(
   id: 'bt_devices',
   kind: WuxWidgetKind.bluetooth,
-  title: 'Écouteurs et montre',
-  description: 'La batterie des appareils Bluetooth connectés.',
+  title: _bluetoothDevicesTitle,
+  description: _bluetoothDevicesDescription,
   androidProvider: '$_androidPackage.BluetoothDevicesWidget',
   previewSize: Size(340, 72),
 );
+String _bluetoothDevicesTitle(AppLocalizations l) =>
+    l.widgetBluetoothDevicesTitle;
+String _bluetoothDevicesDescription(AppLocalizations l) =>
+    l.widgetBluetoothDevicesDescription;
 
 const screenTimeWidget = WuxHomeWidget(
   id: 'screen_time',
   kind: WuxWidgetKind.usage,
-  title: "Temps d'écran",
-  description:
-      "La journée en cadran de 24 heures : quand l'écran était allumé, les "
-      'déverrouillages et les applis les plus utilisées.',
+  title: _screenTimeTitle,
+  description: _screenTimeDescription,
   androidProvider: '$_androidPackage.ScreenTimeWidget',
   previewSize: Size(340, 150),
 );
+String _screenTimeTitle(AppLocalizations l) => l.widgetScreenTimeTitle;
+String _screenTimeDescription(AppLocalizations l) =>
+    l.widgetScreenTimeDescription;
 
 const mobileDataWidget = WuxHomeWidget(
   id: 'mobile_data',
   kind: WuxWidgetKind.mobileData,
-  title: 'Données mobiles',
-  description:
-      'La consommation de la période face au forfait, avec la projection '
-      'en fin de période.',
+  title: _mobileDataTitle,
+  description: _mobileDataDescription,
   androidProvider: '$_androidPackage.MobileDataWidget',
   previewSize: Size(340, 150),
 );
+String _mobileDataTitle(AppLocalizations l) => l.widgetMobileDataTitle;
+String _mobileDataDescription(AppLocalizations l) =>
+    l.widgetMobileDataDescription;
 
 const forecastWidget = WuxHomeWidget(
   id: 'forecast',
   kind: WuxWidgetKind.weather,
-  title: 'Prévisions 5 jours',
-  description:
-      'Cinq jours de météo, et une capsule qui place chacun dans la '
-      'semaine, du plus frais au plus chaud.',
+  title: _forecastTitle,
+  description: _forecastDescription,
   androidProvider: '$_androidPackage.ForecastWidget',
   previewSize: Size(340, 150),
 );
+String _forecastTitle(AppLocalizations l) => l.widgetForecastTitle;
+String _forecastDescription(AppLocalizations l) => l.widgetForecastDescription;
 
 const analogClockWidget = WuxHomeWidget(
   id: 'analog',
   kind: WuxWidgetKind.simple,
-  title: 'Horloge analogique',
-  description: 'Un cadran néon aux aiguilles lumineuses, et la date.',
+  title: _analogClockTitle,
+  description: _analogClockDescription,
   androidProvider: '$_androidPackage.AnalogClockWidget',
   previewSize: Size(160, 180),
 );
+String _analogClockTitle(AppLocalizations l) => l.widgetAnalogClockTitle;
+String _analogClockDescription(AppLocalizations l) =>
+    l.widgetAnalogClockDescription;
 
 const ephemerisWidget = WuxHomeWidget(
   id: 'ephemeris',
   kind: WuxWidgetKind.simple,
-  title: 'Éphéméride',
-  description:
-      "La fête du jour, la semaine, l'année en douze mois et le prochain "
-      'jour férié.',
+  title: _ephemerisTitle,
+  description: _ephemerisDescription,
   androidProvider: '$_androidPackage.EphemerisWidget',
   previewSize: Size(340, 130),
 );
+String _ephemerisTitle(AppLocalizations l) => l.widgetEphemerisTitle;
+String _ephemerisDescription(AppLocalizations l) =>
+    l.widgetEphemerisDescription;
 
 const timerWidget = WuxHomeWidget(
   id: 'timer',
   kind: WuxWidgetKind.timer,
-  title: 'Chronomètre et minuteur',
-  description:
-      'Un chronomètre, et un minuteur de 1, 5, 10 ou 25 minutes d\'un '
-      'toucher, qui sonne à la fin.',
+  title: _timerTitle,
+  description: _timerDescription,
   androidProvider: '$_androidPackage.TimerWidget',
   previewSize: Size(340, 72),
 );
+String _timerTitle(AppLocalizations l) => l.widgetTimerTitle;
+String _timerDescription(AppLocalizations l) => l.widgetTimerDescription;
 
 const mediaWidget = WuxHomeWidget(
   id: 'media',
   kind: WuxWidgetKind.media,
-  title: 'Lecture en cours',
-  description:
-      'Ce qui joue, sa pochette en néon, et précédent, lecture ou pause, '
-      'suivant.',
+  title: _mediaTitle,
+  description: _mediaDescription,
   androidProvider: '$_androidPackage.MediaWidget',
   previewSize: Size(340, 80),
 );
+String _mediaTitle(AppLocalizations l) => l.widgetMediaTitle;
+String _mediaDescription(AppLocalizations l) => l.widgetMediaDescription;
 
 const worldClockWidget = WuxHomeWidget(
   id: 'world_clock',
   kind: WuxWidgetKind.worldClock,
-  title: 'Fuseaux horaires',
-  description: "L'heure de trois villes, sur une rangée.",
+  title: _worldClockTitle,
+  description: _worldClockDescription,
   androidProvider: '$_androidPackage.WorldClockWidget',
   previewSize: Size(340, 80),
 );
+String _worldClockTitle(AppLocalizations l) => l.widgetWorldClockTitle;
+String _worldClockDescription(AppLocalizations l) =>
+    l.widgetWorldClockDescription;
 
 const countdownWidget = WuxHomeWidget(
   id: 'countdown',
   kind: WuxWidgetKind.countdown,
-  title: 'Compte à rebours',
-  description: "Les jours jusqu'à une date qui compte.",
+  title: _countdownTitle,
+  description: _countdownDescription,
   androidProvider: '$_androidPackage.CountdownWidget',
   previewSize: Size(280, 72),
 );
+String _countdownTitle(AppLocalizations l) => l.widgetCountdownTitle;
+String _countdownDescription(AppLocalizations l) =>
+    l.widgetCountdownDescription;
 
 const controlsWidget = WuxHomeWidget(
   id: 'controls',
   kind: WuxWidgetKind.simple,
-  title: 'Contrôles',
-  description:
-      'Lampe torche en un geste ; Wi-Fi, Bluetooth, son et appareil photo '
-      'à portée de doigt.',
+  title: _controlsTitle,
+  description: _controlsDescription,
   androidProvider: '$_androidPackage.ControlsWidget',
   previewSize: Size(340, 72),
 );
+String _controlsTitle(AppLocalizations l) => l.widgetControlsTitle;
+String _controlsDescription(AppLocalizations l) => l.widgetControlsDescription;
 
 const monthWidget = WuxHomeWidget(
   id: 'month',
   kind: WuxWidgetKind.simple,
-  title: 'Mois',
-  description:
-      'Le mois en cours ; un point sous chaque jour qui a un événement. '
-      "Il lit l'agenda : autorisez-le depuis un widget Agenda.",
+  title: _monthTitle,
+  description: _monthDescription,
   androidProvider: '$_androidPackage.MonthWidget',
   previewSize: Size(340, 250),
 );
+String _monthTitle(AppLocalizations l) => l.widgetMonthTitle;
+String _monthDescription(AppLocalizations l) => l.widgetMonthDescription;
 
 const weatherWidget = WuxHomeWidget(
   id: 'weather',
   kind: WuxWidgetKind.weather,
-  title: 'Météo',
-  description:
-      'Façon tableau de bord : température et jauge du jour, ressenti, vent, '
-      'humidité, UV, pluie, et la courbe des 24 heures. Open-Meteo, chaque '
-      'heure. Sur une rangée, une seule ligne.',
+  title: _weatherTitle,
+  description: _weatherDescription,
   androidProvider: '$_androidPackage.WeatherWidget',
   previewSize: Size(340, 230),
 );
+String _weatherTitle(AppLocalizations l) => l.widgetWeatherTitle;
+String _weatherDescription(AppLocalizations l) => l.widgetWeatherDescription;
 
 const sunMoonWidget = WuxHomeWidget(
   id: 'sun_moon',
   kind: WuxWidgetKind.simple,
-  title: 'Soleil et Lune',
-  description:
-      'Lever et coucher du soleil au lieu choisi dans Météo, durée du jour '
-      'et phase de la lune.',
+  title: _sunMoonTitle,
+  description: _sunMoonDescription,
   androidProvider: '$_androidPackage.SunMoonWidget',
   previewSize: Size(340, 72),
 );
+String _sunMoonTitle(AppLocalizations l) => l.widgetSunMoonTitle;
+String _sunMoonDescription(AppLocalizations l) => l.widgetSunMoonDescription;
 
 const rainWidget = WuxHomeWidget(
   id: 'rain',
   kind: WuxWidgetKind.simple,
-  title: 'Pluie',
-  description:
-      'Si la pluie arrive et quand, puis les probabilités des 12 prochaines '
-      'heures, au lieu choisi dans Météo.',
+  title: _rainTitle,
+  description: _rainDescription,
   androidProvider: '$_androidPackage.RainWidget',
   previewSize: Size(340, 150),
 );
+String _rainTitle(AppLocalizations l) => l.widgetRainTitle;
+String _rainDescription(AppLocalizations l) => l.widgetRainDescription;
 
 const allergyWidget = WuxHomeWidget(
   id: 'allergy',
   kind: WuxWidgetKind.simple,
-  title: 'Allergies',
-  description:
-      'Graminées, bouleau, aulne, olivier, armoise, ambroisie et qualité de '
-      "l'air, au lieu choisi dans Météo. Pollens : Europe seulement.",
+  title: _allergyTitle,
+  description: _allergyDescription,
   androidProvider: '$_androidPackage.AllergyWidget',
   previewSize: Size(340, 190),
 );
+String _allergyTitle(AppLocalizations l) => l.widgetAllergyTitle;
+String _allergyDescription(AppLocalizations l) => l.widgetAllergyDescription;
 
 /// Tous les widgets proposés par l'application.
 const wuxHomeWidgets = <WuxHomeWidget>[

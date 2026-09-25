@@ -3,11 +3,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../platform/wux_platform.dart';
 import 'screen_frame.dart';
 
 /// Un fond d'écran animé de Halo : son identifiant (partagé avec
-/// `WallpaperPreview.kt`), son nom, et ce qui bouge.
+/// `WallpaperPreview.kt`), son nom, et ce qui bouge. Les textes sont lus
+/// dans la traduction (lib/l10n).
 class HaloWallpaper {
   const HaloWallpaper({
     required this.id,
@@ -18,96 +21,62 @@ class HaloWallpaper {
   });
 
   final String id;
-  final String title;
-  final String description;
-  final List<(String, String)> features;
-  final String battery;
+  final String Function(AppLocalizations l10n) title;
+  final String Function(AppLocalizations l10n) description;
+
+  /// Ce qui bouge : un titre et son explication.
+  final List<(String, String)> Function(AppLocalizations l10n) features;
+  final String Function(AppLocalizations l10n) battery;
 }
 
 const circuitWallpaper = HaloWallpaper(
   id: 'circuit',
-  title: 'Circuit',
-  description: "L'intérieur du téléphone en néon, aux couleurs du téléphone.",
-  features: [
-    (
-      'Inclinaison',
-      'Les plans du téléphone glissent quand vous le penchez, et le reflet '
-          'du verre suit.',
-    ),
-    (
-      'Vraie batterie',
-      'La batterie dessinée affiche le niveau réel et respire pendant la '
-          'charge.',
-    ),
-    (
-      'Réseau',
-      "Des impulsions courent de l'antenne au processeur quand des données "
-          'passent ; les antennes brillent selon la force du signal.',
-    ),
-    (
-      'Allumage',
-      "À chaque allumage de l'écran, le fond est là tout de suite, puis "
-          "composants et pistes s'illuminent un à un depuis le processeur.",
-    ),
-  ],
-  battery:
-      "L'animation s'arrête dès que le fond n'est plus visible, et ne tourne "
-      'en continu que pendant un mouvement, une impulsion ou une charge.',
+  title: _circuitTitle,
+  description: _circuitDescription,
+  features: _circuitFeatures,
+  battery: _circuitBattery,
 );
+String _circuitTitle(AppLocalizations l) => l.wallpaperCircuitTitle;
+String _circuitDescription(AppLocalizations l) => l.wallpaperCircuitDescription;
+List<(String, String)> _circuitFeatures(AppLocalizations l) => [
+  (l.wallpaperCircuitTiltTitle, l.wallpaperCircuitTiltText),
+  (l.wallpaperCircuitBatteryTitle, l.wallpaperCircuitBatteryText),
+  (l.wallpaperCircuitNetworkTitle, l.wallpaperCircuitNetworkText),
+  (l.wallpaperCircuitWakeTitle, l.wallpaperCircuitWakeText),
+];
+String _circuitBattery(AppLocalizations l) => l.wallpaperCircuitBattery;
 
 const horizonWallpaper = HaloWallpaper(
   id: 'horizon',
-  title: 'Horizon',
-  description:
-      "Un horizon néon qui suit l'heure et la vraie météo du lieu choisi.",
-  features: [
-    (
-      'La journée',
-      'Le soleil se lève, traverse le ciel et se couche aux vraies heures ; '
-          'la nuit, la lune dans sa phase et les étoiles.',
-    ),
-    (
-      'La météo',
-      'Nuages, pluie, neige, orage ou brume, selon le temps qu\'il fait au '
-          'lieu choisi dans Météo.',
-    ),
-    (
-      'Inclinaison',
-      'Montagnes et sol quadrillé glissent quand vous penchez le téléphone.',
-    ),
-  ],
-  battery:
-      "L'animation s'arrête dès que le fond n'est plus visible ; elle "
-      'ralentit par temps clair, et ne va vite que sous la pluie ou la neige.',
+  title: _horizonTitle,
+  description: _horizonDescription,
+  features: _horizonFeatures,
+  battery: _horizonBattery,
 );
+String _horizonTitle(AppLocalizations l) => l.wallpaperHorizonTitle;
+String _horizonDescription(AppLocalizations l) => l.wallpaperHorizonDescription;
+List<(String, String)> _horizonFeatures(AppLocalizations l) => [
+  (l.wallpaperHorizonDayTitle, l.wallpaperHorizonDayText),
+  (l.wallpaperHorizonWeatherTitle, l.wallpaperHorizonWeatherText),
+  (l.wallpaperHorizonTiltTitle, l.wallpaperHorizonTiltText),
+];
+String _horizonBattery(AppLocalizations l) => l.wallpaperHorizonBattery;
 
 const skyWallpaper = HaloWallpaper(
   id: 'sky',
-  title: 'Ciel',
-  description:
-      'Les vraies étoiles et la vraie Lune au-dessus de vous, dans la '
-      'direction du téléphone.',
-  features: [
-    (
-      'Le vrai ciel',
-      'Les étoiles les plus brillantes et les constellations, à leur place '
-          'pour le lieu choisi dans Météo et pour cette heure.',
-    ),
-    (
-      'Boussole',
-      'Tournez-vous : le ciel suit la direction du téléphone. Levez-le : '
-          'vous montez vers le zénith.',
-    ),
-    (
-      'Le jour',
-      'Le ciel s\'éclaircit et les étoiles pâlissent quand le soleil est '
-          'levé.',
-    ),
-  ],
-  battery:
-      "L'animation et la boussole s'arrêtent dès que le fond n'est plus "
-      'visible.',
+  title: _skyTitle,
+  description: _skyDescription,
+  features: _skyFeatures,
+  battery: _skyBattery,
 );
+String _skyTitle(AppLocalizations l) => l.wallpaperSkyTitle;
+String _skyDescription(AppLocalizations l) => l.wallpaperSkyDescription;
+List<(String, String)> _skyFeatures(AppLocalizations l) => [
+  (l.wallpaperSkyRealTitle, l.wallpaperSkyRealText),
+  (l.wallpaperSkyCompassTitle, l.wallpaperSkyCompassText),
+  (l.wallpaperSkyDayTitle, l.wallpaperSkyDayText),
+];
+String _skyBattery(AppLocalizations l) => l.wallpaperSkyBattery;
 
 /// Les fonds d'écran animés, dans l'ordre du catalogue.
 const haloWallpapers = [circuitWallpaper, horizonWallpaper, skyWallpaper];
@@ -130,8 +99,6 @@ class WallpaperScreen extends StatefulWidget {
 
 class _WallpaperScreenState extends State<WallpaperScreen>
     with WidgetsBindingObserver {
-  static const _apply = "Appliquer le fond d'écran";
-
   bool? _active;
   String _intensity = 'discreet';
 
@@ -189,15 +156,18 @@ class _WallpaperScreenState extends State<WallpaperScreen>
   @override
   Widget build(BuildContext context) {
     final typography = IuxTypographyTheme.of(context);
+    final l10n = AppLocalizations.of(context);
+    final title = widget.wallpaper.title(l10n);
+    final apply = l10n.wallpaperApply;
     return Scaffold(
       body: ScreenFrame(
-        title: widget.wallpaper.title,
+        title: title,
         canGoBack: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             IuxSection(
-              description: widget.wallpaper.description,
+              description: widget.wallpaper.description(l10n),
               children: [
                 Center(
                   child: WallpaperPreview(
@@ -210,14 +180,14 @@ class _WallpaperScreenState extends State<WallpaperScreen>
                 if (_active != null)
                   IuxStatusIndicator(
                     status: _active!
-                        ? const IuxStatus.success('Fond d\'écran actuel')
-                        : const IuxStatus.neutral('Pas encore appliqué'),
+                        ? IuxStatus.success(l10n.wallpaperActive)
+                        : IuxStatus.neutral(l10n.wallpaperNotApplied),
                   ),
                 const IuxGap.standard(),
                 IuxButton(
-                  label: _apply,
-                  action: const IuxActionDescriptor.primary(
-                    semantics: IuxActionSemantics(label: _apply),
+                  label: apply,
+                  action: IuxActionDescriptor.primary(
+                    semantics: IuxActionSemantics(label: apply),
                     role: IuxActionRole.custom,
                   ),
                   expand: true,
@@ -226,10 +196,7 @@ class _WallpaperScreenState extends State<WallpaperScreen>
                 if (_unavailable) ...[
                   const IuxGap.standard(),
                   Text(
-                    "Ce téléphone ne propose pas l'écran d'application. "
-                    'Choisissez « Halo · ${widget.wallpaper.title} » dans '
-                    "Fond d'écran et "
-                    'style, rubrique Fonds d\'écran animés.',
+                    l10n.wallpaperUnavailable(title),
                     style: typography.body,
                   ),
                 ],
@@ -237,21 +204,30 @@ class _WallpaperScreenState extends State<WallpaperScreen>
             ),
             const IuxGap.between(),
             IuxSection(
-              title: 'Intensité',
+              title: l10n.wallpaperIntensityTitle,
               children: [
                 IuxRadioGroup<String>(
-                  label: 'Intensité du fond',
-                  input: const IuxInputDescriptor(
-                    semantics: IuxInputSemantics(label: 'Intensité du fond'),
-                    helpText:
-                        'Discret garde les widgets et les icônes bien '
-                        'lisibles par-dessus.',
+                  label: l10n.wallpaperIntensityLabel,
+                  input: IuxInputDescriptor(
+                    semantics: IuxInputSemantics(
+                      label: l10n.wallpaperIntensityLabel,
+                    ),
+                    helpText: l10n.wallpaperIntensityHelp,
                   ),
                   value: _intensity,
-                  options: const [
-                    IuxRadioOption(value: 'discreet', label: 'Discret'),
-                    IuxRadioOption(value: 'normal', label: 'Normal'),
-                    IuxRadioOption(value: 'vivid', label: 'Vif'),
+                  options: [
+                    IuxRadioOption(
+                      value: 'discreet',
+                      label: l10n.wallpaperIntensityDiscreet,
+                    ),
+                    IuxRadioOption(
+                      value: 'normal',
+                      label: l10n.wallpaperIntensityNormal,
+                    ),
+                    IuxRadioOption(
+                      value: 'vivid',
+                      label: l10n.wallpaperIntensityVivid,
+                    ),
                   ],
                   onChanged: _setIntensity,
                 ),
@@ -259,9 +235,11 @@ class _WallpaperScreenState extends State<WallpaperScreen>
             ),
             const IuxGap.between(),
             IuxSection(
-              title: 'Ce qui bouge',
+              title: l10n.wallpaperFeaturesTitle,
               children: [
-                for (final (title, text) in widget.wallpaper.features) ...[
+                for (final (title, text) in widget.wallpaper.features(
+                  l10n,
+                )) ...[
                   Text(title, style: typography.title),
                   Text(text, style: typography.body),
                   const IuxGap.standard(),
@@ -270,8 +248,8 @@ class _WallpaperScreenState extends State<WallpaperScreen>
             ),
             const IuxGap.between(),
             IuxSection(
-              title: 'Batterie',
-              description: widget.wallpaper.battery,
+              title: l10n.wallpaperBatteryTitle,
+              description: widget.wallpaper.battery(l10n),
               children: const [],
             ),
             const IuxGap.between(),
@@ -337,9 +315,10 @@ class _WallpaperPreviewState extends State<WallpaperPreview> {
   @override
   Widget build(BuildContext context) {
     final image = _image;
+    final l10n = AppLocalizations.of(context);
     return Semantics(
       image: true,
-      label: "Aperçu du fond d'écran ${widget.wallpaper.title}",
+      label: l10n.wallpaperPreviewSemantics(widget.wallpaper.title(l10n)),
       child: SizedBox(
         width: widget.width,
         height: widget.width * 20 / 9,

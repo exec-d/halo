@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iux_flutter/iux_flutter.dart';
 
+import '../../l10n/app_localizations.dart';
+
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import 'settings_scaffold.dart';
@@ -31,10 +33,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
   String? _message;
   int _revision = 0;
 
-  static const _locate = 'Utiliser ma position';
-  static const _search = 'Rechercher';
-  static const _busyReason = 'Recherche en cours';
-
   @override
   void initState() {
     super.initState();
@@ -49,7 +47,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
     super.dispose();
   }
 
-  Future<void> _run(Future<String?> Function() action, String failure) async {
+  Future<void> _run(
+    Future<String?> Function() action,
+    String Function(AppLocalizations l10n) failure,
+  ) async {
     setState(() {
       _busy = true;
       _message = null;
@@ -68,7 +69,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         _results = const [];
         _revision++;
       } else {
-        _message = failure;
+        _message = failure(AppLocalizations.of(context));
       }
     });
   }
@@ -87,13 +88,19 @@ class _WeatherScreenState extends State<WeatherScreen> {
     setState(() {
       _busy = false;
       _results = results;
-      _message = results.isEmpty ? 'Aucun lieu trouvé pour « $query ».' : null;
+      _message = results.isEmpty
+          ? AppLocalizations.of(context).weatherNoResult(query)
+          : null;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final message = _message;
+    final l10n = AppLocalizations.of(context);
+    final locate = l10n.weatherUseLocation;
+    final search = l10n.weatherSearch;
+    final busyReason = _busy ? l10n.weatherSearching : null;
     return SettingsScaffold(
       homeWidget: widget.homeWidget,
       platform: widget.platform,
@@ -101,17 +108,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
       revision: _revision,
       sections: [
         IuxSection(
-          title: 'Lieu',
+          title: l10n.weatherPlaceTitle,
           description: _place == null
-              ? 'Aucun lieu choisi pour le moment.'
-              : 'Prévisions pour $_place.',
+              ? l10n.weatherNoPlace
+              : l10n.weatherForecastFor(_place!),
           children: [
             IuxButton(
-              label: _locate,
+              label: locate,
               action: IuxActionDescriptor.primary(
                 semantics: IuxActionSemantics(
-                  label: _locate,
-                  unavailabilityReason: _busy ? _busyReason : null,
+                  label: locate,
+                  unavailabilityReason: busyReason,
                 ),
                 role: IuxActionRole.custom,
                 availability: _busy
@@ -121,15 +128,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
               expand: true,
               onActivate: () => _run(
                 widget.platform.locateWeatherPlace,
-                "La position n'a pas pu être obtenue. Vérifiez que la "
-                'localisation est activée et autorisée pour Halo.',
+                (l10n) => l10n.weatherLocationFailed,
               ),
             ),
             const IuxGap.standard(),
             IuxTextField(
-              input: const IuxInputDescriptor(
-                semantics: IuxInputSemantics(label: 'Ville'),
-                helpText: 'Ou cherchez une ville par son nom.',
+              input: IuxInputDescriptor(
+                semantics: IuxInputSemantics(label: l10n.weatherCityLabel),
+                helpText: l10n.weatherCityHelp,
               ),
               controller: _query,
               onChanged: (_) {},
@@ -137,11 +143,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
             ),
             const IuxGap.standard(),
             IuxButton(
-              label: _search,
+              label: search,
               action: IuxActionDescriptor(
                 semantics: IuxActionSemantics(
-                  label: _search,
-                  unavailabilityReason: _busy ? _busyReason : null,
+                  label: search,
+                  unavailabilityReason: busyReason,
                 ),
                 availability: _busy
                     ? IuxActionAvailability.disabled
@@ -163,7 +169,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       title: place.name,
                       onActivate: () => _run(
                         () => widget.platform.setWeatherPlace(place),
-                        'Les prévisions de ce lieu ne sont pas disponibles.',
+                        (l10n) => l10n.weatherPlaceUnavailable,
                       ),
                     ),
                 ],
