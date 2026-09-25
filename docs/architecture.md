@@ -1,5 +1,7 @@
 # Architecture
 
+*[English](en/architecture.md)*
+
 ## Deux moitiés
 
 Un widget Android est une vue native que le lanceur affiche ; Flutter ne

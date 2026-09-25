@@ -1,10 +1,18 @@
-# Le fond d'écran animé Circuit
+# Fonds d'écran, écran de veille, tuiles et raccourcis
+
+*[English](en/wallpaper.md)*
+
+Halo propose trois fonds d'écran animés (Circuit, Horizon, Ciel), un écran de
+veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
+L'intensité (Discret, Normal, Vif) est commune aux trois fonds.
+
+## Circuit
 
 L'intérieur d'un Pixel 7, vu à travers l'écran, en schéma néon aux couleurs
 du téléphone. Il se choisit dans Halo (section *Fond d'écran*), pour l'accueil,
 l'écran de verrouillage ou les deux.
 
-## Ce qui est dessiné
+### Ce qui est dessiné
 
 Quatre plans, du fond vers le verre :
 
@@ -20,7 +28,7 @@ Quatre plans, du fond vers le verre :
 
 Le décor ne contient aucun texte, pour ne pas se mêler à celui des widgets.
 
-## Ce qui bouge
+### Ce qui bouge
 
 - **Inclinaison** : les plans glissent d'autant plus qu'ils sont profonds
   (capteur de gravité), et un reflet traverse le verre. La position de repos
@@ -35,12 +43,12 @@ Le décor ne contient aucun texte, pour ne pas se mêler à celui des widgets.
   puis composants et pistes s'illuminent un à un depuis le processeur.
 - **Écran de verrouillage** : le haut est assombri pour l'horloge.
 
-## Réglages
+### Réglages
 
 **Intensité** : Discret (par défaut), Normal ou Vif. Discret garde les
 widgets et les icônes lisibles par-dessus.
 
-## Batterie du téléphone
+### Batterie du téléphone
 
 - Rien ne tourne quand le fond n'est pas visible.
 - L'animation ne tourne en continu que pendant un mouvement, une impulsion,
@@ -48,7 +56,7 @@ widgets et les icônes lisibles par-dessus.
 - Les parties fixes sont dessinées une fois, en masques `ALPHA_8` teintés au
   dessin (halo à demi-résolution).
 
-## Code
+### Code
 
 `android/app/src/main/kotlin/dev/levilainpetit/wux/wallpaper/` :
 
@@ -59,3 +67,63 @@ widgets et les icônes lisibles par-dessus.
 | `HaloWallpaperService.kt` | Capteur, batterie, trafic, signal, cadence des images |
 | `WallpaperPreview.kt` | L'aperçu de l'application et l'ouverture de l'écran système |
 | `WallpaperSettings.kt` | L'intensité |
+
+## Horizon
+
+Un paysage néon qui suit la vraie journée et la vraie météo du lieu choisi
+dans Météo :
+
+- le **soleil**, rayé façon années 80, se lève, traverse le ciel et se couche
+  aux vraies heures ; la **nuit**, la lune dans sa phase et des étoiles qui
+  scintillent ;
+- la **météo** : nuages qui dérivent, pluie, neige, orage avec éclairs, ou
+  brume, selon le code météo du moment ;
+- deux crêtes de **montagnes** et un **sol quadrillé** en perspective, qui
+  glissent quand on penche le téléphone.
+
+Par temps clair, l'image change lentement (quelques fois par seconde) ; sous
+la pluie ou la neige, elle s'anime davantage. Code : `HorizonScene.kt`.
+
+## Ciel
+
+Les étoiles les plus brillantes (une centaine) et les tracés des
+constellations connues, à leur vraie place pour le lieu choisi et l'heure, et
+la Lune dans sa phase :
+
+- le ciel suit la **direction du téléphone** (capteur de rotation, comme une
+  boussole) : se tourner montre le ciel de ce côté, lever le téléphone monte
+  vers le zénith ; tenu comme d'habitude, on regarde le ciel au-dessus de
+  l'horizon ;
+- l'**horizon** réel est tracé, avec un repère au nord et aux trois autres
+  points cardinaux ;
+- le **jour**, le ciel s'éclaircit et les étoiles pâlissent.
+
+Positions calculées sur le téléphone (temps sidéral, formules simplifiées
+pour la Lune et le Soleil : à un degré près). Code : `SkyScene.kt`,
+`Stars.kt`.
+
+## Écran de veille
+
+Pendant la charge ou sur un socle, Android peut afficher un écran de veille
+(*Paramètres → Écran → Écran de veille*, choisir « Halo ») : une grande
+horloge néon sur le décor Circuit, avec la date, la prochaine alarme, le
+prochain événement et la météo. Le texte se déplace un peu chaque minute
+pour ne pas marquer l'écran. Code : `dream/`.
+
+## Tuiles de réglages rapides
+
+À ajouter depuis le volet des réglages rapides (crayon) :
+
+| Tuile | Affiche | Toucher |
+| --- | --- | --- |
+| Météo | Température et temps qu'il fait | Retélécharge les prévisions |
+| Fond Halo | L'intensité du fond appliqué | Discret → Normal → Vif |
+| Batterie | Niveau et estimation | Ouvre l'utilisation de la batterie |
+
+Code : `tiles/QuickTiles.kt`.
+
+## Raccourcis de l'icône
+
+Un appui long sur l'icône Halo : **Fond d'écran**, **Widgets**, **Réglages**.
+Chacun ouvre l'application sur l'écran correspondant (`halo://…`,
+`res/xml/shortcuts.xml`).

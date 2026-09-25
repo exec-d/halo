@@ -1,5 +1,7 @@
 # Contribuer à Halo
 
+*[English](CONTRIBUTING.en.md)*
+
 Merci de votre intérêt ! Signalements, idées et corrections sont bienvenus.
 En participant, vous acceptez le [code de conduite](CODE_OF_CONDUCT.md).
 

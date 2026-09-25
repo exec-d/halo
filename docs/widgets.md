@@ -1,5 +1,7 @@
 # Les widgets
 
+*[English](en/widgets.md)*
+
 Tous suivent le même style : heure en Roboto extra gras, texte mono, ombre
 sombre sous les textes, halo sur les traits et les icônes, couleurs du
 téléphone. Tous se posent sur l'écran d'accueil et sur l'écran de verrouillage
@@ -25,6 +27,11 @@ téléphone. Tous se posent sur l'écran d'accueil et sur l'écran de verrouilla
 | Soleil et Lune | 4x1 | Lever, coucher, durée du jour, phase de la lune | Ouvre Halo |
 | Pluie | 4x2 | Pluie en cours ou à venir, probabilités sur 12 h | Ouvre Halo |
 | Allergies | 4x2 | Pollens par famille sur trois jours, qualité de l'air | Ouvre Halo |
+| Prévisions 5 jours | 4x2 | Icône, maximum, minimum, et une capsule qui place chaque jour sur l'échelle de la semaine | Ouvre Halo |
+| Horloge analogique | 2x2 | Cadran néon, aiguilles lumineuses, date | Ouvre les alarmes |
+| Éphéméride | 4x2 | Fête du jour, semaine et jour de l'année, l'année en douze mois, prochain jour férié | Ouvre l'agenda |
+| Chronomètre et minuteur | 4x1 | Chronomètre, minuteurs de 1, 5, 10, 25 min qui sonnent à la fin | Boutons sur le widget |
+| Lecture en cours | 4x1 | Pochette néon, titre, artiste, avancement, commandes | Ouvre l'application qui joue |
 
 Les tailles sont celles de la pose ; tous se redimensionnent, et adaptent leur
 contenu à la place.
@@ -68,3 +75,15 @@ contenu à la place.
 Ces deux derniers demandent l'accès aux données d'utilisation. Installé hors
 du Play Store, Halo doit d'abord être autorisé aux « paramètres restreints » :
 *Paramètres → Applis → Halo → ⋮ → Autoriser les paramètres restreints*.
+
+## Temps, musique
+
+- **Chronomètre et minuteur** : le temps défile dans le lanceur sans réveiller
+  Halo. Toucher un nombre lance un minuteur ; la remise à zéro d'un minuteur
+  déjà à zéro repasse en chronomètre. À la fin, une notification sonne
+  (autorisation des notifications, demandée dans l'écran du widget).
+- **Lecture en cours** : Android ne dit ce qui joue qu'aux applications qui
+  ont l'accès aux notifications ; Halo n'en lit aucune. Installé hors du Play
+  Store, il faut d'abord autoriser les paramètres restreints (voir plus haut).
+- **Éphéméride** : fêtes du calendrier français des prénoms, jours fériés en
+  France (Pâques calculée).

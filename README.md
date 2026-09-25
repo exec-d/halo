@@ -1,5 +1,7 @@
 # Halo
 
+*[English](README.en.md)*
+
 [![CI](https://github.com/exec-d/halo/actions/workflows/ci.yml/badge.svg)](https://github.com/exec-d/halo/actions/workflows/ci.yml)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 ![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84)
@@ -13,25 +15,36 @@ gardent ce nom.*
 
 ## Ce que contient Halo
 
-**18 widgets** pour l'écran d'accueil et l'écran de verrouillage :
+**23 widgets** pour l'écran d'accueil et l'écran de verrouillage :
 
 | Famille | Widgets |
 | --- | --- |
-| Temps | Horloge (avec la prochaine alarme), Fuseaux horaires, Compte à rebours, Mois |
+| Temps | Horloge (avec la prochaine alarme), Horloge analogique, Fuseaux horaires, Compte à rebours, Chronomètre et minuteur, Mois, Éphéméride |
 | Agenda | Agenda, Agenda 2 colonnes — l'événement en cours mis en avant, « toute la journée » masquable |
-| Météo | Météo (tableau de bord et barres des 24 h), Pluie, Allergies (pollens), Soleil et Lune |
+| Météo | Météo (tableau de bord et barres des 24 h), Prévisions 5 jours, Pluie, Allergies (pollens), Soleil et Lune |
 | Système | Système, Système avancé, Batterie détaillée, Appareil (façon console), Écouteurs et montre, Temps d'écran, Données mobiles |
+| Musique | Lecture en cours (pochette néon, commandes) |
 | Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo) |
 
-**Un fond d'écran animé, Circuit** : l'intérieur d'un Pixel 7 en schéma néon,
-qui réagit à l'inclinaison, suit la vraie batterie, s'illumine au passage des
-données et s'allume composant par composant avec l'écran.
+**Trois fonds d'écran animés** :
+
+- **Circuit** : l'intérieur d'un Pixel 7 en schéma néon, qui réagit à
+  l'inclinaison, suit la vraie batterie, s'illumine au passage des données et
+  s'allume composant par composant avec l'écran ;
+- **Horizon** : un paysage néon qui suit la vraie journée et la vraie météo ;
+- **Ciel** : les vraies étoiles et la vraie Lune au-dessus de vous, dans la
+  direction du téléphone.
+
+**Ailleurs dans Android** : un écran de veille (horloge néon pendant la
+charge), trois tuiles de réglages rapides (Météo, Fond Halo, Batterie) et des
+raccourcis sur l'icône (Fonds d'écran, Widgets, Réglages).
 
 **L'application** : catalogue avec aperçus, réglages de chaque widget (aussi
-par un appui long sur le widget), autorisations, à propos et licences.
+par un appui long sur le widget), autorisations, à propos et licences, en
+français et en anglais.
 
-Le détail de chaque widget : [docs/widgets.md](docs/widgets.md) ; le fond
-d'écran : [docs/wallpaper.md](docs/wallpaper.md).
+Le détail de chaque widget : [docs/widgets.md](docs/widgets.md) ; les fonds
+d'écran, l'écran de veille et les tuiles : [docs/wallpaper.md](docs/wallpaper.md).
 
 ## Installer
 
@@ -60,9 +73,11 @@ Toutes sont facultatives ; chacune ne sert qu'aux widgets indiqués.
 | Autorisation | Pour | Demandée |
 | --- | --- | --- |
 | Agenda (lecture) | Agenda, Agenda 2 colonnes, Mois | Au premier lancement |
-| Position approximative | Météo, Pluie, Allergies, Soleil et Lune — seulement si vous choisissez « Ma position » | Dans l'écran Météo |
+| Position approximative | Météo, Prévisions, Pluie, Allergies, Soleil et Lune, fonds Horizon et Ciel — seulement si vous choisissez « Ma position » | Dans l'écran Météo |
 | Appareils à proximité | Écouteurs et montre | Dans l'écran du widget |
 | Données d'utilisation | Temps d'écran, Données mobiles | Dans les réglages d'Android |
+| Accès aux notifications | Lecture en cours (pour voir ce qui joue ; aucune notification lue) | Dans les réglages d'Android |
+| Notifications | Chronomètre et minuteur (sonnerie à la fin) | Dans l'écran du widget |
 | Internet | Prévisions Open-Meteo | — |
 
 Ce que Halo fait de ces données : [PRIVACY.md](PRIVACY.md).

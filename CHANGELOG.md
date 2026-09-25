@@ -5,6 +5,19 @@ build est fixé par la CI. Le projet suit le [versionnage
 sémantique](https://semver.org/lang/fr/) ; tant qu'il est en 0.x, une version
 mineure peut changer des réglages.
 
+## À venir
+
+### Nouveau
+
+- **Cinq widgets** : Lecture en cours, Prévisions 5 jours, Horloge
+  analogique, Éphéméride, Chronomètre et minuteur.
+- **Deux fonds d'écran animés** : Horizon (la vraie journée et la vraie
+  météo) et Ciel (les vraies étoiles, dans la direction du téléphone).
+- **Écran de veille** Halo, pendant la charge.
+- **Tuiles de réglages rapides** : Météo, Fond Halo, Batterie.
+- **Raccourcis de l'icône** : Fond d'écran, Widgets, Réglages.
+- **Anglais** : l'application, les widgets et la documentation.
+
 ## 0.2.0 — 2026-09-25
 
 ### Nouveau
