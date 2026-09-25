@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Une case des widgets système, ajoutée dans une rangée par SystemWidgets. -->
+<!-- Une case des widgets système, ajoutée dans une rangée par SystemWidgets.
+     Étiquette et valeur rétrécissent pour tenir en entier plutôt que d'être
+     coupées. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/system_tile"
     android:layout_width="0dp"
@@ -12,10 +14,15 @@
     <TextView
         android:id="@+id/system_tile_label"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
+        android:autoSizeMaxTextSize="10sp"
+        android:autoSizeMinTextSize="7sp"
+        android:autoSizeStepGranularity="0.5sp"
+        android:autoSizeTextType="uniform"
         android:fontFamily="monospace"
+        android:gravity="center_vertical"
         android:includeFontPadding="false"
-        android:letterSpacing="0.1"
+        android:letterSpacing="0.06"
         android:maxLines="1"
         android:shadowColor="@color/text_shade"
         android:shadowDx="0"
@@ -27,10 +34,14 @@
     <TextView
         android:id="@+id/system_tile_value"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:layout_marginTop="2dp"
-        android:ellipsize="end"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeMinTextSize="11sp"
+        android:autoSizeStepGranularity="1sp"
+        android:autoSizeTextType="uniform"
         android:fontFamily="sans-serif"
+        android:gravity="center_vertical"
         android:includeFontPadding="false"
         android:maxLines="1"
         android:shadowColor="@color/text_shade"
@@ -54,9 +65,8 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:textAllCaps="true"
         android:textColor="@color/clock_line"
-        android:textSize="10sp" />
+        android:textSize="11sp" />
 
     <ProgressBar
         android:id="@+id/system_tile_gauge"

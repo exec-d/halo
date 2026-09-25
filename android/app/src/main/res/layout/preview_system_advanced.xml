@@ -56,7 +56,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:text="SIGNAL 3/4"
+                android:text="Signal 3/4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -68,7 +68,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_line"
                 android:textSize="10sp" />
 
@@ -86,6 +85,7 @@
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
+            android:alpha="0.45"
             android:src="@drawable/clock_divider_vertical"
             android:tint="@color/clock_line" />
         <LinearLayout
@@ -129,7 +129,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:text="5 GHZ · 866 MB/S"
+                android:text="5 GHz · 866 Mb/s"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -141,7 +141,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_line"
                 android:textSize="10sp" />
 
@@ -159,6 +158,7 @@
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
+            android:alpha="0.45"
             android:src="@drawable/clock_divider_vertical"
             android:tint="@color/clock_line" />
         <LinearLayout
@@ -214,7 +214,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_line"
                 android:textSize="10sp" />
 
@@ -232,6 +231,7 @@
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
+            android:alpha="0.45"
             android:src="@drawable/clock_divider_vertical"
             android:tint="@color/clock_line" />
         <LinearLayout
@@ -275,7 +275,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:text="EN CHARGE · 31 °C"
+                android:text="En charge · 31 °C"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -287,7 +287,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_line"
                 android:textSize="10sp" />
 
@@ -307,6 +306,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:scaleType="fitXY"
+        android:alpha="0.45"
         android:src="@drawable/clock_divider_horizontal"
         android:tint="@color/clock_line" />
 
@@ -358,7 +358,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:text="LIBRES SUR 8 GO"
+                android:text="Libres sur 8 Go"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -370,7 +370,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_line"
                 android:textSize="10sp" />
 
@@ -388,6 +387,7 @@
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
+            android:alpha="0.45"
             android:src="@drawable/clock_divider_vertical"
             android:tint="@color/clock_line" />
         <LinearLayout
@@ -431,7 +431,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:text="LIBRES SUR 128 GO"
+                android:text="Libres sur 128 Go"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -443,7 +443,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_line"
                 android:textSize="10sp" />
 
@@ -461,6 +460,7 @@
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
+            android:alpha="0.45"
             android:src="@drawable/clock_divider_vertical"
             android:tint="@color/clock_line" />
         <LinearLayout
@@ -472,7 +472,7 @@
             android:paddingHorizontal="4dp">
 
             <TextView
-                android:text="LOCALISATION"
+                android:text="POSITION"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
@@ -516,7 +516,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_line"
                 android:textSize="10sp" />
 
@@ -534,6 +533,7 @@
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
+            android:alpha="0.45"
             android:src="@drawable/clock_divider_vertical"
             android:tint="@color/clock_line" />
         <LinearLayout
@@ -589,7 +589,6 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
-                android:textAllCaps="true"
                 android:textColor="@color/clock_line"
                 android:textSize="10sp" />
 

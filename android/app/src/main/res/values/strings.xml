@@ -39,7 +39,7 @@
     <string name="system_unavailable">Indisponible</string>
     <string name="system_bluetooth">BLUETOOTH</string>
     <string name="system_memory">MÉMOIRE</string>
-    <string name="system_location">LOCALISATION</string>
+    <string name="system_location">POSITION</string>
     <string name="system_sound">SON</string>
     <string name="system_ring">Sonnerie</string>
     <string name="system_vibrate">Vibreur</string>
