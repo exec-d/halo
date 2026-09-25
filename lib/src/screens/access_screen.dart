@@ -116,6 +116,7 @@ class _AccessScreenState extends State<AccessScreen>
           granted: _granted,
           bluetooth: _bluetooth,
           onRequest: _request,
+          onOpenAppSettings: _platform.openAppSettings,
         ),
         if (_mobileData)
           IuxSection(
@@ -167,11 +168,15 @@ class _AccessSection extends StatelessWidget {
     required this.granted,
     required this.bluetooth,
     required this.onRequest,
+    required this.onOpenAppSettings,
   });
 
   final bool? granted;
   final bool bluetooth;
   final VoidCallback onRequest;
+  final VoidCallback onOpenAppSettings;
+
+  static const _appSettings = 'Ouvrir la fiche de Halo';
 
   @override
   Widget build(BuildContext context) {
@@ -205,6 +210,26 @@ class _AccessSection extends StatelessWidget {
             expand: true,
             onActivate: onRequest,
           ),
+          if (!bluetooth) ...[
+            const IuxGap.standard(),
+            Text(
+              "Si Android répond « L'accès a été refusé à cette appli » : "
+              'Halo, installé hors du Play Store, relève des paramètres '
+              'restreints. Dans sa fiche, touchez ⋮ puis « Autoriser les '
+              'paramètres restreints », confirmez, et revenez activer '
+              "l'accès.",
+              style: IuxTypographyTheme.of(context).body,
+            ),
+            const IuxGap.standard(),
+            IuxButton(
+              label: _appSettings,
+              action: const IuxActionDescriptor(
+                semantics: IuxActionSemantics(label: _appSettings),
+              ),
+              expand: true,
+              onActivate: onOpenAppSettings,
+            ),
+          ],
         ],
       ],
     );
