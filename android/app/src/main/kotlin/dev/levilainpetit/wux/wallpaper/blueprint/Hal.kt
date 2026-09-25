@@ -49,7 +49,7 @@ class Hal : Subject {
         pen.dim(100f, 2500f, 100f, 100f, 100f, "810")
         pen.callout(cx + 200f, eye - 180f, 760f, 600f, 1)
         pen.callout(600f, 2000f, 820f, 2200f, 2)
-        pen.text(100f, 2680f, "FRONT VIEW", 7.5f, bold = true)
+        pen.caption("FRONT VIEW", "1 LENS  2 SPEAKER")
     }
 
     /** La coupe de l'objectif : les lentilles, l'axe, les rayons. */
@@ -83,8 +83,6 @@ class Hal : Subject {
         pen.dim(250f, axis + 320f, 1250f, axis + 320f, -140f, "150")
         pen.callout(650f, axis - 200f, 650f, axis - 520f, 3)
         pen.callout(1180f, axis + 90f, 1250f, axis + 520f, 4)
-        pen.text(0f, 2330f, "SECTION A-A", 7.5f, bold = true)
-        pen.text(0f, 2420f, "1 LENS  2 SPEAKER", 6f, alpha = 150)
-        pen.text(0f, 2500f, "3 OPTICS  4 SENSOR", 6f, alpha = 150)
+        pen.caption("SECTION A-A", "3 OPTICS  4 SENSOR")
     }
 }

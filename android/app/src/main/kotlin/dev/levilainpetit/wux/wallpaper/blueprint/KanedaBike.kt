@@ -16,11 +16,10 @@ class KanedaBike : Subject {
 
     override fun draw(pen: Pen, width: Float, top: Float, bottom: Float, time: Float, tiltX: Float, tiltY: Float) {
         val d = pen.density
-        val zone = bottom - top
         val shift = tiltX * 8f * d
-        pen.fit(3500f, 1500f, 24 * d + shift, top, width - 24 * d + shift, top + zone * 0.6f)
+        pen.fit(3500f, 1500f, 22 * d + shift, top, width * 0.64f + shift, bottom, turn = true)
         side(pen, time)
-        pen.fit(3500f, 800f, 24 * d - shift, top + zone * 0.66f, width - 24 * d - shift, bottom)
+        pen.fit(3500f, 800f, width * 0.66f - shift, top, width - 22 * d - shift, bottom, turn = true)
         plan(pen, time)
     }
 
@@ -70,7 +69,7 @@ class KanedaBike : Subject {
         pen.callout(500f, 300f, 300f, 80f, 1)
         pen.callout(rear, ground - 360f, 2750f, 1320f, 2)
         pen.callout(1800f, 470f, 1900f, 180f, 3)
-        pen.text(0f, 1330f, "SIDE ELEVATION · 1 FAIRING  2 HUB COVER  3 SEAT", 7f, bold = true)
+        pen.caption("SIDE ELEVATION", "1 FAIRING  2 HUB COVER  3 SEAT")
     }
 
     private fun plan(pen: Pen, time: Float) {
@@ -89,6 +88,6 @@ class KanedaBike : Subject {
         pen.glowDot(1100f, cy - 380f, 12f, 0.6f + 0.4f * sin(time * 3f))
         pen.glowDot(1100f, cy + 380f, 12f, 0.6f + 0.4f * sin(time * 3f))
         pen.dim(150f, cy + 300f, 3060f, cy + 300f, -120f, "2 910")
-        pen.text(0f, 780f, "PLAN VIEW", 7.5f, bold = true)
+        pen.caption("PLAN VIEW")
     }
 }

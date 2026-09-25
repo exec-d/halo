@@ -17,10 +17,12 @@ class ArcReactor : Subject {
         val d = pen.density
         val zone = bottom - top
         val shift = tiltX * 8f * d
-        pen.fit(1300f, 1300f, 24 * d + shift, top, width - 24 * d + shift, top + zone * 0.68f)
+        pen.fit(1300f, 1300f, 22 * d + shift, top, width - 22 * d + shift, top + zone * 0.6f)
         front(pen, time)
-        pen.fit(1300f, 500f, 24 * d - shift, top + zone * 0.72f, width - 24 * d - shift, bottom)
+        pen.fit(1300f, 500f, 22 * d - shift, top + zone * 0.6f, width - 22 * d - shift, top + zone * 0.8f)
         section(pen, time)
+        pen.fit(1300f, 600f, 22 * d - shift, top + zone * 0.8f, width - 22 * d - shift, bottom)
+        coil(pen, time)
     }
 
     private fun front(pen: Pen, time: Float) {
@@ -65,7 +67,7 @@ class ArcReactor : Subject {
         pen.callout(c, c, c + 450f, c - 650f + 90f, 1)
         val (bx, by) = pen.around(c, c, 400f, 54f)
         pen.callout(bx, by, c + 620f, c + 400f, 2)
-        pen.text(0f, 1290f, "FRONT VIEW · 1 PALLADIUM CORE  2 COIL", 7f, bold = true)
+        pen.caption("FRONT VIEW", "1 PALLADIUM CORE  2 COIL")
     }
 
     private fun section(pen: Pen, time: Float) {
@@ -80,6 +82,19 @@ class ArcReactor : Subject {
         pen.glowLine(520f, cy, 780f, cy, 0.7f + 0.3f * sin(time * 2.6f), 3f)
         pen.dim(90f, cy + 110f, 1210f, cy + 110f, -80f, "Ø 76")
         pen.dim(1210f, cy + 110f, 1210f, cy - 110f, -40f, "22")
-        pen.text(0f, 480f, "SECTION A-A", 7.5f, bold = true)
+        pen.caption("SECTION A-A")
+    }
+
+    /** Détail : une bobine, ses spires, son courant. */
+    private fun coil(pen: Pen, time: Float) {
+        pen.poly(floatArrayOf(300f, 100f, 1000f, 60f, 1000f, 540f, 300f, 500f), closed = true, weight = Weight.THICK)
+        for (i in 0 until 16) {
+            val x = 340f + i * 40f
+            pen.line(x, 90f + (x - 300f) * -0.06f, x, 510f + (x - 300f) * 0.06f, Weight.HAIR)
+        }
+        val flow = (time * 0.8f) % 1f
+        pen.glowLine(300f + 700f * flow, 70f, 300f + 700f * flow, 530f, 0.8f, 1.2f)
+        pen.dim(300f, 540f, 1000f, 540f, -50f, "×40 TURNS")
+        pen.caption("DETAIL B · COIL")
     }
 }

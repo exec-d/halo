@@ -99,8 +99,10 @@ class BlueprintScene(private val subject: Subject) : LiveScene {
 
         pen.begin(canvas, ink, glow, strength, if (reveal >= 1f) Float.MAX_VALUE else lastTotal * ease(reveal))
         val w = width.toFloat()
-        val top = height * 0.3f
-        val bottom = height * 0.83f
+        // Tout l'écran, du cadre jusqu'au cartouche : sur l'écran verrouillé,
+        // le voile du haut garde l'horloge lisible.
+        val top = 30f * density
+        val bottom = height - 96f * density
         subject.draw(pen, w, top, bottom, time, frame.tiltX, frame.tiltY)
         drawTitleBlock()
         lastTotal = pen.total.coerceAtLeast(1f)
@@ -231,6 +233,10 @@ class Pen {
     private var oy = 0f
     private var k = 1f
 
+    /** Vue tournée d'un quart de tour : le haut de la vue va à droite de l'écran. */
+    private var turned = false
+    private var span = 0f
+
     private val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
@@ -255,24 +261,67 @@ class Pen {
         ox = left
         oy = top
         k = scale
+        turned = false
     }
 
-    /** Cadre une vue de [w] × [h] unités au centre de la zone donnée (px). */
-    fun fit(w: Float, h: Float, left: Float, top: Float, right: Float, bottom: Float) {
-        val scale = min((right - left) / w, (bottom - top) / h)
-        view(left + ((right - left) - w * scale) / 2, top + ((bottom - top) - h * scale) / 2, scale)
+    /**
+     * Cadre une vue de [w] × [h] unités au centre de la zone donnée (px).
+     * [turn] : la vue tournée d'un quart de tour, sa longueur dans la
+     * hauteur de l'écran (pour les objets longs, sur un écran en portrait).
+     */
+    fun fit(w: Float, h: Float, left: Float, top: Float, right: Float, bottom: Float, turn: Boolean = false) {
+        // De la place sous la vue pour sa légende (voir [caption]).
+        val room = bottom - CAPTION * density
+        val sw = if (turn) h else w
+        val sh = if (turn) w else h
+        val scale = min((right - left) / sw, (room - top) / sh)
+        view(left + ((right - left) - sw * scale) / 2, top + ((room - top) - sh * scale) / 2, scale)
+        turned = turn
+        span = h
+        box = floatArrayOf(left, top, right, bottom, ox, oy + sh * scale)
+    }
+
+    private var box = FloatArray(6)
+
+    /** Le titre d'une vue et sa légende, sous la vue, quelle que soit sa rotation. */
+    fun caption(title: String, legend: String? = null) {
+        val left = maxOf(box[0], box[4] - 4f * density)
+        val y = box[5] + 12f * density
+        val width = box[2] - left
+        screen {
+            text(left, y, fit(title, 7.5f, width, true), 7.5f, bold = true)
+            if (legend != null) text(left, y + 9f * density, fit(legend, 6f, width, false), 6f, alpha = 150)
+        }
+    }
+
+    /** [value], raccourci pour tenir dans [width] px. */
+    private fun fit(value: String, size: Float, width: Float, heavy: Boolean): String {
+        val paint = if (heavy) bold else label
+        paint.textSize = size * density
+        paint.letterSpacing = 0.08f
+        if (paint.measureText(value) <= width) return value
+        var cut = value
+        while (cut.length > 3 && paint.measureText("$cut…") > width) cut = cut.dropLast(1)
+        return "${cut.trimEnd()}…"
     }
 
     /** Dessine [block] en pixels d'écran, puis revient à la vue courante. */
     fun screen(block: () -> Unit) {
-        val saved = Triple(ox, oy, k)
+        val saved = listOf(ox, oy, k, span)
+        val wasTurned = turned
         view(0f, 0f, 1f)
         block()
-        view(saved.first, saved.second, saved.third)
+        view(saved[0], saved[1], saved[2])
+        turned = wasTurned
+        span = saved[3]
     }
 
-    fun sx(x: Float) = ox + x * k
-    fun sy(y: Float) = oy + y * k
+    /** Un point de la vue, à l'écran. */
+    fun px(x: Float, y: Float) = if (turned) ox + (span - y) * k else ox + x * k
+    fun py(x: Float, y: Float) = if (turned) oy + x * k else oy + y * k
+
+    /** Un angle de la vue, à l'écran (degrés). */
+    private fun angle(degrees: Float) = if (turned) degrees + 90f else degrees
 
     fun textPaint(size: Float, color: Int, alpha: Int) = label.apply {
         textSize = size * density
@@ -299,10 +348,10 @@ class Pen {
     }
 
     fun line(x0: Float, y0: Float, x1: Float, y1: Float, weight: Weight = Weight.MAIN) {
-        val ax = sx(x0)
-        val ay = sy(y0)
-        val bx = sx(x1)
-        val by = sy(y1)
+        val ax = px(x0, y0)
+        val ay = py(x0, y0)
+        val bx = px(x1, y1)
+        val by = py(x1, y1)
         val part = spend(hypot(bx - ax, by - ay))
         if (part <= 0f) return
         prepare(weight)
@@ -330,7 +379,9 @@ class Pen {
         val part = spend(radius * (Math.abs(sweep) * PI.toFloat() / 180f))
         if (part <= 0f) return
         prepare(weight)
-        canvas.drawArc(android.graphics.RectF(sx(cx) - radius, sy(cy) - radius, sx(cx) + radius, sy(cy) + radius), start, sweep * part, false, stroke)
+        val x = px(cx, cy)
+        val y = py(cx, cy)
+        canvas.drawArc(android.graphics.RectF(x - radius, y - radius, x + radius, y + radius), angle(start), sweep * part, false, stroke)
     }
 
     fun circle(cx: Float, cy: Float, r: Float, weight: Weight = Weight.MAIN) = arc(cx, cy, r, -90f, 360f, weight)
@@ -387,10 +438,12 @@ class Pen {
         arrow(ax, ay, bx, by)
         arrow(bx, by, ax, ay)
         // La valeur, au milieu, dans le sens de la cote.
-        val cx = sx((ax + bx) / 2)
-        val cy = sy((ay + by) / 2)
+        val cx = px((ax + bx) / 2, (ay + by) / 2)
+        val cy = py((ax + bx) / 2, (ay + by) / 2)
         if (spend(30f) <= 0f) return
-        var angle = Math.toDegrees(atan2((by - ay).toDouble(), (bx - ax).toDouble())).toFloat()
+        val dx = px(bx, by) - px(ax, ay)
+        val dy = py(bx, by) - py(ax, ay)
+        var angle = Math.toDegrees(atan2(dy.toDouble(), dx.toDouble())).toFloat()
         if (angle > 90f || angle < -90f) angle += 180f
         canvas.save()
         canvas.rotate(angle, cx, cy)
@@ -414,7 +467,7 @@ class Pen {
     /** Des hachures à 45° dans un rectangle. */
     fun hatch(l: Float, t: Float, r: Float, b: Float, spacing: Float = 6f) {
         canvas.save()
-        canvas.clipRect(sx(l), sy(t), sx(r), sy(b))
+        canvas.clipRect(min(px(l, t), px(r, b)), min(py(l, t), py(r, b)), maxOf(px(l, t), px(r, b)), maxOf(py(l, t), py(r, b)))
         val step = spacing * density / k
         var x = l - (b - t)
         while (x < r) {
@@ -444,7 +497,7 @@ class Pen {
         paint.alpha = (alpha * strength).toInt()
         paint.textAlign = align
         paint.letterSpacing = 0.08f
-        canvas.drawText(value, sx(x), sy(y), paint)
+        canvas.drawText(value, px(x, y), py(x, y), paint)
     }
 
     /** Un point plein ; [size] en dp. */
@@ -453,17 +506,17 @@ class Pen {
         fill.shader = null
         fill.color = color
         fill.alpha = (230 * strength).toInt()
-        canvas.drawCircle(sx(x), sy(y), size * density, fill)
+        canvas.drawCircle(px(x, y), py(x, y), size * density, fill)
     }
 
     // ——— Ce qui brille : les parties lumineuses de l'objet, en couleur vive ———
 
     /** Une ligne lumineuse ; [level] de 0 (éteinte) à 1. */
     fun glowLine(x0: Float, y0: Float, x1: Float, y1: Float, level: Float = 1f, width: Float = 1.6f) {
-        val ax = sx(x0)
-        val ay = sy(y0)
-        val bx = sx(x1)
-        val by = sy(y1)
+        val ax = px(x0, y0)
+        val ay = py(x0, y0)
+        val bx = px(x1, y1)
+        val by = py(x1, y1)
         val part = spend(hypot(bx - ax, by - ay))
         if (part <= 0f || level <= 0f) return
         val ex = ax + (bx - ax) * part
@@ -486,12 +539,14 @@ class Pen {
         val radius = r * k
         val part = spend(radius * (Math.abs(sweep) * PI.toFloat() / 180f))
         if (part <= 0f || level <= 0f) return
-        val oval = android.graphics.RectF(sx(cx) - radius, sy(cy) - radius, sx(cx) + radius, sy(cy) + radius)
+        val x = px(cx, cy)
+        val y = py(cx, cy)
+        val oval = android.graphics.RectF(x - radius, y - radius, x + radius, y + radius)
         for ((w, a) in GLOW) {
             stroke.color = glow
             stroke.alpha = (a * level * strength).toInt().coerceIn(0, 255)
             stroke.strokeWidth = (width + w) * density
-            canvas.drawArc(oval, start, sweep * part, false, stroke)
+            canvas.drawArc(oval, angle(start), sweep * part, false, stroke)
         }
     }
 
@@ -499,13 +554,15 @@ class Pen {
     fun glowDot(x: Float, y: Float, radius: Float, level: Float = 1f) {
         if (spend(radius * k) <= 0f || level <= 0f) return
         val r = radius * k
+        val gx = px(x, y)
+        val gy = py(x, y)
         fill.shader = RadialGradient(
-            sx(x), sy(y), r * 3f,
+            gx, gy, r * 3f,
             intArrayOf(SceneKit.mix(glow, Color.WHITE, 0.6f), SceneKit.alpha(glow, (160 * level).toInt()), Color.TRANSPARENT),
             floatArrayOf(0f, 0.3f, 1f), Shader.TileMode.CLAMP,
         )
         fill.alpha = (255 * strength * level).toInt().coerceIn(0, 255)
-        canvas.drawCircle(sx(x), sy(y), r * 3f, fill)
+        canvas.drawCircle(gx, gy, r * 3f, fill)
         fill.shader = null
     }
 
@@ -513,8 +570,8 @@ class Pen {
     fun shade(points: FloatArray, alpha: Int = 18) {
         if (spend(1f) <= 0f) return
         val path = android.graphics.Path()
-        path.moveTo(sx(points[0]), sy(points[1]))
-        for (i in 1 until points.size / 2) path.lineTo(sx(points[i * 2]), sy(points[i * 2 + 1]))
+        path.moveTo(px(points[0], points[1]), py(points[0], points[1]))
+        for (i in 1 until points.size / 2) path.lineTo(px(points[i * 2], points[i * 2 + 1]), py(points[i * 2], points[i * 2 + 1]))
         path.close()
         fill.shader = null
         fill.color = ink
@@ -530,5 +587,8 @@ class Pen {
 
     private companion object {
         val GLOW = listOf(7f to 22, 3f to 60, 0f to 255)
+
+        /** La place de la légende sous une vue (dp). */
+        const val CAPTION = 26f
     }
 }

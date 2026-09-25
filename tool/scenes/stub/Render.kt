@@ -52,7 +52,7 @@ fun main(args: Array<String>) {
         return
     }
     val out = File(args[0]).apply { mkdirs() }
-    val only = args.getOrNull(1)?.split(',')
+    val only = args.getOrNull(1)?.takeIf { it.isNotEmpty() }?.split(',')
     for ((name, make) in scenes) {
         if (only != null && name !in only) continue
         for ((pn, palette) in palettes) {

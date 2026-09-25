@@ -56,7 +56,7 @@ class Hovercraft : Subject {
         pen.dim(cx - 470f, 5100f, cx - 470f, 100f, 260f, "85 m")
         pen.callout(cx + 150f, 850f, cx + 700f, 500f, 1)
         pen.callout(cx + 610f, 3000f, cx + 820f, 3400f, 2)
-        pen.text(80f, 5380f, "PLAN VIEW", 7.5f, bold = true)
+        pen.caption("PLAN VIEW", "1 BRIDGE  2 EMP THRUSTER")
     }
 
     /** Profil, la proue en haut, flottant au-dessus du sol des égouts. */
@@ -80,7 +80,6 @@ class Hovercraft : Subject {
             pen.glowLine(1130f, y - 120f, floor - 20f, y - 120f, pulse * 0.6f, 1f)
             pen.glowLine(1130f, y + 120f, floor - 20f, y + 120f, pulse * 0.6f, 1f)
         }
-        pen.text(80f, 5380f, "SIDE", 7.5f, bold = true)
-        pen.text(80f, 5250f, "EMP READY", 6f, Paint.Align.LEFT, alpha = 150)
+        pen.caption("SIDE", "EMP READY")
     }
 }

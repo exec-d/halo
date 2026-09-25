@@ -19,11 +19,11 @@ class Spinner : Subject {
         val d = pen.density
         val zone = bottom - top
         val shift = tiltX * 8f * d
-        pen.fit(4900f, 1900f, 24 * d + shift, top, width - 24 * d + shift, top + zone * 0.56f)
+        pen.fit(4900f, 1900f, 22 * d + shift, top, width * 0.58f + shift, bottom, turn = true)
         side(pen, time)
-        pen.fit(2600f, 1900f, 24 * d - shift, top + zone * 0.6f, width * 0.55f - shift, bottom)
+        pen.fit(2600f, 1900f, width * 0.6f - shift, top, width - 22 * d - shift, top + zone * 0.5f)
         front(pen, time)
-        pen.fit(1500f, 1500f, width * 0.58f - shift, top + zone * 0.62f, width - 24 * d - shift, bottom)
+        pen.fit(1500f, 1500f, width * 0.6f - shift, top + zone * 0.52f, width - 22 * d - shift, bottom)
         turbine(pen, time)
     }
 
@@ -73,7 +73,7 @@ class Spinner : Subject {
         pen.callout(1900f, 275f + y, 1900f, 60f + y - 120f, 1)
         pen.callout(1000f, 500f + y, 700f, 200f + y - 60f, 2)
         pen.callout(3700f, 1170f + y, 3950f, 1500f, 3)
-        pen.text(0f, 1880f, "SIDE ELEVATION · IN FLIGHT", 7.5f, bold = true)
+        pen.caption("SIDE ELEVATION · IN FLIGHT", "1 LIGHT BAR  2 CANOPY  3 WHEEL")
     }
 
     private fun front(pen: Pen, time: Float) {
@@ -95,7 +95,7 @@ class Spinner : Subject {
             pen.rect(cx + side * 1050f - 120f, 1350f, cx + side * 1050f + 120f, 1520f, Weight.MAIN)
         }
         pen.dim(cx - 1150f, 1520f, cx + 1150f, 1520f, -140f, "2 300")
-        pen.text(0f, 1870f, "FRONT VIEW", 7.5f, bold = true)
+        pen.caption("FRONT VIEW")
     }
 
     /** Détail : la turbine arrière, pales qui tournent. */
@@ -113,7 +113,7 @@ class Spinner : Subject {
             pen.line(x0, y0, x1, y1, Weight.THIN)
         }
         pen.glowArc(c, c, 520f, spin * 0.3f, 60f, 0.6f)
-        pen.text(0f, 1460f, "DETAIL A · TURBINE", 7.5f, bold = true)
+        pen.caption("DETAIL A · TURBINE")
     }
 }
 

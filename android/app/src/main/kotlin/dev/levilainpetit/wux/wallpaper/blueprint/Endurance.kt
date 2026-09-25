@@ -17,10 +17,12 @@ class Endurance : Subject {
         val d = pen.density
         val zone = bottom - top
         val shift = tiltX * 8f * d
-        pen.fit(2600f, 2600f, 24 * d + shift, top, width - 24 * d + shift, top + zone * 0.72f)
+        pen.fit(2600f, 2600f, 22 * d + shift, top, width - 22 * d + shift, top + zone * 0.6f)
         plan(pen, time)
-        pen.fit(2600f, 600f, 24 * d - shift, top + zone * 0.76f, width - 24 * d - shift, bottom)
+        pen.fit(2600f, 600f, 22 * d - shift, top + zone * 0.6f, width - 22 * d - shift, top + zone * 0.75f)
         side(pen, time)
+        pen.fit(1300f, 800f, 22 * d - shift, top + zone * 0.75f, width - 22 * d - shift, bottom)
+        module(pen, time)
     }
 
     private fun plan(pen: Pen, time: Float) {
@@ -64,7 +66,7 @@ class Endurance : Subject {
         pen.callout(c, c, c + 500f, c - 300f, 1)
         val (mx, my) = pen.around(c, c, ring, spin + 60f)
         pen.callout(mx, my, c + 1150f, c - 1150f, 2)
-        pen.text(0f, 2560f, "PLAN VIEW · 1 COMMAND MODULE  2 HABITAT", 7f, bold = true)
+        pen.caption("PLAN VIEW", "1 COMMAND MODULE  2 HABITAT")
     }
 
     private fun side(pen: Pen, time: Float) {
@@ -77,6 +79,26 @@ class Endurance : Subject {
         }
         pen.rect(1150f, cy - 200f, 1450f, cy + 200f, Weight.THICK)
         pen.glowLine(1180f, cy, 1420f, cy, 0.6f + 0.3f * sin(time * 2f))
-        pen.text(0f, 560f, "SIDE ELEVATION", 7f, bold = true)
+        pen.caption("SIDE ELEVATION")
+    }
+
+    /** Détail : un module d'habitation, ses hublots, ses sas. */
+    private fun module(pen: Pen, time: Float) {
+        pen.rect(150f, 150f, 1150f, 650f, Weight.THICK)
+        pen.rect(190f, 190f, 1110f, 610f, Weight.HAIR)
+        for (i in 0 until 5) {
+            val x = 260f + i * 170f
+            pen.rect(x, 300f, x + 100f, 380f, Weight.THIN)
+            pen.glowLine(x + 10f, 340f, x + 90f, 340f, 0.3f + 0.3f * sin(time * 1.5f + i), 1f)
+        }
+        for (x in floatArrayOf(150f, 1150f)) {
+            pen.circle(x, 400f, 90f, Weight.MAIN)
+            pen.circle(x, 400f, 50f, Weight.HAIR)
+        }
+        pen.line(150f, 500f, 1150f, 500f, Weight.HAIR)
+        pen.hatch(150f, 560f, 1150f, 650f, 7f)
+        pen.dim(150f, 650f, 1150f, 650f, -90f, "12 m")
+        pen.dim(1150f, 650f, 1150f, 150f, -60f, "6 m")
+        pen.caption("DETAIL C · HABITAT MODULE")
     }
 }

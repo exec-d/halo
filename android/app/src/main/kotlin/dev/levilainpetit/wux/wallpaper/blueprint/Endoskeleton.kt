@@ -17,10 +17,12 @@ class Endoskeleton : Subject {
         val d = pen.density
         val zone = bottom - top
         val shift = tiltX * 8f * d
-        pen.fit(1000f, 1700f, 24 * d + shift, top, width * 0.64f + shift, bottom)
+        pen.fit(1000f, 1700f, 22 * d + shift, top, width * 0.66f + shift, bottom)
         skull(pen, time)
-        pen.fit(600f, 900f, width * 0.66f - shift, top + zone * 0.1f, width - 24 * d - shift, top + zone * 0.55f)
+        pen.fit(600f, 900f, width * 0.68f - shift, top + zone * 0.08f, width - 22 * d - shift, top + zone * 0.5f)
         sensor(pen, time)
+        pen.fit(500f, 1100f, width * 0.68f - shift, top + zone * 0.52f, width - 22 * d - shift, bottom)
+        servo(pen, time)
     }
 
     private fun skull(pen: Pen, time: Float) {
@@ -62,7 +64,7 @@ class Endoskeleton : Subject {
         pen.dim(120f, 1500f, 880f, 1500f, -130f, "196")
         pen.callout(cx + 150f, 640f, 900f, 400f, 1)
         pen.callout(cx + 250f, 1250f, 920f, 1250f, 2)
-        pen.text(0f, 1690f, "FRONT VIEW · 1 OPTICAL SENSOR  2 JAW SERVO", 7f, bold = true)
+        pen.caption("FRONT VIEW", "1 OPTICAL SENSOR  2 JAW SERVO")
     }
 
     /** Le capteur optique, et le réticule qui balaie. */
@@ -76,8 +78,21 @@ class Endoskeleton : Subject {
         pen.axis(c, c - 290f, c, c + 290f)
         val sweep = time * 90f
         pen.glowArc(c, c, 220f, sweep, 40f, 0.8f, 1.2f)
-        pen.text(0f, 680f, "DETAIL B", 7.5f, bold = true)
+        pen.caption("DETAIL B")
         pen.text(0f, 760f, "ANALYSIS: ACTIVE", 6f, alpha = 160)
         pen.text(0f, 830f, "THREAT: %03d".format(((time * 7).toInt()) % 1000), 6f, alpha = 160)
+    }
+
+    /** Détail : le vérin de la mâchoire, qui coulisse. */
+    private fun servo(pen: Pen, time: Float) {
+        val stroke = 120f + 80f * sin(time * 1.2f)
+        pen.circle(250f, 100f, 60f, Weight.MAIN)
+        pen.rect(170f, 160f, 330f, 620f, Weight.THICK)
+        pen.hatch(170f, 160f, 330f, 620f, 8f)
+        pen.rect(215f, 620f, 285f, 620f + stroke + 200f, Weight.MAIN)
+        pen.circle(250f, 620f + stroke + 260f, 60f, Weight.MAIN)
+        pen.axis(250f, 20f, 250f, 1080f)
+        pen.dim(330f, 620f, 330f, 620f + stroke + 200f, -70f, "%d".format((stroke / 4).toInt() + 50))
+        pen.caption("DETAIL C · JAW SERVO")
     }
 }

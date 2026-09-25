@@ -15,9 +15,12 @@ class PowerLoader : Subject {
 
     override fun draw(pen: Pen, width: Float, top: Float, bottom: Float, time: Float, tiltX: Float, tiltY: Float) {
         val d = pen.density
+        val zone = bottom - top
         val shift = tiltX * 8f * d
-        pen.fit(2400f, 2600f, 24 * d + shift, top, width - 24 * d + shift, bottom)
+        pen.fit(2400f, 2600f, 22 * d + shift, top, width - 22 * d + shift, top + zone * 0.74f)
         front(pen, time)
+        pen.fit(1400f, 900f, 22 * d - shift, top + zone * 0.74f, width - 22 * d - shift, bottom)
+        clamp(pen, time)
     }
 
     private fun front(pen: Pen, time: Float) {
@@ -79,6 +82,26 @@ class PowerLoader : Subject {
         pen.callout(cx, 900f, cx + 600f, 300f, 1)
         pen.callout(cx - 850f, 1100f - lift, 250f, 700f, 2)
         pen.callout(cx + 780f, 1650f - lift * 1.4f, 2150f, 1900f, 3)
-        pen.text(100f, 2580f, "FRONT VIEW · 1 CAGE  2 ARM  3 CLAMP", 7f, bold = true)
+        pen.caption("FRONT VIEW", "1 CAGE  2 ARM  3 CLAMP")
+    }
+
+    /** Détail : la pince, son pivot et son vérin. */
+    private fun clamp(pen: Pen, time: Float) {
+        val open = 0.5f + 0.5f * sin(time * 1.8f)
+        val px = 700f
+        val py = 250f
+        pen.rect(px - 250f, 60f, px + 250f, py, Weight.THICK)
+        pen.hatch(px - 250f, 60f, px + 250f, py, 10f)
+        pen.circle(px, py, 50f, Weight.MAIN)
+        for (side in floatArrayOf(-1f, 1f)) {
+            val tipX = px + side * (200f + 160f * open)
+            pen.poly(floatArrayOf(px + side * 40f, py, px + side * 220f, py + 280f, tipX, py + 560f, tipX - side * 80f, py + 600f, px + side * 120f, py + 320f), closed = true, weight = Weight.MAIN)
+            // Le vérin qui ouvre la mâchoire.
+            pen.line(px + side * 250f, 120f, px + side * 180f, py + 250f, Weight.THIN)
+            pen.line(px + side * 250f, 120f, px + side * (250f - 50f * open), 120f + (py + 130f - 120f), Weight.THICK)
+        }
+        pen.axis(px, 20f, px, 880f)
+        pen.dim(px - 360f, 880f, px + 360f, 880f, -60f, "OPEN %d°".format((20 + 25 * open).toInt()))
+        pen.caption("DETAIL D · CLAMP", "HYDRAULIC 3 000 PSI")
     }
 }

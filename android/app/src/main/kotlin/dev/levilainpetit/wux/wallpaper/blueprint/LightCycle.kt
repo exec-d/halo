@@ -19,14 +19,14 @@ class LightCycle : Subject {
     override fun draw(pen: Pen, width: Float, top: Float, bottom: Float, time: Float, tiltX: Float, tiltY: Float) {
         val d = pen.density
         val zone = bottom - top
-        // Le profil, en haut ; dessous, la vue de dessus et la vue de face,
-        // qui glissent dans l'autre sens.
         val shift = tiltX * 8f * d
-        pen.fit(3700f, 1500f, 24 * d + shift, top, width - 24 * d + shift, top + zone * 0.55f)
+        // Le profil, tourné, sur toute la hauteur ; à côté, la vue de dessus
+        // et la vue de face, qui glissent dans l'autre sens.
+        pen.fit(3700f, 1500f, 22 * d + shift, top, width * 0.6f + shift, bottom, turn = true)
         side(pen, time)
-        pen.fit(3700f, 900f, 24 * d - shift, top + zone * 0.6f, width * 0.68f - shift, bottom)
+        pen.fit(3700f, 900f, width * 0.62f - shift, top, width - 22 * d - shift, top + zone * 0.7f, turn = true)
         plan(pen, time)
-        pen.fit(1100f, 1450f, width * 0.7f - shift, top + zone * 0.58f, width - 24 * d - shift, bottom)
+        pen.fit(1100f, 1450f, width * 0.62f - shift, top + zone * 0.72f, width - 22 * d - shift, bottom)
         front(pen, time)
     }
 
@@ -96,8 +96,7 @@ class LightCycle : Subject {
         pen.callout(rear + 160f, axle + 90f, 3150f, 1300f, 3)
         pen.callout(2000f, 700f, 2050f, 1320f, 4)
         pen.callout(2700f, 90f, 2950f, -80f, 5)
-        pen.text(0f, 1370f, "SIDE ELEVATION", 7.5f, bold = true)
-        pen.text(0f, 1440f, "1 RAISED SEAT  2 WHEEL WELL  3 HEX HUB  4 DRIVE  5 SCOOP", 6f, alpha = 150)
+        pen.caption("SIDE ELEVATION", "1 RAISED SEAT  2 WHEEL WELL  3 HEX HUB  4 DRIVE  5 SCOOP")
     }
 
     private fun plan(pen: Pen, time: Float) {
@@ -128,7 +127,7 @@ class LightCycle : Subject {
         pen.glowPoly(floatArrayOf(400f, cy + 170f, 1300f, cy + 220f, 2200f, cy + 300f, 3050f, cy + 240f), level = level, width = 1.4f)
         pen.dim(90f, cy + 350f, 3340f, cy + 350f, -120f, "3 250")
         pen.dim(3420f, cy + 350f, 3420f, cy - 350f, -40f, "700")
-        pen.text(0f, 880f, "PLAN VIEW", 7.5f, bold = true)
+        pen.caption("PLAN VIEW")
     }
 
     private fun front(pen: Pen, time: Float) {
@@ -149,6 +148,6 @@ class LightCycle : Subject {
         pen.glowPoly(floatArrayOf(cx - 330f, 560f, cx - 300f, 850f, cx - 230f, 980f), level = 0.8f)
         pen.glowPoly(floatArrayOf(cx + 330f, 560f, cx + 300f, 850f, cx + 230f, 980f), level = 0.8f)
         pen.dim(cx - 360f, ground, cx + 360f, ground, -110f, "720")
-        pen.text(0f, 1400f, "FRONT VIEW", 7.5f, bold = true)
+        pen.caption("FRONT VIEW")
     }
 }

@@ -65,7 +65,7 @@ class FluxCapacitor : Subject {
         pen.dim(1400f, 1700f, 1400f, 100f, -60f, "470")
         pen.callout(330f, 330f, 60f, 60f, 1)
         pen.callout(cx + 60f, cy + 60f, 1250f, 1100f, 2)
-        pen.text(100f, 1860f, "FRONT VIEW · 1 ELECTRODE  2 CORE", 7f, bold = true)
+        pen.caption("FRONT VIEW", "1 ELECTRODE  2 CORE")
     }
 
     /** Les circuits temporels : destination, présent (l'heure vraie), départ. */
