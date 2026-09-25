@@ -56,7 +56,9 @@ class WidgetScreen extends StatelessWidget {
       ),
       WuxWidgetKind.bluetooth ||
       WuxWidgetKind.usage ||
-      WuxWidgetKind.mobileData => AccessScreen(
+      WuxWidgetKind.mobileData ||
+      WuxWidgetKind.media ||
+      WuxWidgetKind.timer => AccessScreen(
         homeWidget: homeWidget,
         platform: platform,
         allowPin: !configuring,

@@ -12,6 +12,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import dev.levilainpetit.wux.widgets.AllergyWidget
+import dev.levilainpetit.wux.widgets.ForecastWidget
 import dev.levilainpetit.wux.widgets.RainWidget
 import dev.levilainpetit.wux.widgets.SunMoonWidget
 import dev.levilainpetit.wux.widgets.WeatherWidget
@@ -77,6 +78,7 @@ object WeatherRefresh {
         SunMoonWidget().renderAll(context)
         RainWidget().renderAll(context)
         AllergyWidget().renderAll(context)
+        ForecastWidget().renderAll(context)
     }
 }
 

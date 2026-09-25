@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Horloge analogique néon : cadran et aiguilles lumineux teints aux couleurs
+     du téléphone (Android 12+), la date dessous (AnalogClockWidget). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/analog_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="@dimen/widget_padding_vertical">
+
+    <AnalogClock
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:dial="@drawable/analog_dial"
+        android:dialTint="@color/clock_line"
+        android:hand_hour="@drawable/analog_hour"
+        android:hand_hourTint="@color/clock_core"
+        android:hand_minute="@drawable/analog_minute"
+        android:hand_minuteTint="@color/clock_core" />
+    <TextClock
+        style="@style/HaloLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:format12Hour="EEE d MMM"
+        android:format24Hour="EEE d MMM" />
+</LinearLayout>

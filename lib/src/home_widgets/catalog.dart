@@ -104,6 +104,59 @@ const mobileDataWidget = WuxHomeWidget(
   previewSize: Size(340, 150),
 );
 
+const forecastWidget = WuxHomeWidget(
+  id: 'forecast',
+  kind: WuxWidgetKind.weather,
+  title: 'Prévisions 5 jours',
+  description:
+      'Cinq jours de météo, et une capsule qui place chacun dans la '
+      'semaine, du plus frais au plus chaud.',
+  androidProvider: '$_androidPackage.ForecastWidget',
+  previewSize: Size(340, 150),
+);
+
+const analogClockWidget = WuxHomeWidget(
+  id: 'analog',
+  kind: WuxWidgetKind.simple,
+  title: 'Horloge analogique',
+  description: 'Un cadran néon aux aiguilles lumineuses, et la date.',
+  androidProvider: '$_androidPackage.AnalogClockWidget',
+  previewSize: Size(160, 180),
+);
+
+const ephemerisWidget = WuxHomeWidget(
+  id: 'ephemeris',
+  kind: WuxWidgetKind.simple,
+  title: 'Éphéméride',
+  description:
+      "La fête du jour, la semaine, l'année en douze mois et le prochain "
+      'jour férié.',
+  androidProvider: '$_androidPackage.EphemerisWidget',
+  previewSize: Size(340, 130),
+);
+
+const timerWidget = WuxHomeWidget(
+  id: 'timer',
+  kind: WuxWidgetKind.timer,
+  title: 'Chronomètre et minuteur',
+  description:
+      'Un chronomètre, et un minuteur de 1, 5, 10 ou 25 minutes d\'un '
+      'toucher, qui sonne à la fin.',
+  androidProvider: '$_androidPackage.TimerWidget',
+  previewSize: Size(340, 72),
+);
+
+const mediaWidget = WuxHomeWidget(
+  id: 'media',
+  kind: WuxWidgetKind.media,
+  title: 'Lecture en cours',
+  description:
+      'Ce qui joue, sa pochette en néon, et précédent, lecture ou pause, '
+      'suivant.',
+  androidProvider: '$_androidPackage.MediaWidget',
+  previewSize: Size(340, 80),
+);
+
 const worldClockWidget = WuxHomeWidget(
   id: 'world_clock',
   kind: WuxWidgetKind.worldClock,
@@ -192,6 +245,7 @@ const allergyWidget = WuxHomeWidget(
 /// Tous les widgets proposés par l'application.
 const wuxHomeWidgets = <WuxHomeWidget>[
   clockWidget,
+  analogClockWidget,
   oneColumnAgendaWidget,
   twoColumnAgendaWidget,
   systemWidget,
@@ -201,11 +255,15 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   bluetoothDevicesWidget,
   screenTimeWidget,
   mobileDataWidget,
+  mediaWidget,
   worldClockWidget,
   countdownWidget,
+  timerWidget,
+  ephemerisWidget,
   controlsWidget,
   monthWidget,
   weatherWidget,
+  forecastWidget,
   sunMoonWidget,
   rainWidget,
   allergyWidget,

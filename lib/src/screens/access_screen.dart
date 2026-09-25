@@ -41,8 +41,8 @@ class _AccessScreenState extends State<AccessScreen>
   int _cycleDay = 1;
 
   WuxPlatform get _platform => widget.platform;
-  bool get _bluetooth => widget.homeWidget.kind == WuxWidgetKind.bluetooth;
   bool get _mobileData => widget.homeWidget.kind == WuxWidgetKind.mobileData;
+  late final _Access _access = _Access.of(widget.homeWidget.kind, _platform);
 
   @override
   void initState() {
@@ -73,9 +73,7 @@ class _AccessScreenState extends State<AccessScreen>
   }
 
   Future<void> _refreshAccess() async {
-    final granted = _bluetooth
-        ? await _platform.hasBluetoothPermission()
-        : await _platform.hasUsageAccess();
+    final granted = await _access.has();
     if (!mounted) return;
     setState(() {
       if (granted != _granted) _revision++;
@@ -84,11 +82,7 @@ class _AccessScreenState extends State<AccessScreen>
   }
 
   Future<void> _request() async {
-    if (_bluetooth) {
-      await _platform.requestBluetoothPermission();
-    } else {
-      await _platform.openUsageAccess();
-    }
+    await _access.request();
     await _refreshAccess();
   }
 
@@ -114,7 +108,7 @@ class _AccessScreenState extends State<AccessScreen>
       sections: [
         _AccessSection(
           granted: _granted,
-          bluetooth: _bluetooth,
+          access: _access,
           onRequest: _request,
           onOpenAppSettings: _platform.openAppSettings,
         ),
@@ -163,16 +157,78 @@ class _AccessScreenState extends State<AccessScreen>
   }
 }
 
+/// Un accès : comment le lire, comment le demander, et comment l'expliquer.
+class _Access {
+  const _Access({
+    required this.has,
+    required this.request,
+    required this.button,
+    required this.description,
+    this.restricted = false,
+  });
+
+  final Future<bool> Function() has;
+  final Future<void> Function() request;
+  final String button;
+  final String description;
+
+  /// Accordé dans les réglages d'Android, que les « paramètres restreints »
+  /// bloquent d'abord pour une appli installée hors du Play Store.
+  final bool restricted;
+
+  static _Access of(WuxWidgetKind kind, WuxPlatform platform) => switch (kind) {
+    WuxWidgetKind.bluetooth => _Access(
+      has: platform.hasBluetoothPermission,
+      request: platform.requestBluetoothPermission,
+      button: 'Autoriser « Appareils à proximité »',
+      description:
+          'Halo lit le nom, le type et la batterie des appareils '
+          'Bluetooth connectés. Rien ne quitte le téléphone.',
+    ),
+    WuxWidgetKind.media => _Access(
+      has: platform.hasMediaAccess,
+      request: platform.openMediaAccess,
+      button: "Ouvrir l'accès aux notifications",
+      description:
+          "Android ne dit ce qui joue, et ne laisse le piloter, qu'aux "
+          'applis autorisées à « accéder aux notifications ». Halo n\'en lit '
+          'aucune : il suit seulement la lecture. Rien ne quitte le '
+          'téléphone.',
+      restricted: true,
+    ),
+    WuxWidgetKind.timer => _Access(
+      has: platform.hasNotificationPermission,
+      request: platform.requestNotificationPermission,
+      button: 'Autoriser les notifications',
+      description:
+          'À la fin d\'un minuteur, Halo sonne et affiche une '
+          'notification. Sans cette autorisation, le widget indique '
+          'seulement « Minuteur terminé ».',
+    ),
+    _ => _Access(
+      has: platform.hasUsageAccess,
+      request: platform.openUsageAccess,
+      button: "Ouvrir l'accès aux données d'utilisation",
+      description:
+          "Android réserve la durée d'utilisation des applis et la "
+          'consommation de données aux applis autorisées dans ses '
+          'réglages : activez Halo dans la liste. Rien ne quitte le '
+          'téléphone.',
+      restricted: true,
+    ),
+  };
+}
+
 class _AccessSection extends StatelessWidget {
   const _AccessSection({
     required this.granted,
-    required this.bluetooth,
+    required this.access,
     required this.onRequest,
     required this.onOpenAppSettings,
   });
 
   final bool? granted;
-  final bool bluetooth;
+  final _Access access;
   final VoidCallback onRequest;
   final VoidCallback onOpenAppSettings;
 
@@ -180,18 +236,10 @@ class _AccessSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final label = bluetooth
-        ? 'Autoriser « Appareils à proximité »'
-        : "Ouvrir l'accès aux données d'utilisation";
+    final label = access.button;
     return IuxSection(
       title: 'Accès',
-      description: bluetooth
-          ? 'Halo lit le nom, le type et la batterie des appareils '
-                'Bluetooth connectés. Rien ne quitte le téléphone.'
-          : "Android réserve la durée d'utilisation des applis et la "
-                'consommation de données aux applis autorisées dans ses '
-                'réglages : activez Halo dans la liste. Rien ne quitte le '
-                'téléphone.',
+      description: access.description,
       children: [
         if (granted != null)
           IuxStatusIndicator(
@@ -210,7 +258,7 @@ class _AccessSection extends StatelessWidget {
             expand: true,
             onActivate: onRequest,
           ),
-          if (!bluetooth) ...[
+          if (access.restricted) ...[
             const IuxGap.standard(),
             Text(
               "Si Android répond « L'accès a été refusé à cette appli » : "

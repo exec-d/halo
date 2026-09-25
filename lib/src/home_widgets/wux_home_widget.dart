@@ -26,6 +26,12 @@ enum WuxWidgetKind {
   /// Les données mobiles : l'accès aux données d'utilisation, le forfait et
   /// son jour de reprise.
   mobileData,
+
+  /// Lecture en cours : l'accès aux notifications.
+  media,
+
+  /// Chronomètre et minuteur : l'autorisation des notifications.
+  timer,
 }
 
 /// Description, côté Dart, d'un widget d'écran d'accueil déclaré côté Android.

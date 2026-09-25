@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu du lanceur, données d'exemple : widget_forecast -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_forecast_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="@dimen/widget_padding_vertical">
+
+    <TextView
+        android:id="@+id/preview_forecast_place"
+    android:text="5 jours · Lyon"
+        style="@style/HaloLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/preview_forecast_row"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center_horizontal" android:orientation="vertical">
+            <TextView style="@style/HaloLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Auj." />
+            <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_marginTop="2dp" android:importantForAccessibility="no" android:src="@drawable/icon_partly_cloudy" android:tint="@color/clock_line" />
+            <TextView style="@style/HaloValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="21°" android:textSize="15sp" />
+            <View android:layout_width="8dp" android:layout_height="0dp" android:layout_marginVertical="3dp" android:layout_weight="1" />
+            <TextView style="@style/HaloDetail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="11°" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center_horizontal" android:orientation="vertical">
+            <TextView style="@style/HaloLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ven" />
+            <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_marginTop="2dp" android:importantForAccessibility="no" android:src="@drawable/icon_rain" android:tint="@color/clock_line" />
+            <TextView style="@style/HaloValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="17°" android:textSize="15sp" />
+            <View android:layout_width="8dp" android:layout_height="0dp" android:layout_marginVertical="3dp" android:layout_weight="1" />
+            <TextView style="@style/HaloDetail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10°" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center_horizontal" android:orientation="vertical">
+            <TextView style="@style/HaloLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="sam" />
+            <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_marginTop="2dp" android:importantForAccessibility="no" android:src="@drawable/icon_showers" android:tint="@color/clock_line" />
+            <TextView style="@style/HaloValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="15°" android:textSize="15sp" />
+            <View android:layout_width="8dp" android:layout_height="0dp" android:layout_marginVertical="3dp" android:layout_weight="1" />
+            <TextView style="@style/HaloDetail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="9°" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center_horizontal" android:orientation="vertical">
+            <TextView style="@style/HaloLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="dim" />
+            <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_marginTop="2dp" android:importantForAccessibility="no" android:src="@drawable/icon_cloud" android:tint="@color/clock_line" />
+            <TextView style="@style/HaloValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="18°" android:textSize="15sp" />
+            <View android:layout_width="8dp" android:layout_height="0dp" android:layout_marginVertical="3dp" android:layout_weight="1" />
+            <TextView style="@style/HaloDetail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8°" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center_horizontal" android:orientation="vertical">
+            <TextView style="@style/HaloLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="lun" />
+            <ImageView android:layout_width="26dp" android:layout_height="26dp" android:layout_marginTop="2dp" android:importantForAccessibility="no" android:src="@drawable/icon_sunny" android:tint="@color/clock_line" />
+            <TextView style="@style/HaloValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="22°" android:textSize="15sp" />
+            <View android:layout_width="8dp" android:layout_height="0dp" android:layout_marginVertical="3dp" android:layout_weight="1" />
+            <TextView style="@style/HaloDetail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10°" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

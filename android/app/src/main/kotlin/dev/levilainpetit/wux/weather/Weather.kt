@@ -105,7 +105,7 @@ object Weather {
     private const val VERSION = "weather.cache_version"
 
     /** À augmenter quand la requête demande de nouvelles données. */
-    private const val CACHE_VERSION = 3
+    private const val CACHE_VERSION = 4
 
     fun place(context: Context): Place? {
         val parts = HomeWidgetPlugin.getData(context).getString(PLACE, null)?.split('|') ?: return null
@@ -129,7 +129,7 @@ object Weather {
             "&hourly=temperature_2m,weather_code,is_day,precipitation_probability,precipitation" +
             "&minutely_15=precipitation&forecast_minutely_15=12" +
             "&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset" +
-            "&timezone=auto&forecast_days=4"
+            "&timezone=auto&forecast_days=6"
         val body = get(url) ?: return false
         // Pollens et qualité de l'air : service distinct, facultatif (hors
         // Europe, pas de pollens).

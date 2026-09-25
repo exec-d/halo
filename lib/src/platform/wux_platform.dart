@@ -89,6 +89,18 @@ abstract interface class WuxPlatform {
   /// Ouvre le réglage d'Android qui accorde cet accès.
   Future<void> openUsageAccess();
 
+  /// Vrai si l'accès aux notifications est accordé (Lecture en cours).
+  Future<bool> hasMediaAccess();
+
+  /// Ouvre le réglage d'Android qui l'accorde.
+  Future<void> openMediaAccess();
+
+  /// Vrai si Halo peut afficher des notifications (fin d'un minuteur).
+  Future<bool> hasNotificationPermission();
+
+  /// Affiche la demande ; renvoie la réponse.
+  Future<void> requestNotificationPermission();
+
   /// Vrai si Halo peut voir les appareils Bluetooth connectés.
   Future<bool> hasBluetoothPermission();
 
@@ -193,6 +205,22 @@ class AndroidWuxPlatform implements WuxPlatform {
       }
     });
   }
+
+  @override
+  Future<bool> hasMediaAccess() async =>
+      await _channel.invokeMethod<bool>('hasMediaAccess') ?? false;
+
+  @override
+  Future<void> openMediaAccess() =>
+      _channel.invokeMethod<void>('openMediaAccess');
+
+  @override
+  Future<bool> hasNotificationPermission() async =>
+      await _channel.invokeMethod<bool>('hasNotificationPermission') ?? false;
+
+  @override
+  Future<void> requestNotificationPermission() =>
+      _channel.invokeMethod<void>('requestNotificationPermission');
 
   @override
   Future<bool> hasUsageAccess() async =>

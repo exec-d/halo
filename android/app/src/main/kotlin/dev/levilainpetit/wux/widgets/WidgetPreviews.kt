@@ -51,6 +51,11 @@ object WidgetPreviews {
         "bt_devices" -> BluetoothDevicesWidget()
         "screen_time" -> ScreenTimeWidget()
         "mobile_data" -> MobileDataWidget()
+        "forecast" -> ForecastWidget()
+        "analog" -> AnalogClockWidget()
+        "ephemeris" -> EphemerisWidget()
+        "timer" -> TimerWidget()
+        "media" -> MediaWidget()
         else -> null
     }
 

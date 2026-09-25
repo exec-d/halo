@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu du lanceur, données d'exemple : widget_timer -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_timer_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="4dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView android:id="@+id/preview_timer_mode"
+    android:text="Minuteur · 25 min" style="@style/HaloLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <Chronometer
+            android:id="@+id/preview_timer_clock"
+    android:text="17:42"
+            style="@style/HaloValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="32sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/preview_timer_toggle"
+    android:src="@drawable/timer_play"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="@string/timer_toggle"
+        android:padding="8dp"
+        android:tint="@color/clock_core" />
+    <ImageView
+        android:id="@+id/preview_timer_reset"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="@string/timer_reset"
+        android:padding="9dp"
+        android:src="@drawable/timer_reset"
+        android:tint="@color/clock_line" />
+
+    <LinearLayout
+        android:id="@+id/preview_timer_presets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:orientation="horizontal">
+        <TextView android:id="@+id/preview_timer_preset_1" style="@style/HaloDetail" android:layout_width="30dp" android:layout_height="36dp" android:gravity="center" android:text="1" android:textColor="@color/clock_core" android:textSize="13sp" />
+        <TextView android:id="@+id/preview_timer_preset_5" style="@style/HaloDetail" android:layout_width="30dp" android:layout_height="36dp" android:gravity="center" android:text="5" android:textColor="@color/clock_core" android:textSize="13sp" />
+        <TextView android:id="@+id/preview_timer_preset_10" style="@style/HaloDetail" android:layout_width="30dp" android:layout_height="36dp" android:gravity="center" android:text="10" android:textColor="@color/clock_core" android:textSize="13sp" />
+        <TextView android:id="@+id/preview_timer_preset_25" style="@style/HaloDetail" android:layout_width="30dp" android:layout_height="36dp" android:gravity="center" android:text="25" android:textColor="@color/clock_core" android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

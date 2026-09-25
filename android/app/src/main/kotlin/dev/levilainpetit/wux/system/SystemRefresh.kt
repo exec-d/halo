@@ -8,6 +8,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import dev.levilainpetit.wux.widgets.BatteryWidget
 import dev.levilainpetit.wux.widgets.BluetoothDevicesWidget
+import dev.levilainpetit.wux.widgets.MediaWidget
 import dev.levilainpetit.wux.widgets.MobileDataWidget
 import dev.levilainpetit.wux.widgets.ScreenTimeWidget
 import java.util.concurrent.TimeUnit
@@ -32,6 +33,7 @@ object SystemRefresh {
         BluetoothDevicesWidget().renderAll(context)
         ScreenTimeWidget().renderAll(context)
         MobileDataWidget().renderAll(context)
+        MediaWidget().renderAll(context)
     }
 }
 

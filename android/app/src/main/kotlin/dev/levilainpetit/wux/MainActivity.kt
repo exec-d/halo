@@ -13,6 +13,7 @@ import android.os.PowerManager
 import android.net.Uri
 import android.provider.Settings
 import dev.levilainpetit.wux.calendar.CalendarRepository
+import dev.levilainpetit.wux.media.MediaListener
 import dev.levilainpetit.wux.system.BluetoothDevices
 import dev.levilainpetit.wux.system.SystemRefresh
 import dev.levilainpetit.wux.system.UsageAccess
@@ -46,7 +47,7 @@ open class MainActivity : FlutterActivity() {
     private var pendingPermission: MethodChannel.Result? = null
     private var pendingLocation: MethodChannel.Result? = null
     private var pendingLocationPermission: MethodChannel.Result? = null
-    private var pendingBluetoothPermission: MethodChannel.Result? = null
+    private var pendingSimplePermission: MethodChannel.Result? = null
     private var channel: MethodChannel? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -160,6 +161,36 @@ open class MainActivity : FlutterActivity() {
                 }
             }
             "launchTarget" -> result.success(launchTarget())
+            "hasMediaAccess" -> result.success(MediaListener.enabled(this))
+            "openMediaAccess" -> {
+                val detail = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    Intent(Settings.ACTION_NOTIFICATION_LISTENER_DETAIL_SETTINGS)
+                        .putExtra(Settings.EXTRA_NOTIFICATION_LISTENER_COMPONENT_NAME, MediaListener.component(this).flattenToString())
+                } else {
+                    null
+                }
+                try {
+                    startActivity(detail ?: Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                } catch (e: ActivityNotFoundException) {
+                    startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                }
+                result.success(null)
+            }
+            "hasNotificationPermission" -> result.success(
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                    checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED,
+            )
+            "requestNotificationPermission" -> {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                    checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    result.success(true)
+                } else {
+                    pendingSimplePermission?.success(false)
+                    pendingSimplePermission = result
+                    requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), SIMPLE_REQUEST)
+                }
+            }
             "hasUsageAccess" -> result.success(UsageAccess.granted(this))
             "openUsageAccess" -> {
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).apply {
@@ -178,9 +209,9 @@ open class MainActivity : FlutterActivity() {
                 if (BluetoothDevices.hasPermission(this) || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                     result.success(true)
                 } else {
-                    pendingBluetoothPermission?.success(false)
-                    pendingBluetoothPermission = result
-                    requestPermissions(arrayOf(Manifest.permission.BLUETOOTH_CONNECT), BLUETOOTH_REQUEST)
+                    pendingSimplePermission?.success(false)
+                    pendingSimplePermission = result
+                    requestPermissions(arrayOf(Manifest.permission.BLUETOOTH_CONNECT), SIMPLE_REQUEST)
                 }
             }
             "openBatterySettings" -> {
@@ -324,9 +355,9 @@ open class MainActivity : FlutterActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val granted = grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED
-        if (requestCode == BLUETOOTH_REQUEST) {
-            pendingBluetoothPermission?.success(granted)
-            pendingBluetoothPermission = null
+        if (requestCode == SIMPLE_REQUEST) {
+            pendingSimplePermission?.success(granted)
+            pendingSimplePermission = null
             scope.launch(Dispatchers.IO) { SystemRefresh.redraw(applicationContext) }
             return
         }
@@ -357,6 +388,7 @@ open class MainActivity : FlutterActivity() {
         const val CALENDAR_REQUEST = 4201
         const val LOCATION_REQUEST = 4202
         const val LOCATION_ONLY_REQUEST = 4203
-        const val BLUETOOTH_REQUEST = 4204
+        /** Autorisation simple (Bluetooth, notifications) : une réponse oui ou non. */
+        const val SIMPLE_REQUEST = 4204
     }
 }

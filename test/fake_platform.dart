@@ -104,6 +104,21 @@ class FakePlatform implements WuxPlatform {
   @override
   void onOpen(void Function(String target) handler) => openHandler = handler;
 
+  var mediaAccess = false;
+  var notifications = false;
+
+  @override
+  Future<bool> hasMediaAccess() async => mediaAccess;
+
+  @override
+  Future<void> openMediaAccess() async => mediaAccess = true;
+
+  @override
+  Future<bool> hasNotificationPermission() async => notifications;
+
+  @override
+  Future<void> requestNotificationPermission() async => notifications = true;
+
   var usageAccess = false;
   var usageSettingsOpened = 0;
   var bluetooth = false;

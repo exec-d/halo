@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Un jour des prévisions : nom, icône, maximum, capsule min–max sur
+     l'échelle de la semaine, minimum. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView android:id="@+id/forecast_day_name" style="@style/HaloLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/forecast_day_icon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="2dp"
+        android:importantForAccessibility="no"
+        android:tint="@color/clock_line" />
+    <TextView android:id="@+id/forecast_day_max" style="@style/HaloValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:textSize="15sp" />
+    <ImageView
+        android:id="@+id/forecast_day_range"
+        android:layout_width="8dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="3dp"
+        android:layout_weight="1"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:tint="@color/clock_line" />
+    <TextView android:id="@+id/forecast_day_min" style="@style/HaloDetail" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+</LinearLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Éphéméride : fête du jour, semaine et jour de l'année, l'année en douze
+     mois, prochain jour férié (EphemerisWidget). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ephemeris_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="@dimen/widget_padding_vertical">
+
+    <TextView
+        style="@style/HaloLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ephemeris_title" />
+    <TextView
+        android:id="@+id/ephemeris_saint"
+        style="@style/HaloValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/ephemeris_numbers"
+        style="@style/HaloDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp" />
+    <ImageView
+        android:id="@+id/ephemeris_year"
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:layout_marginTop="4dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:tint="@color/clock_line" />
+    <TextView
+        android:id="@+id/ephemeris_holiday"
+        style="@style/HaloDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/clock_core" />
+</LinearLayout>

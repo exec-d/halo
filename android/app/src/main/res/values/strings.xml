@@ -248,4 +248,49 @@
     <string name="tile_intensity_vivid">Vif</string>
     <string name="tile_battery">Batterie</string>
     <string name="dream_label">Halo</string>
+    <string name="widget_forecast_label">Prévisions 5 jours</string>
+    <string name="widget_forecast_description">Cinq jours de météo, et la place de chacun dans la semaine.</string>
+    <string name="forecast_title">5 jours · %1$s</string>
+    <string name="forecast_today">Auj.</string>
+    <string name="widget_analog_label">Horloge analogique</string>
+    <string name="widget_analog_description">Un cadran néon aux aiguilles lumineuses.</string>
+    <string name="widget_ephemeris_label">Éphéméride</string>
+    <string name="widget_ephemeris_description">La fête du jour, la semaine, l\'année qui avance et le prochain jour férié.</string>
+    <string name="ephemeris_title">Aujourd\'hui</string>
+    <string name="ephemeris_saint">Bonne fête %1$s</string>
+    <string name="ephemeris_numbers">Semaine %1$d · jour %2$d sur %3$d</string>
+    <string name="ephemeris_holiday">%1$s dans %2$d j</string>
+    <string name="ephemeris_holiday_today">%1$s aujourd\'hui</string>
+    <string name="ephemeris_holiday_tomorrow">%1$s demain</string>
+    <!-- Jours fériés en France, dans l'ordre de EphemerisWidget.holidays. -->
+    <string-array name="holidays">
+        <item>Jour de l\'An</item>
+        <item>Lundi de Pâques</item>
+        <item>Fête du Travail</item>
+        <item>Victoire 1945</item>
+        <item>Ascension</item>
+        <item>Lundi de Pentecôte</item>
+        <item>Fête nationale</item>
+        <item>Assomption</item>
+        <item>Toussaint</item>
+        <item>Armistice</item>
+        <item>Noël</item>
+    </string-array>
+    <string name="widget_timer_label">Chronomètre et minuteur</string>
+    <string name="widget_timer_description">Un chronomètre, et des minuteurs de 1, 5, 10 et 25 minutes d\'un toucher.</string>
+    <string name="timer_stopwatch">Chronomètre</string>
+    <string name="timer_countdown">Minuteur · %1$d min</string>
+    <string name="timer_done">Minuteur terminé</string>
+    <string name="timer_done_detail">%1$d minutes écoulées.</string>
+    <string name="timer_channel">Minuteur</string>
+    <string name="timer_toggle">Démarrer ou mettre en pause</string>
+    <string name="timer_reset">Remettre à zéro</string>
+    <string name="widget_media_label">Lecture en cours</string>
+    <string name="widget_media_description">Ce qui joue, avec sa pochette en néon, et les commandes.</string>
+    <string name="media_permission">Touchez pour autoriser Halo à voir ce qui joue.</string>
+    <string name="media_nothing">Rien en lecture</string>
+    <string name="media_previous">Précédent</string>
+    <string name="media_play">Lecture ou pause</string>
+    <string name="media_next">Suivant</string>
+    <string name="media_listener">Halo · Lecture en cours</string>
 </resources>

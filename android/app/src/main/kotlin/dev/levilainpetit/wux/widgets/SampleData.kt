@@ -142,6 +142,10 @@ object SampleData {
             days = listOf(
                 Day(today, 2, 21.0, 11.0, LocalTime.of(7, 42), LocalTime.of(19, 48)),
                 Day(today.plusDays(1), 61, 17.0, 10.0, LocalTime.of(7, 43), LocalTime.of(19, 46)),
+                Day(today.plusDays(2), 80, 15.0, 9.0, LocalTime.of(7, 45), LocalTime.of(19, 44)),
+                Day(today.plusDays(3), 3, 18.0, 8.0, LocalTime.of(7, 46), LocalTime.of(19, 42)),
+                Day(today.plusDays(4), 1, 22.0, 10.0, LocalTime.of(7, 48), LocalTime.of(19, 40)),
+                Day(today.plusDays(5), 0, 24.0, 12.0, LocalTime.of(7, 49), LocalTime.of(19, 38)),
             ),
         )
     }
