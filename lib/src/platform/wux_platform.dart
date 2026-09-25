@@ -45,6 +45,10 @@ abstract interface class WuxPlatform {
   /// Vrai si le fond d'écran Halo est celui du téléphone.
   Future<bool> isWallpaperActive({String kind = 'circuit'});
 
+  /// Les classes Android (`androidProvider`) des widgets posés au moins une
+  /// fois, sur l'accueil ou l'écran de verrouillage.
+  Future<Set<String>> placedWidgets();
+
   /// Ouvre l'écran système qui applique le fond d'écran ; faux s'il manque.
   Future<bool> applyWallpaper({String kind = 'circuit'});
 
@@ -190,6 +194,11 @@ class AndroidWuxPlatform implements WuxPlatform {
   Future<bool> isWallpaperActive({String kind = 'circuit'}) async =>
       await _channel.invokeMethod<bool>('wallpaperActive', {'kind': kind}) ??
       false;
+
+  @override
+  Future<Set<String>> placedWidgets() async =>
+      (await _channel.invokeListMethod<String>('placedWidgets'))?.toSet() ??
+      const {};
 
   @override
   Future<bool> applyWallpaper({String kind = 'circuit'}) async =>

@@ -40,7 +40,7 @@ keep that name.*
 quick settings tiles (Weather, Halo wallpaper, Battery) and icon shortcuts
 (Wallpaper, Widgets, Settings).
 
-**The app**: gallery with previews (wallpaper carousel, widgets filtered by family), settings for each widget (also through
+**The app**: gallery in three tabs (gallery, wallpapers, my setup), settings for each widget (also through
 a long press on the widget), permissions, About and licences, in French and
 English.
 

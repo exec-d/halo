@@ -254,6 +254,16 @@ open class MainActivity : FlutterActivity() {
                 WallpaperSettings.setIntensityName(this, call.argument<String>("value") ?: "discreet")
                 result.success(null)
             }
+            // Les classes des widgets de Halo posés au moins une fois.
+            "placedWidgets" -> {
+                val manager = AppWidgetManager.getInstance(this)
+                result.success(
+                    manager.installedProviders
+                        .filter { it.provider.packageName == packageName }
+                        .filter { manager.getAppWidgetIds(it.provider).isNotEmpty() }
+                        .map { it.provider.className },
+                )
+            }
             "wallpaperActive" -> result.success(
                 WallpaperPreview.isActive(this, call.argument<String>("kind") ?: WallpaperPreview.CIRCUIT),
             )

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iux_flutter/iux_flutter.dart';
 
 import '../../l10n/app_localizations.dart';
 
@@ -7,17 +6,16 @@ import '../home_widgets/catalog.dart';
 import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import '../previews/widget_previews.dart';
-import 'about_screen.dart';
 import 'dream_screen.dart';
-import 'screen_frame.dart';
 import 'settings_screen.dart';
 import 'wallpaper_screen.dart';
 import 'widget_screen.dart';
 
-/// La galerie de Halo : le fond d'écran du moment en grand, les fonds animés
-/// en carrousel, puis les widgets, filtrables par famille, chacun avec un
-/// aperçu d'exemple ; toucher une carte ouvre ses réglages, avec l'aperçu de
-/// ses vraies données. L'écran de veille ferme la page.
+/// L'accueil de Halo, en trois onglets : la galerie (le fond du moment en
+/// grand, les fonds animés en carrousel, les widgets en mosaïque, filtrables
+/// par famille), les fonds animés en grand avec l'écran de veille, et ce qui
+/// est déjà posé sur le téléphone. Toucher un widget ouvre ses réglages, avec
+/// l'aperçu de ses vraies données.
 ///
 /// Au premier lancement, demande l'accès à l'agenda, dont dépendent trois
 /// widgets. La position, qui ne sert qu'à la météo, est demandée là-bas.
@@ -35,20 +33,33 @@ class CatalogScreen extends StatefulWidget {
   State<CatalogScreen> createState() => _CatalogScreenState();
 }
 
-class _CatalogScreenState extends State<CatalogScreen> {
+class _CatalogScreenState extends State<CatalogScreen>
+    with WidgetsBindingObserver {
   List<WuxHomeWidget> get widgets => widget.widgets;
   WuxPlatform get platform => widget.platform;
+
+  /// Onglet affiché : galerie, fonds, mes ajouts.
+  int _tab = 0;
 
   /// Famille affichée, `null` : tous les widgets.
   WuxWidgetCategory? _category;
 
+  /// Texte cherché, `null` : pas de recherche ouverte.
+  String? _query;
+
   /// Le fond Halo appliqué, s'il y en a un.
   HaloWallpaper? _active;
+
+  /// Les classes Android des widgets posés.
+  Set<String> _placed = const {};
+
+  final _widgetsKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    _findActive();
+    WidgetsBinding.instance.addObserver(this);
+    _refresh();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _firstLaunch();
       final target = await platform.launchTarget();
@@ -57,7 +68,33 @@ class _CatalogScreenState extends State<CatalogScreen> {
     platform.onOpen(_openTarget);
   }
 
-  final _widgetsKey = GlobalKey();
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // De retour sur Halo : un fond ou un widget vient peut-être d'être posé.
+    if (state == AppLifecycleState.resumed) _refresh();
+  }
+
+  Future<void> _refresh() async {
+    HaloWallpaper? active;
+    for (final wallpaper in haloWallpapers) {
+      if (await platform.isWallpaperActive(kind: wallpaper.id)) {
+        active = wallpaper;
+        break;
+      }
+    }
+    final placed = await platform.placedWidgets();
+    if (!mounted) return;
+    setState(() {
+      _active = active;
+      _placed = placed;
+    });
+  }
 
   /// Un raccourci de l'icône ou une tuile des réglages rapides : le fond
   /// d'écran, les réglages, la météo, ou la liste des widgets.
@@ -67,55 +104,23 @@ class _CatalogScreenState extends State<CatalogScreen> {
     navigator.popUntil((route) => route.isFirst);
     switch (target) {
       case 'wallpaper':
-        navigator.push<void>(
-          MaterialPageRoute<void>(
-            builder: (_) => WallpaperScreen(platform: platform),
-          ),
-        );
+        _openWallpaper(_active ?? circuitWallpaper);
       case 'settings':
-        navigator.push<void>(
-          MaterialPageRoute<void>(
-            builder: (_) => SettingsScreen(platform: platform),
-          ),
-        );
+        _push(SettingsScreen(platform: platform));
       case 'weather':
-        navigator.push<void>(
-          MaterialPageRoute<void>(
-            builder: (_) =>
-                WidgetScreen(homeWidget: weatherWidget, platform: platform),
-          ),
-        );
+        _openWidget(weatherWidget);
       case 'widgets':
-        final section = _widgetsKey.currentContext;
-        if (section != null) {
-          Scrollable.ensureVisible(
-            section,
-            duration: const Duration(milliseconds: 300),
-          );
-        }
+        setState(() => _tab = 0);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final section = _widgetsKey.currentContext;
+          if (section != null) {
+            Scrollable.ensureVisible(
+              section,
+              duration: const Duration(milliseconds: 300),
+            );
+          }
+        });
     }
-  }
-
-  Future<void> _findActive() async {
-    for (final wallpaper in haloWallpapers) {
-      if (await platform.isWallpaperActive(kind: wallpaper.id)) {
-        if (mounted) setState(() => _active = wallpaper);
-        return;
-      }
-    }
-    if (mounted) setState(() => _active = null);
-  }
-
-  void _openWallpaper(HaloWallpaper wallpaper) {
-    Navigator.of(context)
-        .push<void>(
-          MaterialPageRoute<void>(
-            builder: (_) =>
-                WallpaperScreen(platform: platform, wallpaper: wallpaper),
-          ),
-        )
-        // De retour : le fond vient peut-être d'être appliqué.
-        .then((_) => _findActive());
   }
 
   Future<void> _firstLaunch() async {
@@ -126,21 +131,71 @@ class _CatalogScreenState extends State<CatalogScreen> {
     }
   }
 
-  void _open(BuildContext context, WuxHomeWidget homeWidget) {
-    Navigator.of(context).push<void>(
-      MaterialPageRoute<void>(
-        builder: (context) =>
-            WidgetScreen(homeWidget: homeWidget, platform: platform),
+  Future<void> _push(Widget screen) async {
+    await Navigator.of(context)
+        .push<void>(MaterialPageRoute<void>(builder: (_) => screen));
+    _refresh();
+  }
+
+  void _openWallpaper(HaloWallpaper wallpaper) =>
+      _push(WallpaperScreen(platform: platform, wallpaper: wallpaper));
+
+  void _openWidget(WuxHomeWidget homeWidget) =>
+      _push(WidgetScreen(homeWidget: homeWidget, platform: platform));
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: _Neon.amber,
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: _Neon.background,
+        body: SafeArea(
+          bottom: false,
+          child: switch (_tab) {
+            0 => _gallery(context),
+            1 => _WallpapersTab(
+              platform: platform,
+              active: _active,
+              onOpen: _openWallpaper,
+              onDream: () => _push(DreamScreen(platform: platform)),
+            ),
+            _ => _MineTab(
+              platform: platform,
+              active: _active,
+              placed: [
+                for (final homeWidget in widgets)
+                  if (_placed.contains(homeWidget.androidProvider)) homeWidget,
+              ],
+              onOpenWallpaper: _openWallpaper,
+              onOpenWidget: _openWidget,
+            ),
+          },
+        ),
+        bottomNavigationBar: _NavigationBar(
+          selected: _tab,
+          onSelect: (tab) {
+            setState(() => _tab = tab);
+            if (tab == 2) _refresh();
+          },
+        ),
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _gallery(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final query = _query?.trim().toLowerCase() ?? '';
     final shown = [
       for (final homeWidget in widgets)
-        if (_category == null || homeWidget.category == _category) homeWidget,
+        if ((_category == null || homeWidget.category == _category) &&
+            (query.isEmpty ||
+                homeWidget.title(l10n).toLowerCase().contains(query) ||
+                homeWidget.description(l10n).toLowerCase().contains(query)))
+          homeWidget,
     ];
     final categories = <(WuxWidgetCategory?, String)>[
       (null, l10n.catalogFilterAll),
@@ -149,261 +204,430 @@ class _CatalogScreenState extends State<CatalogScreen> {
       (WuxWidgetCategory.system, l10n.catalogFilterSystem),
       (WuxWidgetCategory.media, l10n.catalogFilterMedia),
     ];
-    return Scaffold(
-      body: ScreenFrame(
-        title: l10n.appTitle,
-        actions: [
-          IuxIconButton(
-            icon: Icons.settings_outlined,
-            action: IuxActionDescriptor(
-              semantics: IuxActionSemantics(label: l10n.catalogSettings),
-            ),
-            onActivate: () => Navigator.of(context).push<void>(
-              MaterialPageRoute<void>(
-                builder: (_) => SettingsScreen(platform: platform),
+    final active = _active ?? circuitWallpaper;
+    return SingleChildScrollView(
+      padding: const EdgeInsets.only(bottom: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _Header(
+            searching: _query != null,
+            onSearch: () => setState(() => _query = _query == null ? '' : null),
+            onSettings: () => _push(SettingsScreen(platform: platform)),
+          ),
+          if (_query != null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+              child: _SearchField(
+                onChanged: (value) => setState(() => _query = value),
               ),
             ),
-          ),
-          IuxIconButton(
-            icon: Icons.info_outline,
-            action: IuxActionDescriptor(
-              semantics: IuxActionSemantics(label: l10n.catalogAbout),
-            ),
-            onActivate: () => Navigator.of(context).push<void>(
-              MaterialPageRoute<void>(
-                builder: (_) => AboutScreen(platform: platform),
-              ),
-            ),
-          ),
-        ],
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _WallpaperHero(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+            child: _Hero(
               platform: platform,
-              wallpaper: _active ?? circuitWallpaper,
+              wallpaper: active,
               active: _active != null,
-              onOpen: () => _openWallpaper(_active ?? circuitWallpaper),
+              onOpen: () => _openWallpaper(active),
+              onChange: () => setState(() => _tab = 1),
             ),
-            const IuxGap.between(),
-            IuxSection(
-              title: l10n.catalogWallpapers,
-              children: [
-                // Tous construits (pas de liste paresseuse) : six fonds.
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  clipBehavior: Clip.none,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for (final (i, wallpaper) in haloWallpapers.indexed) ...[
-                        if (i > 0) const SizedBox(width: 12),
-                        _WallpaperTile(
-                          platform: platform,
-                          wallpaper: wallpaper,
-                          active: wallpaper == _active,
-                          onOpen: () => _openWallpaper(wallpaper),
-                        ),
-                      ],
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 18, 16, 6),
+            child: Semantics(
+              label: l10n.catalogFilterLabel,
+              container: true,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                clipBehavior: Clip.none,
+                child: Row(
+                  children: [
+                    for (final (i, (category, label))
+                        in categories.indexed) ...[
+                      if (i > 0) const SizedBox(width: 8),
+                      _Chip(
+                        label: label,
+                        selected: _category == category,
+                        onSelect: () => setState(() => _category = category),
+                      ),
                     ],
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-            const IuxGap.between(),
-            IuxSection(
-              key: _widgetsKey,
-              title: l10n.catalogWidgets,
+          ),
+          _SectionHeader(
+            title: l10n.catalogWallpapers,
+            trailing: _TextLink(
+              label: l10n.catalogSeeAll,
+              onTap: () => setState(() => _tab = 1),
+            ),
+          ),
+          // Tous construits (pas de liste paresseuse) : six fonds.
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  clipBehavior: Clip.none,
-                  child: IuxChipGroup(
-                    label: l10n.catalogFilterLabel,
-                    chips: [
-                      for (final (category, label) in categories)
-                        IuxFilterChip(
-                          label: label,
-                          selected: _category == category,
-                          onSelectionChanged: (_) =>
-                              setState(() => _category = category),
-                        ),
-                    ],
+                for (final (i, wallpaper) in haloWallpapers.indexed) ...[
+                  if (i > 0) const SizedBox(width: 12),
+                  _WallpaperTile(
+                    platform: platform,
+                    wallpaper: wallpaper,
+                    active: wallpaper == _active,
+                    width: 118,
+                    height: 200,
+                    onOpen: () => _openWallpaper(wallpaper),
                   ),
-                ),
-                const IuxGap.standard(),
-                for (final row in _rows(shown)) ...[
-                  if (row.length == 1)
-                    _WidgetTile(
-                      homeWidget: row.single,
-                      platform: platform,
-                      onOpen: () => _open(context, row.single),
-                    )
-                  else
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (final (i, homeWidget) in row.indexed) ...[
-                          if (i > 0) const SizedBox(width: 12),
-                          Expanded(
-                            child: _WidgetTile(
-                              homeWidget: homeWidget,
-                              platform: platform,
-                              onOpen: () => _open(context, homeWidget),
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  const IuxGap.standard(),
                 ],
               ],
             ),
-            const IuxGap.between(),
-            IuxSection(
-              title: l10n.dreamTitle,
-              children: [
-                IuxCard.tappable(
-                  semanticLabel: l10n.dreamTitle,
-                  hint: l10n.dreamDescription,
-                  onActivate: () => Navigator.of(context).push<void>(
-                    MaterialPageRoute<void>(
-                      builder: (_) => DreamScreen(platform: platform),
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.dreamTitle,
-                        style: IuxTypographyTheme.of(context).title,
-                      ),
-                      Text(
-                        l10n.dreamDescription,
-                        style: IuxTypographyTheme.of(context).body,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+          ),
+          _SectionHeader(
+            key: _widgetsKey,
+            title: l10n.catalogWidgets,
+            trailing: Text(
+              l10n.catalogWidgetCount(shown.length),
+              style: _Neon.mono(12, color: _Neon.faint),
             ),
-          ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: shown.isEmpty
+                ? Text(l10n.catalogNoMatch, style: _Neon.body(14))
+                : _Mosaic(
+                    widgets: shown,
+                    platform: platform,
+                    onOpen: _openWidget,
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Les couleurs et les polices de la galerie : fond nuit, ambre de Halo,
+/// cyan pour les nouveautés.
+abstract final class _Neon {
+  static const background = Color(0xFF05070D);
+  static const surface = Color(0xFF0C111C);
+  static const stage = Color(0xFF070B14);
+  static const line = Color(0xFF1B2333);
+  static const outline = Color(0xFF2A3346);
+  static const navigation = Color(0xFF0A0E18);
+  static const text = Color(0xFFE8ECF4);
+  static const muted = Color(0xFFB4BCCC);
+  static const faint = Color(0xFF9AA3B5);
+  static const amber = Color(0xFFF2C178);
+  static const onAmber = Color(0xFF1A1206);
+  static const cyan = Color(0xFF5CE1E6);
+  static const onCyan = Color(0xFF03181A);
+
+  static TextStyle display(
+    double size, {
+    FontWeight weight = FontWeight.w600,
+    Color color = text,
+  }) => TextStyle(
+    fontFamily: 'ChakraPetch',
+    fontSize: size,
+    fontWeight: weight,
+    color: color,
+    height: 1.15,
+  );
+
+  static TextStyle body(
+    double size, {
+    FontWeight weight = FontWeight.w400,
+    Color color = muted,
+  }) => TextStyle(
+    fontFamily: 'IBMPlexSans',
+    fontSize: size,
+    fontWeight: weight,
+    color: color,
+    height: 1.35,
+  );
+
+  static TextStyle mono(
+    double size, {
+    FontWeight weight = FontWeight.w400,
+    Color color = amber,
+    double spacing = 0,
+  }) => TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontSize: size,
+    fontWeight: weight,
+    color: color,
+    letterSpacing: spacing,
+  );
+}
+
+/// Une zone qu'on touche : un bouton pour les lecteurs d'écran, un reflet au
+/// toucher.
+class _Tappable extends StatelessWidget {
+  const _Tappable({
+    required this.label,
+    required this.onTap,
+    required this.child,
+    this.hint,
+    this.radius = 20,
+    this.selected,
+  });
+
+  final String label;
+  final String? hint;
+  final VoidCallback onTap;
+  final Widget child;
+  final double radius;
+  final bool? selected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: label,
+      hint: hint,
+      excludeSemantics: true,
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(radius),
+          splashColor: _Neon.amber.withValues(alpha: 0.12),
+          highlightColor: _Neon.amber.withValues(alpha: 0.06),
+          child: child,
         ),
       ),
     );
   }
-
-  /// Les widgets en rangées : les étroits deux par deux, les larges seuls,
-  /// pour que chacun garde une taille lisible.
-  static List<List<WuxHomeWidget>> _rows(List<WuxHomeWidget> shown) {
-    final rows = <List<WuxHomeWidget>>[];
-    WuxHomeWidget? waiting;
-    for (final homeWidget in shown) {
-      if (homeWidget.previewSize.width > _narrow) {
-        rows.add([homeWidget]);
-      } else if (waiting == null) {
-        waiting = homeWidget;
-        rows.add([homeWidget]);
-      } else {
-        rows[rows.indexWhere((row) => row.first == waiting)] = [
-          waiting,
-          homeWidget,
-        ];
-        waiting = null;
-      }
-    }
-    return rows;
-  }
-
-  /// Largeur (dp) sous laquelle un widget partage sa rangée.
-  static const _narrow = 220;
 }
 
-/// Le fond d'écran du moment, en grand : son aperçu, son nom, et s'il est
-/// appliqué.
-class _WallpaperHero extends StatelessWidget {
-  const _WallpaperHero({
+/// Le logo, le nom, la recherche et les réglages.
+class _Header extends StatelessWidget {
+  const _Header({
+    required this.searching,
+    required this.onSearch,
+    required this.onSettings,
+  });
+
+  final bool searching;
+  final VoidCallback onSearch;
+  final VoidCallback onSettings;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 16, 12, 4),
+      child: Row(
+        children: [
+          ExcludeSemantics(
+            child: Container(
+              width: 26,
+              height: 26,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: _Neon.amber, width: 2.4),
+              ),
+              alignment: Alignment.center,
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _Neon.amber,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Semantics(
+              header: true,
+              label: l10n.appTitle,
+              excludeSemantics: true,
+              child: Text(
+                'HALO',
+                style: _Neon.display(
+                  26,
+                  weight: FontWeight.w700,
+                ).copyWith(letterSpacing: 1),
+              ),
+            ),
+          ),
+          _IconButton(
+            icon: searching ? Icons.close : Icons.search,
+            label: searching ? l10n.catalogSearchClose : l10n.catalogSearch,
+            onTap: onSearch,
+          ),
+          _IconButton(
+            icon: Icons.settings_outlined,
+            label: l10n.catalogSettings,
+            onTap: onSettings,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _IconButton extends StatelessWidget {
+  const _IconButton({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return _Tappable(
+      label: label,
+      onTap: onTap,
+      radius: 24,
+      child: SizedBox(
+        width: 48,
+        height: 48,
+        child: Icon(icon, color: _Neon.text, size: 22),
+      ),
+    );
+  }
+}
+
+class _SearchField extends StatelessWidget {
+  const _SearchField({required this.onChanged});
+
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return TextField(
+      autofocus: true,
+      onChanged: onChanged,
+      style: _Neon.body(15, color: _Neon.text),
+      decoration: InputDecoration(
+        hintText: l10n.catalogSearch,
+        hintStyle: _Neon.body(15, color: _Neon.faint),
+        prefixIcon: const Icon(Icons.search, color: _Neon.faint),
+        filled: true,
+        fillColor: _Neon.surface,
+        contentPadding: const EdgeInsets.symmetric(vertical: 14),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: const BorderSide(color: _Neon.outline),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: const BorderSide(color: _Neon.amber, width: 1.5),
+        ),
+      ),
+    );
+  }
+}
+
+/// Le fond d'écran du moment, en grand, recadré au milieu.
+class _Hero extends StatelessWidget {
+  const _Hero({
     required this.platform,
     required this.wallpaper,
     required this.active,
     required this.onOpen,
+    required this.onChange,
   });
 
   final WuxPlatform platform;
   final HaloWallpaper wallpaper;
   final bool active;
   final VoidCallback onOpen;
-
-  static const _height = 280.0;
+  final VoidCallback onChange;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final typography = IuxTypographyTheme.of(context);
     final title = wallpaper.title(l10n);
-    return IuxCard.tappable(
-      semanticLabel: title,
-      hint: wallpaper.description(l10n),
-      onActivate: onOpen,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(28),
+      child: DecoratedBox(
+        position: DecorationPosition.foreground,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(color: _Neon.line),
+        ),
         child: SizedBox(
-          height: _height,
+          height: 300,
           child: LayoutBuilder(
             builder: (context, constraints) => Stack(
               fit: StackFit.expand,
               children: [
-                // L'aperçu au format du téléphone, recadré au milieu.
-                OverflowBox(
-                  maxHeight: constraints.maxWidth * 20 / 9,
-                  child: WallpaperPreview(
-                    key: ValueKey(wallpaper.id),
-                    platform: platform,
-                    wallpaper: wallpaper,
-                    width: constraints.maxWidth,
+                _Tappable(
+                  label: title,
+                  hint: wallpaper.description(l10n),
+                  radius: 28,
+                  onTap: onOpen,
+                  child: ColoredBox(
+                    color: _Neon.stage,
+                    child: OverflowBox(
+                      maxHeight: constraints.maxWidth * 20 / 9,
+                      child: WallpaperPreview(
+                        key: ValueKey(wallpaper.id),
+                        platform: platform,
+                        wallpaper: wallpaper,
+                        width: constraints.maxWidth,
+                      ),
+                    ),
                   ),
                 ),
-                const DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: [0.45, 1],
-                      colors: [Color(0x0005070D), Color(0xF005070D)],
+                // Le texte laisse passer le toucher jusqu'à l'aperçu.
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: IgnorePointer(
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(20, 40, 124, 18),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [Color(0xF005070D), Color(0x0005070D)],
+                        ),
+                      ),
+                      child: ExcludeSemantics(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              '● ${(active ? l10n.catalogActive : l10n.catalogFeatured).toUpperCase()}',
+                              style: _Neon.mono(11, spacing: 1.8),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(title, style: _Neon.display(28)),
+                            const SizedBox(height: 2),
+                            Text(
+                              active
+                                  ? l10n.catalogHeroApplied
+                                  : wallpaper.description(l10n),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: _Neon.body(13),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 20,
                   right: 20,
                   bottom: 18,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        (active ? l10n.catalogActive : l10n.catalogFeatured)
-                            .toUpperCase(),
-                        style: typography.overline.copyWith(
-                          color: _amber,
-                          letterSpacing: 1.6,
-                        ),
-                      ),
-                      Text(
-                        title,
-                        style: typography.headline.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        wallpaper.description(l10n),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: typography.body.copyWith(
-                          color: const Color(0xFFD5DBE6),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: _Pill(label: l10n.catalogChange, onTap: onChange),
                 ),
               ],
             ),
@@ -414,58 +638,256 @@ class _WallpaperHero extends StatelessWidget {
   }
 }
 
-/// Un fond d'écran du carrousel : son aperçu en portrait et son nom.
+/// Le bouton ambre de la galerie.
+class _Pill extends StatelessWidget {
+  const _Pill({required this.label, required this.onTap});
+
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: _Neon.amber,
+      borderRadius: BorderRadius.circular(22),
+      child: _Tappable(
+        label: label,
+        onTap: onTap,
+        radius: 22,
+        child: Container(
+          height: 44,
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          alignment: Alignment.center,
+          child: Text(
+            label,
+            style: _Neon.body(
+              14,
+              weight: FontWeight.w600,
+              color: _Neon.onAmber,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Un filtre : plein et ambré quand il est choisi.
+class _Chip extends StatelessWidget {
+  const _Chip({
+    required this.label,
+    required this.selected,
+    required this.onSelect,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: selected ? _Neon.amber : Colors.transparent,
+      shape: StadiumBorder(
+        side: selected
+            ? BorderSide.none
+            : const BorderSide(color: _Neon.outline),
+      ),
+      child: _Tappable(
+        label: label,
+        selected: selected,
+        onTap: onSelect,
+        radius: 22,
+        child: Container(
+          height: 44,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          alignment: Alignment.center,
+          child: Text(
+            label,
+            style: _Neon.body(
+              14,
+              weight: selected ? FontWeight.w600 : FontWeight.w400,
+              color: selected ? _Neon.onAmber : _Neon.text,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({super.key, required this.title, this.trailing});
+
+  final String title;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 22, 20, 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Semantics(
+              header: true,
+              child: Text(title, style: _Neon.display(20)),
+            ),
+          ),
+          ?trailing,
+        ],
+      ),
+    );
+  }
+}
+
+class _TextLink extends StatelessWidget {
+  const _TextLink({required this.label, required this.onTap});
+
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return _Tappable(
+      label: label,
+      onTap: onTap,
+      radius: 8,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 44),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 6),
+          child: Center(
+            widthFactor: 1,
+            child: Text(
+              label,
+              style: _Neon.body(
+                14,
+                weight: FontWeight.w500,
+                color: _Neon.amber,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Les identifiants des fonds marqués « Nouveau ».
+const _newWallpapers = {'grid', 'megacity', 'code', 'neon', 'sentinel'};
+
+/// Un fond d'écran en portrait : son aperçu recadré et son nom.
 class _WallpaperTile extends StatelessWidget {
   const _WallpaperTile({
     required this.platform,
     required this.wallpaper,
     required this.active,
+    required this.width,
+    required this.height,
     required this.onOpen,
+    this.subtitle,
   });
 
   final WuxPlatform platform;
   final HaloWallpaper wallpaper;
   final bool active;
+  final double width;
+  final double height;
+  final String? subtitle;
   final VoidCallback onOpen;
-
-  static const _width = 116.0;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final typography = IuxTypographyTheme.of(context);
+    final badge = active
+        ? (l10n.catalogActive, _Neon.amber, _Neon.onAmber)
+        : _newWallpapers.contains(wallpaper.id)
+        ? (l10n.catalogNew, _Neon.cyan, _Neon.onCyan)
+        : null;
     return SizedBox(
-      width: _width + 32,
-      child: IuxCard.tappable(
-        semanticLabel: wallpaper.title(l10n),
+      width: width,
+      child: _Tappable(
+        label: wallpaper.title(l10n),
         hint: wallpaper.description(l10n),
-        onActivate: onOpen,
+        onTap: onOpen,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DecoratedBox(
               position: DecorationPosition.foreground,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                border: active ? Border.all(color: _amber, width: 2) : null,
+                borderRadius: BorderRadius.circular(20),
+                border: active
+                    ? Border.all(color: _Neon.amber, width: 2)
+                    : Border.all(color: _Neon.line),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: WallpaperPreview(
-                  platform: platform,
-                  wallpaper: wallpaper,
-                  width: _width,
+                borderRadius: BorderRadius.circular(20),
+                child: SizedBox(
+                  width: width,
+                  height: height,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      ColoredBox(
+                        color: _Neon.stage,
+                        child: OverflowBox(
+                          maxHeight: width * 20 / 9,
+                          child: WallpaperPreview(
+                            platform: platform,
+                            wallpaper: wallpaper,
+                            width: width,
+                          ),
+                        ),
+                      ),
+                      if (badge != null)
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 7,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: badge.$2,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              badge.$1.toUpperCase(),
+                              style: _Neon.mono(
+                                10,
+                                weight: FontWeight.w600,
+                                color: badge.$3,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
-            const IuxGap.standard(),
+            const SizedBox(height: 8),
             Text(
               wallpaper.title(l10n),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: typography.title,
+              style: _Neon.body(
+                subtitle == null ? 14 : 15,
+                weight: subtitle == null ? FontWeight.w500 : FontWeight.w600,
+                color: _Neon.text,
+              ),
             ),
-            if (active) Text(l10n.catalogActive, style: typography.supporting),
+            if (subtitle != null)
+              Text(
+                subtitle!,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: _Neon.body(12),
+              ),
           ],
         ),
       ),
@@ -473,7 +895,68 @@ class _WallpaperTile extends StatelessWidget {
   }
 }
 
-/// Un widget de la galerie : son aperçu sur un fond sombre, et son nom.
+/// Les widgets en deux colonnes, chacun dans la plus courte, dans l'ordre
+/// du catalogue.
+class _Mosaic extends StatelessWidget {
+  const _Mosaic({
+    required this.widgets,
+    required this.platform,
+    required this.onOpen,
+  });
+
+  final List<WuxHomeWidget> widgets;
+  final WuxPlatform platform;
+  final ValueChanged<WuxHomeWidget> onOpen;
+
+  static const _gap = 12.0;
+  static const _padding = 10.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final column = (constraints.maxWidth - _gap) / 2;
+        final columns = [<WuxHomeWidget>[], <WuxHomeWidget>[]];
+        final heights = [0.0, 0.0];
+        for (final homeWidget in widgets) {
+          final size = homeWidget.previewSize;
+          final inner = column - _padding * 2;
+          final scale = (inner / size.width).clamp(0.0, 1.0);
+          // Aperçu, marges et nom.
+          final height = size.height * scale + _padding * 2 + 34 + _gap;
+          final shortest = heights[0] <= heights[1] ? 0 : 1;
+          columns[shortest].add(homeWidget);
+          heights[shortest] += height;
+        }
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (final (i, list) in columns.indexed) ...[
+              if (i > 0) const SizedBox(width: _gap),
+              Expanded(
+                child: Column(
+                  children: [
+                    for (final homeWidget in list)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: _gap),
+                        child: _WidgetTile(
+                          homeWidget: homeWidget,
+                          platform: platform,
+                          onOpen: () => onOpen(homeWidget),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// Un widget de la mosaïque : son aperçu sur une carte sombre, son nom.
 class _WidgetTile extends StatelessWidget {
   const _WidgetTile({
     required this.homeWidget,
@@ -488,17 +971,21 @@ class _WidgetTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final typography = IuxTypographyTheme.of(context);
-    return IuxCard.tappable(
-      semanticLabel: homeWidget.title(l10n),
+    return _Tappable(
+      label: homeWidget.title(l10n),
       hint: homeWidget.description(l10n),
-      onActivate: onOpen,
+      onTap: () => onOpen(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: WallpaperFrame(
+          Container(
+            padding: const EdgeInsets.all(_Mosaic._padding),
+            decoration: BoxDecoration(
+              color: _Neon.surface,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: _Neon.line),
+            ),
+            child: Center(
               child: WidgetPreview(
                 homeWidget: homeWidget,
                 platform: platform,
@@ -506,13 +993,111 @@ class _WidgetTile extends StatelessWidget {
               ),
             ),
           ),
-          const IuxGap.standard(),
-          Text(homeWidget.title(l10n), style: typography.title),
+          const SizedBox(height: 8),
           Text(
-            homeWidget.description(l10n),
-            maxLines: 2,
+            homeWidget.title(l10n),
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: typography.supporting,
+            style: _Neon.body(14, weight: FontWeight.w500, color: _Neon.text),
+          ),
+          const SizedBox(height: 4),
+        ],
+      ),
+    );
+  }
+}
+
+/// Les fonds animés en grand, deux par rangée, et l'écran de veille.
+class _WallpapersTab extends StatelessWidget {
+  const _WallpapersTab({
+    required this.platform,
+    required this.active,
+    required this.onOpen,
+    required this.onDream,
+  });
+
+  final WuxPlatform platform;
+  final HaloWallpaper? active;
+  final ValueChanged<HaloWallpaper> onOpen;
+  final VoidCallback onDream;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Semantics(
+            header: true,
+            child: Text(l10n.catalogWallpapers, style: _Neon.display(24)),
+          ),
+          const SizedBox(height: 6),
+          Text(l10n.catalogWallpapersIntro, style: _Neon.body(14)),
+          const SizedBox(height: 16),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final width = (constraints.maxWidth - 14) / 2;
+              return Wrap(
+                spacing: 14,
+                runSpacing: 16,
+                children: [
+                  for (final wallpaper in haloWallpapers)
+                    _WallpaperTile(
+                      platform: platform,
+                      wallpaper: wallpaper,
+                      active: wallpaper == active,
+                      width: width,
+                      height: width * 1.75,
+                      subtitle: wallpaper.description(l10n),
+                      onOpen: () => onOpen(wallpaper),
+                    ),
+                ],
+              );
+            },
+          ),
+          const SizedBox(height: 28),
+          Semantics(
+            header: true,
+            child: Text(l10n.dreamTitle, style: _Neon.display(20)),
+          ),
+          const SizedBox(height: 10),
+          _Tappable(
+            label: l10n.dreamTitle,
+            hint: l10n.dreamDescription,
+            onTap: onDream,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: _Neon.surface,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: _Neon.line),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.nightlight_outlined, color: _Neon.amber),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.dreamTitle,
+                          style: _Neon.body(
+                            15,
+                            weight: FontWeight.w600,
+                            color: _Neon.text,
+                          ),
+                        ),
+                        Text(l10n.dreamDescription, style: _Neon.body(13)),
+                      ],
+                    ),
+                  ),
+                  const Icon(Icons.chevron_right, color: _Neon.faint),
+                ],
+              ),
+            ),
           ),
         ],
       ),
@@ -520,5 +1105,137 @@ class _WidgetTile extends StatelessWidget {
   }
 }
 
-/// L'ambre de Halo, sur les fonds sombres des aperçus.
-const _amber = Color(0xFFF2C178);
+/// Ce qui est déjà sur le téléphone : le fond Halo appliqué et les widgets
+/// posés.
+class _MineTab extends StatelessWidget {
+  const _MineTab({
+    required this.platform,
+    required this.active,
+    required this.placed,
+    required this.onOpenWallpaper,
+    required this.onOpenWidget,
+  });
+
+  final WuxPlatform platform;
+  final HaloWallpaper? active;
+  final List<WuxHomeWidget> placed;
+  final ValueChanged<HaloWallpaper> onOpenWallpaper;
+  final ValueChanged<WuxHomeWidget> onOpenWidget;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final active = this.active;
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Semantics(
+            header: true,
+            child: Text(l10n.catalogNavMine, style: _Neon.display(24)),
+          ),
+          const SizedBox(height: 20),
+          Text(l10n.catalogMineWallpaper, style: _Neon.display(18)),
+          const SizedBox(height: 10),
+          if (active == null)
+            Text(l10n.catalogMineNoWallpaper, style: _Neon.body(14))
+          else
+            Align(
+              alignment: Alignment.centerLeft,
+              child: _WallpaperTile(
+                platform: platform,
+                wallpaper: active,
+                active: true,
+                width: 150,
+                height: 260,
+                subtitle: active.description(l10n),
+                onOpen: () => onOpenWallpaper(active),
+              ),
+            ),
+          const SizedBox(height: 28),
+          Text(l10n.catalogMineWidgets, style: _Neon.display(18)),
+          const SizedBox(height: 10),
+          if (placed.isEmpty)
+            Text(l10n.catalogMineNoWidgets, style: _Neon.body(14))
+          else
+            _Mosaic(widgets: placed, platform: platform, onOpen: onOpenWidget),
+        ],
+      ),
+    );
+  }
+}
+
+/// La barre du bas : galerie, fonds, mes ajouts.
+class _NavigationBar extends StatelessWidget {
+  const _NavigationBar({required this.selected, required this.onSelect});
+
+  final int selected;
+  final ValueChanged<int> onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final items = [
+      (Icons.grid_view_rounded, l10n.catalogNavGallery),
+      (Icons.smartphone_outlined, l10n.catalogNavWallpapers),
+      (Icons.add_circle_outline, l10n.catalogNavMine),
+    ];
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        color: _Neon.navigation,
+        border: Border(top: BorderSide(color: _Neon.line)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 72,
+          child: Row(
+            children: [
+              for (final (i, (icon, label)) in items.indexed)
+                Expanded(
+                  child: _Tappable(
+                    label: label,
+                    selected: i == selected,
+                    radius: 16,
+                    onTap: () => onSelect(i),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 56,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: i == selected
+                                ? _Neon.amber.withValues(alpha: 0.18)
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Icon(
+                            icon,
+                            size: 20,
+                            color: i == selected ? _Neon.amber : _Neon.muted,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          label,
+                          style: _Neon.body(
+                            12,
+                            weight: i == selected
+                                ? FontWeight.w600
+                                : FontWeight.w400,
+                            color: i == selected ? _Neon.amber : _Neon.muted,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

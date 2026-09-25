@@ -46,6 +46,12 @@ class FakePlatform implements WuxPlatform {
   @override
   Future<bool> canPin() async => true;
 
+  /// Classes Android des widgets posés.
+  var placed = <String>{};
+
+  @override
+  Future<Set<String>> placedWidgets() async => placed;
+
   @override
   Future<void> pin(WuxHomeWidget widget) async => pinned.add(widget.id);
 

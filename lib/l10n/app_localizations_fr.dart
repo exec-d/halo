@@ -60,6 +60,65 @@ class AppLocalizationsFr extends AppLocalizations {
   String get catalogFeatured => 'À découvrir';
 
   @override
+  String get catalogSearch => 'Rechercher un widget';
+
+  @override
+  String get catalogSearchClose => 'Fermer la recherche';
+
+  @override
+  String get catalogChange => 'Changer';
+
+  @override
+  String get catalogSeeAll => 'Tout voir';
+
+  @override
+  String catalogWidgetCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count widgets',
+      one: '1 widget',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get catalogNew => 'Nouveau';
+
+  @override
+  String get catalogNavGallery => 'Galerie';
+
+  @override
+  String get catalogNavWallpapers => 'Fonds';
+
+  @override
+  String get catalogNavMine => 'Mes ajouts';
+
+  @override
+  String get catalogWallpapersIntro =>
+      'Ils réagissent à l\'inclinaison du téléphone. Touchez-en un pour le voir en grand et l\'appliquer.';
+
+  @override
+  String get catalogMineWallpaper => 'Fond d\'écran';
+
+  @override
+  String get catalogMineNoWallpaper =>
+      'Aucun fond Halo n\'est appliqué pour l\'instant.';
+
+  @override
+  String get catalogMineWidgets => 'Widgets posés';
+
+  @override
+  String get catalogMineNoWidgets =>
+      'Aucun widget Halo n\'est posé pour l\'instant. Touchez un widget dans la galerie pour l\'ajouter.';
+
+  @override
+  String get catalogHeroApplied => 'Appliqué sur ce téléphone';
+
+  @override
+  String get catalogNoMatch => 'Aucun widget ne correspond.';
+
+  @override
   String get dreamTitle => 'Écran de veille';
 
   @override

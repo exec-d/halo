@@ -58,6 +58,22 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
+  testWidgets('« Mes ajouts » montre les widgets posés', (tester) async {
+    final platform = FakePlatform()..placed = {clockWidget.androidProvider};
+    await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Mes ajouts'));
+    await tester.pumpAndSettle();
+    expect(find.text('Horloge'), findsOneWidget);
+    expect(find.text('Batterie détaillée'), findsNothing);
+    expect(
+      find.text("Aucun fond Halo n'est appliqué pour l'instant."),
+      findsOneWidget,
+    );
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets("le fond d'écran Circuit s'applique depuis son écran", (
     tester,
   ) async {
@@ -132,7 +148,10 @@ void main() {
     final platform = FakePlatform();
     await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));
     await tester.pumpAndSettle();
-    // Le titre de section, puis celui de la carte : on touche la carte.
+    // Dans l'onglet des fonds. Le titre de section, puis celui de la carte :
+    // on touche la carte.
+    await tester.tap(find.text('Fonds'));
+    await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Écran de veille').last);
     await tester.tap(find.text('Écran de veille').last);
     await tester.pumpAndSettle();
@@ -302,7 +321,11 @@ void main() {
   testWidgets('à propos montre la version et les crédits', (tester) async {
     await tester.pumpWidget(WuxApp(platform: FakePlatform(), locale: _fr));
     await tester.pumpAndSettle();
-    await tester.tap(find.bySemanticsLabel('À propos'));
+    // À propos se trouve dans les réglages.
+    await tester.tap(find.bySemanticsLabel('Réglages'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('À propos de Halo'));
+    await tester.tap(find.text('À propos de Halo'));
     await tester.pumpAndSettle();
 
     expect(find.text('Version 1.0.0 (build 42)'), findsOneWidget);
@@ -334,7 +357,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Live wallpapers'), findsOneWidget);
-    expect(find.text('Screen saver'), findsWidgets);
     expect(find.text('Circuit'), findsWidgets);
     expect(find.text('Megacity'), findsWidgets);
     expect(find.text('Earbuds and watch'), findsOneWidget);
@@ -346,6 +368,10 @@ void main() {
     for (final widget in wuxHomeWidgets) {
       expect(find.text(widget.title(l10n)), findsOneWidget);
     }
+
+    await tester.tap(find.text('Wallpapers'));
+    await tester.pumpAndSettle();
+    expect(find.text('Screen saver'), findsWidgets);
     await tester.pumpWidget(const SizedBox());
   });
 

@@ -19,6 +19,13 @@ void registerLicenses() {
       'License, Version 2.0: https://www.apache.org/licenses/LICENSE-2.0. '
       'Utilisées par les icônes lumineuses des widgets.',
     );
+    yield const LicenseEntryWithLineBreaks(
+      ['Chakra Petch', 'IBM Plex Sans', 'JetBrains Mono'],
+      'Polices de la galerie. Chakra Petch, Copyright 2018 The Chakra Petch '
+      'Project Authors ; IBM Plex Sans, Copyright 2017 IBM Corp. ; JetBrains '
+      'Mono, Copyright 2020 The JetBrains Mono Project Authors. Sous licence '
+      'SIL Open Font License, Version 1.1 : https://openfontlicense.org.',
+    );
   });
 }
 

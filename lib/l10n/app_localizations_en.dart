@@ -60,6 +60,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catalogFeatured => 'Featured';
 
   @override
+  String get catalogSearch => 'Search widgets';
+
+  @override
+  String get catalogSearchClose => 'Close search';
+
+  @override
+  String get catalogChange => 'Change';
+
+  @override
+  String get catalogSeeAll => 'See all';
+
+  @override
+  String catalogWidgetCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count widgets',
+      one: '1 widget',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get catalogNew => 'New';
+
+  @override
+  String get catalogNavGallery => 'Gallery';
+
+  @override
+  String get catalogNavWallpapers => 'Wallpapers';
+
+  @override
+  String get catalogNavMine => 'My setup';
+
+  @override
+  String get catalogWallpapersIntro =>
+      'They react to the tilt of the phone. Tap one to see it full size and apply it.';
+
+  @override
+  String get catalogMineWallpaper => 'Wallpaper';
+
+  @override
+  String get catalogMineNoWallpaper => 'No Halo wallpaper is applied yet.';
+
+  @override
+  String get catalogMineWidgets => 'Placed widgets';
+
+  @override
+  String get catalogMineNoWidgets =>
+      'No Halo widget is placed yet. Tap a widget in the gallery to add it.';
+
+  @override
+  String get catalogHeroApplied => 'Applied on this phone';
+
+  @override
+  String get catalogNoMatch => 'No widget matches.';
+
+  @override
   String get dreamTitle => 'Screen saver';
 
   @override

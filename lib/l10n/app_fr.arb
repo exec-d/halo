@@ -45,6 +45,29 @@
   "catalogFilterMedia": "Médias et contrôles",
   "catalogActive": "Actif",
   "catalogFeatured": "À découvrir",
+  "catalogSearch": "Rechercher un widget",
+  "catalogSearchClose": "Fermer la recherche",
+  "catalogChange": "Changer",
+  "catalogSeeAll": "Tout voir",
+  "catalogWidgetCount": "{count, plural, =1{1 widget} other{{count} widgets}}",
+  "@catalogWidgetCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "catalogNew": "Nouveau",
+  "catalogNavGallery": "Galerie",
+  "catalogNavWallpapers": "Fonds",
+  "catalogNavMine": "Mes ajouts",
+  "catalogWallpapersIntro": "Ils réagissent à l'inclinaison du téléphone. Touchez-en un pour le voir en grand et l'appliquer.",
+  "catalogMineWallpaper": "Fond d'écran",
+  "catalogMineNoWallpaper": "Aucun fond Halo n'est appliqué pour l'instant.",
+  "catalogMineWidgets": "Widgets posés",
+  "catalogMineNoWidgets": "Aucun widget Halo n'est posé pour l'instant. Touchez un widget dans la galerie pour l'ajouter.",
+  "catalogHeroApplied": "Appliqué sur ce téléphone",
+  "catalogNoMatch": "Aucun widget ne correspond.",
   "dreamTitle": "Écran de veille",
   "@dreamTitle": {
     "description": "Nom de l'écran de veille."

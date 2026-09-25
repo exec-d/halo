@@ -74,6 +74,28 @@ flutter:
   assets:
     - assets/icon.png
 
+  # Polices de la galerie (licence SIL OFL 1.1, assets/fonts/OFL-*.txt),
+  # réduites aux caractères latins.
+  fonts:
+    - family: ChakraPetch
+      fonts:
+        - asset: assets/fonts/ChakraPetch-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/ChakraPetch-Bold.ttf
+          weight: 700
+    - family: IBMPlexSans
+      fonts:
+        - asset: assets/fonts/IBMPlexSans-Regular.ttf
+        - asset: assets/fonts/IBMPlexSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSans-SemiBold.ttf
+          weight: 600
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Regular.ttf
+        - asset: assets/fonts/JetBrainsMono-SemiBold.ttf
+          weight: 600
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

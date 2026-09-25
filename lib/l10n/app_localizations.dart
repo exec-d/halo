@@ -194,6 +194,102 @@ abstract class AppLocalizations {
   /// **'À découvrir'**
   String get catalogFeatured;
 
+  /// No description provided for @catalogSearch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un widget'**
+  String get catalogSearch;
+
+  /// No description provided for @catalogSearchClose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer la recherche'**
+  String get catalogSearchClose;
+
+  /// No description provided for @catalogChange.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer'**
+  String get catalogChange;
+
+  /// No description provided for @catalogSeeAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout voir'**
+  String get catalogSeeAll;
+
+  /// No description provided for @catalogWidgetCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 widget} other{{count} widgets}}'**
+  String catalogWidgetCount(int count);
+
+  /// No description provided for @catalogNew.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau'**
+  String get catalogNew;
+
+  /// No description provided for @catalogNavGallery.
+  ///
+  /// In fr, this message translates to:
+  /// **'Galerie'**
+  String get catalogNavGallery;
+
+  /// No description provided for @catalogNavWallpapers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fonds'**
+  String get catalogNavWallpapers;
+
+  /// No description provided for @catalogNavMine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes ajouts'**
+  String get catalogNavMine;
+
+  /// No description provided for @catalogWallpapersIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ils réagissent à l\'inclinaison du téléphone. Touchez-en un pour le voir en grand et l\'appliquer.'**
+  String get catalogWallpapersIntro;
+
+  /// No description provided for @catalogMineWallpaper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fond d\'écran'**
+  String get catalogMineWallpaper;
+
+  /// No description provided for @catalogMineNoWallpaper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun fond Halo n\'est appliqué pour l\'instant.'**
+  String get catalogMineNoWallpaper;
+
+  /// No description provided for @catalogMineWidgets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Widgets posés'**
+  String get catalogMineWidgets;
+
+  /// No description provided for @catalogMineNoWidgets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun widget Halo n\'est posé pour l\'instant. Touchez un widget dans la galerie pour l\'ajouter.'**
+  String get catalogMineNoWidgets;
+
+  /// No description provided for @catalogHeroApplied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appliqué sur ce téléphone'**
+  String get catalogHeroApplied;
+
+  /// No description provided for @catalogNoMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun widget ne correspond.'**
+  String get catalogNoMatch;
+
   /// Nom de l'écran de veille.
   ///
   /// In fr, this message translates to:
