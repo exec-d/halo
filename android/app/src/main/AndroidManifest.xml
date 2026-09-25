@@ -439,6 +439,67 @@
                 android:name="android.service.wallpaper"
                 android:resource="@xml/halo_wallpaper" />
         </service>
+        <!-- Fonds d'écran animés faits d'une scène (SceneWallpapers.kt). -->
+        <service
+            android:name=".wallpaper.GridWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_grid_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_grid" />
+        </service>
+        <service
+            android:name=".wallpaper.MegacityWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_megacity_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_megacity" />
+        </service>
+        <service
+            android:name=".wallpaper.CodeWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_code_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_code" />
+        </service>
+        <service
+            android:name=".wallpaper.NeonWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_neon_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_neon" />
+        </service>
+        <service
+            android:name=".wallpaper.SentinelWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_sentinel_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_sentinel" />
+        </service>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

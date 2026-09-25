@@ -26,12 +26,16 @@ gardent ce nom.*
 | Musique | Lecture en cours (pochette néon, commandes) |
 | Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo) |
 
-**Fond d'écran animé** :
+**Six fonds d'écran animés** :
 
 - **Circuit** : l'intérieur d'un Pixel 7 en schéma néon, qui réagit à
   l'inclinaison, suit la vraie batterie, s'illumine au passage des données et
-  s'allume composant par composant avec l'écran. D'autres fonds, néon et
-  cyberpunk, sont en préparation.
+  s'allume composant par composant avec l'écran ;
+- cinq fonds inspirés de la science-fiction : **Grille** (motos de lumière
+  sur une grille à perte de vue), **Mégapole** (ville immense sous la pluie),
+  **Code** (pluie de caractères verts), **Néon** (rue du futur, enseignes qui
+  grésillent et image qui bugue) et **Sentinelle** (l'œil rouge d'une IA, qui
+  vous suit du regard).
 
 **Ailleurs dans Android** : un écran de veille (horloge néon pendant la
 charge), trois tuiles de réglages rapides (Météo, Fond Halo, Batterie) et des

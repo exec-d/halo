@@ -11,6 +11,8 @@ mineure peut changer des réglages.
 
 - **Cinq widgets** : Lecture en cours, Prévisions 5 jours, Horloge
   analogique, Éphéméride, Chronomètre et minuteur.
+- **Cinq fonds d'écran animés** inspirés de la science-fiction : Grille,
+  Mégapole, Code, Néon, Sentinelle.
 - **Écran de veille** Halo, pendant la charge.
 - **Tuiles de réglages rapides** : Météo, Fond Halo, Batterie.
 - **Raccourcis de l'icône** : Fond d'écran, Widgets, Réglages.

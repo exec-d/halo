@@ -2,9 +2,10 @@
 
 *[Français](../wallpaper.md)*
 
-Halo offers an animated wallpaper (Circuit), a screen saver,
-three quick settings tiles and shortcuts on its icon. The intensity can be set to
-Subtle, Normal or Vivid.
+Halo offers six animated wallpapers (Circuit, Grid, Megacity, Code, Neon,
+Sentinel), a screen saver,
+three quick settings tiles and shortcuts on its icon. The intensity (Subtle, Normal,
+Vivid) is shared by the six wallpapers.
 
 ## Circuit
 
@@ -64,6 +65,24 @@ and icons on top readable.
 | `HaloWallpaperService.kt` | Sensor, battery, traffic, signal, frame rate |
 | `WallpaperPreview.kt` | The in-app preview and opening the system screen |
 | `WallpaperSettings.kt` | The intensity |
+
+## The science-fiction wallpapers
+
+Five scenes inspired by science-fiction and AI films. Unlike Circuit, they
+keep their own colors (cyan and orange, green, neon…) rather than the
+phone's. All of them follow the tilt, nearby layers moving more than distant
+ones, and stop as soon as the wallpaper is no longer visible.
+
+| Wallpaper | What it shows | Code |
+| --- | --- | --- |
+| Grid | An endless scrolling grid; two light cycles, cyan and orange, draw their walls, turning at right angles | `GridScene.kt` |
+| Megacity | Three layers of towers in the rain, a pyramid, flare stacks, flying cars, two searchlights, a glowing billboard | `MegacityScene.kt` |
+| Code | A rain of green characters on two layers, slanting with the phone | `CodeScene.kt` |
+| Neon | A street lined with buzzing signs reflected on the wet ground; now and then, the image glitches | `NeonScene.kt` |
+| Sentinel | The red eye of an AI: its core breathes, follows the tilt, and brightens on unlock | `SentinelScene.kt` |
+
+`SceneWallpaperService.kt` runs these scenes (frame rate, sensors,
+intensity); `SceneWallpapers.kt` declares one service per wallpaper.
 
 ## Screen saver
 

@@ -13,7 +13,7 @@ Everything Halo reads is shown on the phone and never leaves it:
 | --- | --- | --- |
 | Calendar (events, calendars) | Agenda, Month | Calendar, read-only |
 | Next alarm | Clock | None |
-| Phone status (battery, network, storage, memory, sound, location on/off) | System widgets, Circuit wallpaper | None |
+| Phone status (battery, network, storage, memory, sound, location on/off) | System widgets, Animated wallpapers | None |
 | Connected Bluetooth devices (name, type, battery) | Earbuds and watch | Nearby devices |
 | App usage time, unlocks, mobile data usage | Screen time, Mobile data | Usage data access |
 | List of installed apps (name, icon) | Screen time | Not requested (declared) |

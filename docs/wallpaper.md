@@ -2,9 +2,9 @@
 
 *[English](en/wallpaper.md)*
 
-Halo propose un fond d'écran animé (Circuit), un écran de
-veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
-L'intensité se règle en Discret, Normal ou Vif.
+Halo propose six fonds d'écran animés (Circuit, Grille, Mégapole, Code, Néon,
+Sentinelle), un écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
+L'intensité (Discret, Normal, Vif) est commune aux six fonds.
 
 ## Circuit
 
@@ -67,6 +67,25 @@ widgets et les icônes lisibles par-dessus.
 | `HaloWallpaperService.kt` | Capteur, batterie, trafic, signal, cadence des images |
 | `WallpaperPreview.kt` | L'aperçu de l'application et l'ouverture de l'écran système |
 | `WallpaperSettings.kt` | L'intensité |
+
+## Les fonds de science-fiction
+
+Cinq scènes inspirées des films de science-fiction et d'IA. Contrairement à
+Circuit, elles gardent leurs propres couleurs (cyan et orange, vert, néons…)
+plutôt que celles du téléphone. Toutes suivent l'inclinaison, les plans
+proches bougeant plus que les lointains, et s'arrêtent dès que le fond n'est
+plus visible.
+
+| Fond | Ce qu'il montre | Code |
+| --- | --- | --- |
+| Grille | Une grille à perte de vue qui défile ; deux motos de lumière, cyan et orange, tracent leurs murs en virant à angle droit | `GridScene.kt` |
+| Mégapole | Trois plans de tours sous la pluie, une pyramide, des torchères, des voitures volantes, deux projecteurs, un panneau lumineux | `MegacityScene.kt` |
+| Code | Une pluie de caractères verts en deux plans, qui penche avec le téléphone | `CodeScene.kt` |
+| Néon | Une rue bordée d'enseignes qui grésillent et se reflètent sur le sol mouillé ; parfois, l'image bugue | `NeonScene.kt` |
+| Sentinelle | L'œil rouge d'une IA : son cœur respire, suit l'inclinaison, et s'avive au déverrouillage | `SentinelScene.kt` |
+
+`SceneWallpaperService.kt` fait tourner ces scènes (cadence, capteurs,
+intensité) ; `SceneWallpapers.kt` déclare un service par fond.
 
 ## Écran de veille
 

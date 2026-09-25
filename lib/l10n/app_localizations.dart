@@ -991,6 +991,252 @@ abstract class AppLocalizations {
   /// **'L\'animation s\'arrête dès que le fond n\'est plus visible, et ne tourne en continu que pendant un mouvement, une impulsion ou une charge.'**
   String get wallpaperCircuitBattery;
 
+  /// No description provided for @wallpaperSceneBattery.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'animation s\'arrête dès que le fond n\'est plus visible. Ce fond garde ses propres couleurs, pas celles du téléphone.'**
+  String get wallpaperSceneBattery;
+
+  /// No description provided for @wallpaperGridTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Grille'**
+  String get wallpaperGridTitle;
+
+  /// No description provided for @wallpaperGridDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une grille lumineuse à perte de vue, où deux motos de lumière tracent leurs murs.'**
+  String get wallpaperGridDescription;
+
+  /// No description provided for @wallpaperGridATitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motos de lumière'**
+  String get wallpaperGridATitle;
+
+  /// No description provided for @wallpaperGridAText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Deux motos, cyan et orange, filent sur la grille et virent à angle droit ; leurs murs lumineux s\'effacent derrière elles.'**
+  String get wallpaperGridAText;
+
+  /// No description provided for @wallpaperGridBTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Perspective'**
+  String get wallpaperGridBTitle;
+
+  /// No description provided for @wallpaperGridBText.
+  ///
+  /// In fr, this message translates to:
+  /// **'La grille défile doucement vers vous jusqu\'à l\'horizon.'**
+  String get wallpaperGridBText;
+
+  /// No description provided for @wallpaperGridCTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inclinaison'**
+  String get wallpaperGridCTitle;
+
+  /// No description provided for @wallpaperGridCText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Penchez le téléphone : le sol et les murs glissent plus que l\'horizon lointain.'**
+  String get wallpaperGridCText;
+
+  /// No description provided for @wallpaperMegacityTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mégapole'**
+  String get wallpaperMegacityTitle;
+
+  /// No description provided for @wallpaperMegacityDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une ville immense sous la pluie, la nuit, dans un smog orangé.'**
+  String get wallpaperMegacityDescription;
+
+  /// No description provided for @wallpaperMegacityATitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La ville'**
+  String get wallpaperMegacityATitle;
+
+  /// No description provided for @wallpaperMegacityAText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trois plans de tours aux fenêtres allumées, une pyramide au loin et un grand panneau lumineux qui change de couleur.'**
+  String get wallpaperMegacityAText;
+
+  /// No description provided for @wallpaperMegacityBTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La vie'**
+  String get wallpaperMegacityBTitle;
+
+  /// No description provided for @wallpaperMegacityBText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des torchères crachent leur flamme, des voitures volantes passent, deux projecteurs balaient le ciel.'**
+  String get wallpaperMegacityBText;
+
+  /// No description provided for @wallpaperMegacityCTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pluie et inclinaison'**
+  String get wallpaperMegacityCTitle;
+
+  /// No description provided for @wallpaperMegacityCText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il pleut sans cesse ; penchez le téléphone, les tours proches bougent plus que les lointaines, et la pluie penche.'**
+  String get wallpaperMegacityCText;
+
+  /// No description provided for @wallpaperCodeTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code'**
+  String get wallpaperCodeTitle;
+
+  /// No description provided for @wallpaperCodeDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une pluie de caractères verts, en deux plans.'**
+  String get wallpaperCodeDescription;
+
+  /// No description provided for @wallpaperCodeATitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La pluie'**
+  String get wallpaperCodeATitle;
+
+  /// No description provided for @wallpaperCodeAText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque colonne tombe à sa vitesse, sa tête blanche en avant, sa traîne qui s\'éteint ; les caractères changent au passage.'**
+  String get wallpaperCodeAText;
+
+  /// No description provided for @wallpaperCodeBTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profondeur'**
+  String get wallpaperCodeBTitle;
+
+  /// No description provided for @wallpaperCodeBText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un plan de petits caractères, plus sombres, derrière le premier.'**
+  String get wallpaperCodeBText;
+
+  /// No description provided for @wallpaperCodeCTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gravité'**
+  String get wallpaperCodeCTitle;
+
+  /// No description provided for @wallpaperCodeCText.
+  ///
+  /// In fr, this message translates to:
+  /// **'La pluie penche quand vous inclinez le téléphone.'**
+  String get wallpaperCodeCText;
+
+  /// No description provided for @wallpaperNeonTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Néon'**
+  String get wallpaperNeonTitle;
+
+  /// No description provided for @wallpaperNeonDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une rue du futur, la nuit, bordée d\'enseignes néon.'**
+  String get wallpaperNeonDescription;
+
+  /// No description provided for @wallpaperNeonATitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enseignes'**
+  String get wallpaperNeonATitle;
+
+  /// No description provided for @wallpaperNeonAText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jaunes, cyan, magenta et rouges, de chaque côté de la rue ; certaines grésillent, toutes se reflètent sur le sol mouillé.'**
+  String get wallpaperNeonAText;
+
+  /// No description provided for @wallpaperNeonBTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bugs'**
+  String get wallpaperNeonBTitle;
+
+  /// No description provided for @wallpaperNeonBText.
+  ///
+  /// In fr, this message translates to:
+  /// **'De temps en temps, l\'image décroche : bandes décalées, couleurs séparées, une barre jaune d\'interface.'**
+  String get wallpaperNeonBText;
+
+  /// No description provided for @wallpaperNeonCTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inclinaison'**
+  String get wallpaperNeonCTitle;
+
+  /// No description provided for @wallpaperNeonCText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Penchez le téléphone : les enseignes proches bougent plus que le fond de la rue.'**
+  String get wallpaperNeonCText;
+
+  /// No description provided for @wallpaperSentinelTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sentinelle'**
+  String get wallpaperSentinelTitle;
+
+  /// No description provided for @wallpaperSentinelDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'œil rouge d\'une intelligence artificielle, dans son boîtier de métal.'**
+  String get wallpaperSentinelDescription;
+
+  /// No description provided for @wallpaperSentinelATitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il vous regarde'**
+  String get wallpaperSentinelATitle;
+
+  /// No description provided for @wallpaperSentinelAText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le cœur de l\'œil suit l\'inclinaison du téléphone, et son reflet glisse à l\'opposé sur le verre.'**
+  String get wallpaperSentinelAText;
+
+  /// No description provided for @wallpaperSentinelBTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il respire'**
+  String get wallpaperSentinelBTitle;
+
+  /// No description provided for @wallpaperSentinelBText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le cœur pulse lentement ; un anneau de balayage part du centre de temps en temps.'**
+  String get wallpaperSentinelBText;
+
+  /// No description provided for @wallpaperSentinelCTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il s\'éveille'**
+  String get wallpaperSentinelCTitle;
+
+  /// No description provided for @wallpaperSentinelCText.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'œil s\'avive quand vous déverrouillez le téléphone.'**
+  String get wallpaperSentinelCText;
+
   /// Nom du widget, dans le catalogue et en titre de son écran.
   ///
   /// In fr, this message translates to:

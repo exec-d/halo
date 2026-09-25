@@ -529,6 +529,150 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'animation s\'arrête dès que le fond n\'est plus visible, et ne tourne en continu que pendant un mouvement, une impulsion ou une charge.';
 
   @override
+  String get wallpaperSceneBattery =>
+      'L\'animation s\'arrête dès que le fond n\'est plus visible. Ce fond garde ses propres couleurs, pas celles du téléphone.';
+
+  @override
+  String get wallpaperGridTitle => 'Grille';
+
+  @override
+  String get wallpaperGridDescription =>
+      'Une grille lumineuse à perte de vue, où deux motos de lumière tracent leurs murs.';
+
+  @override
+  String get wallpaperGridATitle => 'Motos de lumière';
+
+  @override
+  String get wallpaperGridAText =>
+      'Deux motos, cyan et orange, filent sur la grille et virent à angle droit ; leurs murs lumineux s\'effacent derrière elles.';
+
+  @override
+  String get wallpaperGridBTitle => 'Perspective';
+
+  @override
+  String get wallpaperGridBText =>
+      'La grille défile doucement vers vous jusqu\'à l\'horizon.';
+
+  @override
+  String get wallpaperGridCTitle => 'Inclinaison';
+
+  @override
+  String get wallpaperGridCText =>
+      'Penchez le téléphone : le sol et les murs glissent plus que l\'horizon lointain.';
+
+  @override
+  String get wallpaperMegacityTitle => 'Mégapole';
+
+  @override
+  String get wallpaperMegacityDescription =>
+      'Une ville immense sous la pluie, la nuit, dans un smog orangé.';
+
+  @override
+  String get wallpaperMegacityATitle => 'La ville';
+
+  @override
+  String get wallpaperMegacityAText =>
+      'Trois plans de tours aux fenêtres allumées, une pyramide au loin et un grand panneau lumineux qui change de couleur.';
+
+  @override
+  String get wallpaperMegacityBTitle => 'La vie';
+
+  @override
+  String get wallpaperMegacityBText =>
+      'Des torchères crachent leur flamme, des voitures volantes passent, deux projecteurs balaient le ciel.';
+
+  @override
+  String get wallpaperMegacityCTitle => 'Pluie et inclinaison';
+
+  @override
+  String get wallpaperMegacityCText =>
+      'Il pleut sans cesse ; penchez le téléphone, les tours proches bougent plus que les lointaines, et la pluie penche.';
+
+  @override
+  String get wallpaperCodeTitle => 'Code';
+
+  @override
+  String get wallpaperCodeDescription =>
+      'Une pluie de caractères verts, en deux plans.';
+
+  @override
+  String get wallpaperCodeATitle => 'La pluie';
+
+  @override
+  String get wallpaperCodeAText =>
+      'Chaque colonne tombe à sa vitesse, sa tête blanche en avant, sa traîne qui s\'éteint ; les caractères changent au passage.';
+
+  @override
+  String get wallpaperCodeBTitle => 'Profondeur';
+
+  @override
+  String get wallpaperCodeBText =>
+      'Un plan de petits caractères, plus sombres, derrière le premier.';
+
+  @override
+  String get wallpaperCodeCTitle => 'Gravité';
+
+  @override
+  String get wallpaperCodeCText =>
+      'La pluie penche quand vous inclinez le téléphone.';
+
+  @override
+  String get wallpaperNeonTitle => 'Néon';
+
+  @override
+  String get wallpaperNeonDescription =>
+      'Une rue du futur, la nuit, bordée d\'enseignes néon.';
+
+  @override
+  String get wallpaperNeonATitle => 'Enseignes';
+
+  @override
+  String get wallpaperNeonAText =>
+      'Jaunes, cyan, magenta et rouges, de chaque côté de la rue ; certaines grésillent, toutes se reflètent sur le sol mouillé.';
+
+  @override
+  String get wallpaperNeonBTitle => 'Bugs';
+
+  @override
+  String get wallpaperNeonBText =>
+      'De temps en temps, l\'image décroche : bandes décalées, couleurs séparées, une barre jaune d\'interface.';
+
+  @override
+  String get wallpaperNeonCTitle => 'Inclinaison';
+
+  @override
+  String get wallpaperNeonCText =>
+      'Penchez le téléphone : les enseignes proches bougent plus que le fond de la rue.';
+
+  @override
+  String get wallpaperSentinelTitle => 'Sentinelle';
+
+  @override
+  String get wallpaperSentinelDescription =>
+      'L\'œil rouge d\'une intelligence artificielle, dans son boîtier de métal.';
+
+  @override
+  String get wallpaperSentinelATitle => 'Il vous regarde';
+
+  @override
+  String get wallpaperSentinelAText =>
+      'Le cœur de l\'œil suit l\'inclinaison du téléphone, et son reflet glisse à l\'opposé sur le verre.';
+
+  @override
+  String get wallpaperSentinelBTitle => 'Il respire';
+
+  @override
+  String get wallpaperSentinelBText =>
+      'Le cœur pulse lentement ; un anneau de balayage part du centre de temps en temps.';
+
+  @override
+  String get wallpaperSentinelCTitle => 'Il s\'éveille';
+
+  @override
+  String get wallpaperSentinelCText =>
+      'L\'œil s\'avive quand vous déverrouillez le téléphone.';
+
+  @override
   String get widgetClockTitle => 'Horloge';
 
   @override

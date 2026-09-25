@@ -46,8 +46,94 @@ List<(String, String)> _circuitFeatures(AppLocalizations l) => [
 ];
 String _circuitBattery(AppLocalizations l) => l.wallpaperCircuitBattery;
 
+const gridWallpaper = HaloWallpaper(
+  id: 'grid',
+  title: _gridTitle,
+  description: _gridDescription,
+  features: _gridFeatures,
+  battery: _sceneBattery,
+);
+String _gridTitle(AppLocalizations l) => l.wallpaperGridTitle;
+String _gridDescription(AppLocalizations l) => l.wallpaperGridDescription;
+List<(String, String)> _gridFeatures(AppLocalizations l) => [
+  (l.wallpaperGridATitle, l.wallpaperGridAText),
+  (l.wallpaperGridBTitle, l.wallpaperGridBText),
+  (l.wallpaperGridCTitle, l.wallpaperGridCText),
+];
+
+const megacityWallpaper = HaloWallpaper(
+  id: 'megacity',
+  title: _megacityTitle,
+  description: _megacityDescription,
+  features: _megacityFeatures,
+  battery: _sceneBattery,
+);
+String _megacityTitle(AppLocalizations l) => l.wallpaperMegacityTitle;
+String _megacityDescription(AppLocalizations l) =>
+    l.wallpaperMegacityDescription;
+List<(String, String)> _megacityFeatures(AppLocalizations l) => [
+  (l.wallpaperMegacityATitle, l.wallpaperMegacityAText),
+  (l.wallpaperMegacityBTitle, l.wallpaperMegacityBText),
+  (l.wallpaperMegacityCTitle, l.wallpaperMegacityCText),
+];
+
+const codeWallpaper = HaloWallpaper(
+  id: 'code',
+  title: _codeTitle,
+  description: _codeDescription,
+  features: _codeFeatures,
+  battery: _sceneBattery,
+);
+String _codeTitle(AppLocalizations l) => l.wallpaperCodeTitle;
+String _codeDescription(AppLocalizations l) => l.wallpaperCodeDescription;
+List<(String, String)> _codeFeatures(AppLocalizations l) => [
+  (l.wallpaperCodeATitle, l.wallpaperCodeAText),
+  (l.wallpaperCodeBTitle, l.wallpaperCodeBText),
+  (l.wallpaperCodeCTitle, l.wallpaperCodeCText),
+];
+
+const neonWallpaper = HaloWallpaper(
+  id: 'neon',
+  title: _neonTitle,
+  description: _neonDescription,
+  features: _neonFeatures,
+  battery: _sceneBattery,
+);
+String _neonTitle(AppLocalizations l) => l.wallpaperNeonTitle;
+String _neonDescription(AppLocalizations l) => l.wallpaperNeonDescription;
+List<(String, String)> _neonFeatures(AppLocalizations l) => [
+  (l.wallpaperNeonATitle, l.wallpaperNeonAText),
+  (l.wallpaperNeonBTitle, l.wallpaperNeonBText),
+  (l.wallpaperNeonCTitle, l.wallpaperNeonCText),
+];
+
+const sentinelWallpaper = HaloWallpaper(
+  id: 'sentinel',
+  title: _sentinelTitle,
+  description: _sentinelDescription,
+  features: _sentinelFeatures,
+  battery: _sceneBattery,
+);
+String _sentinelTitle(AppLocalizations l) => l.wallpaperSentinelTitle;
+String _sentinelDescription(AppLocalizations l) =>
+    l.wallpaperSentinelDescription;
+List<(String, String)> _sentinelFeatures(AppLocalizations l) => [
+  (l.wallpaperSentinelATitle, l.wallpaperSentinelAText),
+  (l.wallpaperSentinelBTitle, l.wallpaperSentinelBText),
+  (l.wallpaperSentinelCTitle, l.wallpaperSentinelCText),
+];
+
+String _sceneBattery(AppLocalizations l) => l.wallpaperSceneBattery;
+
 /// Les fonds d'écran animés, dans l'ordre du catalogue.
-const haloWallpapers = [circuitWallpaper];
+const haloWallpapers = [
+  circuitWallpaper,
+  gridWallpaper,
+  megacityWallpaper,
+  codeWallpaper,
+  neonWallpaper,
+  sentinelWallpaper,
+];
 
 /// Un fond d'écran animé : aperçu, ce qu'il montre, son intensité et son
 /// application à l'accueil et à l'écran de verrouillage.

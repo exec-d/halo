@@ -526,6 +526,149 @@ class AppLocalizationsEn extends AppLocalizations {
       'The animation stops as soon as the wallpaper is no longer visible, and only runs continuously during a movement, a pulse or charging.';
 
   @override
+  String get wallpaperSceneBattery =>
+      'The animation stops as soon as the wallpaper is no longer visible. This wallpaper keeps its own colors, not the phone\'s.';
+
+  @override
+  String get wallpaperGridTitle => 'Grid';
+
+  @override
+  String get wallpaperGridDescription =>
+      'A glowing grid stretching to the horizon, where two light cycles draw their walls.';
+
+  @override
+  String get wallpaperGridATitle => 'Light cycles';
+
+  @override
+  String get wallpaperGridAText =>
+      'Two cycles, cyan and orange, race across the grid and turn at right angles; their glowing walls fade behind them.';
+
+  @override
+  String get wallpaperGridBTitle => 'Perspective';
+
+  @override
+  String get wallpaperGridBText =>
+      'The grid slowly scrolls towards you, all the way to the horizon.';
+
+  @override
+  String get wallpaperGridCTitle => 'Tilt';
+
+  @override
+  String get wallpaperGridCText =>
+      'Tilt the phone: the floor and the walls slide more than the distant horizon.';
+
+  @override
+  String get wallpaperMegacityTitle => 'Megacity';
+
+  @override
+  String get wallpaperMegacityDescription =>
+      'A huge city at night, in the rain, under an orange smog.';
+
+  @override
+  String get wallpaperMegacityATitle => 'The city';
+
+  @override
+  String get wallpaperMegacityAText =>
+      'Three layers of towers with lit windows, a pyramid in the distance and a large glowing billboard that changes color.';
+
+  @override
+  String get wallpaperMegacityBTitle => 'Life';
+
+  @override
+  String get wallpaperMegacityBText =>
+      'Flare stacks spit their flames, flying cars go by, two searchlights sweep the sky.';
+
+  @override
+  String get wallpaperMegacityCTitle => 'Rain and tilt';
+
+  @override
+  String get wallpaperMegacityCText =>
+      'It never stops raining; tilt the phone and the nearby towers move more than the far ones, and the rain slants.';
+
+  @override
+  String get wallpaperCodeTitle => 'Code';
+
+  @override
+  String get wallpaperCodeDescription =>
+      'A rain of green characters, on two layers.';
+
+  @override
+  String get wallpaperCodeATitle => 'The rain';
+
+  @override
+  String get wallpaperCodeAText =>
+      'Each column falls at its own speed, white head first, its trail fading; the characters change as it passes.';
+
+  @override
+  String get wallpaperCodeBTitle => 'Depth';
+
+  @override
+  String get wallpaperCodeBText =>
+      'A layer of smaller, darker characters behind the first.';
+
+  @override
+  String get wallpaperCodeCTitle => 'Gravity';
+
+  @override
+  String get wallpaperCodeCText => 'The rain slants when you tilt the phone.';
+
+  @override
+  String get wallpaperNeonTitle => 'Neon';
+
+  @override
+  String get wallpaperNeonDescription =>
+      'A street of the future, at night, lined with neon signs.';
+
+  @override
+  String get wallpaperNeonATitle => 'Signs';
+
+  @override
+  String get wallpaperNeonAText =>
+      'Yellow, cyan, magenta and red, on both sides of the street; some of them buzz, all of them reflect on the wet ground.';
+
+  @override
+  String get wallpaperNeonBTitle => 'Glitches';
+
+  @override
+  String get wallpaperNeonBText =>
+      'Now and then the image breaks up: shifted bands, split colors, a yellow interface bar.';
+
+  @override
+  String get wallpaperNeonCTitle => 'Tilt';
+
+  @override
+  String get wallpaperNeonCText =>
+      'Tilt the phone: the nearby signs move more than the end of the street.';
+
+  @override
+  String get wallpaperSentinelTitle => 'Sentinel';
+
+  @override
+  String get wallpaperSentinelDescription =>
+      'The red eye of an artificial intelligence, in its metal casing.';
+
+  @override
+  String get wallpaperSentinelATitle => 'It watches you';
+
+  @override
+  String get wallpaperSentinelAText =>
+      'The core of the eye follows the tilt of the phone, and its reflection slides the other way on the glass.';
+
+  @override
+  String get wallpaperSentinelBTitle => 'It breathes';
+
+  @override
+  String get wallpaperSentinelBText =>
+      'The core slowly pulses; now and then a scan ring spreads out from the center.';
+
+  @override
+  String get wallpaperSentinelCTitle => 'It wakes up';
+
+  @override
+  String get wallpaperSentinelCText =>
+      'The eye brightens when you unlock the phone.';
+
+  @override
   String get widgetClockTitle => 'Clock';
 
   @override

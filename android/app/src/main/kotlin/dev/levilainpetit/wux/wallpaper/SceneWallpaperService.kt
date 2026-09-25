@@ -46,6 +46,12 @@ interface LiveScene {
 
     fun resize(width: Int, height: Int, density: Float)
 
+    /**
+     * Les couleurs propres de la scène (principale, secondaire, fond), que
+     * le système reprend pour ses thèmes ; `null` : celles du téléphone.
+     */
+    val colors: IntArray? get() = null
+
     /** Données lentes (météo, position) relues quand le fond redevient visible. */
     fun refresh() {}
 
@@ -56,7 +62,8 @@ interface LiveScene {
 }
 
 /**
- * Base des fonds d'écran animés autres que Circuit : cadence des images, capteurs
+ * Base des fonds d'écran animés autres que Circuit (Grille, Mégapole, Code,
+ * Néon, Sentinelle) : cadence des images, capteurs
  * (seulement quand le fond est visible), intensité, couleurs du téléphone.
  */
 abstract class SceneWallpaperService : WallpaperService() {
@@ -175,8 +182,14 @@ abstract class SceneWallpaperService : WallpaperService() {
         }
 
         @RequiresApi(Build.VERSION_CODES.O_MR1)
-        override fun onComputeColors(): WallpaperColors =
-            WallpaperColors(Color.valueOf(frame.palette.glow), Color.valueOf(frame.palette.line), Color.valueOf(CircuitPainter.BACKGROUND))
+        override fun onComputeColors(): WallpaperColors {
+            val own = scene.colors
+            return if (own != null) {
+                WallpaperColors(Color.valueOf(own[0]), Color.valueOf(own[1]), Color.valueOf(own[2]))
+            } else {
+                WallpaperColors(Color.valueOf(frame.palette.glow), Color.valueOf(frame.palette.line), Color.valueOf(CircuitPainter.BACKGROUND))
+            }
+        }
 
         private fun request(delay: Long) {
             if (!visible || !ready || scheduled) return

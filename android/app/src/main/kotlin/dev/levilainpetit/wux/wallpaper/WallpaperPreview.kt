@@ -18,6 +18,7 @@ object WallpaperPreview {
      * allumé, au vrai niveau de batterie, avec quelques impulsions en route.
      */
     fun render(context: Context, widthPx: Int, heightPx: Int, kind: String = CIRCUIT): ByteArray {
+        SCENES[kind]?.let { return renderScene(context, widthPx, heightPx, it.scene()) }
         val intensity = WallpaperSettings.intensity(context)
         val metrics = context.resources.displayMetrics
         // Même rendu qu'à l'écran, réduit : les traits gardent leur proportion.
@@ -42,10 +43,30 @@ object WallpaperPreview {
         }
     }
 
+    /** Une scène (Grille, Code…), dessinée une fois, immobile. */
+    private fun renderScene(context: Context, widthPx: Int, heightPx: Int, scene: LiveScene): ByteArray {
+        val metrics = context.resources.displayMetrics
+        val density = metrics.density * widthPx / metrics.widthPixels.coerceAtLeast(1)
+        scene.resize(widthPx, heightPx, density)
+        scene.refresh()
+        val frame = LiveFrame().apply {
+            timeMillis = System.currentTimeMillis()
+            intensity = WallpaperSettings.intensity(context)
+            palette = CircuitPalette.of(context)
+        }
+        val bitmap = Bitmap.createBitmap(widthPx, heightPx, Bitmap.Config.ARGB_8888)
+        scene.draw(Canvas(bitmap), frame)
+        return ByteArrayOutputStream().use { out ->
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+            bitmap.recycle()
+            out.toByteArray()
+        }
+    }
+
     fun isActive(context: Context, kind: String = CIRCUIT): Boolean =
         WallpaperManager.getInstance(context).wallpaperInfo?.component == component(context, kind)
 
-    /** Le fond Halo appliqué (`circuit`), ou `null`. */
+    /** Le fond Halo appliqué (`circuit`, `grid`…), ou `null`. */
     fun activeKind(context: Context): String? = KINDS.firstOrNull { isActive(context, it) }
 
     /** L'écran système qui propose d'appliquer le fond (accueil, verrouillage ou les deux). */
@@ -53,11 +74,21 @@ object WallpaperPreview {
         Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER)
             .putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, component(context, kind))
 
-    // Un seul fond pour l'instant ; `kind` choisira parmi les suivants.
-    @Suppress("UNUSED_PARAMETER")
     private fun component(context: Context, kind: String) =
-        ComponentName(context, HaloWallpaperService::class.java)
+        ComponentName(context, SCENES[kind]?.service ?: HaloWallpaperService::class.java)
+
+    /** Un fond fait d'une scène : son service et de quoi la créer. */
+    private class Scene(val service: Class<*>, val scene: () -> LiveScene)
 
     const val CIRCUIT = "circuit"
-    private val KINDS = listOf(CIRCUIT)
+
+    /** Les identifiants sont partagés avec Dart (`wallpaper_screen.dart`). */
+    private val SCENES = linkedMapOf(
+        "grid" to Scene(GridWallpaperService::class.java) { GridScene() },
+        "megacity" to Scene(MegacityWallpaperService::class.java) { MegacityScene() },
+        "code" to Scene(CodeWallpaperService::class.java) { CodeScene() },
+        "neon" to Scene(NeonWallpaperService::class.java) { NeonScene() },
+        "sentinel" to Scene(SentinelWallpaperService::class.java) { SentinelScene() },
+    )
+    private val KINDS = listOf(CIRCUIT) + SCENES.keys
 }

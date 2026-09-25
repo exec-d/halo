@@ -17,7 +17,7 @@ Tout ce que Halo lit est affiché sur le téléphone et n'en sort pas :
 | Appareils Bluetooth connectés (nom, type, batterie) | Écouteurs et montre | Appareils à proximité |
 | Temps d'utilisation des applis, déverrouillages, consommation de données mobiles | Temps d'écran, Données mobiles | Accès aux données d'utilisation |
 | Liste des applis installées (nom, icône) | Temps d'écran | Aucune demande (déclarée) |
-| Inclinaison et orientation du téléphone | Fond Circuit | Aucune |
+| Inclinaison et orientation du téléphone | Fonds d'écran animés | Aucune |
 | Morceau en cours (titre, artiste, pochette, application) | Lecture en cours | Accès aux notifications (aucune notification n'est lue) |
 
 Les réglages de Halo et l'historique de batterie (26 heures) sont gardés dans

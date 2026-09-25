@@ -26,12 +26,15 @@ keep that name.*
 | Music | Now playing (neon cover art, controls) |
 | Shortcuts | Controls (flashlight, Wi-Fi, Bluetooth, sound, camera) |
 
-**Animated wallpaper**:
+**Six animated wallpapers**:
 
 - **Circuit**: the inside of a Pixel 7 as a neon schematic, which reacts to
   tilt, follows the real battery, lights up as data flows and powers on
-  component by component with the screen. More wallpapers, neon and
-  cyberpunk, are on the way.
+  component by component with the screen;
+- five wallpapers inspired by science fiction: **Grid** (light cycles on an
+  endless grid), **Megacity** (a huge city in the rain), **Code** (a rain of
+  green characters), **Neon** (a street of the future, buzzing signs and
+  glitches) and **Sentinel** (the red eye of an AI, following you).
 
 **Elsewhere in Android**: a screen saver (neon clock while charging), three
 quick settings tiles (Weather, Halo wallpaper, Battery) and icon shortcuts
