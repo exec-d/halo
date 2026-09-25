@@ -3,8 +3,8 @@
 # canal   : où le public obtient le projet (obligatoire si phase = publié).
 #           Indépendant de la visibilité du dépôt sur GitHub.
 # jalon   : prochaine étape. Un jalon GitHub du même nom prime sur les tâches.
-phase: bêta
-canal: ""
+phase: publié
+canal: https://github.com/exec-d/halo/releases
 jalon: ""
 maj: 2026-09-25
 taches:

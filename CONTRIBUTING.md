@@ -5,10 +5,10 @@ En participant, vous acceptez le [code de conduite](CODE_OF_CONDUCT.md).
 
 ## Signaler un problème, proposer une idée
 
-- **Un bug** : ouvrez un [ticket « Bug »](https://github.com/exec-d/WUX/issues/new?template=bug_report.yml)
+- **Un bug** : ouvrez un [ticket « Bug »](https://github.com/exec-d/halo/issues/new?template=bug_report.yml)
   avec le modèle du téléphone, la version d'Android, la version de Halo
   (*À propos*) et, si possible, une capture d'écran.
-- **Une idée de widget ou d'amélioration** : un [ticket « Idée »](https://github.com/exec-d/WUX/issues/new?template=feature_request.yml).
+- **Une idée de widget ou d'amélioration** : un [ticket « Idée »](https://github.com/exec-d/halo/issues/new?template=feature_request.yml).
   Une maquette, même dessinée à la main, aide beaucoup.
 - **Une faille de sécurité** : jamais dans un ticket public, voir
   [SECURITY.md](SECURITY.md).
@@ -20,8 +20,8 @@ En participant, vous acceptez le [code de conduite](CODE_OF_CONDUCT.md).
   vraiment que sur un écran d'accueil.
 
 ```bash
-git clone https://github.com/exec-d/WUX.git
-cd WUX
+git clone https://github.com/exec-d/halo.git
+cd halo
 flutter pub get
 flutter run
 ```

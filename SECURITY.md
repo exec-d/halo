@@ -3,12 +3,12 @@
 ## Versions suivies
 
 Seule la dernière version publiée sur la page
-[Releases](https://github.com/exec-d/WUX/releases) reçoit des corrections.
+[Releases](https://github.com/exec-d/halo/releases) reçoit des corrections.
 
 ## Signaler une faille
 
 **N'ouvrez pas de ticket public.** Utilisez le
-[signalement privé de GitHub](https://github.com/exec-d/WUX/security/advisories/new)
+[signalement privé de GitHub](https://github.com/exec-d/halo/security/advisories/new)
 (onglet *Security → Report a vulnerability*), en décrivant :
 
 - ce qui est en jeu (donnée exposée, action possible sans autorisation…) ;

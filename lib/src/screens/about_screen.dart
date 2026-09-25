@@ -115,7 +115,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   title: 'Code source',
                   detail:
                       'Halo est un logiciel libre, sous licence MIT : '
-                      'github.com/exec-d/WUX.',
+                      'github.com/exec-d/halo.',
                 ),
               ],
             ),

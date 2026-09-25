@@ -1,6 +1,6 @@
 # Halo
 
-[![CI](https://github.com/exec-d/WUX/actions/workflows/ci.yml/badge.svg)](https://github.com/exec-d/WUX/actions/workflows/ci.yml)
+[![CI](https://github.com/exec-d/halo/actions/workflows/ci.yml/badge.svg)](https://github.com/exec-d/halo/actions/workflows/ci.yml)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 ![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84)
 
@@ -8,8 +8,8 @@
 Android.** Les couleurs suivent celles du téléphone (Material You) ; rien ne
 quitte l'appareil, hormis les coordonnées envoyées à Open-Meteo pour la météo.
 
-*Nom de code : WUX. Le code, le paquet (`dev.levilainpetit.wux`) et le dépôt
-gardent ce nom ; l'application s'appelle Halo.*
+*Nom de code : WUX. Le paquet Android (`dev.levilainpetit.wux`) et le code
+gardent ce nom.*
 
 ## Ce que contient Halo
 
@@ -36,9 +36,9 @@ d'écran : [docs/wallpaper.md](docs/wallpaper.md).
 ## Installer
 
 Halo n'est pas sur le Play Store. Chaque version publiée sur la page
-[Releases](https://github.com/exec-d/WUX/releases) porte un APK ; la dernière
+[Releases](https://github.com/exec-d/halo/releases) porte un APK ; la dernière
 build de la branche principale est aussi un artefact de
-[la CI](https://github.com/exec-d/WUX/actions/workflows/ci.yml).
+[la CI](https://github.com/exec-d/halo/actions/workflows/ci.yml).
 
 1. Télécharger l'APK sur le téléphone et l'ouvrir (autoriser l'installation
    depuis le navigateur ou le gestionnaire de fichiers si Android le demande).

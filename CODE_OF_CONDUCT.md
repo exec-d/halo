@@ -39,6 +39,6 @@ discussions) et lorsqu'une personne le représente publiquement.
 ## Signaler
 
 Un comportement contraire à ce code se signale en privé au mainteneur, par un
-[signalement privé GitHub](https://github.com/exec-d/WUX/security/advisories/new)
+[signalement privé GitHub](https://github.com/exec-d/halo/security/advisories/new)
 ou en contactant [@kdelfour](https://github.com/kdelfour). Chaque signalement
 sera examiné rapidement et avec discrétion.
