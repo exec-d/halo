@@ -1,11 +1,15 @@
-name: CI
+name: Release
 
+# Une version publiée sur GitHub (étiquette vX.Y.Z) reçoit son APK.
 on:
-  push:
-  pull_request:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
 
 jobs:
-  build:
+  apk:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,14 +25,11 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      - run: dart format --output=none --set-exit-if-changed .
-      - run: flutter analyze
       - run: flutter test
-      # Numéro de build croissant, le même pour une même révision que dans
-      # release.yml, pour qu'Android voie une mise à jour : le nombre de
-      # commits, plus 100 (les premières builds numérotaient les exécutions).
+      # Même clé et même numérotation que la CI (ci.yml) : l'APK s'installe
+      # par-dessus une build de la CI, et inversement.
       - run: flutter build apk --debug --build-number=$(( $(git rev-list --count HEAD) + 100 ))
-      - uses: actions/upload-artifact@v4
+      - run: cp build/app/outputs/flutter-apk/app-debug.apk "halo-${{ github.event.release.tag_name }}.apk"
+      - uses: softprops/action-gh-release@v2
         with:
-          name: wux-debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          files: halo-${{ github.event.release.tag_name }}.apk

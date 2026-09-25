@@ -1,154 +1,103 @@
 # Halo
 
-*Nom de code : WUX.*
+[![CI](https://github.com/exec-d/WUX/actions/workflows/ci.yml/badge.svg)](https://github.com/exec-d/WUX/actions/workflows/ci.yml)
+[![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
+![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84)
 
-Application Android (Flutter) qui propose des **widgets d'écran d'accueil**
-au style néon pour personnaliser son téléphone. Nom affiché : **Halo** ; le
-code, le paquet (`dev.levilainpetit.wux`) et le dépôt gardent le nom de code.
+**Des widgets néon et un fond d'écran animé pour personnaliser un téléphone
+Android.** Les couleurs suivent celles du téléphone (Material You) ; rien ne
+quitte l'appareil, hormis les coordonnées envoyées à Open-Meteo pour la météo.
 
-## Widgets
+*Nom de code : WUX. Le code, le paquet (`dev.levilainpetit.wux`) et le dépôt
+gardent ce nom ; l'application s'appelle Halo.*
 
-Style néon d'après les maquettes : heure en Roboto extra gras, texte mono,
-ombre sombre sous les textes, halo sur les traits. Les couleurs suivent l'accent du fond d'écran
-(Material You, Android 12+), un bleu fixe avant.
+## Ce que contient Halo
 
-| Widget | Contenu | Toucher |
-| --- | --- | --- |
-| Horloge | Heure, date, prochaine alarme ; grande ou compacte selon la hauteur | Ouvre l'horloge |
-| Agenda | Événements d'aujourd'hui (et de demain, au choix), en une colonne | Ouvre l'événement ou le jour |
-| Agenda 2 colonnes | Idem en deux colonnes | Idem |
-| Système (4x1) | Batterie, réseau, stockage | Ouvre le réglage correspondant |
-| Système avancé (4x2) | Signal, Wi-Fi, Bluetooth, batterie, mémoire, stockage, localisation, son | Idem |
-| Batterie détaillée (4x2) | Courbe des 24 h (charges en plein) et suite prévue, estimation, température, tension, cycles, santé | Ouvre l'utilisation de la batterie |
-| Appareil (4x2) | Console : durée depuis le démarrage (chronomètre), Android et correctif, modèle, puce, mémoire | Ouvre « À propos du téléphone » |
-| Écouteurs et montre (4x1) | Appareils Bluetooth connectés : silhouette, pile de cellules, niveau (autorisation « Appareils à proximité ») | Ouvre les réglages Bluetooth |
-| Temps d'écran (4x2) | Cadran de 24 h des périodes écran allumé, total, déverrouillages, trois applis en silhouette (accès aux données d'utilisation) | Ouvre Bien-être numérique |
-| Données mobiles (4x2) | Cumul de la période face au forfait, rythme idéal, projection, barre par jour (accès aux données d'utilisation) | Ouvre la consommation des données |
-| Fuseaux horaires (4x1) | L'heure de trois villes au choix | Ouvre l'horloge |
-| Compte à rebours | Les jours jusqu'à une date | Ouvre WUX |
-| Contrôles (4x1) | Lampe torche, Wi-Fi, Bluetooth, son, appareil photo | Bascule la lampe, ouvre le reste |
-| Mois (4x3) | Le mois en cours, jours avec événements marqués | Ouvre le jour dans l'agenda |
-| Météo (4x3) | Tableau de bord : température et jauge du jour, relevés, courbe des 24 h | Ouvre WUX |
-| Soleil et Lune (4x1) | Lever, coucher, durée du jour, phase de la lune | Ouvre WUX |
-| Pluie (4x2) | Pluie en cours ou à venir, probabilités sur 12 h | Ouvre WUX |
-| Allergies (4x2) | Six pollens, qualité de l'air (Open-Meteo, Europe) | Ouvre WUX |
+**18 widgets** pour l'écran d'accueil et l'écran de verrouillage :
 
-La météo vient d'[Open-Meteo](https://open-meteo.com) (gratuit, sans clé),
-rafraîchie chaque heure par WorkManager quand le réseau est là. Le lieu se
-choisit dans l'app, par la position (approximative, demandée une fois) ou par
-une recherche ; il sert aussi à Soleil et Lune, dont la phase lunaire est
-calculée sur le téléphone.
-
-Tous sont en `RemoteViews` : Glance n'accepte pas de halo sur le texte. Un
-widget est dessiné par le lanceur, qui n'a pas accès aux polices de
-l'application : les textes utilisent la police mono du système et l'heure
-Roboto extra gras. Heure et date sont des `TextClock`, qui avancent seuls sans
-réveiller l'application.
-
-À partir de 18 h, quand il ne reste plus d'événement à venir dans la journée,
-les agendas passent au lendemain (`AgendaBuilder.END_OF_DAY_HOUR`).
-
-Un appui long sur un widget ouvre ses réglages dans WUX (Android 12+).
-
-### Ressources graphiques
-
-- `res/drawable-xxhdpi/*.png` : traits et icône d'alarme avec leur halo, en blanc,
-  teintés par le widget ; générés par `tool/clock_assets.py`.
-
-## Fond d'écran animé
-
-**Circuit** (`wallpaper/`) : l'intérieur du téléphone en schéma néon, aux
-couleurs de Material You, pour l'accueil et l'écran de verrouillage.
-
-- disposition d'un Pixel 7 vu à travers l'écran : barre photo et objectifs
-  à droite, caméra frontale dans le poinçon, lecteur d'empreinte, boutons
-  à droite, tiroir SIM à gauche ;
-- quatre plans (châssis et bobine, batterie, cartes et puces, verre) décalés selon
-  l'inclinaison (capteur de gravité), avec un reflet de verre ;
-- la batterie dessinée suit le niveau réel et respire pendant la charge ;
-- des impulsions courent de l'antenne au processeur quand des données passent
-  (`TrafficStats`), les antennes brillent selon la force du signal ;
-- à l'allumage de l'écran, composants et pistes s'illuminent un à un depuis
-  le processeur, le décor étant déjà affiché.
-
-Une intensité (discret par défaut, normal, vif) garde widgets et icônes
-lisibles par-dessus ; le décor ne contient aucun texte.
-
-Les parties fixes sont rendues une fois en masques `ALPHA_8`, teintés au
-dessin. Rien ne tourne quand le fond est caché ; le dessin continu n'a lieu
-que pendant un mouvement, une impulsion, l'allumage ou une charge.
-
-## Application
-
-- **Catalogue** : aperçu de chaque widget avec des données d'exemple ; un appui ouvre ses réglages.
-- **Réglages** : état des autorisations (agenda, position), exclusion de l'optimisation de batterie, lieu et fraîcheur des données météo, actualisation manuelle.
-- **À propos** : version, confidentialité (aucune donnée collectée, seuls les appels à Open-Meteo quittent le téléphone), sources et crédits, licences open source.
-- Écran de démarrage aux couleurs de Halo (API 31+ via `windowSplashScreen*`).
-
-## Principe
-
-Un widget Android est une vue native affichée par le lanceur ; Flutter ne
-dessine pas sur l'écran d'accueil. WUX a donc deux moitiés :
-
-| Côté | Rôle | Emplacement |
-| --- | --- | --- |
-| Flutter + [IUX](https://github.com/systm-d/IUX) | Catalogue, réglages, aperçus, épinglage | `lib/` |
-| Kotlin | Lecture du calendrier, rendu des widgets, rafraîchissement | `android/app/src/main/kotlin/…` |
-
-- **Réglages** : écrits par Flutter avec `home_widget` sous la clé
-  `<id du widget>.<nom>` (`agenda_one_column.calendars`), relus par
-  `AgendaSettings.kt`.
-- **Aperçus dans l'app** : Android dessine le vrai widget
-  (`WidgetPreviews.kt`, chaque widget implémentant `PreviewableWidget`) et
-  l'envoie en PNG à Flutter par le canal `dev.levilainpetit.wux/native`.
-  Rien n'est redessiné côté Dart.
-- **Aperçus dans la liste du lanceur** : `android:previewLayout` (Android 12+),
-  la vraie mise en page pour l'horloge, des mises en page d'exemple
-  (`res/layout/preview_*.xml`) pour les autres.
-- **Fraîcheur des agendas** (`AgendaRefresh.kt`) : modification du calendrier
-  (déclencheur de contenu WorkManager), fin d'un événement du jour, 18 h,
-  passage à minuit, changement de réglage,
-  plus la mise à jour système toutes les 30 minutes.
-- **Couleurs** : `res/values-v31/colors.xml` pointe sur les couleurs d'accent
-  système tirées du fond d'écran ; `res/values/colors.xml` est le repli.
-
-## Décisions
-
-| Sujet | Choix |
+| Famille | Widgets |
 | --- | --- |
-| Couleurs | Accent du fond d'écran (Material You, Android 12+) |
-| Diffusion | Usage personnel, APK de debug issu de la CI |
-| Android minimum | 8.0 (API 26) |
-| Calendrier | Lecture seule (`READ_CALENDAR`) |
-| Autorisations demandées | Agenda, position approximative (Météo) ; rien d'autre |
+| Temps | Horloge (avec la prochaine alarme), Fuseaux horaires, Compte à rebours, Mois |
+| Agenda | Agenda, Agenda 2 colonnes — l'événement en cours mis en avant, « toute la journée » masquable |
+| Météo | Météo (tableau de bord et barres des 24 h), Pluie, Allergies (pollens), Soleil et Lune |
+| Système | Système, Système avancé, Batterie détaillée, Appareil (façon console), Écouteurs et montre, Temps d'écran, Données mobiles |
+| Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo) |
 
-IUX n'est pas publié ; il est tiré de GitHub et épinglé sur un commit dans
-`pubspec.yaml`. Pour monter de version, changer ce `ref` puis lancer
-`flutter pub upgrade iux_flutter`.
+**Un fond d'écran animé, Circuit** : l'intérieur d'un Pixel 7 en schéma néon,
+qui réagit à l'inclinaison, suit la vraie batterie, s'illumine au passage des
+données et s'allume composant par composant avec l'écran.
 
-## Ajouter un widget
+**L'application** : catalogue avec aperçus, réglages de chaque widget (aussi
+par un appui long sur le widget), autorisations, à propos et licences.
 
-1. Le déclarer dans `lib/src/home_widgets/catalog.dart`.
-2. Écrire son widget Kotlin dans `android/…/widgets/`.
-3. Ajouter ses métadonnées (`res/xml/`) et son `<receiver>` dans
-   `AndroidManifest.xml`.
-4. Lui donner un écran de réglage et un aperçu dans `lib/src/`.
+Le détail de chaque widget : [docs/widgets.md](docs/widgets.md) ; le fond
+d'écran : [docs/wallpaper.md](docs/wallpaper.md).
 
-## Installer une mise à jour
+## Installer
 
-Toutes les builds de CI signent avec la même clé de debug
-(`android/app/debug.keystore`) : un nouvel APK s'installe par-dessus le
-précédent. Cette clé est publique ; elle ne doit pas servir à publier.
+Halo n'est pas sur le Play Store. Chaque version publiée sur la page
+[Releases](https://github.com/exec-d/WUX/releases) porte un APK ; la dernière
+build de la branche principale est aussi un artefact de
+[la CI](https://github.com/exec-d/WUX/actions/workflows/ci.yml).
 
-## Développement
+1. Télécharger l'APK sur le téléphone et l'ouvrir (autoriser l'installation
+   depuis le navigateur ou le gestionnaire de fichiers si Android le demande).
+2. Les mises à jour s'installent par-dessus : toutes les builds sont signées
+   avec la même clé.
+3. Pour **Temps d'écran** et **Données mobiles** : Android réserve l'accès aux
+   données d'utilisation aux applications du Play Store. Dans
+   *Paramètres → Applis → Halo*, touchez **⋮ → Autoriser les paramètres
+   restreints**, puis activez l'accès depuis Halo.
+
+Configuration requise : Android 8.0 (API 26) ; Android 12 ou plus pour les
+couleurs du téléphone, l'aperçu dans la liste des widgets et le réglage par
+appui long.
+
+## Autorisations
+
+Toutes sont facultatives ; chacune ne sert qu'aux widgets indiqués.
+
+| Autorisation | Pour | Demandée |
+| --- | --- | --- |
+| Agenda (lecture) | Agenda, Agenda 2 colonnes, Mois | Au premier lancement |
+| Position approximative | Météo, Pluie, Allergies, Soleil et Lune — seulement si vous choisissez « Ma position » | Dans l'écran Météo |
+| Appareils à proximité | Écouteurs et montre | Dans l'écran du widget |
+| Données d'utilisation | Temps d'écran, Données mobiles | Dans les réglages d'Android |
+| Internet | Prévisions Open-Meteo | — |
+
+Ce que Halo fait de ces données : [PRIVACY.md](PRIVACY.md).
+
+## Compiler
 
 ```bash
 flutter pub get
 dart format .
 flutter analyze
 flutter test
-flutter run            # sur un appareil ou émulateur Android
+flutter build apk --debug    # ou : flutter run, sur un appareil branché
 ```
 
-La CI (`.github/workflows/ci.yml`) lance ces vérifications, construit un APK
-de debug et le publie comme artefact téléchargeable.
+Il faut Flutter (canal stable), Java 17 et le SDK Android. La bibliothèque
+d'interface [IUX](https://github.com/systm-d/IUX) est tirée de GitHub,
+épinglée sur un commit dans `pubspec.yaml`.
+
+L'architecture — pourquoi deux moitiés, Flutter et Kotlin, et comment elles se
+parlent — est décrite dans [docs/architecture.md](docs/architecture.md).
+
+## Contribuer
+
+Les signalements et propositions sont les bienvenus : voir
+[CONTRIBUTING.md](CONTRIBUTING.md), et le
+[code de conduite](CODE_OF_CONDUCT.md). Une faille de sécurité se signale en
+privé : [SECURITY.md](SECURITY.md). L'historique des versions :
+[CHANGELOG.md](CHANGELOG.md).
+
+## Licence et crédits
+
+Halo est distribué sous [licence MIT](LICENSE).
+
+- Météo, pluie, pollens et qualité de l'air : [Open-Meteo](https://open-meteo.com)
+  (CC BY 4.0), pollens et air issus du Copernicus Atmosphere Monitoring
+  Service ; géocodage GeoNames (CC BY 4.0).
+- Icônes : Material Icons de Google (Apache 2.0).
+- Interface : [Flutter](https://flutter.dev) et [IUX](https://github.com/systm-d/IUX).

@@ -111,6 +111,12 @@ class _AboutScreenState extends State<AboutScreen> {
                       'Flutter, et IUX pour les composants accessibles de '
                       "l'application.",
                 ),
+                _Credit(
+                  title: 'Code source',
+                  detail:
+                      'Halo est un logiciel libre, sous licence MIT : '
+                      'github.com/exec-d/WUX.',
+                ),
               ],
             ),
             const IuxGap.between(),

@@ -6,9 +6,10 @@
 phase: bêta
 canal: ""
 jalon: ""
-maj: 2026-09-24
+maj: 2026-09-25
 taches:
-  faites: [Setup du projet Flutter Android, Intégration d'IUX, Widget Horloge / date, Widget Agenda / rappels, Essai sur téléphone, Widgets système et météo, Pages Réglages et À propos]
+  faites: [Setup du projet Flutter Android, Intégration d'IUX, Widget Horloge / date, Widget Agenda / rappels, Essai sur téléphone, Widgets système et météo, Pages Réglages et À propos, Fond d'écran animé Circuit, Widgets système détaillés, Documentation open source]
   restantes: []
 notes: |
-  v0.1.0 : app « Halo » (nom de code WUX), APK de debug pour usage personnel.
+  v0.2.0 : app « Halo » (nom de code WUX), licence MIT, APK signé d'une clé de debug
+  joint aux releases GitHub. Pas sur le Play Store.

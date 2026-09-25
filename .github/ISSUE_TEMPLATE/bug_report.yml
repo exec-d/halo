@@ -1,0 +1,43 @@
+name: Bug
+description: Un widget, le fond d'écran ou l'application ne se comporte pas comme prévu.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: Ce qui se passe
+      description: Ce que vous voyez, et ce que vous attendiez.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pour le reproduire
+      placeholder: |
+        1. Poser le widget Météo en 4x3
+        2. …
+  - type: input
+    id: widget
+    attributes:
+      label: Widget ou écran concerné
+      placeholder: Agenda 2 colonnes, fond Circuit, écran Réglages…
+  - type: input
+    id: version
+    attributes:
+      label: Version de Halo
+      description: Dans Halo → À propos.
+      placeholder: 0.2.0 (45)
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Téléphone et version d'Android
+      placeholder: Pixel 7, Android 17
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Captures d'écran
+      description: Glissez-les ici ; pour un problème d'affichage, elles valent mille mots.

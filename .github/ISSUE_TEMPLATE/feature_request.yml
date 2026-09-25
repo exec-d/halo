@@ -1,0 +1,21 @@
+name: Idée
+description: Un nouveau widget, un réglage, une amélioration.
+labels: [idée]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: L'idée
+      description: Ce que vous aimeriez voir, et à quoi cela vous servirait.
+    validations:
+      required: true
+  - type: textarea
+    id: mockup
+    attributes:
+      label: Maquette ou exemple
+      description: Un croquis, une capture d'un autre widget, un lien… tout aide.
+  - type: textarea
+    id: data
+    attributes:
+      label: Données nécessaires
+      description: Si l'idée demande une information du téléphone ou d'un service, laquelle ?
