@@ -104,6 +104,20 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
+  testWidgets("l'écran de veille ouvre les réglages d'Android", (tester) async {
+    final platform = FakePlatform();
+    await tester.pumpWidget(WuxApp(platform: platform));
+    await tester.pumpAndSettle();
+    // Le titre de section, puis celui de la carte : on touche la carte.
+    await tester.ensureVisible(find.text('Écran de veille').last);
+    await tester.tap(find.text('Écran de veille').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text("Ouvrir les réglages de l'écran de veille"));
+    await tester.pumpAndSettle();
+    expect(platform.dreamSettingsOpened, 1);
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets("au premier lancement, l'accès à l'agenda est demandé", (
     tester,
   ) async {

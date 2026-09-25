@@ -151,6 +151,14 @@ open class MainActivity : FlutterActivity() {
                     requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_ONLY_REQUEST)
                 }
             }
+            "openDreamSettings" -> {
+                try {
+                    startActivity(Intent(Settings.ACTION_DREAM_SETTINGS))
+                    result.success(true)
+                } catch (e: ActivityNotFoundException) {
+                    result.success(false)
+                }
+            }
             "launchTarget" -> result.success(launchTarget())
             "hasUsageAccess" -> result.success(UsageAccess.granted(this))
             "openUsageAccess" -> {

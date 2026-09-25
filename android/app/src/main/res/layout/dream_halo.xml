@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Écran de veille Halo (HaloDream), par-dessus le décor Circuit. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <TextClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:format12Hour="h:mm"
+        android:format24Hour="HH:mm"
+        android:includeFontPadding="false"
+        android:shadowColor="@color/text_shade"
+        android:shadowRadius="16"
+        android:textColor="@color/clock_core"
+        android:textFontWeight="800"
+        android:textSize="96sp" />
+    <TextClock
+        style="@style/HaloLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:format12Hour="EEEE d MMMM"
+        android:format24Hour="EEEE d MMMM"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/dream_alarm"
+        style="@style/HaloConsole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:drawablePadding="8dp"
+        android:drawableStart="@drawable/clock_alarm"
+        android:drawableTint="@color/clock_line"
+        android:gravity="center_vertical"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/dream_event"
+        style="@style/HaloConsole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/dream_weather"
+        style="@style/HaloConsole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp" />
+</LinearLayout>

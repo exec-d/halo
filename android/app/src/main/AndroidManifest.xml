@@ -335,6 +335,20 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+        <!-- Écran de veille, pendant la charge ou sur un socle. -->
+        <service
+            android:name=".dream.HaloDream"
+            android:exported="true"
+            android:label="@string/dream_label"
+            android:permission="android.permission.BIND_DREAM_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.dreams.DreamService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.dream"
+                android:resource="@xml/halo_dream" />
+        </service>
         <!-- Fond d'écran animé « Circuit ». -->
         <service
             android:name=".wallpaper.HaloWallpaperService"

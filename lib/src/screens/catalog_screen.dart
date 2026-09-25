@@ -6,6 +6,7 @@ import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import '../previews/widget_previews.dart';
 import 'about_screen.dart';
+import 'dream_screen.dart';
 import 'screen_frame.dart';
 import 'settings_screen.dart';
 import 'wallpaper_screen.dart';
@@ -163,6 +164,34 @@ class _CatalogScreenState extends State<CatalogScreen> {
                             ),
                           ],
                         ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const IuxGap.between(),
+            IuxSection(
+              title: dreamTitle,
+              children: [
+                IuxCard.tappable(
+                  semanticLabel: dreamTitle,
+                  hint: dreamDescription,
+                  onActivate: () => Navigator.of(context).push<void>(
+                    MaterialPageRoute<void>(
+                      builder: (_) => DreamScreen(platform: platform),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        dreamTitle,
+                        style: IuxTypographyTheme.of(context).title,
+                      ),
+                      Text(
+                        dreamDescription,
+                        style: IuxTypographyTheme.of(context).body,
                       ),
                     ],
                   ),

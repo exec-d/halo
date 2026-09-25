@@ -63,6 +63,11 @@ class FakePlatform implements WuxPlatform {
   }
 
   var wallpaperActive = false;
+  var dreamSettingsOpened = 0;
+
+  @override
+  Future<void> openDreamSettings() async => dreamSettingsOpened++;
+
   var intensity = 'discreet';
 
   @override

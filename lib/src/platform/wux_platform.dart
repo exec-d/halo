@@ -39,6 +39,9 @@ abstract interface class WuxPlatform {
 
   Future<void> setWallpaperIntensity(String value);
 
+  /// Ouvre les réglages de l'écran de veille d'Android.
+  Future<void> openDreamSettings();
+
   /// Vrai si le fond d'écran Halo est celui du téléphone.
   Future<bool> isWallpaperActive();
 
@@ -165,6 +168,10 @@ class AndroidWuxPlatform implements WuxPlatform {
   @override
   Future<void> setWallpaperIntensity(String value) =>
       _channel.invokeMethod<void>('setWallpaperIntensity', {'value': value});
+
+  @override
+  Future<void> openDreamSettings() =>
+      _channel.invokeMethod<void>('openDreamSettings');
 
   @override
   Future<bool> isWallpaperActive() async =>
