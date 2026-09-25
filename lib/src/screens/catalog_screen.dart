@@ -136,38 +136,48 @@ class _CatalogScreenState extends State<CatalogScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             IuxSection(
-              title: "Fond d'écran",
+              title: "Fonds d'écran animés",
               children: [
-                IuxCard.tappable(
-                  semanticLabel: wallpaperTitle,
-                  hint: wallpaperDescription,
-                  onActivate: () => Navigator.of(context).push<void>(
-                    MaterialPageRoute<void>(
-                      builder: (_) => WallpaperScreen(platform: platform),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      WallpaperPreview(platform: platform, width: 96),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              wallpaperTitle,
-                              style: IuxTypographyTheme.of(context).title,
-                            ),
-                            Text(
-                              wallpaperDescription,
-                              style: IuxTypographyTheme.of(context).body,
-                            ),
-                          ],
+                for (final wallpaper in haloWallpapers) ...[
+                  IuxCard.tappable(
+                    semanticLabel: wallpaper.title,
+                    hint: wallpaper.description,
+                    onActivate: () => Navigator.of(context).push<void>(
+                      MaterialPageRoute<void>(
+                        builder: (_) => WallpaperScreen(
+                          platform: platform,
+                          wallpaper: wallpaper,
                         ),
                       ),
-                    ],
+                    ),
+                    child: Row(
+                      children: [
+                        WallpaperPreview(
+                          platform: platform,
+                          wallpaper: wallpaper,
+                          width: 96,
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                wallpaper.title,
+                                style: IuxTypographyTheme.of(context).title,
+                              ),
+                              Text(
+                                wallpaper.description,
+                                style: IuxTypographyTheme.of(context).body,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  const IuxGap.between(),
+                ],
               ],
             ),
             const IuxGap.between(),

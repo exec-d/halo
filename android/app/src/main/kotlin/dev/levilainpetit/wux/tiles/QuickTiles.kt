@@ -86,13 +86,14 @@ class WeatherTile : HaloTile() {
 }
 
 /**
- * Fond Circuit : l'intensité en un toucher (Discret → Normal → Vif). Active
- * quand Circuit est le fond d'écran ; sinon, toucher ouvre son écran.
+ * Fond Halo : l'intensité en un toucher (Discret → Normal → Vif). Active
+ * quand un fond Halo (Circuit, Horizon, Ciel) est appliqué ; sinon, toucher
+ * ouvre l'écran des fonds.
  */
 class WallpaperTile : HaloTile() {
 
     override fun update(tile: Tile) {
-        val active = WallpaperPreview.isActive(this)
+        val active = WallpaperPreview.activeKind(this) != null
         tile.state = if (active) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
         tile.label = getString(R.string.tile_wallpaper)
         tile.subtitleCompat(
@@ -103,7 +104,7 @@ class WallpaperTile : HaloTile() {
 
     override fun onClick() {
         super.onClick()
-        if (!WallpaperPreview.isActive(this)) {
+        if (WallpaperPreview.activeKind(this) == null) {
             open("wallpaper")
             return
         }

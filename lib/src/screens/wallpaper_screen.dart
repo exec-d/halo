@@ -6,18 +6,123 @@ import 'package:iux_flutter/iux_flutter.dart';
 import '../platform/wux_platform.dart';
 import 'screen_frame.dart';
 
-/// Nom et description du fond d'écran animé, partagés par le catalogue et son
-/// écran.
-const wallpaperTitle = 'Circuit';
-const wallpaperDescription =
-    "L'intérieur du téléphone en néon, aux couleurs du téléphone.";
+/// Un fond d'écran animé de Halo : son identifiant (partagé avec
+/// `WallpaperPreview.kt`), son nom, et ce qui bouge.
+class HaloWallpaper {
+  const HaloWallpaper({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.features,
+    required this.battery,
+  });
 
-/// Le fond d'écran animé « Circuit » : aperçu, ce qu'il montre, et son
+  final String id;
+  final String title;
+  final String description;
+  final List<(String, String)> features;
+  final String battery;
+}
+
+const circuitWallpaper = HaloWallpaper(
+  id: 'circuit',
+  title: 'Circuit',
+  description: "L'intérieur du téléphone en néon, aux couleurs du téléphone.",
+  features: [
+    (
+      'Inclinaison',
+      'Les plans du téléphone glissent quand vous le penchez, et le reflet '
+          'du verre suit.',
+    ),
+    (
+      'Vraie batterie',
+      'La batterie dessinée affiche le niveau réel et respire pendant la '
+          'charge.',
+    ),
+    (
+      'Réseau',
+      "Des impulsions courent de l'antenne au processeur quand des données "
+          'passent ; les antennes brillent selon la force du signal.',
+    ),
+    (
+      'Allumage',
+      "À chaque allumage de l'écran, le fond est là tout de suite, puis "
+          "composants et pistes s'illuminent un à un depuis le processeur.",
+    ),
+  ],
+  battery:
+      "L'animation s'arrête dès que le fond n'est plus visible, et ne tourne "
+      'en continu que pendant un mouvement, une impulsion ou une charge.',
+);
+
+const horizonWallpaper = HaloWallpaper(
+  id: 'horizon',
+  title: 'Horizon',
+  description:
+      "Un horizon néon qui suit l'heure et la vraie météo du lieu choisi.",
+  features: [
+    (
+      'La journée',
+      'Le soleil se lève, traverse le ciel et se couche aux vraies heures ; '
+          'la nuit, la lune dans sa phase et les étoiles.',
+    ),
+    (
+      'La météo',
+      'Nuages, pluie, neige, orage ou brume, selon le temps qu\'il fait au '
+          'lieu choisi dans Météo.',
+    ),
+    (
+      'Inclinaison',
+      'Montagnes et sol quadrillé glissent quand vous penchez le téléphone.',
+    ),
+  ],
+  battery:
+      "L'animation s'arrête dès que le fond n'est plus visible ; elle "
+      'ralentit par temps clair, et ne va vite que sous la pluie ou la neige.',
+);
+
+const skyWallpaper = HaloWallpaper(
+  id: 'sky',
+  title: 'Ciel',
+  description:
+      'Les vraies étoiles et la vraie Lune au-dessus de vous, dans la '
+      'direction du téléphone.',
+  features: [
+    (
+      'Le vrai ciel',
+      'Les étoiles les plus brillantes et les constellations, à leur place '
+          'pour le lieu choisi dans Météo et pour cette heure.',
+    ),
+    (
+      'Boussole',
+      'Tournez-vous : le ciel suit la direction du téléphone. Levez-le : '
+          'vous montez vers le zénith.',
+    ),
+    (
+      'Le jour',
+      'Le ciel s\'éclaircit et les étoiles pâlissent quand le soleil est '
+          'levé.',
+    ),
+  ],
+  battery:
+      "L'animation et la boussole s'arrêtent dès que le fond n'est plus "
+      'visible.',
+);
+
+/// Les fonds d'écran animés, dans l'ordre du catalogue.
+const haloWallpapers = [circuitWallpaper, horizonWallpaper, skyWallpaper];
+
+/// Un fond d'écran animé : aperçu, ce qu'il montre, son intensité et son
 /// application à l'accueil et à l'écran de verrouillage.
 class WallpaperScreen extends StatefulWidget {
-  const WallpaperScreen({super.key, required this.platform});
+  const WallpaperScreen({
+    super.key,
+    required this.platform,
+    this.wallpaper = circuitWallpaper,
+  });
 
   final WuxPlatform platform;
+  final HaloWallpaper wallpaper;
 
   @override
   State<WallpaperScreen> createState() => _WallpaperScreenState();
@@ -58,7 +163,7 @@ class _WallpaperScreenState extends State<WallpaperScreen>
   }
 
   Future<void> _refresh() async {
-    final active = await _platform.isWallpaperActive();
+    final active = await _platform.isWallpaperActive(kind: widget.wallpaper.id);
     final intensity = await _platform.wallpaperIntensity();
     if (mounted) {
       setState(() {
@@ -75,7 +180,7 @@ class _WallpaperScreenState extends State<WallpaperScreen>
   }
 
   Future<void> _applyWallpaper() async {
-    final opened = await _platform.applyWallpaper();
+    final opened = await _platform.applyWallpaper(kind: widget.wallpaper.id);
     if (!mounted) return;
     setState(() => _unavailable = !opened);
     await _refresh();
@@ -86,17 +191,18 @@ class _WallpaperScreenState extends State<WallpaperScreen>
     final typography = IuxTypographyTheme.of(context);
     return Scaffold(
       body: ScreenFrame(
-        title: wallpaperTitle,
+        title: widget.wallpaper.title,
         canGoBack: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             IuxSection(
-              description: wallpaperDescription,
+              description: widget.wallpaper.description,
               children: [
                 Center(
                   child: WallpaperPreview(
                     platform: _platform,
+                    wallpaper: widget.wallpaper,
                     revision: _revision,
                   ),
                 ),
@@ -121,7 +227,8 @@ class _WallpaperScreenState extends State<WallpaperScreen>
                   const IuxGap.standard(),
                   Text(
                     "Ce téléphone ne propose pas l'écran d'application. "
-                    "Choisissez « Halo · Circuit » dans Fond d'écran et "
+                    'Choisissez « Halo · ${widget.wallpaper.title} » dans '
+                    "Fond d'écran et "
                     'style, rubrique Fonds d\'écran animés.',
                     style: typography.body,
                   ),
@@ -154,7 +261,7 @@ class _WallpaperScreenState extends State<WallpaperScreen>
             IuxSection(
               title: 'Ce qui bouge',
               children: [
-                for (final (title, text) in _features) ...[
+                for (final (title, text) in widget.wallpaper.features) ...[
                   Text(title, style: typography.title),
                   Text(text, style: typography.body),
                   const IuxGap.standard(),
@@ -164,10 +271,7 @@ class _WallpaperScreenState extends State<WallpaperScreen>
             const IuxGap.between(),
             IuxSection(
               title: 'Batterie',
-              description:
-                  "L'animation s'arrête dès que le fond n'est plus visible, "
-                  'et ne tourne en continu que pendant un mouvement, une '
-                  'impulsion ou une charge.',
+              description: widget.wallpaper.battery,
               children: const [],
             ),
             const IuxGap.between(),
@@ -176,29 +280,6 @@ class _WallpaperScreenState extends State<WallpaperScreen>
       ),
     );
   }
-
-  static const _features = [
-    (
-      'Inclinaison',
-      'Les plans du téléphone glissent quand vous le penchez, et le reflet '
-          'du verre suit.',
-    ),
-    (
-      'Vraie batterie',
-      'La batterie dessinée affiche le niveau réel et respire pendant la '
-          'charge.',
-    ),
-    (
-      'Réseau',
-      'Des impulsions courent de l\'antenne au processeur quand des données '
-          'passent ; les antennes brillent selon la force du signal.',
-    ),
-    (
-      'Allumage',
-      "À chaque allumage de l'écran, le fond est là tout de suite, puis "
-          "composants et pistes s'illuminent un à un depuis le processeur.",
-    ),
-  ];
 }
 
 /// Le fond d'écran dessiné par Android, en image fixe, au format d'un
@@ -207,11 +288,13 @@ class WallpaperPreview extends StatefulWidget {
   const WallpaperPreview({
     super.key,
     required this.platform,
+    this.wallpaper = circuitWallpaper,
     this.width = 220,
     this.revision = 0,
   });
 
   final WuxPlatform platform;
+  final HaloWallpaper wallpaper;
 
   /// Redessiné quand elle change (un réglage vient de bouger).
   final int revision;
@@ -244,7 +327,9 @@ class _WallpaperPreviewState extends State<WallpaperPreview> {
   void _render() {
     final ratio = MediaQuery.devicePixelRatioOf(context);
     final size = Size(widget.width * ratio, widget.width * 20 / 9 * ratio);
-    widget.platform.renderWallpaper(size).then((image) {
+    widget.platform.renderWallpaper(size, kind: widget.wallpaper.id).then((
+      image,
+    ) {
       if (mounted) setState(() => _image = image);
     });
   }
@@ -254,7 +339,7 @@ class _WallpaperPreviewState extends State<WallpaperPreview> {
     final image = _image;
     return Semantics(
       image: true,
-      label: "Aperçu du fond d'écran $wallpaperTitle",
+      label: "Aperçu du fond d'écran ${widget.wallpaper.title}",
       child: SizedBox(
         width: widget.width,
         height: widget.width * 20 / 9,

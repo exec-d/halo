@@ -245,7 +245,8 @@ open class MainActivity : FlutterActivity() {
                 if (width <= 0 || height <= 0) {
                     result.success(null)
                 } else {
-                    background(result) { WallpaperPreview.render(applicationContext, width, height) }
+                    val kind = call.argument<String>("kind") ?: WallpaperPreview.CIRCUIT
+                    background(result) { WallpaperPreview.render(applicationContext, width, height, kind) }
                 }
             }
             "wallpaperIntensity" -> result.success(WallpaperSettings.intensityName(this))
@@ -253,10 +254,12 @@ open class MainActivity : FlutterActivity() {
                 WallpaperSettings.setIntensityName(this, call.argument<String>("value") ?: "discreet")
                 result.success(null)
             }
-            "wallpaperActive" -> result.success(WallpaperPreview.isActive(this))
+            "wallpaperActive" -> result.success(
+                WallpaperPreview.isActive(this, call.argument<String>("kind") ?: WallpaperPreview.CIRCUIT),
+            )
             "applyWallpaper" -> {
                 try {
-                    startActivity(WallpaperPreview.applyIntent(this))
+                    startActivity(WallpaperPreview.applyIntent(this, call.argument<String>("kind") ?: WallpaperPreview.CIRCUIT))
                     result.success(true)
                 } catch (e: ActivityNotFoundException) {
                     result.success(false)

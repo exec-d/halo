@@ -439,6 +439,30 @@
                 android:name="android.service.wallpaper"
                 android:resource="@xml/halo_wallpaper" />
         </service>
+        <service
+            android:name=".wallpaper.HorizonWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_horizon_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_horizon" />
+        </service>
+        <service
+            android:name=".wallpaper.SkyWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_sky_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_sky" />
+        </service>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

@@ -32,7 +32,7 @@ abstract interface class WuxPlatform {
   });
 
   /// Le fond d'écran animé en image fixe, à [size] pixels, en PNG.
-  Future<Uint8List?> renderWallpaper(Size size);
+  Future<Uint8List?> renderWallpaper(Size size, {String kind = 'circuit'});
 
   /// Intensité du fond d'écran : `discreet`, `normal` ou `vivid`.
   Future<String> wallpaperIntensity();
@@ -43,10 +43,10 @@ abstract interface class WuxPlatform {
   Future<void> openDreamSettings();
 
   /// Vrai si le fond d'écran Halo est celui du téléphone.
-  Future<bool> isWallpaperActive();
+  Future<bool> isWallpaperActive({String kind = 'circuit'});
 
   /// Ouvre l'écran système qui applique le fond d'écran ; faux s'il manque.
-  Future<bool> applyWallpaper();
+  Future<bool> applyWallpaper({String kind = 'circuit'});
 
   /// Vrai jusqu'à ce que [markLaunched] soit appelé une fois.
   Future<bool> isFirstLaunch();
@@ -167,10 +167,11 @@ class AndroidWuxPlatform implements WuxPlatform {
   static const _launched = 'app.launched';
 
   @override
-  Future<Uint8List?> renderWallpaper(Size size) =>
+  Future<Uint8List?> renderWallpaper(Size size, {String kind = 'circuit'}) =>
       _channel.invokeMethod<Uint8List>('renderWallpaper', {
         'width': size.width.round(),
         'height': size.height.round(),
+        'kind': kind,
       });
 
   @override
@@ -186,12 +187,14 @@ class AndroidWuxPlatform implements WuxPlatform {
       _channel.invokeMethod<void>('openDreamSettings');
 
   @override
-  Future<bool> isWallpaperActive() async =>
-      await _channel.invokeMethod<bool>('wallpaperActive') ?? false;
+  Future<bool> isWallpaperActive({String kind = 'circuit'}) async =>
+      await _channel.invokeMethod<bool>('wallpaperActive', {'kind': kind}) ??
+      false;
 
   @override
-  Future<bool> applyWallpaper() async =>
-      await _channel.invokeMethod<bool>('applyWallpaper') ?? false;
+  Future<bool> applyWallpaper({String kind = 'circuit'}) async =>
+      await _channel.invokeMethod<bool>('applyWallpaper', {'kind': kind}) ??
+      false;
 
   @override
   Future<String?> launchTarget() =>
