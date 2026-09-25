@@ -17,10 +17,10 @@
         android:includeFontPadding="false"
         android:letterSpacing="0.1"
         android:maxLines="1"
-        android:shadowColor="@color/clock_glow"
+        android:shadowColor="@color/text_shade"
         android:shadowDx="0"
         android:shadowDy="0"
-        android:shadowRadius="10"
+        android:shadowRadius="6"
         android:textColor="@color/clock_line"
         android:textSize="10sp" />
 
@@ -33,10 +33,10 @@
         android:fontFamily="sans-serif"
         android:includeFontPadding="false"
         android:maxLines="1"
-        android:shadowColor="@color/clock_glow"
+        android:shadowColor="@color/text_shade"
         android:shadowDx="0"
         android:shadowDy="0"
-        android:shadowRadius="16"
+        android:shadowRadius="8"
         android:textColor="@color/clock_core"
         android:textFontWeight="800"
         android:textSize="20sp" />
@@ -50,10 +50,10 @@
         android:fontFamily="monospace"
         android:includeFontPadding="false"
         android:maxLines="1"
-        android:shadowColor="@color/clock_glow"
+        android:shadowColor="@color/text_shade"
         android:shadowDx="0"
         android:shadowDy="0"
-        android:shadowRadius="8"
+        android:shadowRadius="5"
         android:textAllCaps="true"
         android:textColor="@color/clock_line"
         android:textSize="10sp" />

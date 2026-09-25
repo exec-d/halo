@@ -18,10 +18,10 @@
         android:includeFontPadding="false"
         android:minWidth="26dp"
         android:paddingVertical="2dp"
-        android:shadowColor="@color/clock_glow"
+        android:shadowColor="@color/text_shade"
         android:shadowDx="0"
         android:shadowDy="0"
-        android:shadowRadius="18"
+        android:shadowRadius="8"
         android:textColor="@color/clock_core"
         android:textFontWeight="800"
         android:textSize="15sp" />

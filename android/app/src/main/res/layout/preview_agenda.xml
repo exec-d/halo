@@ -24,10 +24,10 @@
             android:includeFontPadding="false"
             android:letterSpacing="0.08"
             android:maxLines="1"
-            android:shadowColor="@color/clock_glow"
+            android:shadowColor="@color/text_shade"
                 android:shadowDx="0"
                 android:shadowDy="0"
-            android:shadowRadius="16"
+            android:shadowRadius="8"
             android:textColor="@color/clock_line"
             android:textSize="14sp" />
         <LinearLayout
@@ -59,10 +59,10 @@
                     android:fontFamily="monospace"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:shadowColor="@color/clock_glow"
+                    android:shadowColor="@color/text_shade"
                 android:shadowDx="0"
                 android:shadowDy="0"
-                    android:shadowRadius="12"
+                    android:shadowRadius="6"
                     android:textColor="@color/clock_core"
                     android:textSize="13sp" />
 
@@ -76,10 +76,10 @@
                     android:fontFamily="monospace"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:shadowColor="@color/clock_glow"
+                    android:shadowColor="@color/text_shade"
                 android:shadowDx="0"
                 android:shadowDy="0"
-                    android:shadowRadius="10"
+                    android:shadowRadius="6"
                     android:textColor="@color/clock_line"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -113,10 +113,10 @@
                     android:fontFamily="monospace"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:shadowColor="@color/clock_glow"
+                    android:shadowColor="@color/text_shade"
                 android:shadowDx="0"
                 android:shadowDy="0"
-                    android:shadowRadius="12"
+                    android:shadowRadius="6"
                     android:textColor="@color/clock_core"
                     android:textSize="13sp" />
 
@@ -130,10 +130,10 @@
                     android:fontFamily="monospace"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:shadowColor="@color/clock_glow"
+                    android:shadowColor="@color/text_shade"
                 android:shadowDx="0"
                 android:shadowDy="0"
-                    android:shadowRadius="10"
+                    android:shadowRadius="6"
                     android:textColor="@color/clock_line"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -167,10 +167,10 @@
                     android:fontFamily="monospace"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:shadowColor="@color/clock_glow"
+                    android:shadowColor="@color/text_shade"
                 android:shadowDx="0"
                 android:shadowDy="0"
-                    android:shadowRadius="12"
+                    android:shadowRadius="6"
                     android:textColor="@color/clock_core"
                     android:textSize="13sp" />
 
@@ -184,10 +184,10 @@
                     android:fontFamily="monospace"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:shadowColor="@color/clock_glow"
+                    android:shadowColor="@color/text_shade"
                 android:shadowDx="0"
                 android:shadowDy="0"
-                    android:shadowRadius="10"
+                    android:shadowRadius="6"
                     android:textColor="@color/clock_line"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -221,10 +221,10 @@
                     android:fontFamily="monospace"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:shadowColor="@color/clock_glow"
+                    android:shadowColor="@color/text_shade"
                 android:shadowDx="0"
                 android:shadowDy="0"
-                    android:shadowRadius="12"
+                    android:shadowRadius="6"
                     android:textColor="@color/clock_core"
                     android:textSize="13sp" />
 
@@ -238,10 +238,10 @@
                     android:fontFamily="monospace"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:shadowColor="@color/clock_glow"
+                    android:shadowColor="@color/text_shade"
                 android:shadowDx="0"
                 android:shadowDy="0"
-                    android:shadowRadius="10"
+                    android:shadowRadius="6"
                     android:textColor="@color/clock_line"
                     android:textSize="11sp" />
             </LinearLayout>

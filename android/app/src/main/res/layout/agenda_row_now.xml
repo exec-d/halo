@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Un événement en cours : comme agenda_row, sans estompage, titre en gras
-     et halo plus large. Hauteur prévue : AgendaRenderer.ROW. -->
+     et détail plus clair. Hauteur prévue : AgendaRenderer.ROW. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/agenda_row"
     android:layout_width="match_parent"
@@ -31,10 +31,10 @@
             android:fontFamily="monospace"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:shadowColor="@color/clock_glow"
+            android:shadowColor="@color/text_shade"
         android:shadowDx="0"
             android:shadowDy="0"
-            android:shadowRadius="16"
+            android:shadowRadius="8"
             android:textColor="@color/clock_core"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -49,10 +49,10 @@
             android:fontFamily="monospace"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:shadowColor="@color/clock_glow"
+            android:shadowColor="@color/text_shade"
         android:shadowDx="0"
             android:shadowDy="0"
-            android:shadowRadius="14"
+            android:shadowRadius="7"
             android:textColor="@color/clock_core"
             android:textSize="11sp" />
     </LinearLayout>
