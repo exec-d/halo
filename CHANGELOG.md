@@ -11,8 +11,10 @@ mineure peut changer des réglages.
 
 - **Cinq widgets** : Lecture en cours, Prévisions 5 jours, Horloge
   analogique, Éphéméride, Chronomètre et minuteur.
-- **Cinq fonds d'écran animés** inspirés de la science-fiction, aux couleurs
-  du téléphone : Grille, Mégapole, Code, Néon, Sentinelle.
+- **Dix fonds d'écran en plan technique** d'objets de films cultes (Tron,
+  Blade Runner, Matrix, 2001, Retour vers le futur, Interstellar, Aliens,
+  Akira, Terminator, Iron Man), qui se tracent à l'allumage, aux couleurs du
+  téléphone.
 - **Galerie** : un nouvel accueil en trois onglets. Galerie (le fond du
   moment en grand, les fonds animés en carrousel, les widgets en mosaïque,
   filtrables par famille et par recherche), Fonds (les six fonds en grand et

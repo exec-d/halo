@@ -629,144 +629,129 @@ class AppLocalizationsEn extends AppLocalizations {
       'The animation stops as soon as the wallpaper is no longer visible. Like the widgets, the wallpaper takes the phone\'s colors.';
 
   @override
-  String get wallpaperGridTitle => 'Grid';
+  String get wallpaperBlueprintTraceTitle => 'The drawing';
 
   @override
-  String get wallpaperGridDescription =>
-      'A glowing grid stretching to the horizon, where two light cycles draw their walls.';
+  String get wallpaperBlueprintTraceText =>
+      'Each time the screen turns on, the drawing traces itself line by line, dimensions and title block included.';
 
   @override
-  String get wallpaperGridATitle => 'Light cycles';
+  String get wallpaperBlueprintMotionTitle => 'What moves';
 
   @override
-  String get wallpaperGridAText =>
-      'Three cycles, in the phone\'s colors, race across the grid and turn at right angles; their glowing walls fade behind them.';
+  String get wallpaperBlueprintTiltTitle => 'Tilt';
 
   @override
-  String get wallpaperGridBTitle => 'The world';
+  String get wallpaperBlueprintTiltText =>
+      'The views shift a little when you tilt the phone, like an exploded view. The drawing takes the phone\'s colors.';
 
   @override
-  String get wallpaperGridBText =>
-      'Wireframe mountains, a portal on the horizon, a craft crossing the sky and floating particles.';
+  String get wallpaperTronTitle => 'Tron';
 
   @override
-  String get wallpaperGridCTitle => 'Tilt';
+  String get wallpaperTronDescription =>
+      'The light cycle from Tron: Legacy, as a technical drawing.';
 
   @override
-  String get wallpaperGridCText =>
-      'Tilt the phone: the floor and the walls slide more than the distant horizon.';
+  String get wallpaperTronMotion =>
+      'The hubless wheels spin, the light strip pulses and a light ribbon trails behind the cycle.';
 
   @override
-  String get wallpaperMegacityTitle => 'Megacity';
+  String get wallpaperSpinnerTitle => 'Blade Runner';
 
   @override
-  String get wallpaperMegacityDescription =>
-      'A huge city at night, in the rain, under a smog tinted with the phone\'s colors.';
+  String get wallpaperSpinnerDescription =>
+      'The Spinner, the police flying car from Blade Runner.';
 
   @override
-  String get wallpaperMegacityATitle => 'The city';
+  String get wallpaperSpinnerMotion =>
+      'The Spinner hovers, the roof light bar flashes and the rear turbine spins.';
 
   @override
-  String get wallpaperMegacityAText =>
-      'Four layers of towers with lit windows, a pyramid in the distance, a vertical sign and a holographic billboard.';
+  String get wallpaperNebuchadnezzarTitle => 'The Matrix';
 
   @override
-  String get wallpaperMegacityBTitle => 'Life';
+  String get wallpaperNebuchadnezzarDescription =>
+      'The Nebuchadnezzar, Morpheus\'s hovercraft.';
 
   @override
-  String get wallpaperMegacityBText =>
-      'Flare stacks spit their flames, flying cars go by, two searchlights sweep the sky.';
+  String get wallpaperNebuchadnezzarMotion =>
+      'The electromagnetic thrusters light up one after another.';
 
   @override
-  String get wallpaperMegacityCTitle => 'Rain and tilt';
+  String get wallpaperHalTitle => '2001';
 
   @override
-  String get wallpaperMegacityCText =>
-      'It never stops raining; tilt the phone and the nearby towers move more than the far ones, and the rain slants.';
+  String get wallpaperHalDescription =>
+      'HAL 9000, its panel and a section of its lens.';
 
   @override
-  String get wallpaperCodeTitle => 'Code';
+  String get wallpaperHalMotion =>
+      'The eye breathes and light travels through the lenses to the sensor.';
 
   @override
-  String get wallpaperCodeDescription =>
-      'A rain of characters in the phone\'s colors, on three layers.';
+  String get wallpaperFluxTitle => 'Back to the Future';
 
   @override
-  String get wallpaperCodeATitle => 'The rain';
+  String get wallpaperFluxDescription =>
+      'The flux capacitor and the DeLorean\'s time circuits.';
 
   @override
-  String get wallpaperCodeAText =>
-      'Each column falls at its own speed, white head first, its trail fading; the characters change as it passes.';
+  String get wallpaperFluxMotion =>
+      'Pulses run to the center, the charge rises to 1.21 gigawatts, and the present time is the real one.';
 
   @override
-  String get wallpaperCodeBTitle => 'Depth';
+  String get wallpaperEnduranceTitle => 'Interstellar';
 
   @override
-  String get wallpaperCodeBText =>
-      'Three layers of characters, from the farthest, small and dim, to the nearest.';
+  String get wallpaperEnduranceDescription =>
+      'The Endurance, the ring station from Interstellar.';
 
   @override
-  String get wallpaperCodeCTitle => 'Flare-ups';
+  String get wallpaperEnduranceMotion =>
+      'The ring of twelve modules slowly turns around the command module.';
 
   @override
-  String get wallpaperCodeCText =>
-      'Now and then, a column flares up all the way down the screen.';
+  String get wallpaperLoaderTitle => 'Aliens';
 
   @override
-  String get wallpaperNeonTitle => 'Neon';
+  String get wallpaperLoaderDescription =>
+      'The P-5000 power loader, the exoskeleton from Aliens.';
 
   @override
-  String get wallpaperNeonDescription =>
-      'A street of the future, at night, lined with neon signs.';
+  String get wallpaperLoaderMotion =>
+      'The hydraulic arms rise and fall, the clamps open, the beacons flash.';
 
   @override
-  String get wallpaperNeonATitle => 'Signs';
+  String get wallpaperAkiraTitle => 'Akira';
 
   @override
-  String get wallpaperNeonAText =>
-      'In the phone\'s colors, on both sides of the street; some of them buzz, all of them reflect on the wet ground.';
+  String get wallpaperAkiraDescription => 'Kaneda\'s bike, from Akira.';
 
   @override
-  String get wallpaperNeonBTitle => 'Glitches';
+  String get wallpaperAkiraMotion =>
+      'The disc wheels spin and the taillight leaves its trail.';
 
   @override
-  String get wallpaperNeonBText =>
-      'Now and then the image breaks up: shifted bands, split colors, a yellow interface bar.';
+  String get wallpaperT800Title => 'Terminator';
 
   @override
-  String get wallpaperNeonCTitle => 'Tilt';
+  String get wallpaperT800Description => 'The skull of the T-800 endoskeleton.';
 
   @override
-  String get wallpaperNeonCText =>
-      'Tilt the phone: the nearby signs move more than the end of the street.';
+  String get wallpaperT800Motion =>
+      'The eyes light up and a reticle sweeps the optical sensor.';
 
   @override
-  String get wallpaperSentinelTitle => 'Sentinel';
+  String get wallpaperArcTitle => 'Iron Man';
 
   @override
-  String get wallpaperSentinelDescription =>
-      'The eye of an artificial intelligence, in its brushed-metal panel.';
+  String get wallpaperArcDescription =>
+      'Tony Stark\'s arc reactor, front and section.';
 
   @override
-  String get wallpaperSentinelATitle => 'It watches you';
-
-  @override
-  String get wallpaperSentinelAText =>
-      'The core of the eye follows the tilt of the phone, and its reflection slides the other way on the glass.';
-
-  @override
-  String get wallpaperSentinelBTitle => 'It breathes';
-
-  @override
-  String get wallpaperSentinelBText =>
-      'The core slowly pulses; now and then a scan ring spreads out from the center.';
-
-  @override
-  String get wallpaperSentinelCTitle => 'It wakes up';
-
-  @override
-  String get wallpaperSentinelCText =>
-      'The eye brightens when you unlock the phone.';
+  String get wallpaperArcMotion =>
+      'The core pulses and the coils light up one after another.';
 
   @override
   String get widgetClockTitle => 'Clock';

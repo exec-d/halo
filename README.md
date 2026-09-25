@@ -26,16 +26,19 @@ gardent ce nom.*
 | Musique | Lecture en cours (pochette néon, commandes) |
 | Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo) |
 
-**Six fonds d'écran animés** :
+**Onze fonds d'écran animés** :
 
 - **Circuit** : l'intérieur d'un Pixel 7 en schéma néon, qui réagit à
   l'inclinaison, suit la vraie batterie, s'illumine au passage des données et
   s'allume composant par composant avec l'écran ;
-- cinq fonds inspirés de la science-fiction : **Grille** (motos de lumière
-  sur une grille à perte de vue), **Mégapole** (ville immense sous la pluie),
-  **Code** (pluie de caractères), **Néon** (rue du futur, enseignes qui
-  grésillent et image qui bugue) et **Sentinelle** (l'œil d'une IA, qui
-  vous suit du regard).
+- dix **plans techniques** d'objets de films cultes, qui se tracent trait par
+  trait à l'allumage et dont les pièces s'animent : la moto de lumière de
+  Tron, le Spinner de Blade Runner, le Nebuchadnezzar de Matrix, HAL 9000,
+  le convecteur temporel de Retour vers le futur, l'Endurance d'Interstellar,
+  le chargeur P-5000 d'Aliens, la moto de Kaneda d'Akira, le crâne du T-800
+  et le réacteur ARK d'Iron Man.
+
+Tous prennent les couleurs du téléphone, comme les widgets.
 
 **Ailleurs dans Android** : un écran de veille (horloge néon pendant la
 charge), trois tuiles de réglages rapides (Météo, Fond Halo, Batterie) et des

@@ -2,9 +2,9 @@
 
 *[English](en/wallpaper.md)*
 
-Halo propose six fonds d'écran animés (Circuit, Grille, Mégapole, Code, Néon,
-Sentinelle), un écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
-L'intensité (Discret, Normal, Vif) est commune aux six fonds.
+Halo propose onze fonds d'écran animés (Circuit et dix plans techniques), un
+écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
+L'intensité (Discret, Normal, Vif) est commune à tous les fonds.
 
 ## Circuit
 
@@ -68,27 +68,36 @@ widgets et les icônes lisibles par-dessus.
 | `WallpaperPreview.kt` | L'aperçu de l'application et l'ouverture de l'écran système |
 | `WallpaperSettings.kt` | L'intensité |
 
-## Les fonds de science-fiction
+## Les plans techniques
 
-Cinq scènes inspirées des films de science-fiction et d'IA. Comme Circuit
-et les widgets, elles prennent les couleurs du téléphone (Material You) :
-l'accent, et deux teintes qui en dérivent. Toutes, sauf Code, suivent
-l'inclinaison, les plans proches bougeant plus que les lointains ; toutes
-s'arrêtent dès que le fond n'est plus visible.
+Dix fonds dessinent, en plan technique, un objet de film culte : papier
+quadrillé, cadre repéré, vues cotées, repères numérotés et cartouche
+(échelle, planche, date du jour). Comme Circuit et les widgets, ils prennent
+les couleurs du téléphone.
 
-Pour voir une scène sans téléphone, `tool/scenes/render.sh` la dessine en
-PNG sur l'ordinateur (voir l'en-tête du script).
+- **Le tracé** : à chaque allumage de l'écran, le plan se dessine trait par
+  trait en un peu plus de deux secondes (`Pen` compte la longueur de chaque
+  trait et n'en dessine que ce que le temps écoulé permet).
+- **Ce qui bouge** : les pièces de l'objet (roues, turbines, voyants…).
+- **Inclinaison** : les vues glissent un peu, en sens opposés.
 
-| Fond | Ce qu'il montre | Code |
-| --- | --- | --- |
-| Grille | Une grille à perte de vue qui défile ; deux motos de lumière, cyan et orange, tracent leurs murs en virant à angle droit | `GridScene.kt` |
-| Mégapole | Trois plans de tours sous la pluie, une pyramide, des torchères, des voitures volantes, deux projecteurs, un panneau lumineux | `MegacityScene.kt` |
-| Code | Une pluie de caractères en trois plans de profondeur, qui tombe droit | `CodeScene.kt` |
-| Néon | Une rue bordée d'enseignes qui grésillent et se reflètent sur le sol mouillé ; parfois, l'image bugue | `NeonScene.kt` |
-| Sentinelle | L'œil d'une IA dans son panneau de métal : son cœur respire, suit l'inclinaison, et s'avive au déverrouillage | `SentinelScene.kt` |
+| Planche | Film | Objet | Ce qui bouge | Code |
+| --- | --- | --- | --- | --- |
+| 01 | Tron : l'héritage | Moto de lumière | Roues, liseré, ruban de lumière | `LightCycle.kt` |
+| 02 | Blade Runner | Spinner | Vol, rampe du toit, turbine | `Spinner.kt` |
+| 03 | Matrix | Nebuchadnezzar | Propulseurs | `Hovercraft.kt` |
+| 04 | 2001 | HAL 9000 | L'œil, les rayons | `Hal.kt` |
+| 05 | Retour vers le futur | Convecteur temporel | Impulsions, charge, heure présente | `FluxCapacitor.kt` |
+| 06 | Interstellar | Endurance | L'anneau tourne | `Endurance.kt` |
+| 07 | Aliens | Chargeur P-5000 | Bras, pinces, gyrophares | `PowerLoader.kt` |
+| 08 | Akira | Moto de Kaneda | Jantes, feu arrière | `KanedaBike.kt` |
+| 09 | Terminator | Crâne du T-800 | Yeux, réticule | `Endoskeleton.kt` |
+| 10 | Iron Man | Réacteur ARK | Cœur, bobines | `ArcReactor.kt` |
 
-`SceneWallpaperService.kt` fait tourner ces scènes (cadence, capteurs,
-intensité) ; `SceneWallpapers.kt` déclare un service par fond.
+Le cadre commun est dans `wallpaper/blueprint/Blueprint.kt` ; chaque objet
+dans son fichier, à côté. Pour voir un plan sans téléphone,
+`tool/scenes/render.sh` le dessine en PNG sur l'ordinateur (voir l'en-tête
+du script) ; `render.sh --thumbs` refait les miniatures du sélecteur.
 
 ## Écran de veille
 

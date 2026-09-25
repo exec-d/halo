@@ -2,10 +2,10 @@
 
 *[Français](../wallpaper.md)*
 
-Halo offers six animated wallpapers (Circuit, Grid, Megacity, Code, Neon,
-Sentinel), a screen saver,
+Halo offers eleven animated wallpapers (Circuit and ten technical drawings),
+a screen saver,
 three quick settings tiles and shortcuts on its icon. The intensity (Subtle, Normal,
-Vivid) is shared by the six wallpapers.
+Vivid) is shared by all wallpapers.
 
 ## Circuit
 
@@ -66,27 +66,36 @@ and icons on top readable.
 | `WallpaperPreview.kt` | The in-app preview and opening the system screen |
 | `WallpaperSettings.kt` | The intensity |
 
-## The science-fiction wallpapers
+## The technical drawings
 
-Five scenes inspired by science-fiction and AI films. Like Circuit and the
-widgets, they take the phone's colors (Material You): the accent, and two
-hues derived from it. All of them but Code follow the tilt, nearby layers
-moving more than distant ones; all of them stop as soon as the wallpaper is
-no longer visible.
+Ten wallpapers draw an object from a cult film as a technical drawing: grid
+paper, a referenced frame, dimensioned views, numbered callouts and a title
+block (scale, sheet, today's date). Like Circuit and the widgets, they take
+the phone's colors.
 
-To look at a scene without a phone, `tool/scenes/render.sh` draws it as PNG
-files on the computer (see the script's header).
+- **The drawing**: each time the screen turns on, the drawing traces itself
+  line by line in a little over two seconds (`Pen` measures each line and
+  only draws what the elapsed time allows).
+- **What moves**: the object's parts (wheels, turbines, lights…).
+- **Tilt**: the views shift a little, in opposite directions.
 
-| Wallpaper | What it shows | Code |
-| --- | --- | --- |
-| Grid | An endless scrolling grid; two light cycles, cyan and orange, draw their walls, turning at right angles | `GridScene.kt` |
-| Megacity | Three layers of towers in the rain, a pyramid, flare stacks, flying cars, two searchlights, a glowing billboard | `MegacityScene.kt` |
-| Code | A rain of characters on three depth layers, falling straight down | `CodeScene.kt` |
-| Neon | A street lined with buzzing signs reflected on the wet ground; now and then, the image glitches | `NeonScene.kt` |
-| Sentinel | The eye of an AI in its metal panel: its core breathes, follows the tilt, and brightens on unlock | `SentinelScene.kt` |
+| Sheet | Film | Object | What moves | Code |
+| --- | --- | --- | --- | --- |
+| 01 | Tron: Legacy | Light cycle | Wheels, light strip, light ribbon | `LightCycle.kt` |
+| 02 | Blade Runner | Spinner | Hovering, roof light bar, turbine | `Spinner.kt` |
+| 03 | The Matrix | Nebuchadnezzar | Thrusters | `Hovercraft.kt` |
+| 04 | 2001 | HAL 9000 | The eye, the rays | `Hal.kt` |
+| 05 | Back to the Future | Flux capacitor | Pulses, charge, present time | `FluxCapacitor.kt` |
+| 06 | Interstellar | Endurance | The ring turns | `Endurance.kt` |
+| 07 | Aliens | P-5000 power loader | Arms, clamps, beacons | `PowerLoader.kt` |
+| 08 | Akira | Kaneda's bike | Wheels, taillight | `KanedaBike.kt` |
+| 09 | Terminator | T-800 skull | Eyes, reticle | `Endoskeleton.kt` |
+| 10 | Iron Man | Arc reactor | Core, coils | `ArcReactor.kt` |
 
-`SceneWallpaperService.kt` runs these scenes (frame rate, sensors,
-intensity); `SceneWallpapers.kt` declares one service per wallpaper.
+The shared frame lives in `wallpaper/blueprint/Blueprint.kt`, each object in
+its own file next to it. To look at a drawing without a phone,
+`tool/scenes/render.sh` draws it as PNG files on the computer (see the
+script's header); `render.sh --thumbs` redraws the picker thumbnails.
 
 ## Screen saver
 

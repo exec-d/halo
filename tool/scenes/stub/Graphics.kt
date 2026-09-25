@@ -168,6 +168,8 @@ class PorterDuffColorFilter(val color: Int, val mode: PorterDuff.Mode) : ColorFi
 object PorterDuff { enum class Mode { SRC_IN, SRC_ATOP, MULTIPLY, SRC_OVER, ADD, SCREEN } }
 
 open class MaskFilter
+open class PathEffect
+class DashPathEffect(val intervals: FloatArray, val phase: Float) : PathEffect()
 class BlurMaskFilter(val radius: Float, val style: Blur) : MaskFilter() {
     enum class Blur { NORMAL, SOLID, OUTER, INNER }
 }
@@ -203,6 +205,7 @@ class Paint(flags: Int = 0) {
     var letterSpacing = 0f
     var colorFilter: ColorFilter? = null
     var maskFilter: MaskFilter? = null
+    var pathEffect: PathEffect? = null
     internal var shadowRadius = 0f
     internal var shadowColor = 0
     fun setShadowLayer(radius: Float, dx: Float, dy: Float, color: Int) { shadowRadius = radius; shadowColor = color }

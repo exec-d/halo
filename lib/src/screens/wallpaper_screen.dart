@@ -46,81 +46,134 @@ List<(String, String)> _circuitFeatures(AppLocalizations l) => [
 ];
 String _circuitBattery(AppLocalizations l) => l.wallpaperCircuitBattery;
 
-const gridWallpaper = HaloWallpaper(
-  id: 'grid',
-  title: _gridTitle,
-  description: _gridDescription,
-  features: _gridFeatures,
+const tronWallpaper = HaloWallpaper(
+  id: 'tron',
+  title: _tronTitle,
+  description: _tronDescription,
+  features: _tronFeatures,
   battery: _sceneBattery,
 );
-String _gridTitle(AppLocalizations l) => l.wallpaperGridTitle;
-String _gridDescription(AppLocalizations l) => l.wallpaperGridDescription;
-List<(String, String)> _gridFeatures(AppLocalizations l) => [
-  (l.wallpaperGridATitle, l.wallpaperGridAText),
-  (l.wallpaperGridBTitle, l.wallpaperGridBText),
-  (l.wallpaperGridCTitle, l.wallpaperGridCText),
-];
+String _tronTitle(AppLocalizations l) => l.wallpaperTronTitle;
+String _tronDescription(AppLocalizations l) => l.wallpaperTronDescription;
+List<(String, String)> _tronFeatures(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperTronMotion);
 
-const megacityWallpaper = HaloWallpaper(
-  id: 'megacity',
-  title: _megacityTitle,
-  description: _megacityDescription,
-  features: _megacityFeatures,
+const spinnerWallpaper = HaloWallpaper(
+  id: 'spinner',
+  title: _spinnerTitle,
+  description: _spinnerDescription,
+  features: _spinnerFeatures,
   battery: _sceneBattery,
 );
-String _megacityTitle(AppLocalizations l) => l.wallpaperMegacityTitle;
-String _megacityDescription(AppLocalizations l) =>
-    l.wallpaperMegacityDescription;
-List<(String, String)> _megacityFeatures(AppLocalizations l) => [
-  (l.wallpaperMegacityATitle, l.wallpaperMegacityAText),
-  (l.wallpaperMegacityBTitle, l.wallpaperMegacityBText),
-  (l.wallpaperMegacityCTitle, l.wallpaperMegacityCText),
-];
+String _spinnerTitle(AppLocalizations l) => l.wallpaperSpinnerTitle;
+String _spinnerDescription(AppLocalizations l) => l.wallpaperSpinnerDescription;
+List<(String, String)> _spinnerFeatures(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperSpinnerMotion);
 
-const codeWallpaper = HaloWallpaper(
-  id: 'code',
-  title: _codeTitle,
-  description: _codeDescription,
-  features: _codeFeatures,
+const nebuchadnezzarWallpaper = HaloWallpaper(
+  id: 'nebuchadnezzar',
+  title: _nebuchadnezzarTitle,
+  description: _nebuchadnezzarDescription,
+  features: _nebuchadnezzarFeatures,
   battery: _sceneBattery,
 );
-String _codeTitle(AppLocalizations l) => l.wallpaperCodeTitle;
-String _codeDescription(AppLocalizations l) => l.wallpaperCodeDescription;
-List<(String, String)> _codeFeatures(AppLocalizations l) => [
-  (l.wallpaperCodeATitle, l.wallpaperCodeAText),
-  (l.wallpaperCodeBTitle, l.wallpaperCodeBText),
-  (l.wallpaperCodeCTitle, l.wallpaperCodeCText),
-];
+String _nebuchadnezzarTitle(AppLocalizations l) =>
+    l.wallpaperNebuchadnezzarTitle;
+String _nebuchadnezzarDescription(AppLocalizations l) =>
+    l.wallpaperNebuchadnezzarDescription;
+List<(String, String)> _nebuchadnezzarFeatures(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperNebuchadnezzarMotion);
 
-const neonWallpaper = HaloWallpaper(
-  id: 'neon',
-  title: _neonTitle,
-  description: _neonDescription,
-  features: _neonFeatures,
+const halWallpaper = HaloWallpaper(
+  id: 'hal',
+  title: _halTitle,
+  description: _halDescription,
+  features: _halFeatures,
   battery: _sceneBattery,
 );
-String _neonTitle(AppLocalizations l) => l.wallpaperNeonTitle;
-String _neonDescription(AppLocalizations l) => l.wallpaperNeonDescription;
-List<(String, String)> _neonFeatures(AppLocalizations l) => [
-  (l.wallpaperNeonATitle, l.wallpaperNeonAText),
-  (l.wallpaperNeonBTitle, l.wallpaperNeonBText),
-  (l.wallpaperNeonCTitle, l.wallpaperNeonCText),
-];
+String _halTitle(AppLocalizations l) => l.wallpaperHalTitle;
+String _halDescription(AppLocalizations l) => l.wallpaperHalDescription;
+List<(String, String)> _halFeatures(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperHalMotion);
 
-const sentinelWallpaper = HaloWallpaper(
-  id: 'sentinel',
-  title: _sentinelTitle,
-  description: _sentinelDescription,
-  features: _sentinelFeatures,
+const fluxWallpaper = HaloWallpaper(
+  id: 'flux',
+  title: _fluxTitle,
+  description: _fluxDescription,
+  features: _fluxFeatures,
   battery: _sceneBattery,
 );
-String _sentinelTitle(AppLocalizations l) => l.wallpaperSentinelTitle;
-String _sentinelDescription(AppLocalizations l) =>
-    l.wallpaperSentinelDescription;
-List<(String, String)> _sentinelFeatures(AppLocalizations l) => [
-  (l.wallpaperSentinelATitle, l.wallpaperSentinelAText),
-  (l.wallpaperSentinelBTitle, l.wallpaperSentinelBText),
-  (l.wallpaperSentinelCTitle, l.wallpaperSentinelCText),
+String _fluxTitle(AppLocalizations l) => l.wallpaperFluxTitle;
+String _fluxDescription(AppLocalizations l) => l.wallpaperFluxDescription;
+List<(String, String)> _fluxFeatures(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperFluxMotion);
+
+const enduranceWallpaper = HaloWallpaper(
+  id: 'endurance',
+  title: _enduranceTitle,
+  description: _enduranceDescription,
+  features: _enduranceFeatures,
+  battery: _sceneBattery,
+);
+String _enduranceTitle(AppLocalizations l) => l.wallpaperEnduranceTitle;
+String _enduranceDescription(AppLocalizations l) =>
+    l.wallpaperEnduranceDescription;
+List<(String, String)> _enduranceFeatures(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperEnduranceMotion);
+
+const loaderWallpaper = HaloWallpaper(
+  id: 'loader',
+  title: _loaderTitle,
+  description: _loaderDescription,
+  features: _loaderFeatures,
+  battery: _sceneBattery,
+);
+String _loaderTitle(AppLocalizations l) => l.wallpaperLoaderTitle;
+String _loaderDescription(AppLocalizations l) => l.wallpaperLoaderDescription;
+List<(String, String)> _loaderFeatures(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperLoaderMotion);
+
+const akiraWallpaper = HaloWallpaper(
+  id: 'akira',
+  title: _akiraTitle,
+  description: _akiraDescription,
+  features: _akiraFeatures,
+  battery: _sceneBattery,
+);
+String _akiraTitle(AppLocalizations l) => l.wallpaperAkiraTitle;
+String _akiraDescription(AppLocalizations l) => l.wallpaperAkiraDescription;
+List<(String, String)> _akiraFeatures(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperAkiraMotion);
+
+const t800Wallpaper = HaloWallpaper(
+  id: 't800',
+  title: _t800Title,
+  description: _t800Description,
+  features: _t800Features,
+  battery: _sceneBattery,
+);
+String _t800Title(AppLocalizations l) => l.wallpaperT800Title;
+String _t800Description(AppLocalizations l) => l.wallpaperT800Description;
+List<(String, String)> _t800Features(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperT800Motion);
+
+const arcWallpaper = HaloWallpaper(
+  id: 'arc',
+  title: _arcTitle,
+  description: _arcDescription,
+  features: _arcFeatures,
+  battery: _sceneBattery,
+);
+String _arcTitle(AppLocalizations l) => l.wallpaperArcTitle;
+String _arcDescription(AppLocalizations l) => l.wallpaperArcDescription;
+List<(String, String)> _arcFeatures(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperArcMotion);
+
+/// Ce que les plans techniques ont en commun, et ce qui bouge dans chacun.
+List<(String, String)> _blueprint(AppLocalizations l, String motion) => [
+  (l.wallpaperBlueprintTraceTitle, l.wallpaperBlueprintTraceText),
+  (l.wallpaperBlueprintMotionTitle, motion),
+  (l.wallpaperBlueprintTiltTitle, l.wallpaperBlueprintTiltText),
 ];
 
 String _sceneBattery(AppLocalizations l) => l.wallpaperSceneBattery;
@@ -128,11 +181,16 @@ String _sceneBattery(AppLocalizations l) => l.wallpaperSceneBattery;
 /// Les fonds d'écran animés, dans l'ordre du catalogue.
 const haloWallpapers = [
   circuitWallpaper,
-  gridWallpaper,
-  megacityWallpaper,
-  codeWallpaper,
-  neonWallpaper,
-  sentinelWallpaper,
+  tronWallpaper,
+  spinnerWallpaper,
+  nebuchadnezzarWallpaper,
+  halWallpaper,
+  fluxWallpaper,
+  enduranceWallpaper,
+  loaderWallpaper,
+  akiraWallpaper,
+  t800Wallpaper,
+  arcWallpaper,
 ];
 
 /// Un fond d'écran animé : aperçu, ce qu'il montre, son intensité et son

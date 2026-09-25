@@ -1,6 +1,7 @@
 package dev.levilainpetit.wux.wallpaper
 
 import android.app.WallpaperManager
+import dev.levilainpetit.wux.wallpaper.blueprint.*
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -43,7 +44,7 @@ object WallpaperPreview {
         }
     }
 
-    /** Une scène (Grille, Code…), dessinée une fois, immobile. */
+    /** Un plan technique, dessiné une fois, immobile. */
     private fun renderScene(context: Context, widthPx: Int, heightPx: Int, scene: LiveScene): ByteArray {
         val metrics = context.resources.displayMetrics
         val density = metrics.density * widthPx / metrics.widthPixels.coerceAtLeast(1)
@@ -84,11 +85,16 @@ object WallpaperPreview {
 
     /** Les identifiants sont partagés avec Dart (`wallpaper_screen.dart`). */
     private val SCENES = linkedMapOf(
-        "grid" to Scene(GridWallpaperService::class.java) { GridScene() },
-        "megacity" to Scene(MegacityWallpaperService::class.java) { MegacityScene() },
-        "code" to Scene(CodeWallpaperService::class.java) { CodeScene() },
-        "neon" to Scene(NeonWallpaperService::class.java) { NeonScene() },
-        "sentinel" to Scene(SentinelWallpaperService::class.java) { SentinelScene() },
+        "tron" to Scene(TronWallpaperService::class.java) { BlueprintScene(LightCycle()) },
+        "spinner" to Scene(SpinnerWallpaperService::class.java) { BlueprintScene(Spinner()) },
+        "nebuchadnezzar" to Scene(NebuchadnezzarWallpaperService::class.java) { BlueprintScene(Hovercraft()) },
+        "hal" to Scene(HalWallpaperService::class.java) { BlueprintScene(Hal()) },
+        "flux" to Scene(FluxWallpaperService::class.java) { BlueprintScene(FluxCapacitor()) },
+        "endurance" to Scene(EnduranceWallpaperService::class.java) { BlueprintScene(Endurance()) },
+        "loader" to Scene(LoaderWallpaperService::class.java) { BlueprintScene(PowerLoader()) },
+        "akira" to Scene(AkiraWallpaperService::class.java) { BlueprintScene(KanedaBike()) },
+        "t800" to Scene(T800WallpaperService::class.java) { BlueprintScene(Endoskeleton()) },
+        "arc" to Scene(ArcWallpaperService::class.java) { BlueprintScene(ArcReactor()) },
     )
     private val KINDS = listOf(CIRCUIT) + SCENES.keys
 }

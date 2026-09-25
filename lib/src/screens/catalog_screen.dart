@@ -603,7 +603,18 @@ class _TextLink extends StatelessWidget {
 }
 
 /// Les identifiants des fonds marqués « Nouveau ».
-const _newWallpapers = {'grid', 'megacity', 'code', 'neon', 'sentinel'};
+const _newWallpapers = {
+  'tron',
+  'spinner',
+  'nebuchadnezzar',
+  'hal',
+  'flux',
+  'endurance',
+  'loader',
+  'akira',
+  't800',
+  'arc',
+};
 
 /// Un fond d'écran en portrait : son aperçu recadré et son nom.
 class _WallpaperTile extends StatelessWidget {

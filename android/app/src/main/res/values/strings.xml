@@ -293,16 +293,26 @@
     <string name="media_play">Lecture ou pause</string>
     <string name="media_next">Suivant</string>
     <string name="media_listener">Halo · Lecture en cours</string>
-    <string name="wallpaper_grid_label">Halo · Grille</string>
-    <string name="wallpaper_grid_description">Une grille lumineuse à perte de vue, où des motos de lumière tracent leurs murs.</string>
-    <string name="wallpaper_megacity_label">Halo · Mégapole</string>
-    <string name="wallpaper_megacity_description">Une ville immense sous la pluie, ses torchères, ses projecteurs et ses voitures volantes.</string>
-    <string name="wallpaper_code_label">Halo · Code</string>
-    <string name="wallpaper_code_description">Une pluie de caractères aux couleurs du téléphone.</string>
-    <string name="wallpaper_neon_label">Halo · Néon</string>
-    <string name="wallpaper_neon_description">Une rue du futur, ses enseignes néon qui grésillent, et parfois l\'image qui bugue.</string>
-    <string name="wallpaper_sentinel_label">Halo · Sentinelle</string>
-    <string name="wallpaper_sentinel_description">L\'œil d\'une intelligence artificielle, qui vous suit du regard.</string>
+    <string name="wallpaper_tron_label">Halo · Tron</string>
+    <string name="wallpaper_tron_description">La moto de lumière de Tron : l\'héritage, en plan technique.</string>
+    <string name="wallpaper_spinner_label">Halo · Blade Runner</string>
+    <string name="wallpaper_spinner_description">Le Spinner, la voiture volante de la police de Blade Runner.</string>
+    <string name="wallpaper_nebuchadnezzar_label">Halo · Matrix</string>
+    <string name="wallpaper_nebuchadnezzar_description">Le Nebuchadnezzar, l\'aéroglisseur de Morpheus.</string>
+    <string name="wallpaper_hal_label">Halo · 2001</string>
+    <string name="wallpaper_hal_description">HAL 9000, son panneau et la coupe de son objectif.</string>
+    <string name="wallpaper_flux_label">Halo · Retour vers le futur</string>
+    <string name="wallpaper_flux_description">Le convecteur temporel et les circuits temporels de la DeLorean.</string>
+    <string name="wallpaper_endurance_label">Halo · Interstellar</string>
+    <string name="wallpaper_endurance_description">L\'Endurance, la station en anneau d\'Interstellar.</string>
+    <string name="wallpaper_loader_label">Halo · Aliens</string>
+    <string name="wallpaper_loader_description">Le chargeur P-5000, l\'exosquelette de manutention d\'Aliens.</string>
+    <string name="wallpaper_akira_label">Halo · Akira</string>
+    <string name="wallpaper_akira_description">La moto de Kaneda, dans Akira.</string>
+    <string name="wallpaper_t800_label">Halo · Terminator</string>
+    <string name="wallpaper_t800_description">Le crâne de l\'endosquelette T-800.</string>
+    <string name="wallpaper_arc_label">Halo · Iron Man</string>
+    <string name="wallpaper_arc_description">Le réacteur ARK de Tony Stark, de face et en coupe.</string>
     <string name="battery_chart_now">maint.</string>
     <string name="wallpaper_author" translatable="false">Halo</string>
 </resources>

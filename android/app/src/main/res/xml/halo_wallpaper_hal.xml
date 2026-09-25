@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Fond d'écran animé Halo · Grille (GridScene). -->
+<!-- Fond d'écran animé Halo · 2001, en plan technique (Hal). -->
 <wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:description="@string/wallpaper_grid_description"
+    android:description="@string/wallpaper_hal_description"
     android:author="@string/wallpaper_author"
-    android:thumbnail="@drawable/wallpaper_thumb_grid"
+    android:thumbnail="@drawable/wallpaper_thumb_hal"
     android:showMetadataInPreview="false" />

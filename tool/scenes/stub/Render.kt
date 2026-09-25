@@ -3,6 +3,7 @@ package dev.levilainpetit.wux.wallpaper
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import dev.levilainpetit.wux.wallpaper.blueprint.*
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
 import java.io.File
@@ -16,11 +17,16 @@ private val palettes = mapOf(
 )
 
 private val scenes = mapOf<String, () -> LiveScene>(
-    "grid" to { GridScene() },
-    "megacity" to { MegacityScene() },
-    "code" to { CodeScene() },
-    "neon" to { NeonScene() },
-    "sentinel" to { SentinelScene() },
+    "tron" to { BlueprintScene(LightCycle()) },
+    "spinner" to { BlueprintScene(Spinner()) },
+    "nebuchadnezzar" to { BlueprintScene(Hovercraft()) },
+    "hal" to { BlueprintScene(Hal()) },
+    "flux" to { BlueprintScene(FluxCapacitor()) },
+    "endurance" to { BlueprintScene(Endurance()) },
+    "loader" to { BlueprintScene(PowerLoader()) },
+    "akira" to { BlueprintScene(KanedaBike()) },
+    "t800" to { BlueprintScene(Endoskeleton()) },
+    "arc" to { BlueprintScene(ArcReactor()) },
 )
 
 /**

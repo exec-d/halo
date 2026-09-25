@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Fond d'écran animé Halo · Mégapole (MegacityScene). -->
+<!-- Fond d'écran animé Halo · Tron, en plan technique (LightCycle). -->
 <wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:description="@string/wallpaper_megacity_description"
+    android:description="@string/wallpaper_tron_description"
     android:author="@string/wallpaper_author"
-    android:thumbnail="@drawable/wallpaper_thumb_megacity"
+    android:thumbnail="@drawable/wallpaper_thumb_tron"
     android:showMetadataInPreview="false" />

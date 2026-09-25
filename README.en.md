@@ -26,15 +26,19 @@ keep that name.*
 | Music | Now playing (neon cover art, controls) |
 | Shortcuts | Controls (flashlight, Wi-Fi, Bluetooth, sound, camera) |
 
-**Six animated wallpapers**:
+**Eleven animated wallpapers**:
 
 - **Circuit**: the inside of a Pixel 7 as a neon schematic, which reacts to
   tilt, follows the real battery, lights up as data flows and powers on
   component by component with the screen;
-- five wallpapers inspired by science fiction: **Grid** (light cycles on an
-  endless grid), **Megacity** (a huge city in the rain), **Code** (a rain of
-  characters), **Neon** (a street of the future, buzzing signs and
-  glitches) and **Sentinel** (the eye of an AI, following you).
+- ten **technical drawings** of objects from cult films, which trace
+  themselves line by line when the screen turns on and whose parts move: the
+  Tron light cycle, the Blade Runner Spinner, the Matrix Nebuchadnezzar,
+  HAL 9000, the Back to the Future flux capacitor, the Interstellar
+  Endurance, the Aliens P-5000 power loader, Kaneda's bike from Akira, the
+  T-800 skull and the Iron Man arc reactor.
+
+All of them take the phone's colors, like the widgets.
 
 **Elsewhere in Android**: a screen saver (neon clock while charging), three
 quick settings tiles (Weather, Halo wallpaper, Battery) and icon shortcuts

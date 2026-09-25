@@ -1171,245 +1171,215 @@ abstract class AppLocalizations {
   /// **'L\'animation s\'arrête dès que le fond n\'est plus visible. Comme les widgets, le fond prend les couleurs du téléphone.'**
   String get wallpaperSceneBattery;
 
-  /// No description provided for @wallpaperGridTitle.
+  /// No description provided for @wallpaperBlueprintTraceTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Grille'**
-  String get wallpaperGridTitle;
+  /// **'Le tracé'**
+  String get wallpaperBlueprintTraceTitle;
 
-  /// No description provided for @wallpaperGridDescription.
+  /// No description provided for @wallpaperBlueprintTraceText.
   ///
   /// In fr, this message translates to:
-  /// **'Une grille lumineuse à perte de vue, où deux motos de lumière tracent leurs murs.'**
-  String get wallpaperGridDescription;
+  /// **'À chaque allumage de l\'écran, le plan se dessine trait par trait, cotes et cartouche compris.'**
+  String get wallpaperBlueprintTraceText;
 
-  /// No description provided for @wallpaperGridATitle.
+  /// No description provided for @wallpaperBlueprintMotionTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Motos de lumière'**
-  String get wallpaperGridATitle;
+  /// **'Ce qui bouge'**
+  String get wallpaperBlueprintMotionTitle;
 
-  /// No description provided for @wallpaperGridAText.
-  ///
-  /// In fr, this message translates to:
-  /// **'Trois motos, aux couleurs du téléphone, filent sur la grille et virent à angle droit ; leurs murs lumineux s\'effacent derrière elles.'**
-  String get wallpaperGridAText;
-
-  /// No description provided for @wallpaperGridBTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le monde'**
-  String get wallpaperGridBTitle;
-
-  /// No description provided for @wallpaperGridBText.
-  ///
-  /// In fr, this message translates to:
-  /// **'Des montagnes filaires, un portail posé sur l\'horizon, un vaisseau qui passe dans le ciel et des particules qui flottent.'**
-  String get wallpaperGridBText;
-
-  /// No description provided for @wallpaperGridCTitle.
+  /// No description provided for @wallpaperBlueprintTiltTitle.
   ///
   /// In fr, this message translates to:
   /// **'Inclinaison'**
-  String get wallpaperGridCTitle;
+  String get wallpaperBlueprintTiltTitle;
 
-  /// No description provided for @wallpaperGridCText.
+  /// No description provided for @wallpaperBlueprintTiltText.
   ///
   /// In fr, this message translates to:
-  /// **'Penchez le téléphone : le sol et les murs glissent plus que l\'horizon lointain.'**
-  String get wallpaperGridCText;
+  /// **'Les vues glissent un peu quand vous penchez le téléphone, comme une vue éclatée. Le plan prend les couleurs du téléphone.'**
+  String get wallpaperBlueprintTiltText;
 
-  /// No description provided for @wallpaperMegacityTitle.
+  /// No description provided for @wallpaperTronTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Mégapole'**
-  String get wallpaperMegacityTitle;
+  /// **'Tron'**
+  String get wallpaperTronTitle;
 
-  /// No description provided for @wallpaperMegacityDescription.
+  /// No description provided for @wallpaperTronDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Une ville immense sous la pluie, la nuit, dans un smog teinté des couleurs du téléphone.'**
-  String get wallpaperMegacityDescription;
+  /// **'La moto de lumière de Tron : l\'héritage, en plan technique.'**
+  String get wallpaperTronDescription;
 
-  /// No description provided for @wallpaperMegacityATitle.
+  /// No description provided for @wallpaperTronMotion.
   ///
   /// In fr, this message translates to:
-  /// **'La ville'**
-  String get wallpaperMegacityATitle;
+  /// **'Les roues sans moyeu tournent, le liseré pulse et un ruban de lumière se dépose derrière la moto.'**
+  String get wallpaperTronMotion;
 
-  /// No description provided for @wallpaperMegacityAText.
+  /// No description provided for @wallpaperSpinnerTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Quatre plans de tours aux fenêtres allumées, une pyramide au loin, une enseigne verticale et un panneau holographique.'**
-  String get wallpaperMegacityAText;
+  /// **'Blade Runner'**
+  String get wallpaperSpinnerTitle;
 
-  /// No description provided for @wallpaperMegacityBTitle.
+  /// No description provided for @wallpaperSpinnerDescription.
   ///
   /// In fr, this message translates to:
-  /// **'La vie'**
-  String get wallpaperMegacityBTitle;
+  /// **'Le Spinner, la voiture volante de la police de Blade Runner.'**
+  String get wallpaperSpinnerDescription;
 
-  /// No description provided for @wallpaperMegacityBText.
+  /// No description provided for @wallpaperSpinnerMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Des torchères crachent leur flamme, des voitures volantes passent, deux projecteurs balaient le ciel.'**
-  String get wallpaperMegacityBText;
+  /// **'Le Spinner flotte, la rampe du toit clignote et la turbine arrière tourne.'**
+  String get wallpaperSpinnerMotion;
 
-  /// No description provided for @wallpaperMegacityCTitle.
+  /// No description provided for @wallpaperNebuchadnezzarTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Pluie et inclinaison'**
-  String get wallpaperMegacityCTitle;
+  /// **'Matrix'**
+  String get wallpaperNebuchadnezzarTitle;
 
-  /// No description provided for @wallpaperMegacityCText.
+  /// No description provided for @wallpaperNebuchadnezzarDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Il pleut sans cesse ; penchez le téléphone, les tours proches bougent plus que les lointaines, et la pluie penche.'**
-  String get wallpaperMegacityCText;
+  /// **'Le Nebuchadnezzar, l\'aéroglisseur de Morpheus.'**
+  String get wallpaperNebuchadnezzarDescription;
 
-  /// No description provided for @wallpaperCodeTitle.
+  /// No description provided for @wallpaperNebuchadnezzarMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Code'**
-  String get wallpaperCodeTitle;
+  /// **'Les propulseurs électromagnétiques s\'allument l\'un après l\'autre.'**
+  String get wallpaperNebuchadnezzarMotion;
 
-  /// No description provided for @wallpaperCodeDescription.
+  /// No description provided for @wallpaperHalTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Une pluie de caractères aux couleurs du téléphone, en trois plans.'**
-  String get wallpaperCodeDescription;
+  /// **'2001'**
+  String get wallpaperHalTitle;
 
-  /// No description provided for @wallpaperCodeATitle.
+  /// No description provided for @wallpaperHalDescription.
   ///
   /// In fr, this message translates to:
-  /// **'La pluie'**
-  String get wallpaperCodeATitle;
+  /// **'HAL 9000, son panneau et la coupe de son objectif.'**
+  String get wallpaperHalDescription;
 
-  /// No description provided for @wallpaperCodeAText.
+  /// No description provided for @wallpaperHalMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Chaque colonne tombe à sa vitesse, sa tête blanche en avant, sa traîne qui s\'éteint ; les caractères changent au passage.'**
-  String get wallpaperCodeAText;
+  /// **'L\'œil respire et la lumière traverse les lentilles jusqu\'au capteur.'**
+  String get wallpaperHalMotion;
 
-  /// No description provided for @wallpaperCodeBTitle.
+  /// No description provided for @wallpaperFluxTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Profondeur'**
-  String get wallpaperCodeBTitle;
+  /// **'Retour vers le futur'**
+  String get wallpaperFluxTitle;
 
-  /// No description provided for @wallpaperCodeBText.
+  /// No description provided for @wallpaperFluxDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Trois plans de caractères, du plus lointain, petit et sombre, au plus proche.'**
-  String get wallpaperCodeBText;
+  /// **'Le convecteur temporel et les circuits temporels de la DeLorean.'**
+  String get wallpaperFluxDescription;
 
-  /// No description provided for @wallpaperCodeCTitle.
+  /// No description provided for @wallpaperFluxMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Embrasement'**
-  String get wallpaperCodeCTitle;
+  /// **'Les impulsions courent vers le centre, la charge monte jusqu\'à 1,21 gigowatt, et l\'heure présente est la vraie.'**
+  String get wallpaperFluxMotion;
 
-  /// No description provided for @wallpaperCodeCText.
+  /// No description provided for @wallpaperEnduranceTitle.
   ///
   /// In fr, this message translates to:
-  /// **'De temps en temps, une colonne s\'embrase jusqu\'au bas de l\'écran.'**
-  String get wallpaperCodeCText;
+  /// **'Interstellar'**
+  String get wallpaperEnduranceTitle;
 
-  /// No description provided for @wallpaperNeonTitle.
+  /// No description provided for @wallpaperEnduranceDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Néon'**
-  String get wallpaperNeonTitle;
+  /// **'L\'Endurance, la station en anneau d\'Interstellar.'**
+  String get wallpaperEnduranceDescription;
 
-  /// No description provided for @wallpaperNeonDescription.
+  /// No description provided for @wallpaperEnduranceMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Une rue du futur, la nuit, bordée d\'enseignes néon.'**
-  String get wallpaperNeonDescription;
+  /// **'L\'anneau de douze modules tourne lentement autour du poste de commande.'**
+  String get wallpaperEnduranceMotion;
 
-  /// No description provided for @wallpaperNeonATitle.
+  /// No description provided for @wallpaperLoaderTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Enseignes'**
-  String get wallpaperNeonATitle;
+  /// **'Aliens'**
+  String get wallpaperLoaderTitle;
 
-  /// No description provided for @wallpaperNeonAText.
+  /// No description provided for @wallpaperLoaderDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Aux couleurs du téléphone, de chaque côté de la rue ; certaines grésillent, toutes se reflètent sur le sol mouillé.'**
-  String get wallpaperNeonAText;
+  /// **'Le chargeur P-5000, l\'exosquelette de manutention d\'Aliens.'**
+  String get wallpaperLoaderDescription;
 
-  /// No description provided for @wallpaperNeonBTitle.
+  /// No description provided for @wallpaperLoaderMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Bugs'**
-  String get wallpaperNeonBTitle;
+  /// **'Les bras hydrauliques montent et descendent, les pinces s\'ouvrent, les gyrophares tournent.'**
+  String get wallpaperLoaderMotion;
 
-  /// No description provided for @wallpaperNeonBText.
+  /// No description provided for @wallpaperAkiraTitle.
   ///
   /// In fr, this message translates to:
-  /// **'De temps en temps, l\'image décroche : bandes décalées, couleurs séparées, une barre jaune d\'interface.'**
-  String get wallpaperNeonBText;
+  /// **'Akira'**
+  String get wallpaperAkiraTitle;
 
-  /// No description provided for @wallpaperNeonCTitle.
+  /// No description provided for @wallpaperAkiraDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Inclinaison'**
-  String get wallpaperNeonCTitle;
+  /// **'La moto de Kaneda, dans Akira.'**
+  String get wallpaperAkiraDescription;
 
-  /// No description provided for @wallpaperNeonCText.
+  /// No description provided for @wallpaperAkiraMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Penchez le téléphone : les enseignes proches bougent plus que le fond de la rue.'**
-  String get wallpaperNeonCText;
+  /// **'Les jantes pleines tournent et le feu arrière laisse sa traînée.'**
+  String get wallpaperAkiraMotion;
 
-  /// No description provided for @wallpaperSentinelTitle.
+  /// No description provided for @wallpaperT800Title.
   ///
   /// In fr, this message translates to:
-  /// **'Sentinelle'**
-  String get wallpaperSentinelTitle;
+  /// **'Terminator'**
+  String get wallpaperT800Title;
 
-  /// No description provided for @wallpaperSentinelDescription.
+  /// No description provided for @wallpaperT800Description.
   ///
   /// In fr, this message translates to:
-  /// **'L\'œil d\'une intelligence artificielle, dans son panneau de métal brossé.'**
-  String get wallpaperSentinelDescription;
+  /// **'Le crâne de l\'endosquelette T-800.'**
+  String get wallpaperT800Description;
 
-  /// No description provided for @wallpaperSentinelATitle.
+  /// No description provided for @wallpaperT800Motion.
   ///
   /// In fr, this message translates to:
-  /// **'Il vous regarde'**
-  String get wallpaperSentinelATitle;
+  /// **'Les yeux s\'allument et un réticule balaie le capteur optique.'**
+  String get wallpaperT800Motion;
 
-  /// No description provided for @wallpaperSentinelAText.
+  /// No description provided for @wallpaperArcTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Le cœur de l\'œil suit l\'inclinaison du téléphone, et son reflet glisse à l\'opposé sur le verre.'**
-  String get wallpaperSentinelAText;
+  /// **'Iron Man'**
+  String get wallpaperArcTitle;
 
-  /// No description provided for @wallpaperSentinelBTitle.
+  /// No description provided for @wallpaperArcDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Il respire'**
-  String get wallpaperSentinelBTitle;
+  /// **'Le réacteur ARK de Tony Stark, de face et en coupe.'**
+  String get wallpaperArcDescription;
 
-  /// No description provided for @wallpaperSentinelBText.
+  /// No description provided for @wallpaperArcMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Le cœur pulse lentement ; un anneau de balayage part du centre de temps en temps.'**
-  String get wallpaperSentinelBText;
-
-  /// No description provided for @wallpaperSentinelCTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Il s\'éveille'**
-  String get wallpaperSentinelCTitle;
-
-  /// No description provided for @wallpaperSentinelCText.
-  ///
-  /// In fr, this message translates to:
-  /// **'L\'œil s\'avive quand vous déverrouillez le téléphone.'**
-  String get wallpaperSentinelCText;
+  /// **'Le cœur pulse et les bobines s\'éclairent l\'une après l\'autre.'**
+  String get wallpaperArcMotion;
 
   /// Nom du widget, dans le catalogue et en titre de son écran.
   ///

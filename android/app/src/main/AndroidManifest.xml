@@ -439,66 +439,126 @@
                 android:name="android.service.wallpaper"
                 android:resource="@xml/halo_wallpaper" />
         </service>
-        <!-- Fonds d'écran animés faits d'une scène (SceneWallpapers.kt). -->
+        <!-- Fonds d'écran animés en plan technique (SceneWallpapers.kt). -->
         <service
-            android:name=".wallpaper.GridWallpaperService"
+            android:name=".wallpaper.TronWallpaperService"
             android:exported="true"
-            android:label="@string/wallpaper_grid_label"
+            android:label="@string/wallpaper_tron_label"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>
             <meta-data
                 android:name="android.service.wallpaper"
-                android:resource="@xml/halo_wallpaper_grid" />
+                android:resource="@xml/halo_wallpaper_tron" />
         </service>
         <service
-            android:name=".wallpaper.MegacityWallpaperService"
+            android:name=".wallpaper.SpinnerWallpaperService"
             android:exported="true"
-            android:label="@string/wallpaper_megacity_label"
+            android:label="@string/wallpaper_spinner_label"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>
             <meta-data
                 android:name="android.service.wallpaper"
-                android:resource="@xml/halo_wallpaper_megacity" />
+                android:resource="@xml/halo_wallpaper_spinner" />
         </service>
         <service
-            android:name=".wallpaper.CodeWallpaperService"
+            android:name=".wallpaper.NebuchadnezzarWallpaperService"
             android:exported="true"
-            android:label="@string/wallpaper_code_label"
+            android:label="@string/wallpaper_nebuchadnezzar_label"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>
             <meta-data
                 android:name="android.service.wallpaper"
-                android:resource="@xml/halo_wallpaper_code" />
+                android:resource="@xml/halo_wallpaper_nebuchadnezzar" />
         </service>
         <service
-            android:name=".wallpaper.NeonWallpaperService"
+            android:name=".wallpaper.HalWallpaperService"
             android:exported="true"
-            android:label="@string/wallpaper_neon_label"
+            android:label="@string/wallpaper_hal_label"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>
             <meta-data
                 android:name="android.service.wallpaper"
-                android:resource="@xml/halo_wallpaper_neon" />
+                android:resource="@xml/halo_wallpaper_hal" />
         </service>
         <service
-            android:name=".wallpaper.SentinelWallpaperService"
+            android:name=".wallpaper.FluxWallpaperService"
             android:exported="true"
-            android:label="@string/wallpaper_sentinel_label"
+            android:label="@string/wallpaper_flux_label"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>
             <meta-data
                 android:name="android.service.wallpaper"
-                android:resource="@xml/halo_wallpaper_sentinel" />
+                android:resource="@xml/halo_wallpaper_flux" />
+        </service>
+        <service
+            android:name=".wallpaper.EnduranceWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_endurance_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_endurance" />
+        </service>
+        <service
+            android:name=".wallpaper.LoaderWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_loader_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_loader" />
+        </service>
+        <service
+            android:name=".wallpaper.AkiraWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_akira_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_akira" />
+        </service>
+        <service
+            android:name=".wallpaper.T800WallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_t800_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_t800" />
+        </service>
+        <service
+            android:name=".wallpaper.ArcWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_arc_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_arc" />
         </service>
     </application>
     <!-- Required to query activities that can process text, see:
