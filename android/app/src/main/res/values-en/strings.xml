@@ -294,10 +294,10 @@
     <string name="wallpaper_megacity_label">Halo · Megacity</string>
     <string name="wallpaper_megacity_description">A huge city in the rain, with its flare stacks, searchlights and flying cars.</string>
     <string name="wallpaper_code_label">Halo · Code</string>
-    <string name="wallpaper_code_description">A rain of green characters that tilts with the phone.</string>
+    <string name="wallpaper_code_description">A rain of characters in the phone's colors.</string>
     <string name="wallpaper_neon_label">Halo · Neon</string>
     <string name="wallpaper_neon_description">A street of the future, its buzzing neon signs, and now and then a glitch.</string>
     <string name="wallpaper_sentinel_label">Halo · Sentinel</string>
-    <string name="wallpaper_sentinel_description">The red eye of an artificial intelligence, following you with its gaze.</string>
+    <string name="wallpaper_sentinel_description">The eye of an artificial intelligence, following you with its gaze.</string>
     <string name="battery_chart_now">now</string>
 </resources>

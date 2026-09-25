@@ -1168,7 +1168,7 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperSceneBattery.
   ///
   /// In fr, this message translates to:
-  /// **'L\'animation s\'arrête dès que le fond n\'est plus visible. Ce fond garde ses propres couleurs, pas celles du téléphone.'**
+  /// **'L\'animation s\'arrête dès que le fond n\'est plus visible. Comme les widgets, le fond prend les couleurs du téléphone.'**
   String get wallpaperSceneBattery;
 
   /// No description provided for @wallpaperGridTitle.
@@ -1192,19 +1192,19 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperGridAText.
   ///
   /// In fr, this message translates to:
-  /// **'Deux motos, cyan et orange, filent sur la grille et virent à angle droit ; leurs murs lumineux s\'effacent derrière elles.'**
+  /// **'Trois motos, aux couleurs du téléphone, filent sur la grille et virent à angle droit ; leurs murs lumineux s\'effacent derrière elles.'**
   String get wallpaperGridAText;
 
   /// No description provided for @wallpaperGridBTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Perspective'**
+  /// **'Le monde'**
   String get wallpaperGridBTitle;
 
   /// No description provided for @wallpaperGridBText.
   ///
   /// In fr, this message translates to:
-  /// **'La grille défile doucement vers vous jusqu\'à l\'horizon.'**
+  /// **'Des montagnes filaires, un portail posé sur l\'horizon, un vaisseau qui passe dans le ciel et des particules qui flottent.'**
   String get wallpaperGridBText;
 
   /// No description provided for @wallpaperGridCTitle.
@@ -1228,7 +1228,7 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperMegacityDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Une ville immense sous la pluie, la nuit, dans un smog orangé.'**
+  /// **'Une ville immense sous la pluie, la nuit, dans un smog teinté des couleurs du téléphone.'**
   String get wallpaperMegacityDescription;
 
   /// No description provided for @wallpaperMegacityATitle.
@@ -1240,7 +1240,7 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperMegacityAText.
   ///
   /// In fr, this message translates to:
-  /// **'Trois plans de tours aux fenêtres allumées, une pyramide au loin et un grand panneau lumineux qui change de couleur.'**
+  /// **'Quatre plans de tours aux fenêtres allumées, une pyramide au loin, une enseigne verticale et un panneau holographique.'**
   String get wallpaperMegacityAText;
 
   /// No description provided for @wallpaperMegacityBTitle.
@@ -1276,7 +1276,7 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperCodeDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Une pluie de caractères verts, en deux plans.'**
+  /// **'Une pluie de caractères aux couleurs du téléphone, en trois plans.'**
   String get wallpaperCodeDescription;
 
   /// No description provided for @wallpaperCodeATitle.
@@ -1300,19 +1300,19 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperCodeBText.
   ///
   /// In fr, this message translates to:
-  /// **'Un plan de petits caractères, plus sombres, derrière le premier.'**
+  /// **'Trois plans de caractères, du plus lointain, petit et sombre, au plus proche.'**
   String get wallpaperCodeBText;
 
   /// No description provided for @wallpaperCodeCTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Gravité'**
+  /// **'Embrasement'**
   String get wallpaperCodeCTitle;
 
   /// No description provided for @wallpaperCodeCText.
   ///
   /// In fr, this message translates to:
-  /// **'La pluie penche quand vous inclinez le téléphone.'**
+  /// **'De temps en temps, une colonne s\'embrase jusqu\'au bas de l\'écran.'**
   String get wallpaperCodeCText;
 
   /// No description provided for @wallpaperNeonTitle.
@@ -1336,7 +1336,7 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperNeonAText.
   ///
   /// In fr, this message translates to:
-  /// **'Jaunes, cyan, magenta et rouges, de chaque côté de la rue ; certaines grésillent, toutes se reflètent sur le sol mouillé.'**
+  /// **'Aux couleurs du téléphone, de chaque côté de la rue ; certaines grésillent, toutes se reflètent sur le sol mouillé.'**
   String get wallpaperNeonAText;
 
   /// No description provided for @wallpaperNeonBTitle.
@@ -1372,7 +1372,7 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperSentinelDescription.
   ///
   /// In fr, this message translates to:
-  /// **'L\'œil rouge d\'une intelligence artificielle, dans son boîtier de métal.'**
+  /// **'L\'œil d\'une intelligence artificielle, dans son panneau de métal brossé.'**
   String get wallpaperSentinelDescription;
 
   /// No description provided for @wallpaperSentinelATitle.

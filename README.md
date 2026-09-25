@@ -33,8 +33,8 @@ gardent ce nom.*
   s'allume composant par composant avec l'écran ;
 - cinq fonds inspirés de la science-fiction : **Grille** (motos de lumière
   sur une grille à perte de vue), **Mégapole** (ville immense sous la pluie),
-  **Code** (pluie de caractères verts), **Néon** (rue du futur, enseignes qui
-  grésillent et image qui bugue) et **Sentinelle** (l'œil rouge d'une IA, qui
+  **Code** (pluie de caractères), **Néon** (rue du futur, enseignes qui
+  grésillent et image qui bugue) et **Sentinelle** (l'œil d'une IA, qui
   vous suit du regard).
 
 **Ailleurs dans Android** : un écran de veille (horloge néon pendant la

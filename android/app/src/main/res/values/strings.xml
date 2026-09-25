@@ -298,11 +298,11 @@
     <string name="wallpaper_megacity_label">Halo · Mégapole</string>
     <string name="wallpaper_megacity_description">Une ville immense sous la pluie, ses torchères, ses projecteurs et ses voitures volantes.</string>
     <string name="wallpaper_code_label">Halo · Code</string>
-    <string name="wallpaper_code_description">Une pluie de caractères verts qui penche avec le téléphone.</string>
+    <string name="wallpaper_code_description">Une pluie de caractères aux couleurs du téléphone.</string>
     <string name="wallpaper_neon_label">Halo · Néon</string>
     <string name="wallpaper_neon_description">Une rue du futur, ses enseignes néon qui grésillent, et parfois l\'image qui bugue.</string>
     <string name="wallpaper_sentinel_label">Halo · Sentinelle</string>
-    <string name="wallpaper_sentinel_description">L\'œil rouge d\'une intelligence artificielle, qui vous suit du regard.</string>
+    <string name="wallpaper_sentinel_description">L\'œil d\'une intelligence artificielle, qui vous suit du regard.</string>
     <string name="battery_chart_now">maint.</string>
     <string name="wallpaper_author" translatable="false">Halo</string>
 </resources>

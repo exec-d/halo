@@ -626,7 +626,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperSceneBattery =>
-      'The animation stops as soon as the wallpaper is no longer visible. This wallpaper keeps its own colors, not the phone\'s.';
+      'The animation stops as soon as the wallpaper is no longer visible. Like the widgets, the wallpaper takes the phone\'s colors.';
 
   @override
   String get wallpaperGridTitle => 'Grid';
@@ -640,14 +640,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperGridAText =>
-      'Two cycles, cyan and orange, race across the grid and turn at right angles; their glowing walls fade behind them.';
+      'Three cycles, in the phone\'s colors, race across the grid and turn at right angles; their glowing walls fade behind them.';
 
   @override
-  String get wallpaperGridBTitle => 'Perspective';
+  String get wallpaperGridBTitle => 'The world';
 
   @override
   String get wallpaperGridBText =>
-      'The grid slowly scrolls towards you, all the way to the horizon.';
+      'Wireframe mountains, a portal on the horizon, a craft crossing the sky and floating particles.';
 
   @override
   String get wallpaperGridCTitle => 'Tilt';
@@ -661,14 +661,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperMegacityDescription =>
-      'A huge city at night, in the rain, under an orange smog.';
+      'A huge city at night, in the rain, under a smog tinted with the phone\'s colors.';
 
   @override
   String get wallpaperMegacityATitle => 'The city';
 
   @override
   String get wallpaperMegacityAText =>
-      'Three layers of towers with lit windows, a pyramid in the distance and a large glowing billboard that changes color.';
+      'Four layers of towers with lit windows, a pyramid in the distance, a vertical sign and a holographic billboard.';
 
   @override
   String get wallpaperMegacityBTitle => 'Life';
@@ -689,7 +689,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperCodeDescription =>
-      'A rain of green characters, on two layers.';
+      'A rain of characters in the phone\'s colors, on three layers.';
 
   @override
   String get wallpaperCodeATitle => 'The rain';
@@ -703,13 +703,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperCodeBText =>
-      'A layer of smaller, darker characters behind the first.';
+      'Three layers of characters, from the farthest, small and dim, to the nearest.';
 
   @override
-  String get wallpaperCodeCTitle => 'Gravity';
+  String get wallpaperCodeCTitle => 'Flare-ups';
 
   @override
-  String get wallpaperCodeCText => 'The rain slants when you tilt the phone.';
+  String get wallpaperCodeCText =>
+      'Now and then, a column flares up all the way down the screen.';
 
   @override
   String get wallpaperNeonTitle => 'Neon';
@@ -723,7 +724,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperNeonAText =>
-      'Yellow, cyan, magenta and red, on both sides of the street; some of them buzz, all of them reflect on the wet ground.';
+      'In the phone\'s colors, on both sides of the street; some of them buzz, all of them reflect on the wet ground.';
 
   @override
   String get wallpaperNeonBTitle => 'Glitches';
@@ -744,7 +745,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperSentinelDescription =>
-      'The red eye of an artificial intelligence, in its metal casing.';
+      'The eye of an artificial intelligence, in its brushed-metal panel.';
 
   @override
   String get wallpaperSentinelATitle => 'It watches you';

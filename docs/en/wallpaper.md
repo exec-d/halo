@@ -68,18 +68,22 @@ and icons on top readable.
 
 ## The science-fiction wallpapers
 
-Five scenes inspired by science-fiction and AI films. Unlike Circuit, they
-keep their own colors (cyan and orange, green, neon…) rather than the
-phone's. All of them follow the tilt, nearby layers moving more than distant
-ones, and stop as soon as the wallpaper is no longer visible.
+Five scenes inspired by science-fiction and AI films. Like Circuit and the
+widgets, they take the phone's colors (Material You): the accent, and two
+hues derived from it. All of them but Code follow the tilt, nearby layers
+moving more than distant ones; all of them stop as soon as the wallpaper is
+no longer visible.
+
+To look at a scene without a phone, `tool/scenes/render.sh` draws it as PNG
+files on the computer (see the script's header).
 
 | Wallpaper | What it shows | Code |
 | --- | --- | --- |
 | Grid | An endless scrolling grid; two light cycles, cyan and orange, draw their walls, turning at right angles | `GridScene.kt` |
 | Megacity | Three layers of towers in the rain, a pyramid, flare stacks, flying cars, two searchlights, a glowing billboard | `MegacityScene.kt` |
-| Code | A rain of green characters on two layers, slanting with the phone | `CodeScene.kt` |
+| Code | A rain of characters on three depth layers, falling straight down | `CodeScene.kt` |
 | Neon | A street lined with buzzing signs reflected on the wet ground; now and then, the image glitches | `NeonScene.kt` |
-| Sentinel | The red eye of an AI: its core breathes, follows the tilt, and brightens on unlock | `SentinelScene.kt` |
+| Sentinel | The eye of an AI in its metal panel: its core breathes, follows the tilt, and brightens on unlock | `SentinelScene.kt` |
 
 `SceneWallpaperService.kt` runs these scenes (frame rate, sensors,
 intensity); `SceneWallpapers.kt` declares one service per wallpaper.

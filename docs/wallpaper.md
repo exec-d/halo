@@ -70,19 +70,22 @@ widgets et les icônes lisibles par-dessus.
 
 ## Les fonds de science-fiction
 
-Cinq scènes inspirées des films de science-fiction et d'IA. Contrairement à
-Circuit, elles gardent leurs propres couleurs (cyan et orange, vert, néons…)
-plutôt que celles du téléphone. Toutes suivent l'inclinaison, les plans
-proches bougeant plus que les lointains, et s'arrêtent dès que le fond n'est
-plus visible.
+Cinq scènes inspirées des films de science-fiction et d'IA. Comme Circuit
+et les widgets, elles prennent les couleurs du téléphone (Material You) :
+l'accent, et deux teintes qui en dérivent. Toutes, sauf Code, suivent
+l'inclinaison, les plans proches bougeant plus que les lointains ; toutes
+s'arrêtent dès que le fond n'est plus visible.
+
+Pour voir une scène sans téléphone, `tool/scenes/render.sh` la dessine en
+PNG sur l'ordinateur (voir l'en-tête du script).
 
 | Fond | Ce qu'il montre | Code |
 | --- | --- | --- |
 | Grille | Une grille à perte de vue qui défile ; deux motos de lumière, cyan et orange, tracent leurs murs en virant à angle droit | `GridScene.kt` |
 | Mégapole | Trois plans de tours sous la pluie, une pyramide, des torchères, des voitures volantes, deux projecteurs, un panneau lumineux | `MegacityScene.kt` |
-| Code | Une pluie de caractères verts en deux plans, qui penche avec le téléphone | `CodeScene.kt` |
+| Code | Une pluie de caractères en trois plans de profondeur, qui tombe droit | `CodeScene.kt` |
 | Néon | Une rue bordée d'enseignes qui grésillent et se reflètent sur le sol mouillé ; parfois, l'image bugue | `NeonScene.kt` |
-| Sentinelle | L'œil rouge d'une IA : son cœur respire, suit l'inclinaison, et s'avive au déverrouillage | `SentinelScene.kt` |
+| Sentinelle | L'œil d'une IA dans son panneau de métal : son cœur respire, suit l'inclinaison, et s'avive au déverrouillage | `SentinelScene.kt` |
 
 `SceneWallpaperService.kt` fait tourner ces scènes (cadence, capteurs,
 intensité) ; `SceneWallpapers.kt` déclare un service par fond.

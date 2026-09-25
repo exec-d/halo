@@ -33,8 +33,8 @@ keep that name.*
   component by component with the screen;
 - five wallpapers inspired by science fiction: **Grid** (light cycles on an
   endless grid), **Megacity** (a huge city in the rain), **Code** (a rain of
-  green characters), **Neon** (a street of the future, buzzing signs and
-  glitches) and **Sentinel** (the red eye of an AI, following you).
+  characters), **Neon** (a street of the future, buzzing signs and
+  glitches) and **Sentinel** (the eye of an AI, following you).
 
 **Elsewhere in Android**: a screen saver (neon clock while charging), three
 quick settings tiles (Weather, Halo wallpaper, Battery) and icon shortcuts
