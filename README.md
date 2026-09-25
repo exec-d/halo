@@ -26,19 +26,15 @@ gardent ce nom.*
 | Musique | Lecture en cours (pochette néon, commandes) |
 | Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo) |
 
-**Onze fonds d'écran animés** :
+**Deux fonds d'écran animés** :
 
 - **Circuit** : l'intérieur d'un Pixel 7 en schéma néon, qui réagit à
   l'inclinaison, suit la vraie batterie, s'illumine au passage des données et
   s'allume composant par composant avec l'écran ;
-- dix **plans techniques** d'objets de films cultes, qui se tracent trait par
-  trait à l'allumage et dont les pièces s'animent : la moto de lumière de
-  Tron, le Spinner de Blade Runner, le Nebuchadnezzar de Matrix, HAL 9000,
-  le convecteur temporel de Retour vers le futur, l'Endurance d'Interstellar,
-  le chargeur P-5000 d'Aliens, la moto de Kaneda d'Akira, le crâne du T-800
-  et le réacteur ARK d'Iron Man.
+- **Tron** : la moto de lumière de Tron : l'héritage en plan technique, qui se
+  trace trait par trait à l'allumage ; ses roues tournent, son liseré pulse.
 
-Tous prennent les couleurs du téléphone, comme les widgets.
+Les deux prennent les couleurs du téléphone, comme les widgets.
 
 **Ailleurs dans Android** : un écran de veille (horloge néon pendant la
 charge), trois tuiles de réglages rapides (Météo, Fond Halo, Batterie) et des

@@ -2,8 +2,8 @@
 
 *[English](en/wallpaper.md)*
 
-Halo propose onze fonds d'écran animés (Circuit et dix plans techniques), un
-écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
+Halo propose deux fonds d'écran animés (Circuit et le plan technique de la
+moto de Tron), un écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
 L'intensité (Discret, Normal, Vif) est commune à tous les fonds.
 
 ## Circuit
@@ -70,10 +70,10 @@ widgets et les icônes lisibles par-dessus.
 
 ## Les plans techniques
 
-Dix fonds dessinent, en plan technique, un objet de film culte : papier
+Le fond Tron dessine, en plan technique, un objet de film culte : papier
 quadrillé, cadre repéré, vues cotées, repères numérotés et cartouche
-(échelle, planche, date du jour). Comme Circuit et les widgets, ils prennent
-les couleurs du téléphone.
+(échelle, planche, date du jour). Comme Circuit et les widgets, il prend
+les couleurs du téléphone. D'autres objets suivront, un à un.
 
 - **Le tracé** : à chaque allumage de l'écran, le plan se dessine trait par
   trait en un peu plus de deux secondes (`Pen` compte la longueur de chaque
@@ -84,15 +84,6 @@ les couleurs du téléphone.
 | Planche | Film | Objet | Ce qui bouge | Code |
 | --- | --- | --- | --- | --- |
 | 01 | Tron : l'héritage | Moto de lumière | Roues, liseré, ruban de lumière | `LightCycle.kt` |
-| 02 | Blade Runner | Spinner | Vol, rampe du toit, turbine | `Spinner.kt` |
-| 03 | Matrix | Nebuchadnezzar (plan du pont) | Impulsion, moyeu, fût | `Hovercraft.kt` |
-| 04 | 2001 | HAL 9000 | L'œil, les rayons | `Hal.kt` |
-| 05 | Retour vers le futur | Convecteur temporel | Impulsions, charge, heure présente | `FluxCapacitor.kt` |
-| 06 | Interstellar | Endurance | L'anneau tourne | `Endurance.kt` |
-| 07 | Aliens | Chargeur P-5000 | Bras, pinces, gyrophares | `PowerLoader.kt` |
-| 08 | Akira | Moto de Kaneda | Jantes, feu arrière | `KanedaBike.kt` |
-| 09 | Terminator | Crâne du T-800 | Yeux, réticule | `Endoskeleton.kt` |
-| 10 | Iron Man | Réacteur ARK | Cœur, bobines | `ArcReactor.kt` |
 
 Le cadre commun est dans `wallpaper/blueprint/Blueprint.kt` ; chaque objet
 dans son fichier, à côté. Pour voir un plan sans téléphone,

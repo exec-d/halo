@@ -291,23 +291,5 @@
     <string name="media_listener">Halo · Now playing</string>
     <string name="wallpaper_tron_label">Halo · Tron</string>
     <string name="wallpaper_tron_description">The light cycle from Tron: Legacy, as a technical drawing.</string>
-    <string name="wallpaper_spinner_label">Halo · Blade Runner</string>
-    <string name="wallpaper_spinner_description">The Spinner, the police flying car from Blade Runner.</string>
-    <string name="wallpaper_nebuchadnezzar_label">Halo · The Matrix</string>
-    <string name="wallpaper_nebuchadnezzar_description">The Nebuchadnezzar, after the set drawing of its deck.</string>
-    <string name="wallpaper_hal_label">Halo · 2001</string>
-    <string name="wallpaper_hal_description">HAL 9000, its panel and a section of its lens.</string>
-    <string name="wallpaper_flux_label">Halo · Back to the Future</string>
-    <string name="wallpaper_flux_description">The flux capacitor and the DeLorean\'s time circuits.</string>
-    <string name="wallpaper_endurance_label">Halo · Interstellar</string>
-    <string name="wallpaper_endurance_description">The Endurance, the ring station from Interstellar.</string>
-    <string name="wallpaper_loader_label">Halo · Aliens</string>
-    <string name="wallpaper_loader_description">The P-5000 power loader, the exoskeleton from Aliens.</string>
-    <string name="wallpaper_akira_label">Halo · Akira</string>
-    <string name="wallpaper_akira_description">Kaneda\'s bike, from Akira.</string>
-    <string name="wallpaper_t800_label">Halo · Terminator</string>
-    <string name="wallpaper_t800_description">The skull of the T-800 endoskeleton.</string>
-    <string name="wallpaper_arc_label">Halo · Iron Man</string>
-    <string name="wallpaper_arc_description">Tony Stark\'s arc reactor, front and section.</string>
     <string name="battery_chart_now">now</string>
 </resources>

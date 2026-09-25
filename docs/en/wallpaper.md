@@ -2,8 +2,8 @@
 
 *[Français](../wallpaper.md)*
 
-Halo offers eleven animated wallpapers (Circuit and ten technical drawings),
-a screen saver,
+Halo offers two animated wallpapers (Circuit and the Tron light cycle
+technical drawing), a screen saver,
 three quick settings tiles and shortcuts on its icon. The intensity (Subtle, Normal,
 Vivid) is shared by all wallpapers.
 
@@ -68,10 +68,10 @@ and icons on top readable.
 
 ## The technical drawings
 
-Ten wallpapers draw an object from a cult film as a technical drawing: grid
+The Tron wallpaper draws an object from a cult film as a technical drawing: grid
 paper, a referenced frame, dimensioned views, numbered callouts and a title
-block (scale, sheet, today's date). Like Circuit and the widgets, they take
-the phone's colors.
+block (scale, sheet, today's date). Like Circuit and the widgets, it takes
+the phone's colors. More objects will follow, one at a time.
 
 - **The drawing**: each time the screen turns on, the drawing traces itself
   line by line in a little over two seconds (`Pen` measures each line and
@@ -82,15 +82,6 @@ the phone's colors.
 | Sheet | Film | Object | What moves | Code |
 | --- | --- | --- | --- | --- |
 | 01 | Tron: Legacy | Light cycle | Wheels, light strip, light ribbon | `LightCycle.kt` |
-| 02 | Blade Runner | Spinner | Hovering, roof light bar, turbine | `Spinner.kt` |
-| 03 | The Matrix | Nebuchadnezzar (deck plan) | Pulse, hub, barrel | `Hovercraft.kt` |
-| 04 | 2001 | HAL 9000 | The eye, the rays | `Hal.kt` |
-| 05 | Back to the Future | Flux capacitor | Pulses, charge, present time | `FluxCapacitor.kt` |
-| 06 | Interstellar | Endurance | The ring turns | `Endurance.kt` |
-| 07 | Aliens | P-5000 power loader | Arms, clamps, beacons | `PowerLoader.kt` |
-| 08 | Akira | Kaneda's bike | Wheels, taillight | `KanedaBike.kt` |
-| 09 | Terminator | T-800 skull | Eyes, reticle | `Endoskeleton.kt` |
-| 10 | Iron Man | Arc reactor | Core, coils | `ArcReactor.kt` |
 
 The shared frame lives in `wallpaper/blueprint/Blueprint.kt`, each object in
 its own file next to it. To look at a drawing without a phone,

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Fond d'écran animé Halo · Retour vers le futur, en plan technique (FluxCapacitor). -->
-<wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:description="@string/wallpaper_flux_description"
-    android:author="@string/wallpaper_author"
-    android:thumbnail="@drawable/wallpaper_thumb_flux"
-    android:showMetadataInPreview="false" />

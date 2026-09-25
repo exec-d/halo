@@ -1,7 +1,8 @@
 package dev.levilainpetit.wux.wallpaper
 
 import android.app.WallpaperManager
-import dev.levilainpetit.wux.wallpaper.blueprint.*
+import dev.levilainpetit.wux.wallpaper.blueprint.BlueprintScene
+import dev.levilainpetit.wux.wallpaper.blueprint.LightCycle
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -86,15 +87,6 @@ object WallpaperPreview {
     /** Les identifiants sont partagés avec Dart (`wallpaper_screen.dart`). */
     private val SCENES = linkedMapOf(
         "tron" to Scene(TronWallpaperService::class.java) { BlueprintScene(LightCycle()) },
-        "spinner" to Scene(SpinnerWallpaperService::class.java) { BlueprintScene(Spinner()) },
-        "nebuchadnezzar" to Scene(NebuchadnezzarWallpaperService::class.java) { BlueprintScene(Hovercraft()) },
-        "hal" to Scene(HalWallpaperService::class.java) { BlueprintScene(Hal()) },
-        "flux" to Scene(FluxWallpaperService::class.java) { BlueprintScene(FluxCapacitor()) },
-        "endurance" to Scene(EnduranceWallpaperService::class.java) { BlueprintScene(Endurance()) },
-        "loader" to Scene(LoaderWallpaperService::class.java) { BlueprintScene(PowerLoader()) },
-        "akira" to Scene(AkiraWallpaperService::class.java) { BlueprintScene(KanedaBike()) },
-        "t800" to Scene(T800WallpaperService::class.java) { BlueprintScene(Endoskeleton()) },
-        "arc" to Scene(ArcWallpaperService::class.java) { BlueprintScene(ArcReactor()) },
     )
     private val KINDS = listOf(CIRCUIT) + SCENES.keys
 }
