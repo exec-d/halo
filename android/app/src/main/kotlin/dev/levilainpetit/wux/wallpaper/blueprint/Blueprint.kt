@@ -90,9 +90,11 @@ class BlueprintScene(private val subject: Subject) : LiveScene {
 
         // Un plan est fait de traits fins partout : en « Discret », il doit
         // s'effacer derrière les icônes et les widgets, bien plus que Circuit.
-        val strength = (0.22f + (frame.intensity - WallpaperSettings.DISCREET) / (WallpaperSettings.VIVID - WallpaperSettings.DISCREET) * 0.78f)
-            .coerceIn(0.2f, 1f)
-        val lit = strength * strength
+        // Seul le trait s'efface : les parties animées (roues, liserés, feux)
+        // gardent assez d'éclat pour qu'on voie encore le fond vivre.
+        val level = ((frame.intensity - WallpaperSettings.DISCREET) / (WallpaperSettings.VIVID - WallpaperSettings.DISCREET)).coerceIn(0f, 1f)
+        val strength = 0.22f + level * 0.78f
+        val lit = 0.5f + level * 0.5f
         val palette = frame.palette
         val paper = SceneKit.night(palette, 0.07f)
         val ink = SceneKit.mix(palette.line, palette.core, 0.35f)
