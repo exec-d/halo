@@ -9,6 +9,7 @@ import android.graphics.Typeface
 import dev.levilainpetit.wux.wallpaper.LiveFrame
 import dev.levilainpetit.wux.wallpaper.LiveScene
 import dev.levilainpetit.wux.wallpaper.SceneKit
+import dev.levilainpetit.wux.wallpaper.WallpaperSettings
 import java.time.LocalDate
 import kotlin.math.PI
 import kotlin.math.atan2
@@ -87,7 +88,11 @@ class BlueprintScene(private val subject: Subject) : LiveScene {
         wasLocked = frame.locked
         if (reveal < 1f) reveal = min(1f, reveal + dt / REVEAL)
 
-        val strength = SceneKit.strength(frame)
+        // Un plan est fait de traits fins partout : en « Discret », il doit
+        // s'effacer derrière les icônes et les widgets, bien plus que Circuit.
+        val strength = (0.22f + (frame.intensity - WallpaperSettings.DISCREET) / (WallpaperSettings.VIVID - WallpaperSettings.DISCREET) * 0.78f)
+            .coerceIn(0.2f, 1f)
+        val lit = strength * strength
         val palette = frame.palette
         val paper = SceneKit.night(palette, 0.07f)
         val ink = SceneKit.mix(palette.line, palette.core, 0.35f)
@@ -97,7 +102,7 @@ class BlueprintScene(private val subject: Subject) : LiveScene {
         canvas.drawColor(paper)
         drawPaper(canvas, frame, ink, strength)
 
-        pen.begin(canvas, ink, glow, strength, if (reveal >= 1f) Float.MAX_VALUE else lastTotal * ease(reveal))
+        pen.begin(canvas, ink, glow, strength, lit, if (reveal >= 1f) Float.MAX_VALUE else lastTotal * ease(reveal))
         val w = width.toFloat()
         // Tout l'écran, du cadre jusqu'au cartouche : sur l'écran verrouillé,
         // le voile du haut garde l'horloge lisible.
@@ -223,6 +228,9 @@ class Pen {
     private var ink = Color.WHITE
     private var glow = Color.WHITE
     private var strength = 1f
+
+    /** L'éclat des parties lumineuses, qui baisse plus vite que les traits. */
+    private var lit = 1f
     private var budget = Float.MAX_VALUE
 
     /** Longueur totale des traits de l'image (px). */
@@ -250,11 +258,12 @@ class Pen {
     private val label = Paint(Paint.ANTI_ALIAS_FLAG).apply { typeface = Typeface.MONOSPACE }
     private val bold = Paint(Paint.ANTI_ALIAS_FLAG).apply { typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD) }
 
-    fun begin(canvas: Canvas, ink: Int, glow: Int, strength: Float, budget: Float) {
+    fun begin(canvas: Canvas, ink: Int, glow: Int, strength: Float, lit: Float, budget: Float) {
         this.canvas = canvas
         this.ink = ink
         this.glow = glow
         this.strength = strength
+        this.lit = lit
         this.budget = budget
         total = 0f
         view(0f, 0f, 1f)
@@ -577,7 +586,7 @@ class Pen {
         val ey = ay + (by - ay) * part
         for ((w, a) in GLOW) {
             stroke.color = glow
-            stroke.alpha = (a * level * strength).toInt().coerceIn(0, 255)
+            stroke.alpha = (a * level * lit).toInt().coerceIn(0, 255)
             stroke.strokeWidth = (width + w) * density
             canvas.drawLine(ax, ay, ex, ey, stroke)
         }
@@ -598,7 +607,7 @@ class Pen {
         val oval = android.graphics.RectF(x - radius, y - radius, x + radius, y + radius)
         for ((w, a) in GLOW) {
             stroke.color = glow
-            stroke.alpha = (a * level * strength).toInt().coerceIn(0, 255)
+            stroke.alpha = (a * level * lit).toInt().coerceIn(0, 255)
             stroke.strokeWidth = (width + w) * density
             canvas.drawArc(oval, angle(start), sweep * part, false, stroke)
         }
@@ -615,7 +624,7 @@ class Pen {
             intArrayOf(SceneKit.mix(glow, Color.WHITE, 0.6f), SceneKit.alpha(glow, (160 * level).toInt()), Color.TRANSPARENT),
             floatArrayOf(0f, 0.3f, 1f), Shader.TileMode.CLAMP,
         )
-        fill.alpha = (255 * strength * level).toInt().coerceIn(0, 255)
+        fill.alpha = (255 * lit * level).toInt().coerceIn(0, 255)
         canvas.drawCircle(gx, gy, r * 3f, fill)
         fill.shader = null
     }

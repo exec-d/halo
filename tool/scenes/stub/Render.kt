@@ -52,17 +52,21 @@ fun main(args: Array<String>) {
             animate(make(), palette, 540, 1200, 1.3125f, shots).forEachIndexed { i, image ->
                 ImageIO.write(image, "png", File(out, "${name}_${pn}_${shots[i]}.png"))
             }
+            if (pn == "amber") {
+                val image = animate(make(), palette, 540, 1200, 1.3125f, listOf(6500), WallpaperSettings.DISCREET).single()
+                ImageIO.write(image, "png", File(out, "${name}_${pn}_discreet.png"))
+            }
         }
     }
 }
 
 /** Fait tourner [scene] image par image et garde celles des instants [shots] (ms). */
-private fun animate(scene: LiveScene, palette: CircuitPalette, w: Int, h: Int, density: Float, shots: List<Int>): List<BufferedImage> {
+private fun animate(scene: LiveScene, palette: CircuitPalette, w: Int, h: Int, density: Float, shots: List<Int>, level: Float = WallpaperSettings.NORMAL): List<BufferedImage> {
     scene.resize(w, h, density)
     scene.refresh()
     val frame = LiveFrame().apply {
         this.palette = palette
-        intensity = WallpaperSettings.NORMAL
+        intensity = level
         timeMillis = 1_700_000_000_000L
     }
     val scratch = Canvas(Bitmap.createBitmap(4, 4, Bitmap.Config.ARGB_8888))

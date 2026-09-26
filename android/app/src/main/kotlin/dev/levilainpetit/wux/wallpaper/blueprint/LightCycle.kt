@@ -129,30 +129,80 @@ class LightCycle : Subject {
             40f, 0f, 110f, 150f, 380f, 220f, 900f, 210f, 1300f, 270f, 1700f, 350f, 2200f, 365f,
             2700f, 350f, 3100f, 290f, 3350f, 170f, 3420f, 0f,
         )
-        val n = right.size / 2
-        val outline = FloatArray(right.size * 2)
-        for (i in 0 until n) {
-            outline[i * 2] = right[i * 2]
-            outline[i * 2 + 1] = cy - right[i * 2 + 1]
-            outline[(n + i) * 2] = right[(n - 1 - i) * 2]
-            outline[(n + i) * 2 + 1] = cy + right[(n - 1 - i) * 2 + 1]
-        }
+        val outline = symmetric(right, cy, 1f)
         pen.shade(outline, 14)
         pen.poly(outline, closed = true, weight = Weight.THICK)
+        // Le carénage intérieur, en retrait du bord, et l'arête centrale.
+        pen.poly(symmetric(right, cy, 0.72f, from = 2, to = right.size / 2 - 2), closed = true, weight = Weight.THIN)
         pen.axis(-80f, cy, 3500f, cy)
-        for (x in floatArrayOf(130f, 2240f)) pen.rect(x, cy - 90f, x + 1040f, cy + 90f, Weight.MAIN)
-        // Le tableau de bord, reculé, et l'assise.
+        // Les roues, sous la coque : cachées, sauf le nez du pneu avant.
+        for (x in floatArrayOf(130f, 2240f)) {
+            pen.hidden(x, cy - 90f, x + 1040f, cy - 90f)
+            pen.hidden(x, cy + 90f, x + 1040f, cy + 90f)
+            pen.hidden(x + 520f, cy - 110f, x + 520f, cy + 110f)
+        }
+        pen.arc(130f, cy, 90f, 90f, 180f, Weight.MAIN)
+        // Le tableau de bord, reculé, la bulle et l'assise.
         pen.poly(floatArrayOf(1480f, cy - 160f, 1680f, cy - 190f, 1680f, cy + 190f, 1480f, cy + 160f), closed = true, weight = Weight.THIN)
+        pen.poly(floatArrayOf(1050f, cy, 1200f, cy - 90f, 1420f, cy - 140f, 1480f, cy - 130f, 1480f, cy + 130f, 1420f, cy + 140f, 1200f, cy + 90f), closed = true, weight = Weight.THIN)
+        pen.line(1200f, cy - 90f, 1200f, cy + 90f, Weight.HAIR)
         pen.poly(floatArrayOf(1700f, cy - 200f, 2150f, cy - 220f, 2150f, cy + 220f, 1700f, cy + 200f), closed = true, weight = Weight.HAIR)
+        for (x in floatArrayOf(1810f, 1920f, 2030f)) pen.line(x, cy - 205f, x, cy + 205f, Weight.HAIR)
         pen.poly(floatArrayOf(2250f, cy - 250f, 2950f, cy - 230f, 2950f, cy + 230f, 2250f, cy + 250f), closed = true, weight = Weight.HAIR)
+        // L'aileron arrière, fin, sur l'axe.
+        pen.poly(floatArrayOf(2950f, cy - 35f, 3330f, cy - 20f, 3380f, cy, 3330f, cy + 20f, 2950f, cy + 35f), closed = true, weight = Weight.MAIN)
+        // Les grilles d'aération des flancs.
+        for (i in 0 until 5) {
+            val x = 2350f + i * 110f
+            pen.line(x, cy - 330f, x + 60f, cy - 290f, Weight.HAIR)
+            pen.line(x, cy + 330f, x + 60f, cy + 290f, Weight.HAIR)
+        }
         val level = 0.7f + 0.3f * sin(time * 2f)
-        pen.glowPoly(floatArrayOf(400f, cy - 175f, 1300f, cy - 230f, 2200f, cy - 315f, 3100f, cy - 250f), level = level, width = 1.6f)
-        pen.glowPoly(floatArrayOf(400f, cy + 175f, 1300f, cy + 230f, 2200f, cy + 315f, 3100f, cy + 250f), level = level, width = 1.6f)
+        pen.glowPoly(floatArrayOf(400f, cy - 175f, 900f, cy - 180f, 1300f, cy - 230f, 1700f, cy - 300f, 2200f, cy - 315f, 2700f, cy - 300f, 3100f, cy - 250f, 3330f, cy - 120f), level = level, width = 1.6f)
+        pen.glowPoly(floatArrayOf(400f, cy + 175f, 900f, cy + 180f, 1300f, cy + 230f, 1700f, cy + 300f, 2200f, cy + 315f, 2700f, cy + 300f, 3100f, cy + 250f, 3330f, cy + 120f), level = level, width = 1.6f)
+        pen.glowLine(2980f, cy, 3360f, cy, level = level, width = 1.2f)
         pen.dim(40f, cy + 365f, 3420f, cy + 365f, -130f, "3 380")
         pen.dim(3470f, cy + 365f, 3470f, cy - 365f, -40f, "730")
         pen.note(1580f, cy - 175f, 1250f, -120f, "DASH PUSHED BACK")
         pen.note(2200f, cy + 365f, 2300f, 960f, "CURVIER SHAPE")
+        pen.note(3200f, cy - 25f, 3000f, -120f, "THINNER FIN")
         pen.caption("PLAN VIEW")
+    }
+
+    /**
+     * Le contour fermé d'une demi-vue de dessus [half] (x, demi-largeur),
+     * mise à l'échelle [inset] en largeur, entre les points [from] et [to].
+     */
+    private fun symmetric(half: FloatArray, cy: Float, inset: Float, from: Int = 0, to: Int = half.size / 2 - 1): FloatArray {
+        val n = to - from + 1
+        val out = FloatArray(n * 4)
+        for (i in 0 until n) {
+            val j = from + i
+            val k = to - i
+            out[i * 2] = half[j * 2]
+            out[i * 2 + 1] = cy - half[j * 2 + 1] * inset
+            out[(n + i) * 2] = half[k * 2]
+            out[(n + i) * 2 + 1] = cy + half[k * 2 + 1] * inset
+        }
+        return out
+    }
+
+    /** Un pneu vu de face ou de dos : bande, flancs, sculptures et contact au sol. */
+    private fun tyre(pen: Pen, cx: Float, top: Float, ground: Float, time: Float) {
+        pen.rect(cx - 95f, top, cx + 95f, ground, Weight.MAIN)
+        pen.line(cx - 60f, top, cx - 60f, ground, Weight.HAIR)
+        pen.line(cx + 60f, top, cx + 60f, ground, Weight.HAIR)
+        // Les sculptures défilent : la roue tourne.
+        val pitch = 70f
+        var y = top + (time * 90f) % pitch
+        while (y < ground - 10f) {
+            pen.line(cx - 60f, y, cx + 60f, y + 18f, Weight.HAIR)
+            y += pitch
+        }
+        pen.hatch(cx - 95f, ground - 40f, cx + 95f, ground)
+        val ring = 0.6f + 0.4f * sin(time * 3f)
+        pen.glowLine(cx - 78f, top + 20f, cx - 78f, ground - 20f, level = ring, width = 1.4f)
+        pen.glowLine(cx + 78f, top + 20f, cx + 78f, ground - 20f, level = ring, width = 1.4f)
     }
 
     private fun front(pen: Pen, time: Float) {
@@ -166,15 +216,28 @@ class LightCycle : Subject {
         )
         pen.shade(shell, 16)
         pen.poly(shell, closed = true, weight = Weight.THICK)
-        pen.poly(floatArrayOf(cx - 200f, 330f, cx - 120f, 160f, cx + 120f, 160f, cx + 200f, 330f, cx + 150f, 560f, cx - 150f, 560f), closed = true, weight = Weight.THIN)
-        pen.rect(cx - 95f, 600f, cx + 95f, ground, Weight.MAIN)
+        // Le carénage intérieur et la bulle, avec son reflet.
+        pen.poly(floatArrayOf(cx - 200f, 960f, cx - 300f, 740f, cx - 310f, 480f, cx - 240f, 260f, cx - 120f, 110f, cx, 80f, cx + 120f, 110f, cx + 240f, 260f, cx + 310f, 480f, cx + 300f, 740f, cx + 200f, 960f), weight = Weight.HAIR)
+        pen.poly(floatArrayOf(cx - 200f, 330f, cx - 120f, 160f, cx + 120f, 160f, cx + 200f, 330f, cx + 150f, 440f, cx - 150f, 440f), closed = true, weight = Weight.THIN)
+        pen.line(cx - 90f, 200f, cx - 150f, 330f, Weight.HAIR)
+        pen.line(cx - 50f, 200f, cx - 100f, 310f, Weight.HAIR)
+        // Le phare : une fente horizontale.
+        pen.rect(cx - 170f, 480f, cx + 170f, 520f, Weight.THIN)
+        pen.glowLine(cx - 150f, 500f, cx + 150f, 500f, level = 0.7f + 0.3f * sin(time * 2.4f), width = 2.2f)
+        // Les prises d'air sous le phare.
+        for (i in 0 until 4) {
+            val y = 570f + i * 45f
+            pen.line(cx - 280f + i * 8f, y, cx - 130f, y, Weight.HAIR)
+            pen.line(cx + 130f, y, cx + 280f - i * 8f, y, Weight.HAIR)
+        }
+        tyre(pen, cx, 760f, ground, time)
         pen.axis(cx, -60f, cx, ground + 60f)
-        pen.glowDot(cx, 760f, 30f, 0.7f + 0.3f * sin(time * 2.4f))
         pen.glowPoly(floatArrayOf(cx - 350f, 560f, cx - 320f, 850f, cx - 240f, 980f), level = 0.8f, width = 2f)
         pen.glowPoly(floatArrayOf(cx + 350f, 560f, cx + 320f, 850f, cx + 240f, 980f), level = 0.8f, width = 2f)
-        pen.dim(cx - 380f, ground, cx + 380f, ground, -110f, "760")
+        pen.dim(cx - 380f, ground, cx + 380f, ground, 160f, "760")
         pen.note(cx + 60f, 30f, cx + 250f, -140f, "HIGHER SCOOP")
         pen.note(cx - 380f, 480f, -40f, 180f, "SLIGHTLY|WIDER")
+        pen.note(cx + 170f, 500f, cx + 470f, 700f, "HEADLIGHT|SLIT")
         pen.caption("FRONT VIEW")
     }
 
@@ -184,26 +247,35 @@ class LightCycle : Subject {
         pen.line(0f, ground, 1100f, ground, Weight.THIN)
         // De dos : une écope toute différente, un aileron plus fin, le feu en obus, surélevé.
         val shell = floatArrayOf(
-            cx - 280f, 1000f, cx - 390f, 740f, cx - 400f, 450f, cx - 330f, 220f, cx - 90f, 110f, cx - 40f, 20f,
-            cx + 40f, 20f, cx + 90f, 110f, cx + 330f, 220f, cx + 400f, 450f, cx + 390f, 740f, cx + 280f, 1000f,
+            cx - 280f, 1000f, cx - 390f, 740f, cx - 400f, 450f, cx - 330f, 220f, cx - 90f, 110f, cx - 30f, 20f,
+            cx + 30f, 20f, cx + 90f, 110f, cx + 330f, 220f, cx + 400f, 450f, cx + 390f, 740f, cx + 280f, 1000f,
         )
         pen.shade(shell, 16)
         pen.poly(shell, closed = true, weight = Weight.THICK)
-        pen.line(cx - 40f, 20f, cx - 40f, 420f, Weight.THIN)
-        pen.line(cx + 40f, 20f, cx + 40f, 420f, Weight.THIN)
-        pen.poly(floatArrayOf(cx - 250f, 330f, cx - 90f, 230f, cx + 90f, 230f, cx + 250f, 330f), weight = Weight.HAIR)
-        // Le feu arrière, en obus, et la roue.
+        // L'aileron, fin, qui s'évase dans la coque.
+        pen.poly(floatArrayOf(cx - 30f, 20f, cx - 22f, 300f, cx - 60f, 420f), weight = Weight.THIN)
+        pen.poly(floatArrayOf(cx + 30f, 20f, cx + 22f, 300f, cx + 60f, 420f), weight = Weight.THIN)
+        // L'écope arrière : deux coquilles galbées de part et d'autre.
+        pen.poly(floatArrayOf(cx - 300f, 300f, cx - 180f, 240f, cx - 70f, 260f, cx - 90f, 440f, cx - 260f, 470f, cx - 330f, 420f), closed = true, weight = Weight.HAIR)
+        pen.poly(floatArrayOf(cx + 300f, 300f, cx + 180f, 240f, cx + 70f, 260f, cx + 90f, 440f, cx + 260f, 470f, cx + 330f, 420f), closed = true, weight = Weight.HAIR)
+        pen.poly(floatArrayOf(cx - 330f, 780f, cx - 200f, 860f, cx + 200f, 860f, cx + 330f, 780f), weight = Weight.HAIR)
+        // Le feu arrière, en obus, surélevé.
         pen.rect(cx - 110f, 520f, cx + 110f, 680f, Weight.MAIN)
         pen.arc(cx, 600f, 80f, 0f, 360f, Weight.THIN)
+        pen.arc(cx, 600f, 45f, 0f, 360f, Weight.HAIR)
         pen.glowDot(cx, 600f, 40f, 0.75f + 0.25f * sin(time * 3f))
-        pen.rect(cx - 95f, 700f, cx + 95f, ground, Weight.MAIN)
+        // L'émetteur du ruban de lumière, sous le feu.
+        pen.rect(cx - 170f, 900f, cx + 170f, 940f, Weight.THIN)
+        pen.glowLine(cx - 150f, 920f, cx + 150f, 920f, level = 0.6f + 0.4f * sin(time * 4f), width = 2f)
+        tyre(pen, cx, 960f, ground, time)
         pen.axis(cx, -60f, cx, ground + 60f)
         pen.glowPoly(floatArrayOf(cx - 360f, 540f, cx - 330f, 840f, cx - 250f, 980f), level = 0.8f, width = 2f)
         pen.glowPoly(floatArrayOf(cx + 360f, 540f, cx + 330f, 840f, cx + 250f, 980f), level = 0.8f, width = 2f)
-        pen.dim(cx - 400f, ground, cx + 400f, ground, -110f, "800")
-        pen.note(cx - 200f, 180f, -40f, -120f, "DIFFERENT SCOOP|ALTOGETHER")
-        pen.note(cx + 40f, 200f, cx + 300f, 20f, "THINNER FIN")
-        pen.note(cx + 110f, 600f, cx + 420f, 980f, "BULLET|RAISED")
+        pen.dim(cx - 400f, ground, cx + 400f, ground, 160f, "800")
+        pen.note(cx - 200f, 250f, -40f, -120f, "DIFFERENT SCOOP|ALTOGETHER")
+        pen.note(cx + 25f, 150f, cx + 300f, 20f, "THINNER FIN")
+        pen.note(cx + 110f, 600f, cx + 420f, 760f, "BULLET|RAISED")
+        pen.note(cx - 170f, 920f, -40f, 800f, "RIBBON|EMITTER")
         pen.caption("REAR VIEW")
     }
 }
