@@ -2,8 +2,8 @@
 
 *[Français](../wallpaper.md)*
 
-Halo offers two animated wallpapers (Circuit and the Tron light cycle
-technical drawing), a screen saver,
+Halo offers three animated wallpapers (Circuit, and the Tron light cycle
+and flux capacitor technical drawings), a screen saver,
 three quick settings tiles and shortcuts on its icon. The intensity (Subtle, Normal,
 Vivid) is shared by all wallpapers.
 
@@ -68,9 +68,9 @@ and icons on top readable.
 
 ## The technical drawings
 
-The Tron wallpaper draws an object from a cult film as a technical drawing: grid
+The Tron and Back to the Future wallpapers draw an object from a cult film as a technical drawing: grid
 paper, a referenced frame, dimensioned views, numbered callouts and a title
-block (scale, sheet, today's date). Like Circuit and the widgets, it takes
+block (scale, sheet, today's date). Like Circuit and the widgets, they take
 the phone's colors. More objects will follow, one at a time.
 
 - **The drawing**: each time the screen turns on, the drawing traces itself
@@ -82,6 +82,7 @@ the phone's colors. More objects will follow, one at a time.
 | Sheet | Film | Object | What moves | Code |
 | --- | --- | --- | --- | --- |
 | 01 | Tron: Legacy | Light cycle | Wheels, light strip, light ribbon | `LightCycle.kt` |
+| 02 | Back to the Future | Flux capacitor | Y pulses, core, power curve | `FluxCapacitor.kt` |
 
 The shared frame lives in `wallpaper/blueprint/Blueprint.kt`, each object in
 its own file next to it. To look at a drawing without a phone,

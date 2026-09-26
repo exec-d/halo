@@ -295,6 +295,8 @@
     <string name="media_listener">Halo · Lecture en cours</string>
     <string name="wallpaper_tron_label">Halo · Tron</string>
     <string name="wallpaper_tron_description">La moto de lumière de Tron : l\'héritage, en plan technique.</string>
+    <string name="wallpaper_flux_label">Halo · Retour vers le futur</string>
+    <string name="wallpaper_flux_description">Le convecteur temporel de la DeLorean, en plan technique.</string>
     <string name="battery_chart_now">maint.</string>
     <string name="wallpaper_author" translatable="false">Halo</string>
 </resources>

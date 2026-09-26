@@ -1219,6 +1219,24 @@ abstract class AppLocalizations {
   /// **'Les roues sans moyeu tournent, le liseré pulse et un ruban de lumière se dépose derrière la moto.'**
   String get wallpaperTronMotion;
 
+  /// No description provided for @wallpaperFluxTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour vers le futur'**
+  String get wallpaperFluxTitle;
+
+  /// No description provided for @wallpaperFluxDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le convecteur temporel de la DeLorean, en plan technique.'**
+  String get wallpaperFluxDescription;
+
+  /// No description provided for @wallpaperFluxMotion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les impulsions courent le long des trois bras jusqu\'au cœur, qui s\'illumine ; sur la courbe, le point de fonctionnement grimpe jusqu\'à 88 mph et 1,21 gigawatt.'**
+  String get wallpaperFluxMotion;
+
   /// Nom du widget, dans le catalogue et en titre de son écran.
   ///
   /// In fr, this message translates to:

@@ -26,16 +26,19 @@ keep that name.*
 | Music | Now playing (neon cover art, controls) |
 | Shortcuts | Controls (flashlight, Wi-Fi, Bluetooth, sound, camera) |
 
-**Two animated wallpapers**:
+**Three animated wallpapers**:
 
 - **Circuit**: the inside of a Pixel 7 as a neon schematic, which reacts to
   tilt, follows the real battery, lights up as data flows and powers on
   component by component with the screen;
 - **Tron**: the light cycle from Tron: Legacy as a technical drawing, which
   traces itself line by line when the screen turns on; its wheels spin, its
-  light strip pulses.
+  light strip pulses;
+- **Back to the Future**: the DeLorean's flux capacitor as a technical
+  drawing; its pulses race to the core, and the power curve climbs to 88 mph
+  and 1.21 gigawatts.
 
-Both take the phone's colors, like the widgets.
+All take the phone's colors, like the widgets.
 
 **Elsewhere in Android**: a screen saver (neon clock while charging), three
 quick settings tiles (Weather, Halo wallpaper, Battery) and icon shortcuts

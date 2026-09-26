@@ -291,5 +291,7 @@
     <string name="media_listener">Halo · Now playing</string>
     <string name="wallpaper_tron_label">Halo · Tron</string>
     <string name="wallpaper_tron_description">The light cycle from Tron: Legacy, as a technical drawing.</string>
+    <string name="wallpaper_flux_label">Halo · Back to the Future</string>
+    <string name="wallpaper_flux_description">The DeLorean\'s flux capacitor, as a technical drawing.</string>
     <string name="battery_chart_now">now</string>
 </resources>

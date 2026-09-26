@@ -58,6 +58,18 @@ String _tronDescription(AppLocalizations l) => l.wallpaperTronDescription;
 List<(String, String)> _tronFeatures(AppLocalizations l) =>
     _blueprint(l, l.wallpaperTronMotion);
 
+const fluxWallpaper = HaloWallpaper(
+  id: 'flux',
+  title: _fluxTitle,
+  description: _fluxDescription,
+  features: _fluxFeatures,
+  battery: _sceneBattery,
+);
+String _fluxTitle(AppLocalizations l) => l.wallpaperFluxTitle;
+String _fluxDescription(AppLocalizations l) => l.wallpaperFluxDescription;
+List<(String, String)> _fluxFeatures(AppLocalizations l) =>
+    _blueprint(l, l.wallpaperFluxMotion);
+
 /// Ce que les plans techniques ont en commun, et ce qui bouge dans chacun.
 List<(String, String)> _blueprint(AppLocalizations l, String motion) => [
   (l.wallpaperBlueprintTraceTitle, l.wallpaperBlueprintTraceText),
@@ -68,7 +80,7 @@ List<(String, String)> _blueprint(AppLocalizations l, String motion) => [
 String _sceneBattery(AppLocalizations l) => l.wallpaperSceneBattery;
 
 /// Les fonds d'écran animés, dans l'ordre du catalogue.
-const haloWallpapers = [circuitWallpaper, tronWallpaper];
+const haloWallpapers = [circuitWallpaper, tronWallpaper, fluxWallpaper];
 
 /// Un fond d'écran animé : aperçu, ce qu'il montre, son intensité et son
 /// application à l'accueil et à l'écran de verrouillage.

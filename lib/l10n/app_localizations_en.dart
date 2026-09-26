@@ -657,6 +657,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'The hubless wheels spin, the light strip pulses and a light ribbon trails behind the cycle.';
 
   @override
+  String get wallpaperFluxTitle => 'Back to the Future';
+
+  @override
+  String get wallpaperFluxDescription =>
+      'The DeLorean\'s flux capacitor, as a technical drawing.';
+
+  @override
+  String get wallpaperFluxMotion =>
+      'Pulses race along the three arms to the core, which flashes; on the power curve, the operating point climbs to 88 mph and 1.21 gigawatts.';
+
+  @override
   String get widgetClockTitle => 'Clock';
 
   @override

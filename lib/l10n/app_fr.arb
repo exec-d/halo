@@ -371,6 +371,9 @@
   "wallpaperTronTitle": "Tron",
   "wallpaperTronDescription": "La moto de lumière de Tron : l'héritage, en plan technique.",
   "wallpaperTronMotion": "Les roues sans moyeu tournent, le liseré pulse et un ruban de lumière se dépose derrière la moto.",
+  "wallpaperFluxTitle": "Retour vers le futur",
+  "wallpaperFluxDescription": "Le convecteur temporel de la DeLorean, en plan technique.",
+  "wallpaperFluxMotion": "Les impulsions courent le long des trois bras jusqu'au cœur, qui s'illumine ; sur la courbe, le point de fonctionnement grimpe jusqu'à 88 mph et 1,21 gigawatt.",
   "widgetClockTitle": "Horloge",
   "@widgetClockTitle": {
     "description": "Nom du widget, dans le catalogue et en titre de son écran."

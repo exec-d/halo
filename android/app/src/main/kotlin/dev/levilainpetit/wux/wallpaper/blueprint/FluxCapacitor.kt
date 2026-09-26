@@ -11,11 +11,11 @@ import kotlin.math.sin
  * Retour vers le futur — le convecteur temporel : le boîtier à hublot, le Y
  * des trois chambres de flux, les câbles d'alimentation. Les impulsions
  * courent le long des trois bras vers le centre, qui s'illumine.
- *
- * [layout] : 0 vues orthogonales, 1 repères et nomenclature, 2 dans la
- * DeLorean avec la courbe de puissance (maquettes à comparer).
+ * En haut, la DeLorean de profil et la place du convecteur ; au milieu, la
+ * face et le côté du boîtier ; en bas, la puissance à fournir selon la
+ * vitesse, que le point de fonctionnement remonte jusqu'à 88 mph.
  */
-class FluxCapacitor(private val layout: Int = 0) : Subject {
+class FluxCapacitor : Subject {
     override val title = "FLUX CAPACITOR"
     override val reference = "BACK TO THE FUTURE (1985) · DMC-12"
     override val scale = "1:5"
@@ -28,44 +28,18 @@ class FluxCapacitor(private val layout: Int = 0) : Subject {
         val shift = tiltX * 8f * d
         val l = 18 * d
         val r = width - 18 * d
-        when (layout) {
-            0 -> {
-                pen.fit(800f, 1080f, l + shift, top, r + shift, top + zone * 0.64f, x0 = -100f, y0 = -250f)
-                front(pen, time, notes = true)
-                pen.caption("FRONT VIEW", "DOOR CLOSED · CHAMBER LIVE")
-                pen.fit(480f, 1080f, l - shift, top + zone * 0.64f, width * 0.42f - shift, bottom, x0 = -110f, y0 = -250f)
-                side(pen)
-                pen.caption("SIDE VIEW")
-                pen.fit(820f, 480f, width * 0.42f - shift, top + zone * 0.64f, r - shift, bottom, x0 = -110f, y0 = -110f)
-                plan(pen)
-                pen.caption("PLAN VIEW", "FEED GLANDS")
-            }
-            1 -> {
-                pen.fit(800f, 1080f, l + shift, top, r + shift, top + zone * 0.6f, x0 = -100f, y0 = -250f)
-                front(pen, time, callouts = true)
-                pen.caption("FRONT VIEW")
-                pen.fit(420f, 640f, l - shift, top + zone * 0.6f, width * 0.4f - shift, bottom, x0 = -210f, y0 = -80f)
-                electrode(pen, time)
-                pen.caption("DETAIL A", "SCALE 2:1")
-                pen.fit(1000f, 820f, width * 0.4f - shift, top + zone * 0.6f, r - shift, bottom, x0 = -20f, y0 = -40f)
-                parts(pen)
-                pen.caption("PARTS LIST")
-            }
-            else -> {
-                pen.fit(4600f, 1450f, l + shift, top, r + shift, top + zone * 0.26f, x0 = -200f, y0 = -150f)
-                car(pen, time)
-                pen.caption("INSTALLATION", "DMC-12 · BEHIND THE SEATS")
-                pen.fit(800f, 1080f, l - shift, top + zone * 0.26f, width * 0.62f - shift, top + zone * 0.7f, x0 = -100f, y0 = -250f)
-                front(pen, time)
-                pen.caption("FRONT VIEW")
-                pen.fit(480f, 1080f, width * 0.62f - shift, top + zone * 0.26f, r - shift, top + zone * 0.7f, x0 = -110f, y0 = -250f)
-                side(pen)
-                pen.caption("SIDE VIEW")
-                pen.fit(1200f, 760f, l + shift, top + zone * 0.7f, r + shift, bottom, x0 = -150f, y0 = -60f)
-                curve(pen, time)
-                pen.caption("POWER REQUIREMENT", "1.21 GW AT 88 MPH")
-            }
-        }
+        pen.fit(4600f, 1450f, l + shift, top, r + shift, top + zone * 0.26f, x0 = -200f, y0 = -150f)
+        car(pen, time)
+        pen.caption("INSTALLATION", "DMC-12 · BEHIND THE SEATS")
+        pen.fit(800f, 1080f, l - shift, top + zone * 0.26f, width * 0.62f - shift, top + zone * 0.7f, x0 = -100f, y0 = -250f)
+        front(pen, time)
+        pen.caption("FRONT VIEW", "DOOR CLOSED · CHAMBER LIVE")
+        pen.fit(480f, 1080f, width * 0.62f - shift, top + zone * 0.26f, r - shift, top + zone * 0.7f, x0 = -110f, y0 = -250f)
+        side(pen)
+        pen.caption("SIDE VIEW")
+        pen.fit(1200f, 760f, l + shift, top + zone * 0.7f, r + shift, bottom, x0 = -150f, y0 = -60f)
+        curve(pen, time)
+        pen.caption("POWER REQUIREMENT", "1.21 GW AT 88 MPH")
     }
 
     // ——— Le boîtier, de face : 600 × 760, le Y centré sur (300, 400) ———
@@ -84,7 +58,7 @@ class FluxCapacitor(private val layout: Int = 0) : Subject {
         return max(0f, 1f - abs(p - 5.3f) * 0.9f)
     }
 
-    private fun front(pen: Pen, time: Float, notes: Boolean = false, callouts: Boolean = false) {
+    private fun front(pen: Pen, time: Float) {
         // Les trois câbles d'alimentation, qui descendent dans le boîtier.
         for (x in floatArrayOf(150f, 300f, 450f)) {
             val bend = (x - 300f) * 0.25f
@@ -162,24 +136,8 @@ class FluxCapacitor(private val layout: Int = 0) : Subject {
         pen.axis(300f, 70f, 300f, 720f)
 
         pen.dim(600f, 0f, 600f, 760f, -80f, "760")
-        if (notes) {
-            pen.note(cx + 30f, cy - 30f, 520f, -150f, "1.21 GIGAWATTS")
-            pen.note(140f, 190f, -60f, -80f, "FLUX|DISPERSAL")
-            pen.note(424f, 730f, 40f, 800f, "SHIELD EYES FROM LIGHT")
-        }
-        if (callouts) {
-            pen.callout(20f, 50f, -60f, -40f, 1)
-            pen.callout(560f, 400f, 680f, 300f, 2)
-            pen.callout(80f, 300f, -60f, 300f, 3)
-            pen.callout(150f, 210f, -60f, 140f, 4)
-            pen.callout(300f, 400f, 680f, 520f, 5)
-            pen.callout(300f, 520f, -60f, 560f, 6)
-            pen.callout(450f, -120f, 680f, -140f, 7)
-            pen.callout(424f, 715f, 680f, 760f, 8)
-            pen.circle(140f, 185f, 70f, Weight.HAIR)
-            pen.line(95f, 130f, 60f, 90f, Weight.HAIR)
-            pen.text(50f, 80f, "A", 7f, Paint.Align.CENTER, bold = true)
-        }
+        pen.note(140f, 190f, -60f, -80f, "FLUX|DISPERSAL")
+        pen.note(424f, 730f, 40f, 800f, "SHIELD EYES FROM LIGHT")
     }
 
     /** Un rectangle aux coins coupés. */
@@ -210,83 +168,6 @@ class FluxCapacitor(private val layout: Int = 0) : Subject {
         }
         pen.axis(-40f, 400f, 320f, 400f)
         pen.dim(0f, 760f, 260f, 760f, -60f, "260")
-    }
-
-    // ——— De dessus : les presse-étoupes des câbles ———
-
-    private fun plan(pen: Pen) {
-        val box = floatArrayOf(0f, 0f, 600f, 0f, 600f, 260f, 0f, 260f)
-        pen.shade(box, 14)
-        pen.rect(0f, 0f, 600f, 260f, Weight.THICK)
-        pen.rect(22f, 236f, 578f, 260f, Weight.THIN)
-        for (x in floatArrayOf(150f, 300f, 450f)) {
-            pen.circle(x, 130f, 30f, Weight.MAIN)
-            pen.circle(x, 130f, 16f, Weight.THIN)
-            pen.axis(x, 70f, x, 190f)
-        }
-        pen.axis(-40f, 130f, 640f, 130f)
-        pen.dim(0f, 0f, 600f, 0f, 50f, "600")
-    }
-
-    // ——— Détail A : une électrode, agrandie ———
-
-    private fun electrode(pen: Pen, time: Float) {
-        // Verticale, le centre du Y vers le bas.
-        val body = floatArrayOf(-80f, 0f, 80f, 0f, 80f, 200f, -80f, 200f)
-        pen.shade(body, 24)
-        pen.rect(-80f, 0f, 80f, 200f, Weight.THICK)
-        for (y in floatArrayOf(50f, 100f, 150f)) {
-            pen.line(-80f, y, 80f, y, Weight.THIN)
-            pen.rect(-90f, y - 8f, 90f, y + 8f, Weight.HAIR)
-        }
-        pen.rect(-40f, -40f, 40f, 0f, Weight.MAIN)
-        pen.line(0f, -40f, 0f, -80f, Weight.THIN)
-        pen.hatch(-80f, 0f, -50f, 200f)
-        pen.hatch(50f, 0f, 80f, 200f)
-        pen.line(-30f, 200f, -30f, 560f, Weight.THIN)
-        pen.line(30f, 200f, 30f, 560f, Weight.THIN)
-        for (i in 0 until 3) {
-            val y = 260f + i * 110f
-            pen.line(-50f, y, 50f, y, Weight.MAIN)
-            pen.line(-50f, y + 20f, 50f, y + 20f, Weight.MAIN)
-            pen.glowDot(0f, y + 10f, 18f, chase(time, i + 1))
-        }
-        pen.axis(0f, -80f, 0f, 600f)
-        pen.dim(-80f, 0f, 80f, 0f, 40f, "Ø 160")
-        pen.note(50f, 280f, 170f, 180f, "SPARK|GAP")
-        pen.note(-80f, 100f, -190f, 20f, "COIL", left = false)
-    }
-
-    // ——— La nomenclature ———
-
-    private fun parts(pen: Pen) {
-        val rows = listOf(
-            "1" to "CASING, STEEL" to "1",
-            "2" to "DOOR, HINGED" to "1",
-            "3" to "VIEWING WINDOW" to "1",
-            "4" to "ELECTRODE, FLUX" to "3",
-            "5" to "FLUX CORE" to "1",
-            "6" to "DISPERSAL TUBE" to "3",
-            "7" to "FEED CABLE" to "3",
-            "8" to "WARNING LABEL" to "1",
-        )
-        val h = 88f
-        pen.rect(0f, 0f, 980f, h * (rows.size + 1), Weight.MAIN)
-        pen.line(120f, 0f, 120f, h * (rows.size + 1), Weight.THIN)
-        pen.line(840f, 0f, 840f, h * (rows.size + 1), Weight.THIN)
-        pen.line(0f, h, 980f, h, Weight.MAIN)
-        pen.text(60f, h * 0.65f, "No", 6f, Paint.Align.CENTER, bold = true)
-        pen.text(150f, h * 0.65f, "DESIGNATION", 6f, bold = true)
-        pen.text(910f, h * 0.65f, "QTY", 6f, Paint.Align.CENTER, bold = true)
-        for ((i, row) in rows.withIndex()) {
-            val y = h * (i + 1)
-            if (i > 0) pen.line(0f, y, 980f, y, Weight.HAIR)
-            val (a, qty) = row
-            val (no, name) = a
-            pen.text(60f, y + h * 0.65f, no, 6f, Paint.Align.CENTER)
-            pen.text(150f, y + h * 0.65f, name, 6f)
-            pen.text(910f, y + h * 0.65f, qty, 6f, Paint.Align.CENTER)
-        }
     }
 
     // ——— La DeLorean, de profil, et la place du convecteur ———
@@ -356,7 +237,7 @@ class FluxCapacitor(private val layout: Int = 0) : Subject {
         }
         for (i in 0..3) {
             val y = h - h * i / 3f
-            pen.text(-16f, y + 8f, "%.1f".format(i * 0.5f), 5f, Paint.Align.RIGHT, alpha = 170)
+            pen.text(-16f, y + 8f, listOf("0.0", "0.5", "1.0", "1.5")[i], 5f, Paint.Align.RIGHT, alpha = 170)
             if (i > 0) pen.line(0f, y, w, y, Weight.HAIR)
         }
         pen.text(w, h + 90f, "MPH", 5.5f, Paint.Align.RIGHT, bold = true)

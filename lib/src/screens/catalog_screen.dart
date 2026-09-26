@@ -603,7 +603,7 @@ class _TextLink extends StatelessWidget {
 }
 
 /// Les identifiants des fonds marqués « Nouveau ».
-const _newWallpapers = {'tron'};
+const _newWallpapers = {'tron', 'flux'};
 
 /// Un fond d'écran en portrait : son aperçu recadré et son nom.
 class _WallpaperTile extends StatelessWidget {

@@ -13,6 +13,8 @@ mineure peut changer des réglages.
   analogique, Éphéméride, Chronomètre et minuteur.
 - **Tron**, fond d'écran en plan technique de la moto de lumière, qui se
   trace à l'allumage, aux couleurs du téléphone.
+- **Retour vers le futur**, fond d'écran en plan technique du convecteur
+  temporel, dans la DeLorean, avec sa courbe de puissance jusqu'à 88 mph.
 - **Galerie** : un nouvel accueil en trois onglets. Galerie (le fond du
   moment en grand, les fonds animés en carrousel, les widgets en mosaïque,
   filtrables par famille et par recherche), Fonds (les six fonds en grand et

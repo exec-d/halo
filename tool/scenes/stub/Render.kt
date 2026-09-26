@@ -20,9 +20,7 @@ private val palettes = mapOf(
 
 private val scenes = mapOf<String, () -> LiveScene>(
     "tron" to { BlueprintScene(LightCycle()) },
-    "flux_a" to { BlueprintScene(FluxCapacitor(0)) },
-    "flux_b" to { BlueprintScene(FluxCapacitor(1)) },
-    "flux_c" to { BlueprintScene(FluxCapacitor(2)) },
+    "flux" to { BlueprintScene(FluxCapacitor()) },
 )
 
 /**

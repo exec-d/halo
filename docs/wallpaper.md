@@ -2,8 +2,8 @@
 
 *[English](en/wallpaper.md)*
 
-Halo propose deux fonds d'écran animés (Circuit et le plan technique de la
-moto de Tron), un écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
+Halo propose trois fonds d'écran animés (Circuit, et les plans techniques de
+la moto de Tron et du convecteur temporel), un écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
 L'intensité (Discret, Normal, Vif) est commune à tous les fonds.
 
 ## Circuit
@@ -70,9 +70,9 @@ widgets et les icônes lisibles par-dessus.
 
 ## Les plans techniques
 
-Le fond Tron dessine, en plan technique, un objet de film culte : papier
+Les fonds Tron et Retour vers le futur dessinent, en plan technique, un objet de film culte : papier
 quadrillé, cadre repéré, vues cotées, repères numérotés et cartouche
-(échelle, planche, date du jour). Comme Circuit et les widgets, il prend
+(échelle, planche, date du jour). Comme Circuit et les widgets, ils prennent
 les couleurs du téléphone. D'autres objets suivront, un à un.
 
 - **Le tracé** : à chaque allumage de l'écran, le plan se dessine trait par
@@ -84,6 +84,7 @@ les couleurs du téléphone. D'autres objets suivront, un à un.
 | Planche | Film | Objet | Ce qui bouge | Code |
 | --- | --- | --- | --- | --- |
 | 01 | Tron : l'héritage | Moto de lumière | Roues, liseré, ruban de lumière | `LightCycle.kt` |
+| 02 | Retour vers le futur | Convecteur temporel | Impulsions du Y, cœur, courbe de puissance | `FluxCapacitor.kt` |
 
 Le cadre commun est dans `wallpaper/blueprint/Blueprint.kt` ; chaque objet
 dans son fichier, à côté. Pour voir un plan sans téléphone,

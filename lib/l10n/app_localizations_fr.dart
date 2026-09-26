@@ -661,6 +661,17 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les roues sans moyeu tournent, le liseré pulse et un ruban de lumière se dépose derrière la moto.';
 
   @override
+  String get wallpaperFluxTitle => 'Retour vers le futur';
+
+  @override
+  String get wallpaperFluxDescription =>
+      'Le convecteur temporel de la DeLorean, en plan technique.';
+
+  @override
+  String get wallpaperFluxMotion =>
+      'Les impulsions courent le long des trois bras jusqu\'au cœur, qui s\'illumine ; sur la courbe, le point de fonctionnement grimpe jusqu\'à 88 mph et 1,21 gigawatt.';
+
+  @override
   String get widgetClockTitle => 'Horloge';
 
   @override

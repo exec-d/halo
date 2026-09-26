@@ -2,6 +2,7 @@ package dev.levilainpetit.wux.wallpaper
 
 import android.app.WallpaperManager
 import dev.levilainpetit.wux.wallpaper.blueprint.BlueprintScene
+import dev.levilainpetit.wux.wallpaper.blueprint.FluxCapacitor
 import dev.levilainpetit.wux.wallpaper.blueprint.LightCycle
 import android.content.ComponentName
 import android.content.Context
@@ -87,6 +88,7 @@ object WallpaperPreview {
     /** Les identifiants sont partagés avec Dart (`wallpaper_screen.dart`). */
     private val SCENES = linkedMapOf(
         "tron" to Scene(TronWallpaperService::class.java) { BlueprintScene(LightCycle()) },
+        "flux" to Scene(FluxWallpaperService::class.java) { BlueprintScene(FluxCapacitor()) },
     )
     private val KINDS = listOf(CIRCUIT) + SCENES.keys
 }
