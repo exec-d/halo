@@ -213,6 +213,8 @@
   "widgetAnalogClockDescription": "A neon dial with glowing hands, and the date.",
   "widgetEphemerisTitle": "Ephemeris",
   "widgetEphemerisDescription": "The day's name day, the week, the year in twelve months and the next public holiday.",
+  "widgetProgressTitle": "Progress",
+  "widgetProgressDescription": "How much of the day, week, month and year has gone by, in four bars.",
   "widgetTimerTitle": "Stopwatch and timer",
   "widgetTimerDescription": "A stopwatch, and a 1, 5, 10 or 25-minute timer in one tap, which rings at the end.",
   "widgetMediaTitle": "Now playing",

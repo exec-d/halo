@@ -266,6 +266,16 @@
     <string name="ephemeris_holiday">%1$s dans %2$d j</string>
     <string name="ephemeris_holiday_today">%1$s aujourd\'hui</string>
     <string name="ephemeris_holiday_tomorrow">%1$s demain</string>
+    <string name="widget_progress_label">Progression</string>
+    <string name="widget_progress_description">La part écoulée du jour, de la semaine, du mois et de l\'année.</string>
+    <string name="progress_title">Progression</string>
+    <string name="progress_now_pattern">EEE d MMM</string>
+    <string name="progress_day">Jour</string>
+    <string name="progress_week">Semaine</string>
+    <string name="progress_month">Mois</string>
+    <string name="progress_year">Année</string>
+    <string name="progress_percent">%1$d %%</string>
+    <string name="progress_footer">%1$d · jour %2$d sur %3$d · %4$d jours restants</string>
     <!-- Jours fériés en France, dans l'ordre de EphemerisWidget.holidays. -->
     <string-array name="holidays">
         <item>Jour de l\'An</item>

@@ -756,6 +756,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'La fête du jour, la semaine, l\'année en douze mois et le prochain jour férié.';
 
   @override
+  String get widgetProgressTitle => 'Progression';
+
+  @override
+  String get widgetProgressDescription =>
+      'La part écoulée du jour, de la semaine, du mois et de l\'année, en quatre barres.';
+
+  @override
   String get widgetTimerTitle => 'Chronomètre et minuteur';
 
   @override

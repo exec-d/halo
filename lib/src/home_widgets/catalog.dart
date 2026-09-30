@@ -175,6 +175,18 @@ String _ephemerisTitle(AppLocalizations l) => l.widgetEphemerisTitle;
 String _ephemerisDescription(AppLocalizations l) =>
     l.widgetEphemerisDescription;
 
+const progressWidget = WuxHomeWidget(
+  id: 'progress',
+  kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.time,
+  title: _progressTitle,
+  description: _progressDescription,
+  androidProvider: '$_androidPackage.ProgressWidget',
+  previewSize: Size(340, 150),
+);
+String _progressTitle(AppLocalizations l) => l.widgetProgressTitle;
+String _progressDescription(AppLocalizations l) => l.widgetProgressDescription;
+
 const timerWidget = WuxHomeWidget(
   id: 'timer',
   kind: WuxWidgetKind.timer,
@@ -315,6 +327,7 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   countdownWidget,
   timerWidget,
   ephemerisWidget,
+  progressWidget,
   controlsWidget,
   monthWidget,
   weatherWidget,

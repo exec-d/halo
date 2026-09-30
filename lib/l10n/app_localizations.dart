@@ -1381,6 +1381,18 @@ abstract class AppLocalizations {
   /// **'La fête du jour, la semaine, l\'année en douze mois et le prochain jour férié.'**
   String get widgetEphemerisDescription;
 
+  /// No description provided for @widgetProgressTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Progression'**
+  String get widgetProgressTitle;
+
+  /// No description provided for @widgetProgressDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'La part écoulée du jour, de la semaine, du mois et de l\'année, en quatre barres.'**
+  String get widgetProgressDescription;
+
   /// Nom du widget, dans le catalogue et en titre de son écran.
   ///
   /// In fr, this message translates to:

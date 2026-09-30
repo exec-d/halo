@@ -476,6 +476,8 @@
   "@widgetEphemerisDescription": {
     "description": "Description du widget."
   },
+  "widgetProgressTitle": "Progression",
+  "widgetProgressDescription": "La part écoulée du jour, de la semaine, du mois et de l'année, en quatre barres.",
   "widgetTimerTitle": "Chronomètre et minuteur",
   "@widgetTimerTitle": {
     "description": "Nom du widget, dans le catalogue et en titre de son écran."

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu du lanceur, données d'exemple : widget_progress -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_progress_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="@dimen/widget_padding_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/HaloLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/progress_title" />
+        <TextView
+            android:id="@+id/preview_progress_now"
+            style="@style/HaloLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mer. 30 sept." />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/preview_progress_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/HaloLabel"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:text="@string/progress_day" />
+        <ProgressBar
+            android:id="@+id/preview_progress_day_bar"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:max="1000"
+            android:maxHeight="6dp"
+            android:minHeight="6dp"
+            android:progress="318"
+            android:progressBackgroundTint="@color/clock_line"
+            android:progressTint="@color/clock_line" />
+        <TextView
+            android:id="@+id/preview_progress_day_value"
+            style="@style/HaloConsole"
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="31 %" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/preview_progress_week"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/HaloLabel"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:text="@string/progress_week" />
+        <ProgressBar
+            android:id="@+id/preview_progress_week_bar"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:max="1000"
+            android:maxHeight="6dp"
+            android:minHeight="6dp"
+            android:progress="331"
+            android:progressBackgroundTint="@color/clock_line"
+            android:progressTint="@color/clock_line" />
+        <TextView
+            android:id="@+id/preview_progress_week_value"
+            style="@style/HaloConsole"
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="33 %" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/preview_progress_month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/HaloLabel"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:text="@string/progress_month" />
+        <ProgressBar
+            android:id="@+id/preview_progress_month_bar"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:max="1000"
+            android:maxHeight="6dp"
+            android:minHeight="6dp"
+            android:progress="977"
+            android:progressBackgroundTint="@color/clock_line"
+            android:progressTint="@color/clock_line" />
+        <TextView
+            android:id="@+id/preview_progress_month_value"
+            style="@style/HaloConsole"
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="97 %" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/preview_progress_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/HaloLabel"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:text="@string/progress_year" />
+        <ProgressBar
+            android:id="@+id/preview_progress_year_bar"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:max="1000"
+            android:maxHeight="6dp"
+            android:minHeight="6dp"
+            android:progress="746"
+            android:progressBackgroundTint="@color/clock_line"
+            android:progressTint="@color/clock_line" />
+        <TextView
+            android:id="@+id/preview_progress_year_value"
+            style="@style/HaloConsole"
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="74 %" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/preview_progress_footer"
+        style="@style/HaloDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="2026 · jour 273 sur 365 · 93 jours restants" />
+</LinearLayout>

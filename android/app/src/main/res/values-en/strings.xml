@@ -262,6 +262,16 @@
     <string name="ephemeris_holiday">%1$s in %2$d d</string>
     <string name="ephemeris_holiday_today">%1$s today</string>
     <string name="ephemeris_holiday_tomorrow">%1$s tomorrow</string>
+    <string name="widget_progress_label">Progress</string>
+    <string name="widget_progress_description">How much of the day, week, month and year has gone by.</string>
+    <string name="progress_title">Progress</string>
+    <string name="progress_now_pattern">EEE d MMM</string>
+    <string name="progress_day">Day</string>
+    <string name="progress_week">Week</string>
+    <string name="progress_month">Month</string>
+    <string name="progress_year">Year</string>
+    <string name="progress_percent">%1$d%%</string>
+    <string name="progress_footer">%1$d · day %2$d of %3$d · %4$d days left</string>
     <!-- Public holidays in France, in the order of EphemerisWidget.holidays. -->
     <string-array name="holidays">
         <item>New Year\'s Day</item>

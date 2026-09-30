@@ -752,6 +752,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'The day\'s name day, the week, the year in twelve months and the next public holiday.';
 
   @override
+  String get widgetProgressTitle => 'Progress';
+
+  @override
+  String get widgetProgressDescription =>
+      'How much of the day, week, month and year has gone by, in four bars.';
+
+  @override
   String get widgetTimerTitle => 'Stopwatch and timer';
 
   @override
