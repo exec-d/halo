@@ -773,6 +773,47 @@ class AppLocalizationsEn extends AppLocalizations {
       'The current Wi-Fi or mobile network, signal strength, ping and local address. The speed test (about ten seconds, a few dozen MB) only runs when you tap “Test”.';
 
   @override
+  String get widgetContactsTitle => 'Favourite contacts';
+
+  @override
+  String get widgetContactsDescription =>
+      'Up to six contacts as neon badges; one tap to call or text.';
+
+  @override
+  String get contactsTitle => 'Contacts';
+
+  @override
+  String get contactsDescription =>
+      'Pick them with Android\'s contact picker: Halo only sees the contact you tap, not your address book.';
+
+  @override
+  String get contactsAdd => 'Add a contact';
+
+  @override
+  String get contactsFull => 'Six contacts: remove one to add another.';
+
+  @override
+  String get contactsActionTitle => 'On tap';
+
+  @override
+  String get contactsSms => 'Send a text';
+
+  @override
+  String get contactsSmsHelp => 'Otherwise, a tap calls the contact.';
+
+  @override
+  String get contactsCallHelp =>
+      'Without permission, a tap opens the dialer with the number: you still press “Call”.';
+
+  @override
+  String get contactsCallButton => 'Call directly';
+
+  @override
+  String contactsRemove(String name) {
+    return 'Remove $name';
+  }
+
+  @override
   String get widgetTimerTitle => 'Stopwatch and timer';
 
   @override

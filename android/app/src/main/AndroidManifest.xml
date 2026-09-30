@@ -32,6 +32,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Réseau : Android ne donne le nom du Wi-Fi qu'avec la position précise. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Contacts favoris : appeler d'un toucher (sinon, le clavier s'ouvre). -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- Système avancé : Wi-Fi activé ou non, bande et débit. -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- Système avancé : Bluetooth activé ou non (sans autorisation dès Android 12). -->
@@ -386,6 +388,17 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_network_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.ContactsWidget"
+            android:exported="false"
+            android:label="@string/widget_contacts_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_contacts_info" />
         </receiver>
         <receiver
             android:name=".widgets.ProgressWidget"

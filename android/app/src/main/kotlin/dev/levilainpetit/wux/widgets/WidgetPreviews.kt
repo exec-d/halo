@@ -58,6 +58,7 @@ object WidgetPreviews {
         "ephemeris" -> EphemerisWidget()
         "progress" -> ProgressWidget()
         "network" -> NetworkWidget()
+        "contacts" -> ContactsWidget()
         "timer" -> TimerWidget()
         "media" -> MediaWidget()
         else -> null

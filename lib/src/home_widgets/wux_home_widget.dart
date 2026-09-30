@@ -37,6 +37,9 @@ enum WuxWidgetKind {
 
   /// Réseau : la position précise, sans laquelle Android cache le nom du Wi-Fi.
   network,
+
+  /// Contacts favoris : les contacts choisis, appeler ou écrire.
+  contacts,
 }
 
 /// Famille d'un widget, pour les filtres de la galerie.

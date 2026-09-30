@@ -105,6 +105,16 @@ abstract interface class WuxPlatform {
   /// Affiche la demande ; renvoie la réponse.
   Future<void> requestNotificationPermission();
 
+  /// Ouvre le sélecteur de contacts d'Android ; le contact touché (`name`,
+  /// `number`, `photo`), ou `null`.
+  Future<Map<String, dynamic>?> pickContact();
+
+  /// Vrai si Halo peut appeler directement (sans passer par le clavier).
+  Future<bool> hasCallPermission();
+
+  /// Affiche la demande d'appel direct ; renvoie la réponse.
+  Future<bool> requestCallPermission();
+
   /// Vrai si Halo peut lire le nom du Wi-Fi (position précise accordée).
   Future<bool> hasWifiNamePermission();
 
@@ -247,6 +257,22 @@ class AndroidWuxPlatform implements WuxPlatform {
   @override
   Future<void> openUsageAccess() =>
       _channel.invokeMethod<void>('openUsageAccess');
+
+  @override
+  Future<Map<String, dynamic>?> pickContact() async {
+    final contact = await _channel.invokeMethod<Map<Object?, Object?>>(
+      'pickContact',
+    );
+    return contact?.map((key, value) => MapEntry('$key', value));
+  }
+
+  @override
+  Future<bool> hasCallPermission() async =>
+      await _channel.invokeMethod<bool>('hasCallPermission') ?? false;
+
+  @override
+  Future<bool> requestCallPermission() async =>
+      await _channel.invokeMethod<bool>('requestCallPermission') ?? false;
 
   @override
   Future<bool> hasWifiNamePermission() async =>

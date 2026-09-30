@@ -11,6 +11,7 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.PowerManager
 import android.net.Uri
+import android.provider.ContactsContract
 import android.provider.Settings
 import dev.levilainpetit.wux.calendar.CalendarRepository
 import dev.levilainpetit.wux.media.MediaListener
@@ -24,6 +25,7 @@ import dev.levilainpetit.wux.weather.Place
 import dev.levilainpetit.wux.weather.Weather
 import dev.levilainpetit.wux.weather.WeatherRefresh
 import dev.levilainpetit.wux.widgets.AgendaRefresh
+import dev.levilainpetit.wux.widgets.FavoriteContacts
 import dev.levilainpetit.wux.widgets.WidgetPreviews
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -49,6 +51,7 @@ open class MainActivity : FlutterActivity() {
     private var pendingLocation: MethodChannel.Result? = null
     private var pendingLocationPermission: MethodChannel.Result? = null
     private var pendingSimplePermission: MethodChannel.Result? = null
+    private var pendingContact: MethodChannel.Result? = null
     private var channel: MethodChannel? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -204,6 +207,26 @@ open class MainActivity : FlutterActivity() {
                     startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
                 }
                 result.success(null)
+            }
+            "pickContact" -> {
+                pendingContact?.success(null)
+                pendingContact = result
+                try {
+                    startActivityForResult(Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI), CONTACT_REQUEST)
+                } catch (e: ActivityNotFoundException) {
+                    pendingContact = null
+                    result.success(null)
+                }
+            }
+            "hasCallPermission" -> result.success(checkSelfPermission(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
+            "requestCallPermission" -> {
+                if (checkSelfPermission(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    result.success(true)
+                } else {
+                    pendingSimplePermission?.success(false)
+                    pendingSimplePermission = result
+                    requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), SIMPLE_REQUEST)
+                }
             }
             "hasWifiNamePermission" -> result.success(NetworkStatus.canReadName(this))
             "requestWifiNamePermission" -> {
@@ -372,6 +395,23 @@ open class MainActivity : FlutterActivity() {
         requestPermissions(arrayOf(Manifest.permission.READ_CALENDAR), CALENDAR_REQUEST)
     }
 
+    /** Le sélecteur de contacts rend son résultat ici. */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != CONTACT_REQUEST) return
+        val pending = pendingContact ?: return
+        pendingContact = null
+        val uri = data?.data
+        if (resultCode != RESULT_OK || uri == null) {
+            pending.success(null)
+            return
+        }
+        scope.launch {
+            val contact = withContext(Dispatchers.IO) { runCatching { FavoriteContacts.read(applicationContext, uri) }.getOrNull() }
+            pending.success(contact)
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -414,5 +454,6 @@ open class MainActivity : FlutterActivity() {
         const val LOCATION_ONLY_REQUEST = 4203
         /** Autorisation simple (Bluetooth, notifications) : une réponse oui ou non. */
         const val SIMPLE_REQUEST = 4204
+        const val CONTACT_REQUEST = 4205
     }
 }

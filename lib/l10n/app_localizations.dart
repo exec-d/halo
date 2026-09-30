@@ -1417,6 +1417,78 @@ abstract class AppLocalizations {
   /// **'Le Wi-Fi ou le réseau mobile en cours, la force du signal, le ping et l\'adresse locale. Le test de débit (une dizaine de secondes, quelques dizaines de Mo) ne part qu\'au toucher de « Tester ».'**
   String get widgetNetworkDescription;
 
+  /// No description provided for @widgetContactsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contacts favoris'**
+  String get widgetContactsTitle;
+
+  /// No description provided for @widgetContactsDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jusqu\'à six contacts en pastilles néon ; un toucher pour appeler ou écrire.'**
+  String get widgetContactsDescription;
+
+  /// No description provided for @contactsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contacts'**
+  String get contactsTitle;
+
+  /// No description provided for @contactsDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisissez-les avec le sélecteur d\'Android : Halo ne voit que le contact touché, pas votre carnet d\'adresses.'**
+  String get contactsDescription;
+
+  /// No description provided for @contactsAdd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un contact'**
+  String get contactsAdd;
+
+  /// No description provided for @contactsFull.
+  ///
+  /// In fr, this message translates to:
+  /// **'Six contacts : retirez-en un pour en ajouter un autre.'**
+  String get contactsFull;
+
+  /// No description provided for @contactsActionTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au toucher'**
+  String get contactsActionTitle;
+
+  /// No description provided for @contactsSms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire un SMS'**
+  String get contactsSms;
+
+  /// No description provided for @contactsSmsHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sinon, un toucher appelle le contact.'**
+  String get contactsSmsHelp;
+
+  /// No description provided for @contactsCallHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans autorisation, un toucher ouvre le clavier avec le numéro : il reste à appuyer sur « Appeler ».'**
+  String get contactsCallHelp;
+
+  /// No description provided for @contactsCallButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appeler directement'**
+  String get contactsCallButton;
+
+  /// No description provided for @contactsRemove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer {name}'**
+  String contactsRemove(String name);
+
   /// Nom du widget, dans le catalogue et en titre de son écran.
   ///
   /// In fr, this message translates to:

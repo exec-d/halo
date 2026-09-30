@@ -4,6 +4,7 @@ import '../home_widgets/wux_home_widget.dart';
 import '../platform/wux_platform.dart';
 import 'access_screen.dart';
 import 'agenda_screen.dart';
+import 'contacts_screen.dart';
 import 'countdown_screen.dart';
 import 'simple_screen.dart';
 import 'weather_screen.dart';
@@ -45,6 +46,11 @@ class WidgetScreen extends StatelessWidget {
         allowPin: !configuring,
       ),
       WuxWidgetKind.countdown => CountdownScreen(
+        homeWidget: homeWidget,
+        platform: platform,
+        allowPin: !configuring,
+      ),
+      WuxWidgetKind.contacts => ContactsScreen(
         homeWidget: homeWidget,
         platform: platform,
         allowPin: !configuring,

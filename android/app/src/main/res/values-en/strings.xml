@@ -319,6 +319,11 @@
     <string name="progress_year">Year</string>
     <string name="progress_percent">%1$d%%</string>
     <string name="progress_footer">%1$d · day %2$d of %3$d · %4$d days left</string>
+    <string name="widget_contacts_label">Favourite contacts</string>
+    <string name="widget_contacts_description">Your favourite contacts, one tap to call them.</string>
+    <string name="contacts_title">Favourites · call</string>
+    <string name="contacts_title_sms">Favourites · text</string>
+    <string name="contacts_empty">Choose your contacts in Halo.</string>
     <string name="widget_network_label">Network</string>
     <string name="widget_network_description">Wi-Fi or mobile network, signal, ping and a speed test on tap.</string>
     <string name="net_wifi">Wi-Fi</string>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu du lanceur, données d'exemple : widget_contacts -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_contacts_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="@dimen/widget_padding_vertical">
+
+    <TextView
+        style="@style/HaloLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contacts_title" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <TextView
+                style="@style/HaloValue"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/widget_button_outline"
+                android:gravity="center"
+                android:text="M" />
+            <TextView
+                style="@style/HaloDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Maman"
+                android:textColor="@color/clock_core" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <TextView
+                style="@style/HaloValue"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/widget_button_outline"
+                android:gravity="center"
+                android:text="L" />
+            <TextView
+                style="@style/HaloDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Léa"
+                android:textColor="@color/clock_core" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <TextView
+                style="@style/HaloValue"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/widget_button_outline"
+                android:gravity="center"
+                android:text="T" />
+            <TextView
+                style="@style/HaloDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Tom"
+                android:textColor="@color/clock_core" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <TextView
+                style="@style/HaloValue"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/widget_button_outline"
+                android:gravity="center"
+                android:text="P" />
+            <TextView
+                style="@style/HaloDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Paul"
+                android:textColor="@color/clock_core" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <TextView
+                style="@style/HaloValue"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/widget_button_outline"
+                android:gravity="center"
+                android:text="B" />
+            <TextView
+                style="@style/HaloDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Bureau"
+                android:textColor="@color/clock_core" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

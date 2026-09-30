@@ -175,6 +175,18 @@ String _ephemerisTitle(AppLocalizations l) => l.widgetEphemerisTitle;
 String _ephemerisDescription(AppLocalizations l) =>
     l.widgetEphemerisDescription;
 
+const contactsWidget = WuxHomeWidget(
+  id: 'contacts',
+  kind: WuxWidgetKind.contacts,
+  category: WuxWidgetCategory.media,
+  title: _contactsTitle,
+  description: _contactsDescription,
+  androidProvider: '$_androidPackage.ContactsWidget',
+  previewSize: Size(340, 110),
+);
+String _contactsTitle(AppLocalizations l) => l.widgetContactsTitle;
+String _contactsDescription(AppLocalizations l) => l.widgetContactsDescription;
+
 const networkWidget = WuxHomeWidget(
   id: 'network',
   kind: WuxWidgetKind.network,
@@ -360,6 +372,7 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   mobileDataWidget,
   networkWidget,
   mediaWidget,
+  contactsWidget,
   worldClockWidget,
   countdownWidget,
   timerWidget,

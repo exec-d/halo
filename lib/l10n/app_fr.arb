@@ -482,6 +482,25 @@
   "widgetProgressDescription": "La part écoulée du jour, de la semaine, du mois et de l'année, en quatre barres.",
   "widgetNetworkTitle": "Réseau",
   "widgetNetworkDescription": "Le Wi-Fi ou le réseau mobile en cours, la force du signal, le ping et l'adresse locale. Le test de débit (une dizaine de secondes, quelques dizaines de Mo) ne part qu'au toucher de « Tester ».",
+  "widgetContactsTitle": "Contacts favoris",
+  "widgetContactsDescription": "Jusqu'à six contacts en pastilles néon ; un toucher pour appeler ou écrire.",
+  "contactsTitle": "Contacts",
+  "contactsDescription": "Choisissez-les avec le sélecteur d'Android : Halo ne voit que le contact touché, pas votre carnet d'adresses.",
+  "contactsAdd": "Ajouter un contact",
+  "contactsFull": "Six contacts : retirez-en un pour en ajouter un autre.",
+  "contactsActionTitle": "Au toucher",
+  "contactsSms": "Écrire un SMS",
+  "contactsSmsHelp": "Sinon, un toucher appelle le contact.",
+  "contactsCallHelp": "Sans autorisation, un toucher ouvre le clavier avec le numéro : il reste à appuyer sur « Appeler ».",
+  "contactsCallButton": "Appeler directement",
+  "contactsRemove": "Retirer {name}",
+  "@contactsRemove": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "widgetTimerTitle": "Chronomètre et minuteur",
   "@widgetTimerTitle": {
     "description": "Nom du widget, dans le catalogue et en titre de son écran."

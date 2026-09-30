@@ -219,6 +219,25 @@
   "widgetProgressDescription": "How much of the day, week, month and year has gone by, in four bars.",
   "widgetNetworkTitle": "Network",
   "widgetNetworkDescription": "The current Wi-Fi or mobile network, signal strength, ping and local address. The speed test (about ten seconds, a few dozen MB) only runs when you tap “Test”.",
+  "widgetContactsTitle": "Favourite contacts",
+  "widgetContactsDescription": "Up to six contacts as neon badges; one tap to call or text.",
+  "contactsTitle": "Contacts",
+  "contactsDescription": "Pick them with Android's contact picker: Halo only sees the contact you tap, not your address book.",
+  "contactsAdd": "Add a contact",
+  "contactsFull": "Six contacts: remove one to add another.",
+  "contactsActionTitle": "On tap",
+  "contactsSms": "Send a text",
+  "contactsSmsHelp": "Otherwise, a tap calls the contact.",
+  "contactsCallHelp": "Without permission, a tap opens the dialer with the number: you still press “Call”.",
+  "contactsCallButton": "Call directly",
+  "contactsRemove": "Remove {name}",
+  "@contactsRemove": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "widgetTimerTitle": "Stopwatch and timer",
   "widgetTimerDescription": "A stopwatch, and a 1, 5, 10 or 25-minute timer in one tap, which rings at the end.",
   "widgetMediaTitle": "Now playing",

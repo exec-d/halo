@@ -777,6 +777,48 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le Wi-Fi ou le réseau mobile en cours, la force du signal, le ping et l\'adresse locale. Le test de débit (une dizaine de secondes, quelques dizaines de Mo) ne part qu\'au toucher de « Tester ».';
 
   @override
+  String get widgetContactsTitle => 'Contacts favoris';
+
+  @override
+  String get widgetContactsDescription =>
+      'Jusqu\'à six contacts en pastilles néon ; un toucher pour appeler ou écrire.';
+
+  @override
+  String get contactsTitle => 'Contacts';
+
+  @override
+  String get contactsDescription =>
+      'Choisissez-les avec le sélecteur d\'Android : Halo ne voit que le contact touché, pas votre carnet d\'adresses.';
+
+  @override
+  String get contactsAdd => 'Ajouter un contact';
+
+  @override
+  String get contactsFull =>
+      'Six contacts : retirez-en un pour en ajouter un autre.';
+
+  @override
+  String get contactsActionTitle => 'Au toucher';
+
+  @override
+  String get contactsSms => 'Écrire un SMS';
+
+  @override
+  String get contactsSmsHelp => 'Sinon, un toucher appelle le contact.';
+
+  @override
+  String get contactsCallHelp =>
+      'Sans autorisation, un toucher ouvre le clavier avec le numéro : il reste à appuyer sur « Appeler ».';
+
+  @override
+  String get contactsCallButton => 'Appeler directement';
+
+  @override
+  String contactsRemove(String name) {
+    return 'Retirer $name';
+  }
+
+  @override
   String get widgetTimerTitle => 'Chronomètre et minuteur';
 
   @override
