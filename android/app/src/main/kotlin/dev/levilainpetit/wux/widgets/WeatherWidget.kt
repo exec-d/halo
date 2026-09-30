@@ -151,7 +151,7 @@ class WeatherWidget : NeonWidget() {
          * Hauteur (dp, texte à 100 %) du bloc du haut, marges du widget et du
          * graphique comprises : suivre widget_weather.
          */
-        private const val TOP_BLOCK = 176f
+        private const val TOP_BLOCK = 168f
 
         fun degrees(value: Double) = "${value.roundToInt()}°"
 

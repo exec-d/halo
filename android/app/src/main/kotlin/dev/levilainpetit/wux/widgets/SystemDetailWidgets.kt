@@ -69,7 +69,7 @@ class BatteryWidget : NeonWidget() {
 
         // Assez haut : la courbe ; sinon, seulement les chiffres.
         val scale = fontScale(context)
-        val chartHeight = size.height - 20 - 92 * scale
+        val chartHeight = size.height - 12 - 92 * scale
         val showChart = chartHeight >= 36
         views.setViewVisibility(R.id.battery_chart, if (showChart) View.VISIBLE else View.GONE)
         if (showChart) {
@@ -311,7 +311,7 @@ class MobileDataWidget : NeonWidget() {
         views.setTextViewText(R.id.md_projection, "≈ ${SystemGraphics.formatBytes(data.projected)}")
         views.setTextViewText(R.id.md_average, SystemGraphics.formatBytes(if (data.days.isEmpty()) 0L else data.used / data.days.size))
 
-        val chartHeight = size.height - 20 - 72 * fontScale(context)
+        val chartHeight = size.height - 12 - 72 * fontScale(context)
         val showChart = chartHeight >= 32
         views.setViewVisibility(R.id.md_chart, if (showChart) View.VISIBLE else View.GONE)
         if (showChart) {
