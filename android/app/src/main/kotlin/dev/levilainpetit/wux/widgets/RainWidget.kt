@@ -55,11 +55,16 @@ class RainWidget : NeonWidget() {
                 R.id.rain_chart,
                 chart(forecast.rain.map { it.probability }, (size.width * density).roundToInt(), (48 * density).roundToInt(), density),
             )
-            val format = DateTimeFormatter.ofPattern(if (DateFormat.is24HourFormat(context)) "HH'h'" else "h a", Locale.getDefault())
+            // L'heure sous chaque barre, comme sur le graphique des températures ;
+            // une sur deux si le widget est trop étroit pour les écrire toutes.
+            val format = DateTimeFormatter.ofPattern(if (DateFormat.is24HourFormat(context)) "HH'h'" else "ha", Locale.getDefault())
             val hours = forecast.rain
-            views.setTextViewText(R.id.rain_axis_start, format.format(hours.first().time))
-            views.setTextViewText(R.id.rain_axis_middle, format.format(hours[hours.size / 2].time))
-            views.setTextViewText(R.id.rain_axis_end, format.format(hours.last().time))
+            val every = if (size.width / hours.size >= 24f) 1 else 2
+            HOURS.forEachIndexed { i, id ->
+                val hour = hours.getOrNull(i)
+                views.setViewVisibility(id, if (hour == null) View.GONE else View.VISIBLE)
+                views.setTextViewText(id, if (hour != null && i % every == 0) format.format(hour.time).lowercase(Locale.getDefault()) else "")
+            }
         }
         return views
     }
@@ -69,6 +74,13 @@ class RainWidget : NeonWidget() {
 
     override fun onRendered(context: Context) {
         WeatherRefresh.schedule(context)
+    }
+
+    private companion object {
+        val HOURS = intArrayOf(
+            R.id.rain_hour_0, R.id.rain_hour_1, R.id.rain_hour_2, R.id.rain_hour_3, R.id.rain_hour_4, R.id.rain_hour_5,
+            R.id.rain_hour_6, R.id.rain_hour_7, R.id.rain_hour_8, R.id.rain_hour_9, R.id.rain_hour_10, R.id.rain_hour_11,
+        )
     }
 
     /** Histogramme : une barre par heure, hauteur = probabilité, base visible. */
