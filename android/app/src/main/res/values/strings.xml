@@ -137,43 +137,26 @@
     <string name="sea_period">%1$d s</string>
     <string name="sea_distance">à %1$d km</string>
     <string name="sea_none">Pas de mer à moins de 55 km</string>
-    <string name="widget_sky_label">Ciel de ce soir</string>
-    <string name="widget_sky_description">La Lune et les planètes visibles ce soir, où les chercher et quand.</string>
-    <string name="sky_title">Ciel ce soir</string>
-    <string name="sky_title_late">Ciel cette nuit</string>
-    <string name="sky_sunset">Coucher %1$s</string>
-    <string name="sky_where">%1$s, %2$s</string>
-    <string name="sky_high">haute</string>
-    <string name="sky_low">basse</string>
-    <string name="sky_rises">Se lève %1$s</string>
-    <string name="sky_until">→ %1$s</string>
-    <string name="sky_all_night">toute la nuit</string>
-    <string name="sky_nothing">Ni Lune ni planète visible cette nuit.</string>
-    <string name="sky_moon">Lune</string>
-    <string name="sky_venus">Vénus</string>
-    <string name="sky_jupiter">Jupiter</string>
-    <string name="sky_mars">Mars</string>
-    <string name="sky_saturn">Saturne</string>
-    <string name="sky_mercury">Mercure</string>
-    <string-array name="sky_directions">
-        <item>Nord</item>
-        <item>Nord-est</item>
-        <item>Est</item>
-        <item>Sud-est</item>
-        <item>Sud</item>
-        <item>Sud-ouest</item>
-        <item>Ouest</item>
-        <item>Nord-ouest</item>
-    </string-array>
-    <string-array name="sky_rising">
-        <item>au nord</item>
-        <item>au nord-est</item>
-        <item>à l\'est</item>
-        <item>au sud-est</item>
-        <item>au sud</item>
-        <item>au sud-ouest</item>
-        <item>à l\'ouest</item>
-        <item>au nord-ouest</item>
+    <string name="widget_sky_label">Lune</string>
+    <string name="widget_sky_description">La Lune dans sa phase du moment, son lever et son coucher, et les phases à venir.</string>
+    <string name="moon_title">Lune</string>
+    <string name="moon_age">%1$d j · %2$d %%</string>
+    <string name="moon_full_today">Pleine lune aujourd\'hui</string>
+    <string name="moon_full_tomorrow">Pleine lune demain</string>
+    <string name="moon_full_in">Pleine lune dans %1$d jours</string>
+    <string name="moon_new_today">Nouvelle lune aujourd\'hui</string>
+    <string name="moon_new_tomorrow">Nouvelle lune demain</string>
+    <string name="moon_new_in">Nouvelle lune dans %1$d jours</string>
+    <string name="moon_up">Levée · coucher %1$s</string>
+    <string name="moon_rise_set">Lever %1$s · coucher %2$s</string>
+    <string name="moon_up_only">Levée</string>
+    <string name="moon_rise_only">Lever %1$s</string>
+    <string name="moon_tomorrow">demain %1$s</string>
+    <string-array name="moon_principal">
+        <item>Nouvelle</item>
+        <item>1er quartier</item>
+        <item>Pleine</item>
+        <item>Dern. quartier</item>
     </string-array>
     <string name="rain_detail">Cumul 12 h %1$s mm · max %2$d %%</string>
     <string name="widget_allergy_label">Allergies</string>

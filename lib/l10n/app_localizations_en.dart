@@ -284,7 +284,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutPrivacyDescription =>
-      'Halo creates no account, contains no ads or analytics, and sends nothing to its authors. Your calendar, screen time, data usage, Bluetooth devices, favourite contacts, steps and sleep (Health Connect) are read on the phone and never leave it. Only a few requests leave the phone: the coordinates of the chosen place, sent to Open-Meteo for weather, rain, pollen, air quality and the sea; the Network widget\'s ping and, when you start it, its speed test, to Cloudflare\'s servers. Tonight\'s sky planets are computed on the phone. Your settings stay on the phone.';
+      'Halo creates no account, contains no ads or analytics, and sends nothing to its authors. Your calendar, screen time, data usage, Bluetooth devices, favourite contacts, steps and sleep (Health Connect) are read on the phone and never leave it. Only a few requests leave the phone: the coordinates of the chosen place, sent to Open-Meteo for weather, rain, pollen, air quality and the sea; the Network widget\'s ping and, when you start it, its speed test, to Cloudflare\'s servers. The Moon and its phases are computed on the phone. Your settings stay on the phone.';
 
   @override
   String get aboutCreditsTitle => 'Sources and credits';
@@ -917,11 +917,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'As close as possible to the Weather place: wave height, period and direction, water temperature, and the waves over the next 24 hours.';
 
   @override
-  String get widgetSkyTitle => 'Tonight\'s sky';
+  String get widgetSkyTitle => 'Moon';
 
   @override
   String get widgetSkyDescription =>
-      'From the Weather place: the Moon and the planets visible tonight, where to look and when. Computed on the phone.';
+      'The Moon in its current phase, drawn with its seas: the countdown to the full moon, its rise and set at the Weather place, and the next four phases. Computed on the phone.';
 
   @override
   String get widgetAllergyTitle => 'Allergies';

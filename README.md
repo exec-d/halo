@@ -22,7 +22,7 @@ gardent ce nom.*
 | --- | --- |
 | Temps | Horloge (avec la prochaine alarme), Horloge analogique, Fuseaux horaires, Compte à rebours, Chronomètre et minuteur, Mois, Éphéméride, Progression (jour, semaine, mois, année) |
 | Agenda | Agenda, Agenda 2 colonnes — l'événement en cours mis en avant, « toute la journée » masquable |
-| Météo | Météo (tableau de bord et barres des 24 h), Prévisions 5 jours, Pluie, Allergies (pollens), Soleil et Lune, Mer et vagues, Ciel de ce soir (Lune et planètes) |
+| Météo | Météo (tableau de bord et barres des 24 h), Prévisions 5 jours, Pluie, Allergies (pollens), Soleil et Lune, Mer et vagues, Lune (phase, lever et coucher) |
 | Système | Système, Système avancé, Batterie détaillée, Appareil (façon console), Écouteurs et montre, Temps d'écran, Données mobiles, Réseau (signal, ping, test de débit), Pas et sommeil (Santé Connect) |
 | Musique | Lecture en cours (pochette néon, commandes) |
 | Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo), Contacts favoris |

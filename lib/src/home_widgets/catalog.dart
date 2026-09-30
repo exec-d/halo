@@ -352,7 +352,7 @@ const skyWidget = WuxHomeWidget(
   title: _skyTitle,
   description: _skyDescription,
   androidProvider: '$_androidPackage.SkyWidget',
-  previewSize: Size(340, 190),
+  previewSize: Size(340, 170),
 );
 String _skyTitle(AppLocalizations l) => l.widgetSkyTitle;
 String _skyDescription(AppLocalizations l) => l.widgetSkyDescription;

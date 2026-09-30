@@ -134,43 +134,26 @@
     <string name="sea_period">%1$d s</string>
     <string name="sea_distance">%1$d km away</string>
     <string name="sea_none">No sea within 55 km</string>
-    <string name="widget_sky_label">Tonight\'s sky</string>
-    <string name="widget_sky_description">The Moon and the planets visible tonight, where to look and when.</string>
-    <string name="sky_title">Sky tonight</string>
-    <string name="sky_title_late">Sky before dawn</string>
-    <string name="sky_sunset">Sunset %1$s</string>
-    <string name="sky_where">%1$s, %2$s</string>
-    <string name="sky_high">high</string>
-    <string name="sky_low">low</string>
-    <string name="sky_rises">Rises %1$s</string>
-    <string name="sky_until">→ %1$s</string>
-    <string name="sky_all_night">all night</string>
-    <string name="sky_nothing">No Moon or planet visible tonight.</string>
-    <string name="sky_moon">Moon</string>
-    <string name="sky_venus">Venus</string>
-    <string name="sky_jupiter">Jupiter</string>
-    <string name="sky_mars">Mars</string>
-    <string name="sky_saturn">Saturn</string>
-    <string name="sky_mercury">Mercury</string>
-    <string-array name="sky_directions">
-        <item>North</item>
-        <item>Northeast</item>
-        <item>East</item>
-        <item>Southeast</item>
-        <item>South</item>
-        <item>Southwest</item>
-        <item>West</item>
-        <item>Northwest</item>
-    </string-array>
-    <string-array name="sky_rising">
-        <item>in the north</item>
-        <item>in the northeast</item>
-        <item>in the east</item>
-        <item>in the southeast</item>
-        <item>in the south</item>
-        <item>in the southwest</item>
-        <item>in the west</item>
-        <item>in the northwest</item>
+    <string name="widget_sky_label">Moon</string>
+    <string name="widget_sky_description">The Moon in its current phase, its rise and set, and the phases ahead.</string>
+    <string name="moon_title">Moon</string>
+    <string name="moon_age">Day %1$d · %2$d%%</string>
+    <string name="moon_full_today">Full moon today</string>
+    <string name="moon_full_tomorrow">Full moon tomorrow</string>
+    <string name="moon_full_in">Full moon in %1$d days</string>
+    <string name="moon_new_today">New moon today</string>
+    <string name="moon_new_tomorrow">New moon tomorrow</string>
+    <string name="moon_new_in">New moon in %1$d days</string>
+    <string name="moon_up">Up · sets %1$s</string>
+    <string name="moon_rise_set">Rises %1$s · sets %2$s</string>
+    <string name="moon_up_only">Up</string>
+    <string name="moon_rise_only">Rises %1$s</string>
+    <string name="moon_tomorrow">tomorrow %1$s</string>
+    <string-array name="moon_principal">
+        <item>New</item>
+        <item>First qtr</item>
+        <item>Full</item>
+        <item>Last qtr</item>
     </string-array>
     <string name="rain_detail">12 h total %1$s mm · max %2$d%%</string>
     <string name="widget_allergy_label">Allergies</string>

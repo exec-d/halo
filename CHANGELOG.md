@@ -11,10 +11,11 @@ mineure peut changer des réglages.
 
 - **Cinq widgets** : Lecture en cours, Prévisions 5 jours, Horloge
   analogique, Éphéméride, Chronomètre et minuteur.
-- **Six widgets de plus** : Progression, Mer et vagues, Ciel de ce soir,
-  Réseau, Contacts favoris, Pas et sommeil (Santé Connect). Le Ciel de ce
-  soir montre sa soirée en frise : une ligne par astre, les heures en
-  dessous, la courbe de hauteur et son sommet.
+- **Six widgets de plus** : Progression, Mer et vagues, Lune, Réseau,
+  Contacts favoris, Pas et sommeil (Santé Connect). La Lune est dessinée
+  dans sa phase du moment, avec ses mers et ses cratères ; le widget donne
+  le compte à rebours jusqu'à la pleine lune, son lever et son coucher, et
+  les quatre phases à venir. Soleil et Lune suit le même calcul, plus précis.
 - **Retour vers le futur**, fond d'écran : l'intérieur du téléphone de
   Circuit, avec le convecteur temporel à la place de la batterie ; ses
   impulsions courent vers le cœur, plus vite en charge ; circuits temporels

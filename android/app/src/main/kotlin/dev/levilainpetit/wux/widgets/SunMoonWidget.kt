@@ -7,6 +7,7 @@ import android.util.SizeF
 import android.widget.RemoteViews
 import dev.levilainpetit.wux.MainActivity
 import dev.levilainpetit.wux.R
+import dev.levilainpetit.wux.sky.Moon
 import dev.levilainpetit.wux.weather.Weather
 import dev.levilainpetit.wux.weather.WeatherRefresh
 import java.time.Duration
@@ -14,12 +15,11 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import kotlin.math.cos
 import kotlin.math.roundToInt
 
 /**
  * Soleil et Lune : lever et coucher du soleil au lieu de la météo, durée du
- * jour, et phase de la lune (calculée sur le téléphone, sans réseau).
+ * jour, et phase de la lune (calculée sur le téléphone, sans réseau, par sky/Moon.kt).
  */
 class SunMoonWidget : NeonWidget() {
 
@@ -61,22 +61,12 @@ class SunMoonWidget : NeonWidget() {
     }
 
     companion object {
-        private const val SYNODIC_MONTH = 29.530588853
-        /** Nouvelle lune de référence : 6 janvier 2000, 18 h 14 UTC. */
-        private val NEW_MOON = Instant.parse("2000-01-06T18:14:00Z")
-
         private val MOON_ICONS = intArrayOf(
             R.drawable.moon_0, R.drawable.moon_1, R.drawable.moon_2, R.drawable.moon_3,
             R.drawable.moon_4, R.drawable.moon_5, R.drawable.moon_6, R.drawable.moon_7,
         )
 
-        /** Phase (0 à 7, 0 : nouvelle lune) et fraction éclairée (0 à 1). */
-        fun moon(at: Instant): Pair<Int, Double> {
-            val days = Duration.between(NEW_MOON, at).toMinutes() / 1440.0
-            val age = ((days % SYNODIC_MONTH) + SYNODIC_MONTH) % SYNODIC_MONTH
-            val fraction = age / SYNODIC_MONTH
-            val phase = ((fraction * 8).roundToInt()) % 8
-            return phase to (1 - cos(2 * Math.PI * fraction)) / 2
-        }
+        /** Phase (0 à 7, 0 : nouvelle lune) et fraction éclairée (0 à 1), comme le widget Lune. */
+        fun moon(at: Instant): Pair<Int, Double> = Moon.at(at).let { it.phase.ordinal to it.fraction }
     }
 }

@@ -22,7 +22,7 @@ keep that name.*
 | --- | --- |
 | Time | Clock (with the next alarm), Analog clock, World clock, Countdown, Stopwatch and timer, Month, Ephemeris, Progress (day, week, month, year) |
 | Agenda | Agenda, Agenda 2 columns — the current event highlighted, "all day" events can be hidden |
-| Weather | Weather (dashboard and 24-hour bars), 5-day forecast, Rain, Allergies (pollen), Sun and Moon, Sea and waves, Tonight's sky (Moon and planets) |
+| Weather | Weather (dashboard and 24-hour bars), 5-day forecast, Rain, Allergies (pollen), Sun and Moon, Sea and waves, Moon (phase, rise and set) |
 | System | System, Advanced system, Detailed battery, Device (console style), Earbuds and watch, Screen time, Mobile data, Network (signal, ping, speed test), Steps and sleep (Health Connect) |
 | Music | Now playing (neon cover art, controls) |
 | Shortcuts | Controls (flashlight, Wi-Fi, Bluetooth, sound, camera), Favourite contacts |

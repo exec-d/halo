@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Ciel de ce soir : la Lune et les planètes visibles, où et quand (SkyWidget). -->
+<!-- Lune : la Lune dans sa phase, le compte à rebours, lever et coucher, les phases à venir (SkyWidget). -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sky_root"
     android:layout_width="match_parent"
@@ -11,116 +11,185 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
-        <TextView
-            android:id="@+id/sky_title"
-            style="@style/HaloLabel"
+        <ImageView
+            android:id="@+id/sky_moon"
+            android:layout_width="84dp"
+            android:layout_height="match_parent"
+            android:maxHeight="84dp"
+            android:adjustViewBounds="true"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            android:tint="@color/clock_core" />
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/sky_title" />
-        <TextView
-            android:id="@+id/sky_sunset"
-            style="@style/HaloLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_marginStart="14dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/HaloLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/moon_title" />
+                <TextView
+                    android:id="@+id/sky_age"
+                    style="@style/HaloLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/sky_phase"
+                style="@style/HaloValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/sky_countdown"
+                style="@style/HaloDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:maxLines="1" />
+            <TextView
+                android:id="@+id/sky_times"
+                style="@style/HaloConsole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:maxLines="1" />
+        </LinearLayout>
     </LinearLayout>
-    <ImageView
-        android:id="@+id/sky_chart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="4dp"
-        android:importantForAccessibility="no"
-        android:scaleType="fitCenter"
-        android:tint="@color/clock_line" />
     <LinearLayout
+        android:id="@+id/sky_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:orientation="vertical">
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
         <LinearLayout
-            android:id="@+id/sky_row_0"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/next_icon_0"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                android:tint="@color/clock_core" />
             <TextView
-                android:id="@+id/sky_name_0"
-                style="@style/HaloLabel"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/sky_where_0"
-                style="@style/HaloConsole"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-            <TextView
-                android:id="@+id/sky_time_0"
-                style="@style/HaloConsole"
+                android:id="@+id/next_name_0"
+                style="@style/HaloDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/next_date_0"
+                style="@style/HaloLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="9sp" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/sky_row_1"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/next_icon_1"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                android:tint="@color/clock_core" />
             <TextView
-                android:id="@+id/sky_name_1"
-                style="@style/HaloLabel"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/sky_where_1"
-                style="@style/HaloConsole"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-            <TextView
-                android:id="@+id/sky_time_1"
-                style="@style/HaloConsole"
+                android:id="@+id/next_name_1"
+                style="@style/HaloDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/next_date_1"
+                style="@style/HaloLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="9sp" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/sky_row_2"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/next_icon_2"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                android:tint="@color/clock_core" />
             <TextView
-                android:id="@+id/sky_name_2"
-                style="@style/HaloLabel"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/sky_where_2"
-                style="@style/HaloConsole"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-            <TextView
-                android:id="@+id/sky_time_2"
-                style="@style/HaloConsole"
+                android:id="@+id/next_name_2"
+                style="@style/HaloDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/next_date_2"
+                style="@style/HaloLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="9sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/next_icon_3"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                android:tint="@color/clock_core" />
+            <TextView
+                android:id="@+id/next_name_3"
+                style="@style/HaloDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/next_date_3"
+                style="@style/HaloLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="9sp" />
         </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:id="@+id/sky_empty"
-        style="@style/HaloDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:visibility="gone" />
 </LinearLayout>

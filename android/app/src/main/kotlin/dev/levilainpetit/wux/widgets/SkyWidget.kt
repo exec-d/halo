@@ -9,127 +9,112 @@ import android.view.View
 import android.widget.RemoteViews
 import dev.levilainpetit.wux.MainActivity
 import dev.levilainpetit.wux.R
-import dev.levilainpetit.wux.sky.Body
-import dev.levilainpetit.wux.sky.Sighting
-import dev.levilainpetit.wux.sky.Sky
-import dev.levilainpetit.wux.sky.SkyChart
+import dev.levilainpetit.wux.sky.Moon
+import dev.levilainpetit.wux.sky.MoonPainter
+import dev.levilainpetit.wux.sky.Phase
 import dev.levilainpetit.wux.weather.Weather
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Locale
 import kotlin.math.roundToInt
 
 /**
- * Ciel de ce soir : depuis le lieu de Météo, la Lune et les planètes visibles
- * de la tombée de la nuit à 1 h du matin (ou jusqu'à l'aube, après minuit),
- * où les chercher et quand. Tout est calculé sur le téléphone (sky/Sky.kt).
+ * Lune : la Lune dessinée dans sa phase du moment, le nom de la phase, le
+ * compte à rebours jusqu'à la pleine lune (ou la nouvelle), son lever et son
+ * coucher au lieu de Météo, et les quatre phases principales à venir. Tout
+ * est calculé sur le téléphone (sky/Moon.kt). Sans lieu, ni lever ni coucher.
+ *
+ * Le nom de la classe vient du widget Ciel de ce soir qu'il remplace : les
+ * widgets déjà posés restent en place.
  */
 class SkyWidget : NeonWidget() {
 
     override val refreshActions = DATE_ACTIONS
 
     override fun build(context: Context, size: SizeF, sample: Boolean): RemoteViews {
-        val views = RemoteViews(context.packageName, R.layout.widget_sky)
+        val small = size.width < 220f
+        val views = RemoteViews(context.packageName, if (small) R.layout.widget_sky_small else R.layout.widget_sky)
         views.setOnClickPendingIntent(R.id.sky_root, activity(context, Intent(context, MainActivity::class.java), 65))
         val place = if (sample) SampleData.place else Weather.place(context)
-        if (place == null) {
-            views.setTextViewText(R.id.sky_sunset, "")
-            views.setTextViewText(R.id.sky_empty, context.getString(R.string.weather_pick_place))
-            views.setViewVisibility(R.id.sky_empty, View.VISIBLE)
-            views.setViewVisibility(R.id.sky_chart, View.GONE)
-            ROWS.forEach { views.setViewVisibility(it[0], View.GONE) }
-            return views
-        }
         val now = if (sample) ZonedDateTime.of(2026, 9, 30, 18, 0, 0, 0, ZoneId.of("Europe/Paris")) else ZonedDateTime.now()
-        val night = Sky.night(now, place.latitude, place.longitude)
+        val day = Moon.day(now, place?.latitude, place?.longitude)
+        val southern = (place?.latitude ?: 45.0) < 0
+        val density = context.resources.displayMetrics.density
+
+        val moonDp = if (small) minOf(size.width - 48, size.height - 60).coerceIn(40f, 120f) else 84f
+        views.setImageViewBitmap(R.id.sky_moon, MoonPainter.draw(day.now.angle, (moonDp * density).roundToInt(), southern))
+        views.setTextViewText(R.id.sky_phase, context.resources.getStringArray(R.array.moon_phases)[day.now.phase.ordinal])
+        val percent = (day.now.fraction * 100).roundToInt()
+        views.setTextViewText(
+            R.id.sky_age,
+            if (small) context.getString(R.string.moon_illumination, percent) else context.getString(R.string.moon_age, day.now.age.toInt(), percent),
+        )
+        if (small) return views
+
+        views.setTextViewText(R.id.sky_countdown, countdown(context, now, day.now.phase, day.next))
         val format = DateTimeFormatter.ofPattern(if (DateFormat.is24HourFormat(context)) "HH:mm" else "h:mm a", Locale.getDefault())
-        views.setTextViewText(R.id.sky_title, context.getString(if (night.from.hour < 5) R.string.sky_title_late else R.string.sky_title))
-        views.setTextViewText(R.id.sky_sunset, night.sunset?.let { context.getString(R.string.sky_sunset, format.format(it)) }.orEmpty())
-
-        val sightings = night.sightings.take(ROWS.size)
-        ROWS.forEachIndexed { i, (rowId, nameId, whereId, timeId) ->
-            val s = sightings.getOrNull(i)
-            views.setViewVisibility(rowId, if (s == null) View.GONE else View.VISIBLE)
-            if (s == null) return@forEachIndexed
-            views.setTextViewText(nameId, context.getString(NAMES.getValue(s.body)))
-            views.setTextViewText(whereId, where(context, s))
-            views.setTextViewText(
-                timeId,
-                when {
-                    !s.atStart -> format.format(s.from)
-                    s.atEnd -> context.getString(R.string.sky_all_night)
-                    else -> context.getString(R.string.sky_until, format.format(s.until))
-                },
-            )
+        fun time(t: ZonedDateTime, from: ZonedDateTime) =
+            if (t.toLocalDate().isAfter(from.toLocalDate())) context.getString(R.string.moon_tomorrow, format.format(t)) else format.format(t)
+        val rise = day.rise
+        val set = day.set
+        val times = when {
+            place == null -> context.getString(R.string.weather_pick_place)
+            day.up && set != null -> context.getString(R.string.moon_up, time(set, now))
+            day.up -> context.getString(R.string.moon_up_only)
+            rise != null && set != null -> context.getString(R.string.moon_rise_set, time(rise, now), time(set, rise))
+            rise != null -> context.getString(R.string.moon_rise_only, time(rise, now))
+            else -> ""
         }
-        views.setViewVisibility(R.id.sky_empty, if (sightings.isEmpty()) View.VISIBLE else View.GONE)
-        views.setTextViewText(R.id.sky_empty, context.getString(R.string.sky_nothing))
+        views.setTextViewText(R.id.sky_times, times)
 
-        val showChart = size.height >= 150f && sightings.isNotEmpty()
-        views.setViewVisibility(R.id.sky_chart, if (showChart) View.VISIBLE else View.GONE)
-        if (showChart) {
-            val density = context.resources.displayMetrics.density
-            val hours = DateTimeFormatter.ofPattern(
-                when {
-                    !DateFormat.is24HourFormat(context) -> "h a"
-                    Locale.getDefault().language == "fr" -> "H'h'"
-                    else -> "HH"
-                },
-                Locale.getDefault(),
-            )
-            views.setImageViewBitmap(
-                R.id.sky_chart,
-                SkyChart.draw(
-                    night, place.latitude, place.longitude, sightings,
-                    name = { context.getString(NAMES.getValue(it)).uppercase(Locale.getDefault()) },
-                    hour = { hours.format(it) },
-                    now = now,
-                    width = ((size.width - 48) * density).roundToInt(),
-                    height = (64 * density).roundToInt(),
-                    density = density,
-                ),
-            )
+        val showNext = size.height >= 140f
+        views.setViewVisibility(R.id.sky_next, if (showNext) View.VISIBLE else View.GONE)
+        if (showNext) {
+            val names = context.resources.getStringArray(R.array.moon_principal)
+            val dates = DateTimeFormatter.ofPattern("EEE d MMM", Locale.getDefault())
+            val icon = (18 * density).roundToInt()
+            NEXT.forEachIndexed { i, (iconId, nameId, dateId) ->
+                val (phase, at) = day.next.getOrNull(i) ?: return@forEachIndexed
+                val index = PRINCIPALS.indexOf(phase)
+                views.setImageViewBitmap(iconId, MoonPainter.draw(index * 90.0, icon, southern, outline = true))
+                views.setTextViewText(nameId, names[index])
+                views.setTextViewText(dateId, dates.format(at))
+            }
         }
         return views
     }
 
     override fun onRendered(context: Context) {
+        // Le lever, le coucher et la phase avancent : on redessine toutes les demi-heures.
         val next = System.currentTimeMillis() + 30 * 60_000L
         context.getSystemService(AlarmManager::class.java)?.set(AlarmManager.RTC, next, refreshIntent(context, 2))
     }
 
-    /** « Sud-est, haute » s'il est déjà là ; « Se lève à l'est » sinon. */
-    private fun where(context: Context, s: Sighting): String {
-        val sector = sector(s.start.azimuth)
-        return if (s.atStart) {
-            context.getString(
-                R.string.sky_where,
-                context.resources.getStringArray(R.array.sky_directions)[sector],
-                context.getString(if (s.highest >= 35) R.string.sky_high else R.string.sky_low),
-            )
-        } else {
-            context.getString(R.string.sky_rises, context.resources.getStringArray(R.array.sky_rising)[sector])
+    /** « Pleine lune dans 26 jours » ; le jour de la pleine lune, la nouvelle lune. */
+    private fun countdown(context: Context, now: ZonedDateTime, phase: Phase, next: List<Pair<Phase, ZonedDateTime>>): String {
+        val target = if (phase == Phase.FULL) Phase.NEW else Phase.FULL
+        val at = next.firstOrNull { it.first == target }?.second ?: return ""
+        val days = ChronoUnit.DAYS.between(now.toLocalDate(), at.toLocalDate()).toInt()
+        val full = target == Phase.FULL
+        return when (days) {
+            0 -> context.getString(if (full) R.string.moon_full_today else R.string.moon_new_today)
+            1 -> context.getString(if (full) R.string.moon_full_tomorrow else R.string.moon_new_tomorrow)
+            else -> context.getString(if (full) R.string.moon_full_in else R.string.moon_new_in, days)
         }
     }
 
     private companion object {
-        /** Chaque rangée : la rangée, le nom, où regarder, quand. */
-        val ROWS = listOf(
-            intArrayOf(R.id.sky_row_0, R.id.sky_name_0, R.id.sky_where_0, R.id.sky_time_0),
-            intArrayOf(R.id.sky_row_1, R.id.sky_name_1, R.id.sky_where_1, R.id.sky_time_1),
-            intArrayOf(R.id.sky_row_2, R.id.sky_name_2, R.id.sky_where_2, R.id.sky_time_2),
-        )
+        /** Les phases principales, dans l'ordre de moon_principal (un quart de tour chacune). */
+        val PRINCIPALS = listOf(Phase.NEW, Phase.FIRST_QUARTER, Phase.FULL, Phase.LAST_QUARTER)
 
-        val NAMES = mapOf(
-            Body.MOON to R.string.sky_moon,
-            Body.VENUS to R.string.sky_venus,
-            Body.JUPITER to R.string.sky_jupiter,
-            Body.MARS to R.string.sky_mars,
-            Body.SATURN to R.string.sky_saturn,
-            Body.MERCURY to R.string.sky_mercury,
+        /** Chaque phase à venir : l'icône, le nom, la date. */
+        val NEXT = listOf(
+            Triple(R.id.next_icon_0, R.id.next_name_0, R.id.next_date_0),
+            Triple(R.id.next_icon_1, R.id.next_name_1, R.id.next_date_1),
+            Triple(R.id.next_icon_2, R.id.next_name_2, R.id.next_date_2),
+            Triple(R.id.next_icon_3, R.id.next_name_3, R.id.next_date_3),
         )
-
-        fun sector(azimuth: Double) = (((azimuth % 360 + 360) % 360 + 22.5) / 45).toInt() % 8
     }
 }

@@ -286,7 +286,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutPrivacyDescription =>
-      'Halo ne crée aucun compte, ne contient ni publicité ni mesure d\'audience, et n\'envoie rien à ses auteurs. Votre agenda, le temps d\'écran, la consommation de données, les appareils Bluetooth, vos contacts favoris, vos pas et votre sommeil (Santé Connect) sont lus sur le téléphone et n\'en sortent pas. Seules quelques requêtes quittent le téléphone : les coordonnées du lieu choisi, envoyées à Open-Meteo pour la météo, la pluie, les pollens, la qualité de l\'air et la mer ; le ping et, quand vous le lancez, le test de débit du widget Réseau, vers les serveurs de Cloudflare. Les planètes du Ciel de ce soir sont calculées sur le téléphone. Vos réglages restent sur le téléphone.';
+      'Halo ne crée aucun compte, ne contient ni publicité ni mesure d\'audience, et n\'envoie rien à ses auteurs. Votre agenda, le temps d\'écran, la consommation de données, les appareils Bluetooth, vos contacts favoris, vos pas et votre sommeil (Santé Connect) sont lus sur le téléphone et n\'en sortent pas. Seules quelques requêtes quittent le téléphone : les coordonnées du lieu choisi, envoyées à Open-Meteo pour la météo, la pluie, les pollens, la qualité de l\'air et la mer ; le ping et, quand vous le lancez, le test de débit du widget Réseau, vers les serveurs de Cloudflare. La Lune et ses phases sont calculées sur le téléphone. Vos réglages restent sur le téléphone.';
 
   @override
   String get aboutCreditsTitle => 'Sources et crédits';
@@ -922,11 +922,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Au plus près du lieu de Météo : la hauteur, la période et la direction des vagues, la température de l\'eau et les vagues des 24 prochaines heures.';
 
   @override
-  String get widgetSkyTitle => 'Ciel de ce soir';
+  String get widgetSkyTitle => 'Lune';
 
   @override
   String get widgetSkyDescription =>
-      'Depuis le lieu de Météo : la Lune et les planètes visibles ce soir, où les chercher et quand. Calculé sur le téléphone.';
+      'La Lune dans sa phase du moment, dessinée avec ses mers : le compte à rebours jusqu\'à la pleine lune, son lever et son coucher au lieu de Météo, et les quatre phases à venir. Calculé sur le téléphone.';
 
   @override
   String get widgetAllergyTitle => 'Allergies';
