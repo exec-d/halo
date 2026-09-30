@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Réseau : le lien en cours, le signal, le ping, et le test de débit au toucher (NetworkWidget). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/network_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="@dimen/widget_padding_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/network_kind"
+                style="@style/HaloLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/network_name"
+                style="@style/HaloValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="22sp" />
+            <TextView
+                android:id="@+id/network_detail"
+                style="@style/HaloDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/network_bars"
+            android:layout_width="30dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="10dp"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            android:tint="@color/clock_line" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/network_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                style="@style/HaloLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/net_down" />
+            <TextView
+                android:id="@+id/network_down"
+                style="@style/HaloValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                style="@style/HaloLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/net_up" />
+            <TextView
+                android:id="@+id/network_up"
+                style="@style/HaloValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/network_test"
+            style="@style/HaloLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@drawable/widget_button_outline"
+            android:gravity="center"
+            android:minWidth="72dp"
+            android:paddingHorizontal="12dp"
+            android:text="@string/net_test" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/network_tested"
+        style="@style/HaloDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp" />
+</LinearLayout>

@@ -30,6 +30,8 @@
     <!-- Météo : prévisions Open-Meteo, et position approximative pour le lieu. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Réseau : Android ne donne le nom du Wi-Fi qu'avec la position précise. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Système avancé : Wi-Fi activé ou non, bande et débit. -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- Système avancé : Bluetooth activé ou non (sans autorisation dès Android 12). -->
@@ -373,6 +375,17 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_ephemeris_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.NetworkWidget"
+            android:exported="false"
+            android:label="@string/widget_network_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_network_info" />
         </receiver>
         <receiver
             android:name=".widgets.ProgressWidget"

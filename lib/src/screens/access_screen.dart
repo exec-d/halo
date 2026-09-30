@@ -196,6 +196,12 @@ class _Access {
       description: (l10n) => l10n.accessMediaDescription,
       restricted: true,
     ),
+    WuxWidgetKind.network => _Access(
+      has: platform.hasWifiNamePermission,
+      request: platform.requestWifiNamePermission,
+      button: (l10n) => l10n.accessNetworkButton,
+      description: (l10n) => l10n.accessNetworkDescription,
+    ),
     WuxWidgetKind.timer => _Access(
       has: platform.hasNotificationPermission,
       request: platform.requestNotificationPermission,

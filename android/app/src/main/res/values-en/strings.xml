@@ -319,6 +319,22 @@
     <string name="progress_year">Year</string>
     <string name="progress_percent">%1$d%%</string>
     <string name="progress_footer">%1$d · day %2$d of %3$d · %4$d days left</string>
+    <string name="widget_network_label">Network</string>
+    <string name="widget_network_description">Wi-Fi or mobile network, signal, ping and a speed test on tap.</string>
+    <string name="net_wifi">Wi-Fi</string>
+    <string name="net_mobile">Mobile</string>
+    <string name="net_other">Network</string>
+    <string name="net_offline">Offline</string>
+    <string name="net_name_hidden">Wi-Fi (name hidden)</string>
+    <string name="net_rssi">%1$d dBm</string>
+    <string name="net_ping">ping %1$d ms</string>
+    <string name="net_down">↓ Down</string>
+    <string name="net_up">↑ Up</string>
+    <string name="net_test">Test</string>
+    <string name="net_testing">Testing…</string>
+    <string name="net_mbps">%1$s Mb/s</string>
+    <string name="net_tested">Tested %1$s</string>
+    <string name="net_never">Not tested yet: tap “Test”</string>
     <!-- Public holidays in France, in the order of EphemerisWidget.holidays. -->
     <string-array name="holidays">
         <item>New Year\'s Day</item>

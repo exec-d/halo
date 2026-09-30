@@ -105,6 +105,12 @@ abstract interface class WuxPlatform {
   /// Affiche la demande ; renvoie la réponse.
   Future<void> requestNotificationPermission();
 
+  /// Vrai si Halo peut lire le nom du Wi-Fi (position précise accordée).
+  Future<bool> hasWifiNamePermission();
+
+  /// Affiche la demande de position précise ; renvoie la réponse.
+  Future<bool> requestWifiNamePermission();
+
   /// Vrai si Halo peut voir les appareils Bluetooth connectés.
   Future<bool> hasBluetoothPermission();
 
@@ -241,6 +247,14 @@ class AndroidWuxPlatform implements WuxPlatform {
   @override
   Future<void> openUsageAccess() =>
       _channel.invokeMethod<void>('openUsageAccess');
+
+  @override
+  Future<bool> hasWifiNamePermission() async =>
+      await _channel.invokeMethod<bool>('hasWifiNamePermission') ?? false;
+
+  @override
+  Future<bool> requestWifiNamePermission() async =>
+      await _channel.invokeMethod<bool>('requestWifiNamePermission') ?? false;
 
   @override
   Future<bool> hasBluetoothPermission() async =>

@@ -57,6 +57,7 @@ object WidgetPreviews {
         "analog" -> AnalogClockWidget()
         "ephemeris" -> EphemerisWidget()
         "progress" -> ProgressWidget()
+        "network" -> NetworkWidget()
         "timer" -> TimerWidget()
         "media" -> MediaWidget()
         else -> null

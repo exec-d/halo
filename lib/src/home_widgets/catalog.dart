@@ -175,6 +175,18 @@ String _ephemerisTitle(AppLocalizations l) => l.widgetEphemerisTitle;
 String _ephemerisDescription(AppLocalizations l) =>
     l.widgetEphemerisDescription;
 
+const networkWidget = WuxHomeWidget(
+  id: 'network',
+  kind: WuxWidgetKind.network,
+  category: WuxWidgetCategory.system,
+  title: _networkTitle,
+  description: _networkDescription,
+  androidProvider: '$_androidPackage.NetworkWidget',
+  previewSize: Size(340, 160),
+);
+String _networkTitle(AppLocalizations l) => l.widgetNetworkTitle;
+String _networkDescription(AppLocalizations l) => l.widgetNetworkDescription;
+
 const progressWidget = WuxHomeWidget(
   id: 'progress',
   kind: WuxWidgetKind.simple,
@@ -346,6 +358,7 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   bluetoothDevicesWidget,
   screenTimeWidget,
   mobileDataWidget,
+  networkWidget,
   mediaWidget,
   worldClockWidget,
   countdownWidget,

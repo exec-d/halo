@@ -15,6 +15,7 @@ import android.provider.Settings
 import dev.levilainpetit.wux.calendar.CalendarRepository
 import dev.levilainpetit.wux.media.MediaListener
 import dev.levilainpetit.wux.system.BluetoothDevices
+import dev.levilainpetit.wux.system.NetworkStatus
 import dev.levilainpetit.wux.system.SystemRefresh
 import dev.levilainpetit.wux.system.UsageAccess
 import dev.levilainpetit.wux.wallpaper.WallpaperPreview
@@ -203,6 +204,16 @@ open class MainActivity : FlutterActivity() {
                     startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
                 }
                 result.success(null)
+            }
+            "hasWifiNamePermission" -> result.success(NetworkStatus.canReadName(this))
+            "requestWifiNamePermission" -> {
+                if (NetworkStatus.canReadName(this)) {
+                    result.success(true)
+                } else {
+                    pendingSimplePermission?.success(false)
+                    pendingSimplePermission = result
+                    requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), SIMPLE_REQUEST)
+                }
             }
             "hasBluetoothPermission" -> result.success(BluetoothDevices.hasPermission(this))
             "requestBluetoothPermission" -> {

@@ -34,6 +34,9 @@ enum WuxWidgetKind {
 
   /// Chronomètre et minuteur : l'autorisation des notifications.
   timer,
+
+  /// Réseau : la position précise, sans laquelle Android cache le nom du Wi-Fi.
+  network,
 }
 
 /// Famille d'un widget, pour les filtres de la galerie.

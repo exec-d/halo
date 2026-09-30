@@ -351,6 +351,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Halo reads the name, type and battery of connected Bluetooth devices. Nothing leaves the phone.';
 
   @override
+  String get accessNetworkButton => 'Allow precise location';
+
+  @override
+  String get accessNetworkDescription =>
+      'Android only gives the Wi-Fi name to apps with precise location. Halo uses it for that name only: it neither reads nor keeps your location.';
+
+  @override
   String get accessMediaButton => 'Open notification access';
 
   @override
@@ -757,6 +764,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get widgetProgressDescription =>
       'How much of the day, week, month and year has gone by, in four bars.';
+
+  @override
+  String get widgetNetworkTitle => 'Network';
+
+  @override
+  String get widgetNetworkDescription =>
+      'The current Wi-Fi or mobile network, signal strength, ping and local address. The speed test (about ten seconds, a few dozen MB) only runs when you tap “Test”.';
 
   @override
   String get widgetTimerTitle => 'Stopwatch and timer';

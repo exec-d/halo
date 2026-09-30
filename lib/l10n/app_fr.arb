@@ -231,6 +231,8 @@
   "accessRestrictedHelp": "Si Android répond « L'accès a été refusé à cette appli » : Halo, installé hors du Play Store, relève des paramètres restreints. Dans sa fiche, touchez ⋮ puis « Autoriser les paramètres restreints », confirmez, et revenez activer l'accès.",
   "accessBluetoothButton": "Autoriser « Appareils à proximité »",
   "accessBluetoothDescription": "Halo lit le nom, le type et la batterie des appareils Bluetooth connectés. Rien ne quitte le téléphone.",
+  "accessNetworkButton": "Autoriser la position précise",
+  "accessNetworkDescription": "Android ne donne le nom du Wi-Fi qu'aux applis qui ont la position précise. Halo ne s'en sert que pour ce nom : il ne lit ni ne garde votre position.",
   "accessMediaButton": "Ouvrir l'accès aux notifications",
   "accessMediaDescription": "Android ne dit ce qui joue, et ne laisse le piloter, qu'aux applis autorisées à « accéder aux notifications ». Halo n'en lit aucune : il suit seulement la lecture. Rien ne quitte le téléphone.",
   "accessTimerButton": "Autoriser les notifications",
@@ -478,6 +480,8 @@
   },
   "widgetProgressTitle": "Progression",
   "widgetProgressDescription": "La part écoulée du jour, de la semaine, du mois et de l'année, en quatre barres.",
+  "widgetNetworkTitle": "Réseau",
+  "widgetNetworkDescription": "Le Wi-Fi ou le réseau mobile en cours, la force du signal, le ping et l'adresse locale. Le test de débit (une dizaine de secondes, quelques dizaines de Mo) ne part qu'au toucher de « Tester ».",
   "widgetTimerTitle": "Chronomètre et minuteur",
   "@widgetTimerTitle": {
     "description": "Nom du widget, dans le catalogue et en titre de son écran."

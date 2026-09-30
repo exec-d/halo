@@ -685,6 +685,18 @@ abstract class AppLocalizations {
   /// **'Halo lit le nom, le type et la batterie des appareils Bluetooth connectés. Rien ne quitte le téléphone.'**
   String get accessBluetoothDescription;
 
+  /// No description provided for @accessNetworkButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autoriser la position précise'**
+  String get accessNetworkButton;
+
+  /// No description provided for @accessNetworkDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Android ne donne le nom du Wi-Fi qu\'aux applis qui ont la position précise. Halo ne s\'en sert que pour ce nom : il ne lit ni ne garde votre position.'**
+  String get accessNetworkDescription;
+
   /// No description provided for @accessMediaButton.
   ///
   /// In fr, this message translates to:
@@ -1392,6 +1404,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'La part écoulée du jour, de la semaine, du mois et de l\'année, en quatre barres.'**
   String get widgetProgressDescription;
+
+  /// No description provided for @widgetNetworkTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réseau'**
+  String get widgetNetworkTitle;
+
+  /// No description provided for @widgetNetworkDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Wi-Fi ou le réseau mobile en cours, la force du signal, le ping et l\'adresse locale. Le test de débit (une dizaine de secondes, quelques dizaines de Mo) ne part qu\'au toucher de « Tester ».'**
+  String get widgetNetworkDescription;
 
   /// Nom du widget, dans le catalogue et en titre de son écran.
   ///
