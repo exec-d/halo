@@ -15,6 +15,7 @@ import dev.levilainpetit.wux.widgets.AllergyWidget
 import dev.levilainpetit.wux.widgets.ForecastWidget
 import dev.levilainpetit.wux.widgets.RainWidget
 import dev.levilainpetit.wux.widgets.SeaWidget
+import dev.levilainpetit.wux.widgets.SkyWidget
 import dev.levilainpetit.wux.widgets.SunMoonWidget
 import dev.levilainpetit.wux.widgets.WeatherWidget
 import es.antonborri.home_widget.HomeWidgetPlugin
@@ -84,6 +85,7 @@ object WeatherRefresh {
         AllergyWidget().renderAll(context)
         ForecastWidget().renderAll(context)
         SeaWidget().renderAll(context)
+        SkyWidget().renderAll(context)
     }
 }
 

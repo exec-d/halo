@@ -309,6 +309,18 @@ const seaWidget = WuxHomeWidget(
 String _seaTitle(AppLocalizations l) => l.widgetSeaTitle;
 String _seaDescription(AppLocalizations l) => l.widgetSeaDescription;
 
+const skyWidget = WuxHomeWidget(
+  id: 'sky',
+  kind: WuxWidgetKind.simple,
+  category: WuxWidgetCategory.weather,
+  title: _skyTitle,
+  description: _skyDescription,
+  androidProvider: '$_androidPackage.SkyWidget',
+  previewSize: Size(340, 190),
+);
+String _skyTitle(AppLocalizations l) => l.widgetSkyTitle;
+String _skyDescription(AppLocalizations l) => l.widgetSkyDescription;
+
 const allergyWidget = WuxHomeWidget(
   id: 'allergy',
   kind: WuxWidgetKind.simple,
@@ -347,5 +359,6 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   sunMoonWidget,
   rainWidget,
   seaWidget,
+  skyWidget,
   allergyWidget,
 ];

@@ -232,6 +232,20 @@
                 android:resource="@xml/widget_sea_info" />
         </receiver>
         <receiver
+            android:name=".widgets.SkyWidget"
+            android:exported="false"
+            android:label="@string/widget_sky_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_sky_info" />
+        </receiver>
+        <receiver
             android:name=".widgets.RainWidget"
             android:exported="false"
             android:label="@string/widget_rain_label">

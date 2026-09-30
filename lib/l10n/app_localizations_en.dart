@@ -829,6 +829,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'As close as possible to the Weather place: wave height, period and direction, water temperature, and the waves over the next 24 hours.';
 
   @override
+  String get widgetSkyTitle => 'Tonight\'s sky';
+
+  @override
+  String get widgetSkyDescription =>
+      'From the Weather place: the Moon and the planets visible tonight, where to look and when. Computed on the phone.';
+
+  @override
   String get widgetAllergyTitle => 'Allergies';
 
   @override

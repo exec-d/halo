@@ -1513,6 +1513,18 @@ abstract class AppLocalizations {
   /// **'Au plus près du lieu de Météo : la hauteur, la période et la direction des vagues, la température de l\'eau et les vagues des 24 prochaines heures.'**
   String get widgetSeaDescription;
 
+  /// No description provided for @widgetSkyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ciel de ce soir'**
+  String get widgetSkyTitle;
+
+  /// No description provided for @widgetSkyDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Depuis le lieu de Météo : la Lune et les planètes visibles ce soir, où les chercher et quand. Calculé sur le téléphone.'**
+  String get widgetSkyDescription;
+
   /// Nom du widget, dans le catalogue et en titre de son écran.
   ///
   /// In fr, this message translates to:

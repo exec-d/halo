@@ -833,6 +833,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Au plus près du lieu de Météo : la hauteur, la période et la direction des vagues, la température de l\'eau et les vagues des 24 prochaines heures.';
 
   @override
+  String get widgetSkyTitle => 'Ciel de ce soir';
+
+  @override
+  String get widgetSkyDescription =>
+      'Depuis le lieu de Météo : la Lune et les planètes visibles ce soir, où les chercher et quand. Calculé sur le téléphone.';
+
+  @override
   String get widgetAllergyTitle => 'Allergies';
 
   @override

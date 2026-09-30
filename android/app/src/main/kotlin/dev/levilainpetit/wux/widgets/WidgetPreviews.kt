@@ -46,6 +46,7 @@ object WidgetPreviews {
         "sun_moon" -> SunMoonWidget()
         "rain" -> RainWidget()
         "sea" -> SeaWidget()
+        "sky" -> SkyWidget()
         "allergy" -> AllergyWidget()
         "battery" -> BatteryWidget()
         "device" -> DeviceWidget()
