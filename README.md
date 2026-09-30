@@ -26,18 +26,16 @@ gardent ce nom.*
 | Musique | Lecture en cours (pochette néon, commandes) |
 | Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo) |
 
-**Trois fonds d'écran animés** :
+**Deux fonds d'écran animés** :
 
 - **Circuit** : l'intérieur d'un Pixel 7 en schéma néon, qui réagit à
   l'inclinaison, suit la vraie batterie, s'illumine au passage des données et
   s'allume composant par composant avec l'écran ;
-- **Tron** : la moto de lumière de Tron : l'héritage en plan technique, qui se
-  trace trait par trait à l'allumage ; ses roues tournent, son liseré pulse ;
-- **Retour vers le futur** : le convecteur temporel de la DeLorean en plan
-  technique ; ses impulsions courent vers le cœur, et la courbe de puissance
-  grimpe jusqu'à 88 mph et 1,21 gigawatt.
+- **Retour vers le futur** : le même téléphone, avec le convecteur temporel
+  de la DeLorean à la place de la batterie ; ses impulsions courent vers le
+  cœur, plus vite en charge, et sa jauge suit la batterie.
 
-Tous prennent les couleurs du téléphone, comme les widgets.
+Les deux prennent les couleurs du téléphone, comme les widgets.
 
 **Ailleurs dans Android** : un écran de veille (horloge néon pendant la
 charge), trois tuiles de réglages rapides (Météo, Fond Halo, Batterie) et des

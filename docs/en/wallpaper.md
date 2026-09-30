@@ -2,8 +2,8 @@
 
 *[Français](../wallpaper.md)*
 
-Halo offers three animated wallpapers (Circuit, and the Tron light cycle
-and flux capacitor technical drawings), a screen saver,
+Halo offers two animated wallpapers (Circuit, and its Back to the Future
+variant with the flux capacitor), a screen saver,
 three quick settings tiles and shortcuts on its icon. The intensity (Subtle, Normal,
 Vivid) is shared by all wallpapers.
 
@@ -66,28 +66,25 @@ and icons on top readable.
 | `WallpaperPreview.kt` | The in-app preview and opening the system screen |
 | `WallpaperSettings.kt` | The intensity |
 
-## The technical drawings
+## Back to the Future
 
-The Tron and Back to the Future wallpapers draw an object from a cult film as a technical drawing: grid
-paper, a referenced frame, dimensioned views, numbered callouts and a title
-block (scale, sheet, today's date). Like Circuit and the widgets, they take
-the phone's colors. More objects will follow, one at a time.
+The same phone interior as Circuit (`CircuitScene.build(…, flux = true)`),
+with the film's flux capacitor in place of the battery and the coil: a box
+with a window, the Y of three electrodes, cables running up to the
+motherboard. The set's dimensions (600 × 760 mm) are scaled to the battery
+rectangle. The service is `FluxWallpaperService`, which extends
+`HaloWallpaperService`.
 
-- **The drawing**: each time the screen turns on, the drawing traces itself
-  line by line in a little over two seconds (`Pen` measures each line and
-  only draws what the elapsed time allows).
-- **What moves**: the object's parts (wheels, turbines, lights…).
-- **Tilt**: the views shift a little, in opposite directions.
+- **The flux capacitor**: a pulse runs from lamp to lamp along the three
+  arms to the core, which flashes; faster while charging.
+- **The gauge**, above the window: ten cells for the battery level.
+- **The rest is Circuit's**: tilt, network, wake-up.
+- **Battery**: on screen, the flux capacitor animates continuously at about
+  22 frames per second; nothing runs when the wallpaper is not visible.
 
-| Sheet | Film | Object | What moves | Code |
-| --- | --- | --- | --- | --- |
-| 01 | Tron: Legacy | Light cycle | Wheels, light strip, light ribbon | `LightCycle.kt` |
-| 02 | Back to the Future | Flux capacitor | Y pulses, core, power curve | `FluxCapacitor.kt` |
-
-The shared frame lives in `wallpaper/blueprint/Blueprint.kt`, each object in
-its own file next to it. To look at a drawing without a phone,
-`tool/scenes/render.sh` draws it as PNG files on the computer (see the
-script's header); `render.sh --thumbs` redraws the picker thumbnails.
+To look at the wallpapers without a phone, `tool/scenes/render.sh` draws them
+as PNG files on the computer (see the script's header); `render.sh --thumbs`
+redraws the flux capacitor thumbnail in Android's picker.
 
 ## Screen saver
 

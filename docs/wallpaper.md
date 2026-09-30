@@ -2,8 +2,8 @@
 
 *[English](en/wallpaper.md)*
 
-Halo propose trois fonds d'écran animés (Circuit, et les plans techniques de
-la moto de Tron et du convecteur temporel), un écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
+Halo propose deux fonds d'écran animés (Circuit, et sa variante Retour vers
+le futur avec le convecteur temporel), un écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
 L'intensité (Discret, Normal, Vif) est commune à tous les fonds.
 
 ## Circuit
@@ -68,28 +68,25 @@ widgets et les icônes lisibles par-dessus.
 | `WallpaperPreview.kt` | L'aperçu de l'application et l'ouverture de l'écran système |
 | `WallpaperSettings.kt` | L'intensité |
 
-## Les plans techniques
+## Retour vers le futur
 
-Les fonds Tron et Retour vers le futur dessinent, en plan technique, un objet de film culte : papier
-quadrillé, cadre repéré, vues cotées, repères numérotés et cartouche
-(échelle, planche, date du jour). Comme Circuit et les widgets, ils prennent
-les couleurs du téléphone. D'autres objets suivront, un à un.
+Le même intérieur de téléphone que Circuit (`CircuitScene.build(…, flux = true)`),
+avec le convecteur temporel du film à la place de la batterie et de la
+bobine : boîtier à hublot, Y des trois électrodes, câbles qui montent vers la
+carte mère. Les cotes du décor (600 × 760 mm) sont ramenées au rectangle de
+la batterie. Le service est `FluxWallpaperService`, qui étend
+`HaloWallpaperService`.
 
-- **Le tracé** : à chaque allumage de l'écran, le plan se dessine trait par
-  trait en un peu plus de deux secondes (`Pen` compte la longueur de chaque
-  trait et n'en dessine que ce que le temps écoulé permet).
-- **Ce qui bouge** : les pièces de l'objet (roues, turbines, voyants…).
-- **Inclinaison** : les vues glissent un peu, en sens opposés.
+- **Le convecteur** : une impulsion court de lampe en lampe le long des trois
+  bras jusqu'au cœur, qui s'illumine ; plus vite pendant la charge.
+- **La jauge**, au-dessus du hublot : dix cases pour le niveau de batterie.
+- **Le reste est celui de Circuit** : inclinaison, réseau, allumage.
+- **Batterie** : à l'écran, le convecteur s'anime sans arrêt, à 22 images
+  par seconde environ ; rien ne tourne quand le fond n'est pas visible.
 
-| Planche | Film | Objet | Ce qui bouge | Code |
-| --- | --- | --- | --- | --- |
-| 01 | Tron : l'héritage | Moto de lumière | Roues, liseré, ruban de lumière | `LightCycle.kt` |
-| 02 | Retour vers le futur | Convecteur temporel | Impulsions du Y, cœur, courbe de puissance | `FluxCapacitor.kt` |
-
-Le cadre commun est dans `wallpaper/blueprint/Blueprint.kt` ; chaque objet
-dans son fichier, à côté. Pour voir un plan sans téléphone,
-`tool/scenes/render.sh` le dessine en PNG sur l'ordinateur (voir l'en-tête
-du script) ; `render.sh --thumbs` refait les miniatures du sélecteur.
+Pour voir les fonds sans téléphone, `tool/scenes/render.sh` les dessine en
+PNG sur l'ordinateur (voir l'en-tête du script) ; `render.sh --thumbs` refait
+la miniature du convecteur dans le sélecteur d'Android.
 
 ## Écran de veille
 

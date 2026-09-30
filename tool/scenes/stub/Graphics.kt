@@ -47,6 +47,11 @@ object Color {
 }
 
 class RectF(var left: Float = 0f, var top: Float = 0f, var right: Float = 0f, var bottom: Float = 0f) {
+    constructor(r: RectF) : this(r.left, r.top, r.right, r.bottom)
+    fun union(x: Float, y: Float) { left = minOf(left, x); top = minOf(top, y); right = maxOf(right, x); bottom = maxOf(bottom, y) }
+    companion object {
+        fun intersects(a: RectF, b: RectF) = a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom
+    }
     fun set(l: Float, t: Float, r: Float, b: Float) { left = l; top = t; right = r; bottom = b }
     fun width() = right - left
     fun height() = bottom - top
@@ -70,7 +75,26 @@ class Typeface private constructor(val family: String, val bold: Boolean) {
 open class Shader {
     enum class TileMode { CLAMP, REPEAT, MIRROR }
     internal open fun awt(alpha: Float): java.awt.Paint? = null
+    internal var local = AffineTransform()
+    fun setLocalMatrix(m: Matrix?) { local = AffineTransform(m?.t ?: AffineTransform()) }
 }
+
+class PointF(var x: Float = 0f, var y: Float = 0f) {
+    fun set(x: Float, y: Float) { this.x = x; this.y = y }
+}
+
+class Matrix {
+    internal var t = AffineTransform()
+    fun reset() { t = AffineTransform() }
+    fun setScale(sx: Float, sy: Float) { t = AffineTransform.getScaleInstance(sx.toDouble(), sy.toDouble()) }
+    fun setScale(sx: Float, sy: Float, px: Float, py: Float) {
+        t = AffineTransform().apply { translate(px.toDouble(), py.toDouble()); scale(sx.toDouble(), sy.toDouble()); translate(-px.toDouble(), -py.toDouble()) }
+    }
+    fun setTranslate(dx: Float, dy: Float) { t = AffineTransform.getTranslateInstance(dx.toDouble(), dy.toDouble()) }
+    fun postTranslate(dx: Float, dy: Float): Boolean { t.preConcatenate(AffineTransform.getTranslateInstance(dx.toDouble(), dy.toDouble())); return true }
+}
+
+class Rect(var left: Int = 0, var top: Int = 0, var right: Int = 0, var bottom: Int = 0)
 
 private fun fractions(n: Int, positions: FloatArray?): FloatArray {
     val f = positions?.copyOf() ?: FloatArray(n) { if (n == 1) 0f else it / (n - 1f) }
@@ -94,14 +118,14 @@ class LinearGradient(val x0: Float, val y0: Float, val x1: Float, val y1: Float,
     constructor(x0: Float, y0: Float, x1: Float, y1: Float, c0: Int, c1: Int, tile: TileMode) : this(x0, y0, x1, y1, intArrayOf(c0, c1), null, tile)
     override fun awt(alpha: Float): java.awt.Paint {
         val same = x0 == x1 && y0 == y1
-        return java.awt.LinearGradientPaint(Point2D.Float(x0, y0), Point2D.Float(x1, if (same) y1 + 0.01f else y1), fractions(colors.size, positions), awtColors(colors, alpha), cycle(tile))
+        return java.awt.LinearGradientPaint(Point2D.Float(x0, y0), Point2D.Float(x1, if (same) y1 + 0.01f else y1), fractions(colors.size, positions), awtColors(colors, alpha), cycle(tile), MultipleGradientPaint.ColorSpaceType.SRGB, local)
     }
 }
 
 class RadialGradient(val cx: Float, val cy: Float, val r: Float, val colors: IntArray, val positions: FloatArray?, val tile: TileMode) : Shader() {
     constructor(cx: Float, cy: Float, r: Float, c0: Int, c1: Int, tile: TileMode) : this(cx, cy, r, intArrayOf(c0, c1), null, tile)
     override fun awt(alpha: Float): java.awt.Paint =
-        java.awt.RadialGradientPaint(Point2D.Float(cx, cy), r.coerceAtLeast(0.01f), fractions(colors.size, positions), awtColors(colors, alpha), cycle(tile))
+        java.awt.RadialGradientPaint(Point2D.Float(cx, cy), r.coerceAtLeast(0.01f), Point2D.Float(cx, cy), fractions(colors.size, positions), awtColors(colors, alpha), cycle(tile), MultipleGradientPaint.ColorSpaceType.SRGB, local)
 }
 
 class SweepGradient(val cx: Float, val cy: Float, val colors: IntArray, val positions: FloatArray?) : Shader() {
@@ -138,7 +162,7 @@ private class SweepPaint(val s: SweepGradient, val alpha: Float) : java.awt.Pain
     }
 }
 
-class Bitmap private constructor(val image: BufferedImage) {
+class Bitmap private constructor(val image: BufferedImage, val alpha8: Boolean = false) {
     enum class Config { ARGB_8888, ALPHA_8, RGB_565 }
     enum class CompressFormat { PNG }
     val width get() = image.width
@@ -146,8 +170,38 @@ class Bitmap private constructor(val image: BufferedImage) {
     fun setPixel(x: Int, y: Int, c: Int) = image.setRGB(x, y, c)
     fun getPixel(x: Int, y: Int) = image.getRGB(x, y)
     fun recycle() {}
+    fun compress(format: CompressFormat, quality: Int, out: java.io.OutputStream): Boolean = javax.imageio.ImageIO.write(image, "png", out)
+
+    /** Le masque flouté (flou gaussien approché par trois flous en boîte), décalé de -rayon. */
+    fun extractAlpha(paint: Paint?, offset: IntArray): Bitmap {
+        val r = ((paint?.maskFilter as? BlurMaskFilter)?.radius ?: 0f).toInt().coerceAtLeast(1)
+        val w = width + 2 * r
+        val h = height + 2 * r
+        var a = FloatArray(w * h)
+        for (y in 0 until height) for (x in 0 until width) a[(y + r) * w + x + r] = Color.alpha(image.getRGB(x, y)).toFloat()
+        val k = (r / 1.7f).toInt().coerceAtLeast(1)
+        repeat(3) {
+            val b = FloatArray(w * h)
+            for (y in 0 until h) { var sum = 0f; for (x in -k until w + k) { if (x + k < w) sum += a[y * w + x + k]; if (x - k - 1 >= 0) sum -= a[y * w + x - k - 1]; if (x in 0 until w) b[y * w + x] = sum / (2 * k + 1) } }
+            val c = FloatArray(w * h)
+            for (x in 0 until w) { var sum = 0f; for (y in -k until h + k) { if (y + k < h) sum += b[(y + k) * w + x]; if (y - k - 1 >= 0) sum -= b[(y - k - 1) * w + x]; if (y in 0 until h) c[y * w + x] = sum / (2 * k + 1) } }
+            a = c
+        }
+        val out = BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB)
+        for (i in a.indices) out.setRGB(i % w, i / w, (a[i].toInt().coerceIn(0, 255) shl 24) or 0xFFFFFF)
+        offset[0] = -r; offset[1] = -r
+        return Bitmap(out, true)
+    }
     companion object {
-        fun createBitmap(w: Int, h: Int, c: Config) = Bitmap(BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB))
+        fun createBitmap(w: Int, h: Int, c: Config) = Bitmap(BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB), c == Config.ALPHA_8)
+        fun createScaledBitmap(src: Bitmap, w: Int, h: Int, filter: Boolean): Bitmap {
+            val out = BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB)
+            out.createGraphics().apply {
+                setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR)
+                drawImage(src.image, 0, 0, w, h, null); dispose()
+            }
+            return Bitmap(out, src.alpha8)
+        }
     }
 }
 
@@ -247,6 +301,8 @@ class Path() {
         p = Path2D.Float(a); return true
     }
     fun offset(dx: Float, dy: Float) = p.transform(AffineTransform.getTranslateInstance(dx.toDouble(), dy.toDouble()))
+    fun transform(m: Matrix) = p.transform(m.t)
+    fun computeBounds(r: RectF, exact: Boolean) { val b = p.bounds2D; r.set(b.minX.toFloat(), b.minY.toFloat(), b.maxX.toFloat(), b.maxY.toFloat()) }
     val isEmpty get() = p.currentPoint == null
 }
 
@@ -406,5 +462,27 @@ class Canvas(private val bitmap: Bitmap) {
         g.drawString(text, x + dx, y)
     }
     fun drawText(chars: CharArray, index: Int, count: Int, x: Float, y: Float, paint: Paint) = drawText(String(chars, index, count), x, y, paint)
-    fun drawBitmap(b: Bitmap, x: Float, y: Float, paint: Paint?) { g.drawImage(b.image, x.toInt(), y.toInt(), null) }
+    fun drawBitmap(b: Bitmap, x: Float, y: Float, paint: Paint?) = drawBitmap(b, null, RectF(x, y, x + b.width, y + b.height), paint)
+    fun drawBitmap(b: Bitmap, src: Rect?, dst: RectF, paint: Paint?) {
+        val img = if (b.alpha8 && paint != null) tint(b.image, paint.color) else b.image
+        val a = if (b.alpha8 || paint == null) 1f else paint.alpha / 255f
+        g.composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, a)
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR)
+        g.drawImage(img, dst.left.toInt(), dst.top.toInt(), dst.width().toInt(), dst.height().toInt(), null)
+        g.composite = AlphaComposite.SrcOver
+    }
+
+    /** Un masque ALPHA_8 dessiné avec une peinture : la couleur de la peinture, l'alpha du masque. */
+    private fun tint(image: BufferedImage, color: Int): BufferedImage {
+        val out = BufferedImage(image.width, image.height, BufferedImage.TYPE_INT_ARGB)
+        val rgb = color and 0xFFFFFF
+        val pa = Color.alpha(color)
+        val row = IntArray(image.width)
+        for (y in 0 until image.height) {
+            image.getRGB(0, y, image.width, 1, row, 0, image.width)
+            for (x in row.indices) row[x] = ((Color.alpha(row[x]) * pa / 255) shl 24) or rgb
+            out.setRGB(0, y, image.width, 1, row, 0, image.width)
+        }
+        return out
+    }
 }

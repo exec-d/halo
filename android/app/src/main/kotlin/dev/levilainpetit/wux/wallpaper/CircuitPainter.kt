@@ -13,6 +13,7 @@ import android.graphics.RectF
 import android.graphics.Shader
 import dev.levilainpetit.wux.R
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sin
 
@@ -124,7 +125,7 @@ class CircuitPainter(private val scene: CircuitScene) {
             canvas.drawBitmap(layer.core, 0f, 0f, maskPaint)
             if (igniting) ignite(canvas, index, state, palette)
             when (index) {
-                CircuitScene.BATTERY -> battery(canvas, state, palette)
+                CircuitScene.BATTERY -> if (scene.flux != null) flux(canvas, scene.flux, state, palette) else battery(canvas, state, palette)
                 CircuitScene.BOARD -> {
                     antennas(canvas, state, palette)
                     pulses(canvas, state, palette)
@@ -134,7 +135,7 @@ class CircuitPainter(private val scene: CircuitScene) {
         }
 
         glassMatrix.setTranslate(-state.tiltX * maxShift * 4f, -state.tiltY * maxShift * 4f)
-        glass.shader.setLocalMatrix(glassMatrix)
+        glass.shader?.setLocalMatrix(glassMatrix)
         canvas.drawRect(0f, 0f, scene.width.toFloat(), scene.height.toFloat(), glass)
 
         if (state.locked) canvas.drawRect(0f, 0f, scene.width.toFloat(), scene.height * 0.34f, lockShade)
@@ -155,6 +156,81 @@ class CircuitPainter(private val scene: CircuitScene) {
         canvas.drawLine(cell.left + 1.5f * density, top, cell.right - 1.5f * density, top, stroke)
     }
 
+    /**
+     * Le convecteur temporel : une impulsion court le long des trois bras,
+     * lampe après lampe, jusqu'au cœur qui s'illumine ; plus vite pendant la
+     * charge. La jauge au-dessus du hublot montre le niveau de batterie.
+     */
+    private fun flux(canvas: Canvas, flux: CircuitScene.Flux, state: FrameState, palette: CircuitPalette) {
+        val u = flux.unit
+        // L'animation reste visible en « Discret », comme les impulsions.
+        val strength = 0.4f + 0.6f * state.intensity
+        val speed = if (state.charging) 1.6f else 0.9f
+        val phase = (state.timeMillis / 1000f * speed) % 1f * 7f
+        for (lamps in flux.arms) {
+            lamps.forEachIndexed { i, lamp ->
+                val level = max(0f, 1f - abs(phase - i) * 1.4f)
+                if (i < lamps.size - 1 && level > 0f) {
+                    val next = lamps[i + 1]
+                    stroke.color = palette.glow
+                    stroke.alpha = (90 * level * strength).toInt()
+                    stroke.strokeWidth = 5f * density
+                    canvas.drawLine(lamp.x, lamp.y, next.x, next.y, stroke)
+                    stroke.color = palette.core
+                    stroke.alpha = (230 * level * strength).toInt()
+                    stroke.strokeWidth = 1.4f * density
+                    canvas.drawLine(lamp.x, lamp.y, next.x, next.y, stroke)
+                }
+                val a = (0.2f + 0.8f * level) * strength
+                halo(canvas, lamp, 2.6f * u, (150 * a).toInt(), palette)
+                fill.color = palette.core
+                fill.alpha = (255 * a).toInt()
+                canvas.drawCircle(lamp.x, lamp.y, 0.7f * u, fill)
+            }
+        }
+        // Le cœur s'illumine quand les trois impulsions s'y rejoignent.
+        val flash = max(0f, 1f - abs(phase - 5.3f) * 0.9f)
+        halo(canvas, flux.core, flux.coreRadius * (1.4f + flash), ((50 + 200 * flash) * strength).toInt(), palette)
+        fill.color = palette.core
+        fill.alpha = ((60 + 195 * flash) * strength).toInt()
+        canvas.drawCircle(flux.core.x, flux.core.y, flux.coreRadius * 0.55f, fill)
+
+        // La jauge : une case par dixième de batterie, la dernière respire en charge.
+        val g = flux.gauge
+        val cells = (state.batteryLevel.coerceIn(0f, 1f) * 10f).let { kotlin.math.ceil(it).toInt() }.coerceIn(1, 10)
+        val breath = if (state.charging) (sin(state.timeMillis / 700.0 * PI).toFloat() + 1f) / 2f else 1f
+        val cell = g.width() / 10f
+        for (i in 0 until cells) {
+            fill.color = palette.glow
+            val a = if (i == cells - 1) 0.35f + 0.65f * breath else 1f
+            fill.alpha = (150 * a * strength).toInt()
+            val left = g.left + i * cell
+            canvas.drawRect(left + 0.35f * u, g.top + 0.35f * u, left + cell - 0.35f * u, g.bottom - 0.35f * u, fill)
+        }
+    }
+
+    /** Un halo rond, du cœur vers rien. */
+    private fun halo(canvas: Canvas, at: PointF, radius: Float, alpha: Int, palette: CircuitPalette) {
+        val shader = glowShader(palette)
+        pulseMatrix.setScale(radius / (9f * density), radius / (9f * density))
+        pulseMatrix.postTranslate(at.x, at.y)
+        shader.setLocalMatrix(pulseMatrix)
+        pulseGlow.shader = shader
+        pulseGlow.alpha = alpha.coerceIn(0, 255)
+        canvas.drawCircle(at.x, at.y, radius, pulseGlow)
+    }
+
+    private fun glowShader(palette: CircuitPalette): RadialGradient {
+        if (pulseShader == null || pulseColor != palette.glow) {
+            pulseColor = palette.glow
+            pulseShader = RadialGradient(
+                0f, 0f, 9f * density,
+                palette.glow, palette.glow and 0x00FFFFFF, Shader.TileMode.CLAMP,
+            )
+        }
+        return pulseShader!!
+    }
+
     private fun antennas(canvas: Canvas, state: FrameState, palette: CircuitPalette) {
         val strength = 0.25f + 0.75f * state.signal.coerceIn(0f, 1f)
         stroke.color = palette.glow
@@ -169,14 +245,7 @@ class CircuitPainter(private val scene: CircuitScene) {
 
     private fun pulses(canvas: Canvas, state: FrameState, palette: CircuitPalette) {
         if (state.pulses.isEmpty()) return
-        if (pulseShader == null || pulseColor != palette.glow) {
-            pulseColor = palette.glow
-            pulseShader = RadialGradient(
-                0f, 0f, 9f * density,
-                palette.glow, palette.glow and 0x00FFFFFF, Shader.TileMode.CLAMP,
-            )
-        }
-        val shader = pulseShader!!
+        val shader = glowShader(palette)
         pulseGlow.shader = shader
         val strength = 0.4f + 0.6f * state.intensity
         for (pulse in state.pulses) {

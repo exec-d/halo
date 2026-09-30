@@ -625,47 +625,22 @@ class AppLocalizationsEn extends AppLocalizations {
       'The animation stops as soon as the wallpaper is no longer visible, and only runs continuously during a movement, a pulse or charging.';
 
   @override
-  String get wallpaperSceneBattery =>
-      'The animation stops as soon as the wallpaper is no longer visible. Like the widgets, the wallpaper takes the phone\'s colors.';
-
-  @override
-  String get wallpaperBlueprintTraceTitle => 'The drawing';
-
-  @override
-  String get wallpaperBlueprintTraceText =>
-      'Each time the screen turns on, the drawing traces itself line by line, dimensions and title block included.';
-
-  @override
-  String get wallpaperBlueprintMotionTitle => 'What moves';
-
-  @override
-  String get wallpaperBlueprintTiltTitle => 'Tilt';
-
-  @override
-  String get wallpaperBlueprintTiltText =>
-      'The views shift a little when you tilt the phone, like an exploded view. The drawing takes the phone\'s colors.';
-
-  @override
-  String get wallpaperTronTitle => 'Tron';
-
-  @override
-  String get wallpaperTronDescription =>
-      'The light cycle from Tron: Legacy, as a technical drawing.';
-
-  @override
-  String get wallpaperTronMotion =>
-      'The hubless wheels spin, the light strip pulses and a light ribbon trails behind the cycle.';
-
-  @override
   String get wallpaperFluxTitle => 'Back to the Future';
 
   @override
   String get wallpaperFluxDescription =>
-      'The DeLorean\'s flux capacitor, as a technical drawing.';
+      'The DeLorean\'s flux capacitor, fitted inside the phone in place of the battery.';
 
   @override
-  String get wallpaperFluxMotion =>
-      'Pulses race along the three arms to the core, which flashes; on the power curve, the operating point climbs to 88 mph and 1.21 gigawatts.';
+  String get wallpaperFluxMotion => 'The flux capacitor';
+
+  @override
+  String get wallpaperFluxMotionText =>
+      'Pulses race along the three arms to the core, which flashes; faster while charging. Above the window, the gauge shows the battery level.';
+
+  @override
+  String get wallpaperFluxBattery =>
+      'The animation stops as soon as the wallpaper is no longer visible; on screen, the flux capacitor runs continuously at a reduced frame rate.';
 
   @override
   String get widgetClockTitle => 'Clock';

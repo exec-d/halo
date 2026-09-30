@@ -41,7 +41,10 @@ import kotlin.random.Random
  * dessine en continu que pendant une animation ; au repos, seule une nouvelle
  * inclinaison, une impulsion ou un changement d'état réveille le dessin.
  */
-class HaloWallpaperService : WallpaperService() {
+open class HaloWallpaperService : WallpaperService() {
+
+    /** Le convecteur temporel à la place de la batterie (voir [FluxWallpaperService]). */
+    protected open val flux = false
 
     override fun onCreateEngine(): Engine = CircuitEngine()
 
@@ -123,7 +126,7 @@ class HaloWallpaperService : WallpaperService() {
             if (width <= 0 || height <= 0) return
             if (scene?.width == width && scene?.height == height) return
             scene?.recycle()
-            val built = CircuitScene.build(width, height, resources.displayMetrics.density)
+            val built = CircuitScene.build(width, height, resources.displayMetrics.density, flux)
             scene = built
             painter = CircuitPainter(built)
             state.pulses.clear()
@@ -250,7 +253,7 @@ class HaloWallpaperService : WallpaperService() {
         private fun requestFrame() {
             if (!visible || frameScheduled) return
             frameScheduled = true
-            val wait = (FRAME_MILLIS - (SystemClock.uptimeMillis() - lastFrame)).coerceAtLeast(0L)
+            val wait = ((if (flux) FLUX_FRAME_MILLIS else FRAME_MILLIS) - (SystemClock.uptimeMillis() - lastFrame)).coerceAtLeast(0L)
             handler.postDelayed(frame, wait)
         }
 
@@ -278,12 +281,14 @@ class HaloWallpaperService : WallpaperService() {
             }
 
             val moving = abs(targetX - state.tiltX) > TILT_EPSILON || abs(targetY - state.tiltY) > TILT_EPSILON
-            if (moving || state.ignition < 1f || state.pulses.isNotEmpty() || state.charging) requestFrame()
+            // Le convecteur s'anime sans cesse, à une cadence plus lente.
+            if (flux || moving || state.ignition < 1f || state.pulses.isNotEmpty() || state.charging) requestFrame()
         }
     }
 
     private companion object {
         const val FRAME_MILLIS = 33L
+        const val FLUX_FRAME_MILLIS = 45L
         const val SAMPLE_MILLIS = 1000L
         const val SIGNAL_MILLIS = 5000L
         const val IGNITION_MILLIS = 1300L
@@ -297,4 +302,13 @@ class HaloWallpaperService : WallpaperService() {
         /** Part de l'écart rattrapée par la position de repos à chaque mesure. */
         const val BASE_FOLLOW = 0.006f
     }
+}
+
+/**
+ * Fond d'écran animé « Retour vers le futur » : le même intérieur de
+ * téléphone que Circuit, avec le convecteur temporel à la place de la
+ * batterie. Ses impulsions courent vers le cœur, plus vite en charge.
+ */
+class FluxWallpaperService : HaloWallpaperService() {
+    override val flux = true
 }

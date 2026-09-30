@@ -1,9 +1,6 @@
 package dev.levilainpetit.wux.wallpaper
 
 import android.app.WallpaperManager
-import dev.levilainpetit.wux.wallpaper.blueprint.BlueprintScene
-import dev.levilainpetit.wux.wallpaper.blueprint.FluxCapacitor
-import dev.levilainpetit.wux.wallpaper.blueprint.LightCycle
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -21,13 +18,16 @@ object WallpaperPreview {
      * allumé, au vrai niveau de batterie, avec quelques impulsions en route.
      */
     fun render(context: Context, widthPx: Int, heightPx: Int, kind: String = CIRCUIT): ByteArray {
-        SCENES[kind]?.let { return renderScene(context, widthPx, heightPx, it.scene()) }
         val intensity = WallpaperSettings.intensity(context)
         val metrics = context.resources.displayMetrics
         // Même rendu qu'à l'écran, réduit : les traits gardent leur proportion.
         val density = metrics.density * widthPx / metrics.widthPixels.coerceAtLeast(1)
-        val scene = CircuitScene.build(widthPx, heightPx, density)
-        val state = FrameState().apply { this.intensity = intensity }
+        val scene = CircuitScene.build(widthPx, heightPx, density, flux = kind == FLUX)
+        // Pour le convecteur, l'instant où les impulsions arrivent au cœur.
+        val state = FrameState().apply {
+            this.intensity = intensity
+            timeMillis = 830L
+        }
         context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))?.let {
             val level = it.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
             val scale = it.getIntExtra(BatteryManager.EXTRA_SCALE, 100)
@@ -39,26 +39,6 @@ object WallpaperPreview {
         val bitmap = Bitmap.createBitmap(widthPx, heightPx, Bitmap.Config.ARGB_8888)
         CircuitPainter(scene).draw(Canvas(bitmap), state, CircuitPalette.of(context))
         scene.recycle()
-        return ByteArrayOutputStream().use { out ->
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-            bitmap.recycle()
-            out.toByteArray()
-        }
-    }
-
-    /** Un plan technique, dessiné une fois, immobile. */
-    private fun renderScene(context: Context, widthPx: Int, heightPx: Int, scene: LiveScene): ByteArray {
-        val metrics = context.resources.displayMetrics
-        val density = metrics.density * widthPx / metrics.widthPixels.coerceAtLeast(1)
-        scene.resize(widthPx, heightPx, density)
-        scene.refresh()
-        val frame = LiveFrame().apply {
-            timeMillis = System.currentTimeMillis()
-            intensity = WallpaperSettings.intensity(context)
-            palette = CircuitPalette.of(context)
-        }
-        val bitmap = Bitmap.createBitmap(widthPx, heightPx, Bitmap.Config.ARGB_8888)
-        scene.draw(Canvas(bitmap), frame)
         return ByteArrayOutputStream().use { out ->
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
             bitmap.recycle()
@@ -78,17 +58,10 @@ object WallpaperPreview {
             .putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, component(context, kind))
 
     private fun component(context: Context, kind: String) =
-        ComponentName(context, SCENES[kind]?.service ?: HaloWallpaperService::class.java)
-
-    /** Un fond fait d'une scène : son service et de quoi la créer. */
-    private class Scene(val service: Class<*>, val scene: () -> LiveScene)
-
-    const val CIRCUIT = "circuit"
+        ComponentName(context, if (kind == FLUX) FluxWallpaperService::class.java else HaloWallpaperService::class.java)
 
     /** Les identifiants sont partagés avec Dart (`wallpaper_screen.dart`). */
-    private val SCENES = linkedMapOf(
-        "tron" to Scene(TronWallpaperService::class.java) { BlueprintScene(LightCycle()) },
-        "flux" to Scene(FluxWallpaperService::class.java) { BlueprintScene(FluxCapacitor()) },
-    )
-    private val KINDS = listOf(CIRCUIT) + SCENES.keys
+    const val CIRCUIT = "circuit"
+    const val FLUX = "flux"
+    private val KINDS = listOf(CIRCUIT, FLUX)
 }

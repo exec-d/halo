@@ -243,7 +243,7 @@ class _CatalogScreenState extends State<CatalogScreen>
                 onTap: () => setState(() => _tab = 1),
               ),
             ),
-            // Tous construits (pas de liste paresseuse) : six fonds.
+            // Tous construits (pas de liste paresseuse) : il y a peu de fonds.
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -603,7 +603,7 @@ class _TextLink extends StatelessWidget {
 }
 
 /// Les identifiants des fonds marqués « Nouveau ».
-const _newWallpapers = {'tron', 'flux'};
+const _newWallpapers = {'flux'};
 
 /// Un fond d'écran en portrait : son aperçu recadré et son nom.
 class _WallpaperTile extends StatelessWidget {

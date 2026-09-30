@@ -629,47 +629,22 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'animation s\'arrête dès que le fond n\'est plus visible, et ne tourne en continu que pendant un mouvement, une impulsion ou une charge.';
 
   @override
-  String get wallpaperSceneBattery =>
-      'L\'animation s\'arrête dès que le fond n\'est plus visible. Comme les widgets, le fond prend les couleurs du téléphone.';
-
-  @override
-  String get wallpaperBlueprintTraceTitle => 'Le tracé';
-
-  @override
-  String get wallpaperBlueprintTraceText =>
-      'À chaque allumage de l\'écran, le plan se dessine trait par trait, cotes et cartouche compris.';
-
-  @override
-  String get wallpaperBlueprintMotionTitle => 'Ce qui bouge';
-
-  @override
-  String get wallpaperBlueprintTiltTitle => 'Inclinaison';
-
-  @override
-  String get wallpaperBlueprintTiltText =>
-      'Les vues glissent un peu quand vous penchez le téléphone, comme une vue éclatée. Le plan prend les couleurs du téléphone.';
-
-  @override
-  String get wallpaperTronTitle => 'Tron';
-
-  @override
-  String get wallpaperTronDescription =>
-      'La moto de lumière de Tron : l\'héritage, en plan technique.';
-
-  @override
-  String get wallpaperTronMotion =>
-      'Les roues sans moyeu tournent, le liseré pulse et un ruban de lumière se dépose derrière la moto.';
-
-  @override
   String get wallpaperFluxTitle => 'Retour vers le futur';
 
   @override
   String get wallpaperFluxDescription =>
-      'Le convecteur temporel de la DeLorean, en plan technique.';
+      'Le convecteur temporel de la DeLorean, installé dans le téléphone à la place de la batterie.';
 
   @override
-  String get wallpaperFluxMotion =>
-      'Les impulsions courent le long des trois bras jusqu\'au cœur, qui s\'illumine ; sur la courbe, le point de fonctionnement grimpe jusqu\'à 88 mph et 1,21 gigawatt.';
+  String get wallpaperFluxMotion => 'Le convecteur';
+
+  @override
+  String get wallpaperFluxMotionText =>
+      'Les impulsions courent le long des trois bras jusqu\'au cœur, qui s\'illumine ; plus vite pendant la charge. Au-dessus du hublot, la jauge montre le niveau de batterie.';
+
+  @override
+  String get wallpaperFluxBattery =>
+      'L\'animation s\'arrête dès que le fond n\'est plus visible ; à l\'écran, le convecteur tourne sans cesse, à cadence réduite.';
 
   @override
   String get widgetClockTitle => 'Horloge';

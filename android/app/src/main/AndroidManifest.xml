@@ -441,18 +441,6 @@
         </service>
         <!-- Fonds d'écran animés en plan technique (SceneWallpapers.kt). -->
         <service
-            android:name=".wallpaper.TronWallpaperService"
-            android:exported="true"
-            android:label="@string/wallpaper_tron_label"
-            android:permission="android.permission.BIND_WALLPAPER">
-            <intent-filter>
-                <action android:name="android.service.wallpaper.WallpaperService" />
-            </intent-filter>
-            <meta-data
-                android:name="android.service.wallpaper"
-                android:resource="@xml/halo_wallpaper_tron" />
-        </service>
-        <service
             android:name=".wallpaper.FluxWallpaperService"
             android:exported="true"
             android:label="@string/wallpaper_flux_label"

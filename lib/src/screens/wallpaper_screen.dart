@@ -46,41 +46,25 @@ List<(String, String)> _circuitFeatures(AppLocalizations l) => [
 ];
 String _circuitBattery(AppLocalizations l) => l.wallpaperCircuitBattery;
 
-const tronWallpaper = HaloWallpaper(
-  id: 'tron',
-  title: _tronTitle,
-  description: _tronDescription,
-  features: _tronFeatures,
-  battery: _sceneBattery,
-);
-String _tronTitle(AppLocalizations l) => l.wallpaperTronTitle;
-String _tronDescription(AppLocalizations l) => l.wallpaperTronDescription;
-List<(String, String)> _tronFeatures(AppLocalizations l) =>
-    _blueprint(l, l.wallpaperTronMotion);
-
 const fluxWallpaper = HaloWallpaper(
   id: 'flux',
   title: _fluxTitle,
   description: _fluxDescription,
   features: _fluxFeatures,
-  battery: _sceneBattery,
+  battery: _fluxBattery,
 );
 String _fluxTitle(AppLocalizations l) => l.wallpaperFluxTitle;
 String _fluxDescription(AppLocalizations l) => l.wallpaperFluxDescription;
-List<(String, String)> _fluxFeatures(AppLocalizations l) =>
-    _blueprint(l, l.wallpaperFluxMotion);
-
-/// Ce que les plans techniques ont en commun, et ce qui bouge dans chacun.
-List<(String, String)> _blueprint(AppLocalizations l, String motion) => [
-  (l.wallpaperBlueprintTraceTitle, l.wallpaperBlueprintTraceText),
-  (l.wallpaperBlueprintMotionTitle, motion),
-  (l.wallpaperBlueprintTiltTitle, l.wallpaperBlueprintTiltText),
+List<(String, String)> _fluxFeatures(AppLocalizations l) => [
+  (l.wallpaperFluxMotion, l.wallpaperFluxMotionText),
+  (l.wallpaperCircuitTiltTitle, l.wallpaperCircuitTiltText),
+  (l.wallpaperCircuitNetworkTitle, l.wallpaperCircuitNetworkText),
+  (l.wallpaperCircuitWakeTitle, l.wallpaperCircuitWakeText),
 ];
-
-String _sceneBattery(AppLocalizations l) => l.wallpaperSceneBattery;
+String _fluxBattery(AppLocalizations l) => l.wallpaperFluxBattery;
 
 /// Les fonds d'écran animés, dans l'ordre du catalogue.
-const haloWallpapers = [circuitWallpaper, tronWallpaper, fluxWallpaper];
+const haloWallpapers = [circuitWallpaper, fluxWallpaper];
 
 /// Un fond d'écran animé : aperçu, ce qu'il montre, son intensité et son
 /// application à l'accueil et à l'écran de verrouillage.

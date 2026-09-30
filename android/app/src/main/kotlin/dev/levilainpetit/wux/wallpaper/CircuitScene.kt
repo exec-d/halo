@@ -27,6 +27,10 @@ import kotlin.random.Random
  *
  * Les coordonnées sont en « unités » : un centième de la largeur de l'écran.
  * Tout est décrit vu de dos, puis retourné comme on le verrait par l'écran.
+ *
+ * Variante « convecteur temporel » ([flux]) : à la place de la batterie et
+ * de la bobine, le boîtier de Retour vers le futur, porte à hublot, Y des
+ * trois chambres de flux et câbles montant vers la carte mère.
  */
 class CircuitScene private constructor(
     val width: Int,
@@ -48,7 +52,15 @@ class CircuitScene private constructor(
     /** Petits parcours internes pour le battement de cœur du processeur. */
     val innerRoutes: List<Route>,
     val density: Float,
+    /** Le convecteur temporel, s'il remplace la batterie. */
+    val flux: Flux? = null,
 ) {
+
+    /**
+     * Ce qui s'anime dans le convecteur : les lampes de chaque bras, du bout
+     * vers le cœur, le cœur, et la jauge (le niveau de batterie).
+     */
+    class Flux(val arms: List<List<PointF>>, val core: PointF, val coreRadius: Float, val gauge: RectF, val unit: Float)
 
     class Layer(
         /** 0 : collé au verre ; 1 : au fond du téléphone. */
@@ -105,10 +117,11 @@ class CircuitScene private constructor(
         const val GLASS = 3
         const val GLOW_SCALE = 2
 
-        fun build(width: Int, height: Int, density: Float): CircuitScene = Builder(width, height, density).build()
+        fun build(width: Int, height: Int, density: Float, flux: Boolean = false): CircuitScene =
+            Builder(width, height, density, flux).build()
     }
 
-    private class Builder(val width: Int, val height: Int, val density: Float) {
+    private class Builder(val width: Int, val height: Int, val density: Float, val flux: Boolean) {
         val u = width / 100f
         /** Hauteur de l'écran en unités (≈ 222 sur un téléphone 20:9). */
         val h = height / u
@@ -159,7 +172,7 @@ class CircuitScene private constructor(
             val inner = innerRoutes()
             val layers = listOf(
                 layer(depth = 1f, alpha = 90) { chassis(it) },
-                layer(depth = 0.55f, alpha = 150) { battery(it) },
+                layer(depth = 0.55f, alpha = 150) { if (flux) capacitor(it) else battery(it) },
                 layer(depth = 0.2f, alpha = 230) { board(it) },
                 layer(depth = 0f, alpha = 170) { glass(it) },
             )
@@ -178,6 +191,19 @@ class CircuitScene private constructor(
                 dataRoutes = data.map { it.mirrored() },
                 innerRoutes = inner.map { it.mirrored() },
                 density = density,
+                flux = if (flux) {
+                    fun PointF.m() = PointF(width - x, y)
+                    val g = gauge()
+                    Flux(
+                        arms = arms().map { arm -> arm.lamps.map { it.m() } },
+                        core = center().m(),
+                        coreRadius = qs(46f),
+                        gauge = RectF(width - g.right, g.top, width - g.left, g.bottom),
+                        unit = u,
+                    )
+                } else {
+                    null
+                },
             )
         }
 
@@ -190,7 +216,12 @@ class CircuitScene private constructor(
             listOf(connector, bottomConnector).forEach { rect(it, 0f) }
             rect(usb, 2.7f)
             rect(motor, 2f)
-            rect(battery, 4f, BATTERY)
+            rect(battery, if (flux) 2f else 4f, BATTERY)
+            if (flux) {
+                arms().forEach { shapes += Path().apply { addPoly(it.body) } to BATTERY }
+                val core = center()
+                shapes += Path().apply { addCircle(core.x, core.y, qs(46f), Path.Direction.CW) } to BATTERY
+            }
             rect(pill, 8.5f)
             for ((center, radius) in listOf(camera1 to camera1Radius, camera2 to camera2Radius)) {
                 shapes += Path().apply { addCircle(center.x, center.y, radius * u, Path.Direction.CW) } to BOARD
@@ -247,9 +278,11 @@ class CircuitScene private constructor(
             canvas.drawCircle(sim.centerX(), sim.bottom - 1.2f * u, 0.35f * u, thin)
 
             val coil = PointF(battery.centerX(), battery.centerY())
-            for (i in 0 until 8) canvas.drawCircle(coil.x, coil.y, (22f - i * 1.6f) * u, thin)
-            canvas.drawLine(coil.x - 1.5f * u, coil.y + 22f * u, coil.x - 1.5f * u, coil.y + 27f * u, thin)
-            canvas.drawLine(coil.x + 1.5f * u, coil.y + 22f * u, coil.x + 1.5f * u, coil.y + 27f * u, thin)
+            if (!flux) for (i in 0 until 8) canvas.drawCircle(coil.x, coil.y, (22f - i * 1.6f) * u, thin)
+            if (!flux) {
+                canvas.drawLine(coil.x - 1.5f * u, coil.y + 22f * u, coil.x - 1.5f * u, coil.y + 27f * u, thin)
+                canvas.drawLine(coil.x + 1.5f * u, coil.y + 22f * u, coil.x + 1.5f * u, coil.y + 27f * u, thin)
+            }
 
             listOf(
                 p(11f, top + 3f), p(89f, top + 3f), p(11f, board.bottom / u - 3f),
@@ -306,6 +339,117 @@ class CircuitScene private constructor(
                 val cx = battery.left + (22f + i * 24f) * u
                 canvas.drawRect(RectF(cx - 3f * u, battery.bottom - 0.8f * u, cx + 3f * u, battery.bottom + 3f * u), thin)
             }
+        }
+
+        // ——— Plan du milieu, variante : le convecteur temporel ———
+        //
+        // Le boîtier prend la place de la batterie. Ses cotes sont celles du
+        // décor du film (600 × 760 mm), ramenées au rectangle de la batterie
+        // par [q] : origine en haut à gauche du boîtier, vu de dos.
+
+        fun q(x: Float, y: Float) = PointF(battery.left + x * battery.width() / 600f, battery.top + y * battery.height() / 760f)
+        fun qs(v: Float) = v * battery.width() / 600f
+        fun qr(l: Float, t: Float, r: Float, b: Float) = q(l, t).let { a -> q(r, b).let { z -> RectF(a.x, a.y, z.x, z.y) } }
+
+        fun center() = q(300f, 400f)
+
+        /** Un bras du Y : le corps de l'électrode (4 coins), ses bagues, le tube, les lampes. */
+        class Arm(val body: List<PointF>, val rings: List<Pair<PointF, PointF>>, val tube: List<Pair<PointF, PointF>>, val lamps: List<PointF>, val gaps: List<Pair<PointF, PointF>>)
+
+        fun arms(): List<Arm> {
+            val c = center()
+            return listOf(q(140f, 185f), q(460f, 185f), q(300f, 650f)).map { e ->
+                val len = hypot(c.x - e.x, c.y - e.y)
+                val ux = (c.x - e.x) / len
+                val uy = (c.y - e.y) / len
+                val nx = -uy
+                val ny = ux
+                fun at(t: Float, side: Float) = PointF(e.x + ux * t + nx * side, e.y + uy * t + ny * side)
+                val h = qs(34f)
+                val body = qs(90f)
+                val start = body
+                val end = len - qs(44f)
+                val lamps = (0 until 5).map { i -> start + qs(20f) + (end - start - qs(40f)) * i / 4f }
+                Arm(
+                    body = listOf(at(0f, h), at(body, h), at(body, -h), at(0f, -h)),
+                    rings = listOf(22f, 45f, 68f).map { at(qs(it), h) to at(qs(it), -h) },
+                    tube = listOf(at(start, qs(14f)) to at(end, qs(14f)), at(start, -qs(14f)) to at(end, -qs(14f))),
+                    lamps = lamps.map { at(it, 0f) },
+                    gaps = lamps.map { at(it, qs(22f)) to at(it, -qs(22f)) },
+                )
+            }
+        }
+
+        /** La jauge, au-dessus du hublot (le bas du boîtier passe sous le lecteur d'empreinte). */
+        fun gauge() = qr(176f, 42f, 424f, 70f)
+
+        private fun Path.addPoly(points: List<PointF>) {
+            moveTo(points[0].x, points[0].y)
+            points.drop(1).forEach { lineTo(it.x, it.y) }
+            close()
+        }
+
+        private fun chamfer(l: Float, t: Float, r: Float, b: Float, c: Float) = listOf(
+            q(l + c, t), q(r - c, t), q(r, t + c), q(r, b - c), q(r - c, b), q(l + c, b), q(l, b - c), q(l, t + c),
+        )
+
+        private fun capacitor(canvas: Canvas) {
+            // Le boîtier, la porte, le hublot à pans coupés.
+            canvas.drawRoundRect(battery, 2f * u, 2f * u, line)
+            canvas.drawRoundRect(qr(22f, 22f, 578f, 738f), 1.2f * u, 1.2f * u, thin)
+            canvas.drawPath(Path().apply { addPoly(chamfer(72f, 92f, 528f, 690f, 34f)) }, line)
+            canvas.drawPath(Path().apply { addPoly(chamfer(86f, 106f, 514f, 676f, 28f)) }, thin)
+            // Charnières d'un côté, loquet de l'autre.
+            canvas.drawRect(qr(-14f, 120f, 0f, 200f), thin)
+            canvas.drawRect(qr(-14f, 560f, 0f, 640f), thin)
+            canvas.drawRect(qr(578f, 330f, 606f, 470f), thin)
+            canvas.drawRect(qr(592f, 360f, 620f, 440f), thin)
+            // Quatre vis aux coins de la porte.
+            listOf(q(48f, 48f), q(552f, 48f), q(48f, 712f), q(552f, 712f)).forEach { screw(canvas, it) }
+            // La jauge, en dix cases.
+            val g = gauge()
+            canvas.drawRect(g, thin)
+            for (i in 1 until 10) {
+                val x = g.left + g.width() * i / 10f
+                canvas.drawLine(x, g.top + 0.5f * u, x, g.bottom - 0.5f * u, thin)
+            }
+            // Les trois câbles d'alimentation, qui montent jusqu'à la carte mère.
+            for (x in floatArrayOf(150f, 300f, 450f)) {
+                val gland = qr(x - 30f, -22f, x + 30f, 0f)
+                canvas.drawRect(gland, thin)
+                val l = q(x - 16f, 0f).x
+                val r = q(x + 16f, 0f).x
+                canvas.drawLine(l, gland.top, l, board.bottom, thin)
+                canvas.drawLine(r, gland.top, r, board.bottom, thin)
+                var y = gland.top - 1.4f * u
+                while (y > board.bottom + 0.6f * u) {
+                    canvas.drawLine(l, y, r, y, thin)
+                    y -= 1.4f * u
+                }
+            }
+            // Le Y : électrodes baguées, tubes, éclateurs, et le cœur.
+            for (arm in arms()) {
+                canvas.drawPath(Path().apply { addPoly(arm.body) }, line)
+                for ((a, b) in arm.rings + arm.tube + arm.gaps) canvas.drawLine(a.x, a.y, b.x, b.y, thin)
+            }
+            val c = center()
+            canvas.drawCircle(c.x, c.y, qs(46f), line)
+            canvas.drawCircle(c.x, c.y, qs(26f), thin)
+            // Les fils qui relient chaque électrode à son câble.
+            val (left, right, low) = arms().map { it.body[0] }
+            val feed = Path().apply {
+                moveTo(left.x, left.y)
+                q(150f, 110f).let { lineTo(it.x, it.y) }
+                q(150f, 22f).let { lineTo(it.x, it.y) }
+                moveTo(right.x, right.y)
+                q(450f, 110f).let { lineTo(it.x, it.y) }
+                q(450f, 22f).let { lineTo(it.x, it.y) }
+                moveTo(low.x, low.y)
+                q(548f, 650f).let { lineTo(it.x, it.y) }
+                q(548f, 22f).let { lineTo(it.x, it.y) }
+                q(300f, 22f).let { lineTo(it.x, it.y) }
+            }
+            canvas.drawPath(feed, thin)
         }
 
         // ——— Plan avant : cartes, puces, pistes ———

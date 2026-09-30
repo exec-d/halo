@@ -1165,60 +1165,6 @@ abstract class AppLocalizations {
   /// **'L\'animation s\'arrête dès que le fond n\'est plus visible, et ne tourne en continu que pendant un mouvement, une impulsion ou une charge.'**
   String get wallpaperCircuitBattery;
 
-  /// No description provided for @wallpaperSceneBattery.
-  ///
-  /// In fr, this message translates to:
-  /// **'L\'animation s\'arrête dès que le fond n\'est plus visible. Comme les widgets, le fond prend les couleurs du téléphone.'**
-  String get wallpaperSceneBattery;
-
-  /// No description provided for @wallpaperBlueprintTraceTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le tracé'**
-  String get wallpaperBlueprintTraceTitle;
-
-  /// No description provided for @wallpaperBlueprintTraceText.
-  ///
-  /// In fr, this message translates to:
-  /// **'À chaque allumage de l\'écran, le plan se dessine trait par trait, cotes et cartouche compris.'**
-  String get wallpaperBlueprintTraceText;
-
-  /// No description provided for @wallpaperBlueprintMotionTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ce qui bouge'**
-  String get wallpaperBlueprintMotionTitle;
-
-  /// No description provided for @wallpaperBlueprintTiltTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inclinaison'**
-  String get wallpaperBlueprintTiltTitle;
-
-  /// No description provided for @wallpaperBlueprintTiltText.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les vues glissent un peu quand vous penchez le téléphone, comme une vue éclatée. Le plan prend les couleurs du téléphone.'**
-  String get wallpaperBlueprintTiltText;
-
-  /// No description provided for @wallpaperTronTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tron'**
-  String get wallpaperTronTitle;
-
-  /// No description provided for @wallpaperTronDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'La moto de lumière de Tron : l\'héritage, en plan technique.'**
-  String get wallpaperTronDescription;
-
-  /// No description provided for @wallpaperTronMotion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les roues sans moyeu tournent, le liseré pulse et un ruban de lumière se dépose derrière la moto.'**
-  String get wallpaperTronMotion;
-
   /// No description provided for @wallpaperFluxTitle.
   ///
   /// In fr, this message translates to:
@@ -1228,14 +1174,26 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperFluxDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Le convecteur temporel de la DeLorean, en plan technique.'**
+  /// **'Le convecteur temporel de la DeLorean, installé dans le téléphone à la place de la batterie.'**
   String get wallpaperFluxDescription;
 
   /// No description provided for @wallpaperFluxMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Les impulsions courent le long des trois bras jusqu\'au cœur, qui s\'illumine ; sur la courbe, le point de fonctionnement grimpe jusqu\'à 88 mph et 1,21 gigawatt.'**
+  /// **'Le convecteur'**
   String get wallpaperFluxMotion;
+
+  /// No description provided for @wallpaperFluxMotionText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les impulsions courent le long des trois bras jusqu\'au cœur, qui s\'illumine ; plus vite pendant la charge. Au-dessus du hublot, la jauge montre le niveau de batterie.'**
+  String get wallpaperFluxMotionText;
+
+  /// No description provided for @wallpaperFluxBattery.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'animation s\'arrête dès que le fond n\'est plus visible ; à l\'écran, le convecteur tourne sans cesse, à cadence réduite.'**
+  String get wallpaperFluxBattery;
 
   /// Nom du widget, dans le catalogue et en titre de son écran.
   ///

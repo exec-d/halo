@@ -3,36 +3,35 @@ package dev.levilainpetit.wux.wallpaper
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import dev.levilainpetit.wux.wallpaper.blueprint.BlueprintScene
-import dev.levilainpetit.wux.wallpaper.blueprint.FluxCapacitor
-import dev.levilainpetit.wux.wallpaper.blueprint.LightCycle
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
-/** Palettes Material You d'essai : ambre, bleu, vert. */
+/** Palettes Material You d'essai : cuivre, bleu, vert. */
 private val palettes = mapOf(
-    "amber" to CircuitPalette(Color.rgb(255, 236, 205), Color.rgb(242, 193, 120), Color.rgb(217, 161, 91)),
+    "copper" to CircuitPalette(Color.rgb(255, 233, 223), Color.rgb(233, 167, 142), Color.rgb(214, 128, 98)),
     "blue" to CircuitPalette(Color.rgb(214, 227, 255), Color.rgb(170, 199, 255), Color.rgb(90, 140, 230)),
     "green" to CircuitPalette(Color.rgb(200, 245, 210), Color.rgb(140, 214, 160), Color.rgb(70, 170, 110)),
 )
 
-private val scenes = mapOf<String, () -> LiveScene>(
-    "tron" to { BlueprintScene(LightCycle()) },
-    "flux" to { BlueprintScene(FluxCapacitor()) },
-)
+/** Les fonds : Circuit, et Circuit avec le convecteur temporel. */
+private val scenes = mapOf("circuit" to false, "flux" to true)
+
+/** Les miniatures que `--thumbs` refait (celle de Circuit est faite à part). */
+private val thumbs = listOf("flux")
 
 /**
- * `Render <dossier> [scènes]` : chaque scène, dans chaque palette, après 3 s
- * et 6,5 s d'animation. `Render --thumbs <dossier res/drawable-nodpi>` : les
- * miniatures du sélecteur de fonds d'Android, en palette ambre.
+ * `Render <dossier> [fonds]` : chaque fond, dans chaque palette, à trois
+ * instants, plus en « Discret » et en charge (palette cuivre).
+ * `Render --thumbs <dossier res/drawable-nodpi>` : les miniatures du
+ * sélecteur de fonds d'Android.
  */
 fun main(args: Array<String>) {
     if (args.firstOrNull() == "--thumbs") {
         val out = File(args[1])
-        for ((name, make) in scenes) {
-            val image = animate(make(), palettes.getValue("amber"), 720, 1600, 2f, listOf(6500)).single()
+        for (name in thumbs) {
+            val image = render(scenes.getValue(name), palettes.getValue("copper"), 720, 1600, 2f, 830L)
             // Le sélecteur montre du 9:16 : on recadre au milieu, puis on réduit.
             val crop = image.getSubimage(0, (1600 - 1280) / 2, 720, 1280)
             val small = BufferedImage(360, 640, BufferedImage.TYPE_INT_RGB)
@@ -47,43 +46,41 @@ fun main(args: Array<String>) {
     }
     val out = File(args[0]).apply { mkdirs() }
     val only = args.getOrNull(1)?.takeIf { it.isNotEmpty() }?.split(',')
-    for ((name, make) in scenes) {
+    for ((name, flux) in scenes) {
         if (only != null && name !in only) continue
         for ((pn, palette) in palettes) {
-            val shots = listOf(3000, 6500)
-            animate(make(), palette, 540, 1200, 1.3125f, shots).forEachIndexed { i, image ->
-                ImageIO.write(image, "png", File(out, "${name}_${pn}_${shots[i]}.png"))
-            }
-            if (pn == "amber") {
-                val image = animate(make(), palette, 540, 1200, 1.3125f, listOf(6500), WallpaperSettings.DISCREET).single()
-                ImageIO.write(image, "png", File(out, "${name}_${pn}_discreet.png"))
+            for (time in listOf(300L, 600L, 830L)) {
+                ImageIO.write(render(flux, palette, 540, 1200, 1.3125f, time), "png", File(out, "${name}_${pn}_$time.png"))
             }
         }
+        val copper = palettes.getValue("copper")
+        ImageIO.write(render(flux, copper, 540, 1200, 1.3125f, 830L, WallpaperSettings.DISCREET), "png", File(out, "${name}_copper_discreet.png"))
+        ImageIO.write(render(flux, copper, 540, 1200, 1.3125f, 600L, charging = true), "png", File(out, "${name}_copper_charging.png"))
     }
 }
 
-/** Fait tourner [scene] image par image et garde celles des instants [shots] (ms). */
-private fun animate(scene: LiveScene, palette: CircuitPalette, w: Int, h: Int, density: Float, shots: List<Int>, level: Float = WallpaperSettings.NORMAL): List<BufferedImage> {
-    scene.resize(w, h, density)
-    scene.refresh()
-    val frame = LiveFrame().apply {
-        this.palette = palette
+/** Une image du fond à l'instant [time] (ms), tout allumé, avec quelques impulsions en route. */
+private fun render(
+    flux: Boolean,
+    palette: CircuitPalette,
+    w: Int,
+    h: Int,
+    density: Float,
+    time: Long,
+    level: Float = WallpaperSettings.NORMAL,
+    charging: Boolean = false,
+): BufferedImage {
+    val scene = CircuitScene.build(w, h, density, flux)
+    val state = FrameState().apply {
         intensity = level
-        timeMillis = 1_700_000_000_000L
+        timeMillis = time
+        batteryLevel = 0.68f
+        this.charging = charging
+        tiltX = 0.15f
     }
-    val scratch = Canvas(Bitmap.createBitmap(4, 4, Bitmap.Config.ARGB_8888))
-    val images = mutableListOf<BufferedImage>()
-    var t = 0
-    for (shot in shots) {
-        while (t < shot) {
-            frame.timeMillis += 40
-            t += 40
-            frame.tiltX = kotlin.math.sin(t / 1400.0).toFloat() * 0.4f
-            scene.draw(scratch, frame)
-        }
-        val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-        scene.draw(Canvas(bitmap), frame)
-        images += bitmap.image
-    }
-    return images
+    scene.networkRoutes.forEachIndexed { i, route -> state.pulses += Pulse(route, 0f, 0.3f + i * 0.2f) }
+    scene.dataRoutes.firstOrNull()?.let { state.pulses += Pulse(it, 0f, 0.55f) }
+    val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+    CircuitPainter(scene).draw(Canvas(bitmap), state, palette)
+    return bitmap.image
 }
