@@ -28,9 +28,10 @@ import kotlin.random.Random
  * Les coordonnées sont en « unités » : un centième de la largeur de l'écran.
  * Tout est décrit vu de dos, puis retourné comme on le verrait par l'écran.
  *
- * Variante « convecteur temporel » ([flux]) : à la place de la batterie et
- * de la bobine, le boîtier de Retour vers le futur, porte à hublot, Y des
- * trois chambres de flux et câbles montant vers la carte mère.
+ * Variantes ([Core]) : à la place de la batterie et de la bobine, le
+ * convecteur temporel de Retour vers le futur (avec, sur les cartes, les
+ * afficheurs des circuits temporels, des bobines d'alimentation et Mr. Fusion)
+ * ou le réacteur arc d'Iron Man.
  */
 class CircuitScene private constructor(
     val width: Int,
@@ -54,13 +55,35 @@ class CircuitScene private constructor(
     val density: Float,
     /** Le convecteur temporel, s'il remplace la batterie. */
     val flux: Flux? = null,
+    /** Le réacteur arc, s'il remplace la batterie. */
+    val arc: Arc? = null,
 ) {
+
+    /** Ce qui occupe la place de la batterie. */
+    enum class Core { BATTERY, FLUX, ARC }
+
+    /**
+     * Ce qui s'anime dans le réacteur : les dix bobines (autant de dixièmes de
+     * batterie), leur angle au centre, et le cœur.
+     */
+    class Arc(val coils: List<Path>, val angles: List<Float>, val core: PointF, val coreRadius: Float, val unit: Float)
 
     /**
      * Ce qui s'anime dans le convecteur : les lampes de chaque bras, du bout
      * vers le cœur, le cœur, et la jauge (le niveau de batterie).
      */
-    class Flux(val arms: List<List<PointF>>, val core: PointF, val coreRadius: Float, val gauge: RectF, val unit: Float)
+    class Flux(
+        val arms: List<List<PointF>>,
+        val core: PointF,
+        val coreRadius: Float,
+        val gauge: RectF,
+        /** Les trois afficheurs des circuits temporels : destination, présent, dernier départ. */
+        val clocks: List<RectF>,
+        /** Mr. Fusion, sur la carte du bas : il s'éclaire pendant la charge. */
+        val fusion: PointF,
+        val fusionRadius: Float,
+        val unit: Float,
+    )
 
     class Layer(
         /** 0 : collé au verre ; 1 : au fond du téléphone. */
@@ -117,11 +140,20 @@ class CircuitScene private constructor(
         const val GLASS = 3
         const val GLOW_SCALE = 2
 
-        fun build(width: Int, height: Int, density: Float, flux: Boolean = false): CircuitScene =
-            Builder(width, height, density, flux).build()
+        /** Rayons (unités) des bobines d'alimentation et de Mr. Fusion. */
+        const val TOROID = 2.6f
+        const val FUSION = 4.2f
+
+        /** Les bobines du réacteur arc. */
+        const val COILS = 10
+
+        fun build(width: Int, height: Int, density: Float, core: Core = Core.BATTERY): CircuitScene =
+            Builder(width, height, density, core).build()
     }
 
-    private class Builder(val width: Int, val height: Int, val density: Float, val flux: Boolean) {
+    private class Builder(val width: Int, val height: Int, val density: Float, val core: Core) {
+        val flux = core == Core.FLUX
+        val arc = core == Core.ARC
         val u = width / 100f
         /** Hauteur de l'écran en unités (≈ 222 sur un téléphone 20:9). */
         val h = height / u
@@ -166,13 +198,31 @@ class CircuitScene private constructor(
 
         val traces = mutableListOf<List<PointF>>()
 
+        // Convecteur : les afficheurs des circuits temporels, entre les
+        // appareils photo et le modem ; trois bobines d'alimentation au-dessus
+        // de l'arrivée des câbles ; Mr. Fusion sur la carte du bas, à la place
+        // du haut-parleur.
+        val clocks = listOf(25f, 32f, 39f).map { y -> r(12f, top + y, 32f, top + y + 5.5f) }
+        val toroids = listOf(150f, 300f, 450f).map { x -> PointF(q(x, 0f).x, board.bottom - 4.5f * u) }
+        val fusion = p(22f, bottomTop + 8f)
+
+        // Réacteur arc : centré sur la batterie.
+        val reactorCenter = PointF(battery.centerX(), battery.centerY())
+        val reactorRadius = minOf(battery.width(), battery.height()) / 2f - 3f * u
+
         fun build(): CircuitScene {
             val network = networkRoutes()
             val data = dataRoutes()
             val inner = innerRoutes()
             val layers = listOf(
                 layer(depth = 1f, alpha = 90) { chassis(it) },
-                layer(depth = 0.55f, alpha = 150) { if (flux) capacitor(it) else battery(it) },
+                layer(depth = 0.55f, alpha = 150) {
+                    when (core) {
+                        Core.BATTERY -> battery(it)
+                        Core.FLUX -> capacitor(it)
+                        Core.ARC -> reactor(it)
+                    }
+                },
                 layer(depth = 0.2f, alpha = 230) { board(it) },
                 layer(depth = 0f, alpha = 170) { glass(it) },
             )
@@ -194,11 +244,27 @@ class CircuitScene private constructor(
                 flux = if (flux) {
                     fun PointF.m() = PointF(width - x, y)
                     val g = gauge()
+                    fun RectF.m() = RectF(width - right, top, width - left, bottom)
                     Flux(
                         arms = arms().map { arm -> arm.lamps.map { it.m() } },
                         core = center().m(),
                         coreRadius = qs(46f),
-                        gauge = RectF(width - g.right, g.top, width - g.left, g.bottom),
+                        gauge = g.m(),
+                        clocks = clocks.map { it.m() },
+                        fusion = fusion.m(),
+                        fusionRadius = FUSION * u,
+                        unit = u,
+                    )
+                } else {
+                    null
+                },
+                arc = if (arc) {
+                    Arc(
+                        coils = coils().map { Path().apply { addPoly(it) }.apply { transform(mirror) } },
+                        // Vu de face, le sens des angles s'inverse.
+                        angles = (0 until COILS).map { 180f - coilAngle(it) },
+                        core = PointF(width - reactorCenter.x, reactorCenter.y),
+                        coreRadius = reactorRadius * 0.3f,
                         unit = u,
                     )
                 } else {
@@ -216,11 +282,18 @@ class CircuitScene private constructor(
             listOf(connector, bottomConnector).forEach { rect(it, 0f) }
             rect(usb, 2.7f)
             rect(motor, 2f)
-            rect(battery, if (flux) 2f else 4f, BATTERY)
+            rect(battery, if (core == Core.BATTERY) 4f else 2f, BATTERY)
             if (flux) {
                 arms().forEach { shapes += Path().apply { addPoly(it.body) } to BATTERY }
                 val core = center()
                 shapes += Path().apply { addCircle(core.x, core.y, qs(46f), Path.Direction.CW) } to BATTERY
+                clocks.forEach { rect(it, 0.6f) }
+                toroids.forEach { shapes += Path().apply { addCircle(it.x, it.y, TOROID * u, Path.Direction.CW) } to BOARD }
+                shapes += Path().apply { addCircle(fusion.x, fusion.y, FUSION * u, Path.Direction.CW) } to BOARD
+            }
+            if (arc) {
+                coils().forEach { shapes += Path().apply { addPoly(it) } to BATTERY }
+                shapes += Path().apply { addCircle(reactorCenter.x, reactorCenter.y, reactorRadius, Path.Direction.CW) } to BATTERY
             }
             rect(pill, 8.5f)
             for ((center, radius) in listOf(camera1 to camera1Radius, camera2 to camera2Radius)) {
@@ -278,8 +351,8 @@ class CircuitScene private constructor(
             canvas.drawCircle(sim.centerX(), sim.bottom - 1.2f * u, 0.35f * u, thin)
 
             val coil = PointF(battery.centerX(), battery.centerY())
-            if (!flux) for (i in 0 until 8) canvas.drawCircle(coil.x, coil.y, (22f - i * 1.6f) * u, thin)
-            if (!flux) {
+            if (core == Core.BATTERY) for (i in 0 until 8) canvas.drawCircle(coil.x, coil.y, (22f - i * 1.6f) * u, thin)
+            if (core == Core.BATTERY) {
                 canvas.drawLine(coil.x - 1.5f * u, coil.y + 22f * u, coil.x - 1.5f * u, coil.y + 27f * u, thin)
                 canvas.drawLine(coil.x + 1.5f * u, coil.y + 22f * u, coil.x + 1.5f * u, coil.y + 27f * u, thin)
             }
@@ -452,6 +525,104 @@ class CircuitScene private constructor(
             canvas.drawPath(feed, thin)
         }
 
+        /** Une bobine d'alimentation torique, vue de dessus, avec son enroulement. */
+        private fun toroid(canvas: Canvas, at: PointF) {
+            val r = TOROID * u
+            canvas.drawCircle(at.x, at.y, r, line)
+            canvas.drawCircle(at.x, at.y, r * 0.45f, thin)
+            for (i in 0 until 14) {
+                val a = Math.toRadians(i * 360.0 / 14)
+                val c = kotlin.math.cos(a).toFloat()
+                val sn = kotlin.math.sin(a).toFloat()
+                canvas.drawLine(at.x + c * r * 0.45f, at.y + sn * r * 0.45f, at.x + c * r, at.y + sn * r, thin)
+            }
+        }
+
+        /** Mr. Fusion : le couvercle rond et ses nervures. */
+        private fun fusion(canvas: Canvas) {
+            val r = FUSION * u
+            canvas.drawCircle(fusion.x, fusion.y, r, line)
+            canvas.drawCircle(fusion.x, fusion.y, r * 0.62f, thin)
+            canvas.drawCircle(fusion.x, fusion.y, r * 0.22f, thin)
+            for (i in 0 until 8) {
+                val a = Math.toRadians(i * 45.0 + 22.5)
+                val c = kotlin.math.cos(a).toFloat()
+                val sn = kotlin.math.sin(a).toFloat()
+                canvas.drawLine(fusion.x + c * r * 0.62f, fusion.y + sn * r * 0.62f, fusion.x + c * r * 0.95f, fusion.y + sn * r * 0.95f, thin)
+            }
+        }
+
+        // ——— Plan du milieu, variante : le réacteur arc ———
+
+        /** L'angle (degrés, vu de dos) de la bobine [i], la première en haut. */
+        fun coilAngle(i: Int) = -90f + i * 360f / COILS
+
+        fun around(radius: Float, degrees: Float): PointF {
+            val a = Math.toRadians(degrees.toDouble())
+            return PointF(reactorCenter.x + kotlin.math.cos(a).toFloat() * radius, reactorCenter.y + kotlin.math.sin(a).toFloat() * radius)
+        }
+
+        /** Chaque bobine : un secteur d'anneau entre 0,58 et 0,8 du rayon. */
+        fun coils(): List<List<PointF>> = (0 until COILS).map { i ->
+            val a = coilAngle(i)
+            val half = 360f / COILS / 2f - 4f
+            val outer = (0..6).map { k -> around(reactorRadius * 0.8f, a - half + 2 * half * k / 6f) }
+            val inner = (0..6).map { k -> around(reactorRadius * 0.58f, a + half - 2 * half * k / 6f) }
+            outer + inner
+        }
+
+        private fun reactor(canvas: Canvas) {
+            val rr = reactorRadius
+            val c = reactorCenter
+            // La platine, ses vis, et les deux câbles vers la carte mère.
+            canvas.drawRoundRect(battery, 2f * u, 2f * u, line)
+            canvas.drawRoundRect(RectF(battery).apply { inset(1.4f * u, 1.4f * u) }, 1.4f * u, 1.4f * u, thin)
+            listOf(
+                PointF(battery.left + 3.5f * u, battery.top + 3.5f * u), PointF(battery.right - 3.5f * u, battery.top + 3.5f * u),
+                PointF(battery.left + 3.5f * u, battery.bottom - 3.5f * u), PointF(battery.right - 3.5f * u, battery.bottom - 3.5f * u),
+            ).forEach { screw(canvas, it) }
+            for (dx in floatArrayOf(-14f, 14f)) {
+                val x = c.x + dx * u
+                canvas.drawRect(RectF(x - 3f * u, battery.top - 2f * u, x + 3f * u, battery.top), thin)
+                canvas.drawLine(x - 1.6f * u, battery.top - 2f * u, x - 1.6f * u, board.bottom, thin)
+                canvas.drawLine(x + 1.6f * u, battery.top - 2f * u, x + 1.6f * u, board.bottom, thin)
+                var y = battery.top - 3.4f * u
+                while (y > board.bottom + 0.6f * u) {
+                    canvas.drawLine(x - 1.6f * u, y, x + 1.6f * u, y, thin)
+                    y -= 1.4f * u
+                }
+                // Le câble rejoint l'anneau.
+                val entry = around(rr, if (dx < 0) -118f else -62f)
+                canvas.drawLine(x, battery.top, entry.x, entry.y, thin)
+            }
+            // Le boîtier : anneaux, vis, porte-bobines.
+            canvas.drawCircle(c.x, c.y, rr, line)
+            canvas.drawCircle(c.x, c.y, rr * 0.93f, thin)
+            for (a in floatArrayOf(-30f, 90f, 210f)) around(rr * 0.965f, a).let { canvas.drawCircle(it.x, it.y, 0.7f * u, thin) }
+            canvas.drawCircle(c.x, c.y, rr * 0.84f, line)
+            // Les dix bobines et leur enroulement.
+            coils().forEach { canvas.drawPath(Path().apply { addPoly(it) }, line) }
+            for (i in 0 until COILS) {
+                val a = coilAngle(i)
+                for (k in -2..2) {
+                    val o = a + k * 5f
+                    val p0 = around(rr * 0.61f, o)
+                    val p1 = around(rr * 0.77f, o)
+                    canvas.drawLine(p0.x, p0.y, p1.x, p1.y, thin)
+                }
+                val s0 = around(rr * 0.44f, a)
+                val s1 = around(rr * 0.56f, a)
+                canvas.drawLine(s0.x, s0.y, s1.x, s1.y, thin)
+            }
+            // Le cœur : anneau, triangle du nouvel élément, noyau.
+            canvas.drawCircle(c.x, c.y, rr * 0.52f, thin)
+            canvas.drawCircle(c.x, c.y, rr * 0.44f, line)
+            val tri = listOf(-90f, 30f, 150f).map { around(rr * 0.3f, it) }
+            canvas.drawPath(Path().apply { addPoly(tri) }, line)
+            canvas.drawCircle(c.x, c.y, rr * 0.3f, thin)
+            canvas.drawCircle(c.x, c.y, rr * 0.12f, thin)
+        }
+
         // ——— Plan avant : cartes, puces, pistes ———
 
         private fun board(canvas: Canvas) {
@@ -494,7 +665,8 @@ class CircuitScene private constructor(
             canvas.drawRoundRect(motor, 2f * u, 2f * u, thin)
             canvas.drawCircle(motor.centerX(), motor.centerY(), 2.6f * u, thin)
             fill.alpha = 200
-            var gx = 13f
+            // Le convecteur met Mr. Fusion à la place de la grille du haut-parleur.
+            var gx = if (flux) 99f else 13f
             while (gx <= 31f) {
                 var gy = bottomTop + 4f
                 while (gy <= bottomTop + 12f) {
@@ -504,8 +676,16 @@ class CircuitScene private constructor(
                 }
                 gx += 2.4f
             }
+            if (flux) fusion(canvas)
             val mic = p(66f, bottomTop + 8f)
             canvas.drawCircle(mic.x, mic.y, 1f * u, thin)
+            if (flux) {
+                clocks.forEach {
+                    canvas.drawRoundRect(it, 0.6f * u, 0.6f * u, line)
+                    canvas.drawRect(RectF(it).apply { inset(0.8f * u, 0.8f * u) }, thin)
+                }
+                toroids.forEach { toroid(canvas, it) }
+            }
 
             // Petits composants semés sur la carte mère, hors des grosses puces.
             val keepOut = listOf(
@@ -515,7 +695,8 @@ class CircuitScene private constructor(
                 RectF(modem).apply { inset(-2f * u, -2f * u) },
                 RectF(pmic).apply { inset(-2f * u, -2f * u) },
                 RectF(connector).apply { inset(-2f * u, -2f * u) },
-            ) + traces.map { bounds(it).apply { inset(-1.2f * u, -1.2f * u) } }
+            ) + (if (flux) clocks.map { RectF(it).apply { inset(-1.5f * u, -1.5f * u) } } + toroids.map { RectF(it.x - 4f * u, it.y - 4f * u, it.x + 4f * u, it.y + 4f * u) } else emptyList()) +
+                traces.map { bounds(it).apply { inset(-1.2f * u, -1.2f * u) } }
             val random = Random(7)
             fill.alpha = 150
             repeat(160) {
@@ -638,6 +819,12 @@ class CircuitScene private constructor(
 
         private fun innerRoutes(): List<Route> {
             val routes = mutableListOf<Route>()
+            // Convecteur : de la première bobine d'alimentation aux afficheurs.
+            if (flux) {
+                val from = toroids.first()
+                val x = from.x / u + 1.2f
+                routes += Route(route(p(x, from.y / u - TOROID + 0.3f), p(x, clocks.last().bottom / u)))
+            }
             // Processeur → appareil photo.
             for (i in 0 until 3) {
                 val sx = soc.left / u + 4f + i * 2.5f

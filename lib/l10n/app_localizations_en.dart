@@ -636,11 +636,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperFluxMotionText =>
-      'Pulses race along the three arms to the core, which flashes; faster while charging. Above the window, the gauge shows the battery level.';
+      'Pulses race along the three arms to the core, which flashes; faster while charging. Above the window, the gauge shows the battery level; on the motherboard, the time circuits show the time.';
 
   @override
   String get wallpaperFluxBattery =>
       'The animation stops as soon as the wallpaper is no longer visible; on screen, the flux capacitor runs continuously at a reduced frame rate.';
+
+  @override
+  String get wallpaperArcTitle => 'Iron Man';
+
+  @override
+  String get wallpaperArcDescription =>
+      'Tony Stark\'s arc reactor, fitted inside the phone in place of the battery.';
+
+  @override
+  String get wallpaperArcMotion => 'The reactor';
+
+  @override
+  String get wallpaperArcMotionText =>
+      'One coil lights up per tenth of battery and a glow runs around the ring; the core breathes, faster while charging.';
+
+  @override
+  String get wallpaperArcBattery =>
+      'The animation stops as soon as the wallpaper is no longer visible; on screen, the reactor runs continuously at a reduced frame rate.';
 
   @override
   String get widgetClockTitle => 'Clock';

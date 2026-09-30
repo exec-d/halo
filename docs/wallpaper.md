@@ -2,8 +2,8 @@
 
 *[English](en/wallpaper.md)*
 
-Halo propose deux fonds d'écran animés (Circuit, et sa variante Retour vers
-le futur avec le convecteur temporel), un écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
+Halo propose trois fonds d'écran animés (Circuit, et ses variantes Retour
+vers le futur et Iron Man), un écran de veille, trois tuiles de réglages rapides et des raccourcis sur son icône.
 L'intensité (Discret, Normal, Vif) est commune à tous les fonds.
 
 ## Circuit
@@ -70,7 +70,7 @@ widgets et les icônes lisibles par-dessus.
 
 ## Retour vers le futur
 
-Le même intérieur de téléphone que Circuit (`CircuitScene.build(…, flux = true)`),
+Le même intérieur de téléphone que Circuit (`CircuitScene.build(…, Core.FLUX)`),
 avec le convecteur temporel du film à la place de la batterie et de la
 bobine : boîtier à hublot, Y des trois électrodes, câbles qui montent vers la
 carte mère. Les cotes du décor (600 × 760 mm) sont ramenées au rectangle de
@@ -80,13 +80,29 @@ la batterie. Le service est `FluxWallpaperService`, qui étend
 - **Le convecteur** : une impulsion court de lampe en lampe le long des trois
   bras jusqu'au cœur, qui s'illumine ; plus vite pendant la charge.
 - **La jauge**, au-dessus du hublot : dix cases pour le niveau de batterie.
+- **Les cartes, plus chargées** : sur la carte mère, les trois afficheurs des
+  circuits temporels (destination 2015 · 16:29, présent à l'heure réelle,
+  dernier départ 1985 · 01:21) et trois bobines d'alimentation au-dessus des
+  câbles ; sur la carte du bas, Mr. Fusion, qui s'éclaire pendant la charge.
 - **Le reste est celui de Circuit** : inclinaison, réseau, allumage.
 - **Batterie** : à l'écran, le convecteur s'anime sans arrêt, à 22 images
   par seconde environ ; rien ne tourne quand le fond n'est pas visible.
 
+## Iron Man
+
+Même principe (`Core.ARC`, `ArcWallpaperService`) : le réacteur arc de Tony
+Stark, centré sur la platine qui remplace la batterie, relié à la carte mère
+par deux câbles. Dix bobines autour du cœur au triangle du nouvel élément.
+
+- **Les bobines** : une allumée par dixième de batterie ; une lueur fait le
+  tour de l'anneau, plus vite en charge.
+- **Le cœur** respire, plus vite en charge.
+- Inclinaison, réseau et allumage sont ceux de Circuit ; même cadence que le
+  convecteur.
+
 Pour voir les fonds sans téléphone, `tool/scenes/render.sh` les dessine en
 PNG sur l'ordinateur (voir l'en-tête du script) ; `render.sh --thumbs` refait
-la miniature du convecteur dans le sélecteur d'Android.
+les miniatures du convecteur et du réacteur dans le sélecteur d'Android.
 
 ## Écran de veille
 

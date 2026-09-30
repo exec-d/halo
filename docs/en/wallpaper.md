@@ -2,8 +2,8 @@
 
 *[Français](../wallpaper.md)*
 
-Halo offers two animated wallpapers (Circuit, and its Back to the Future
-variant with the flux capacitor), a screen saver,
+Halo offers three animated wallpapers (Circuit, and its Back to the Future
+and Iron Man variants), a screen saver,
 three quick settings tiles and shortcuts on its icon. The intensity (Subtle, Normal,
 Vivid) is shared by all wallpapers.
 
@@ -68,7 +68,7 @@ and icons on top readable.
 
 ## Back to the Future
 
-The same phone interior as Circuit (`CircuitScene.build(…, flux = true)`),
+The same phone interior as Circuit (`CircuitScene.build(…, Core.FLUX)`),
 with the film's flux capacitor in place of the battery and the coil: a box
 with a window, the Y of three electrodes, cables running up to the
 motherboard. The set's dimensions (600 × 760 mm) are scaled to the battery
@@ -78,13 +78,29 @@ rectangle. The service is `FluxWallpaperService`, which extends
 - **The flux capacitor**: a pulse runs from lamp to lamp along the three
   arms to the core, which flashes; faster while charging.
 - **The gauge**, above the window: ten cells for the battery level.
+- **Busier boards**: on the motherboard, the three time circuit displays
+  (destination 2015 · 16:29, present at the real time, last departed
+  1985 · 01:21) and three power coils above the cables; on the bottom board,
+  Mr. Fusion, which lights up while charging.
 - **The rest is Circuit's**: tilt, network, wake-up.
 - **Battery**: on screen, the flux capacitor animates continuously at about
   22 frames per second; nothing runs when the wallpaper is not visible.
 
+## Iron Man
+
+Same principle (`Core.ARC`, `ArcWallpaperService`): Tony Stark's arc reactor,
+centred on the plate that replaces the battery, linked to the motherboard by
+two cables. Ten coils around the core with the new element's triangle.
+
+- **The coils**: one lit per tenth of battery; a glow runs around the ring,
+  faster while charging.
+- **The core** breathes, faster while charging.
+- Tilt, network and wake-up are Circuit's; same frame rate as the flux
+  capacitor.
+
 To look at the wallpapers without a phone, `tool/scenes/render.sh` draws them
 as PNG files on the computer (see the script's header); `render.sh --thumbs`
-redraws the flux capacitor thumbnail in Android's picker.
+redraws the flux capacitor and arc reactor thumbnails in Android's picker.
 
 ## Screen saver
 

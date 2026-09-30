@@ -1186,7 +1186,7 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperFluxMotionText.
   ///
   /// In fr, this message translates to:
-  /// **'Les impulsions courent le long des trois bras jusqu\'au cœur, qui s\'illumine ; plus vite pendant la charge. Au-dessus du hublot, la jauge montre le niveau de batterie.'**
+  /// **'Les impulsions courent le long des trois bras jusqu\'au cœur, qui s\'illumine ; plus vite pendant la charge. Au-dessus du hublot, la jauge montre le niveau de batterie ; sur la carte mère, les circuits temporels affichent l\'heure.'**
   String get wallpaperFluxMotionText;
 
   /// No description provided for @wallpaperFluxBattery.
@@ -1194,6 +1194,36 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'L\'animation s\'arrête dès que le fond n\'est plus visible ; à l\'écran, le convecteur tourne sans cesse, à cadence réduite.'**
   String get wallpaperFluxBattery;
+
+  /// No description provided for @wallpaperArcTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Iron Man'**
+  String get wallpaperArcTitle;
+
+  /// No description provided for @wallpaperArcDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le réacteur arc de Tony Stark, installé dans le téléphone à la place de la batterie.'**
+  String get wallpaperArcDescription;
+
+  /// No description provided for @wallpaperArcMotion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le réacteur'**
+  String get wallpaperArcMotion;
+
+  /// No description provided for @wallpaperArcMotionText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une bobine s\'allume par dixième de batterie et une lueur fait le tour de l\'anneau ; le cœur respire, plus vite pendant la charge.'**
+  String get wallpaperArcMotionText;
+
+  /// No description provided for @wallpaperArcBattery.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'animation s\'arrête dès que le fond n\'est plus visible ; à l\'écran, le réacteur tourne sans cesse, à cadence réduite.'**
+  String get wallpaperArcBattery;
 
   /// Nom du widget, dans le catalogue et en titre de son écran.
   ///

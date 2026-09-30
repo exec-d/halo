@@ -13,7 +13,10 @@ mineure peut changer des réglages.
   analogique, Éphéméride, Chronomètre et minuteur.
 - **Retour vers le futur**, fond d'écran : l'intérieur du téléphone de
   Circuit, avec le convecteur temporel à la place de la batterie ; ses
-  impulsions courent vers le cœur, plus vite en charge.
+  impulsions courent vers le cœur, plus vite en charge ; circuits temporels
+  à l'heure réelle et Mr. Fusion sur les cartes.
+- **Iron Man**, fond d'écran : le même téléphone avec le réacteur arc de Tony
+  Stark ; ses bobines suivent la batterie, son cœur respire.
 - **Galerie** : un nouvel accueil en trois onglets. Galerie (le fond du
   moment en grand, les fonds animés en carrousel, les widgets en mosaïque,
   filtrables par famille et par recherche), Fonds (les fonds en grand et

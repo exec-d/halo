@@ -26,16 +26,19 @@ gardent ce nom.*
 | Musique | Lecture en cours (pochette néon, commandes) |
 | Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo) |
 
-**Deux fonds d'écran animés** :
+**Trois fonds d'écran animés** :
 
 - **Circuit** : l'intérieur d'un Pixel 7 en schéma néon, qui réagit à
   l'inclinaison, suit la vraie batterie, s'illumine au passage des données et
   s'allume composant par composant avec l'écran ;
 - **Retour vers le futur** : le même téléphone, avec le convecteur temporel
   de la DeLorean à la place de la batterie ; ses impulsions courent vers le
-  cœur, plus vite en charge, et sa jauge suit la batterie.
+  cœur, plus vite en charge, et sa jauge suit la batterie ; sur la carte
+  mère, les circuits temporels donnent l'heure ;
+- **Iron Man** : le même téléphone, avec le réacteur arc de Tony Stark ; une
+  bobine s'allume par dixième de batterie et son cœur respire.
 
-Les deux prennent les couleurs du téléphone, comme les widgets.
+Tous prennent les couleurs du téléphone, comme les widgets.
 
 **Ailleurs dans Android** : un écran de veille (horloge néon pendant la
 charge), trois tuiles de réglages rapides (Météo, Fond Halo, Batterie) et des

@@ -125,8 +125,13 @@ class CircuitPainter(private val scene: CircuitScene) {
             canvas.drawBitmap(layer.core, 0f, 0f, maskPaint)
             if (igniting) ignite(canvas, index, state, palette)
             when (index) {
-                CircuitScene.BATTERY -> if (scene.flux != null) flux(canvas, scene.flux, state, palette) else battery(canvas, state, palette)
+                CircuitScene.BATTERY -> when {
+                    scene.flux != null -> flux(canvas, scene.flux, state, palette)
+                    scene.arc != null -> arc(canvas, scene.arc, state, palette)
+                    else -> battery(canvas, state, palette)
+                }
                 CircuitScene.BOARD -> {
+                    scene.flux?.let { timeCircuits(canvas, it, state, palette) }
                     antennas(canvas, state, palette)
                     pulses(canvas, state, palette)
                 }
@@ -207,6 +212,90 @@ class CircuitPainter(private val scene: CircuitScene) {
             val left = g.left + i * cell
             canvas.drawRect(left + 0.35f * u, g.top + 0.35f * u, left + cell - 0.35f * u, g.bottom - 0.35f * u, fill)
         }
+    }
+
+    /**
+     * Les circuits temporels, en afficheurs à sept segments : la destination
+     * (21 octobre 2015, 16 h 29), le présent (la vraie année et l'heure), le
+     * dernier départ (26 octobre 1985, 1 h 21). Mr. Fusion s'éclaire en charge.
+     */
+    private fun timeCircuits(canvas: Canvas, flux: CircuitScene.Flux, state: FrameState, palette: CircuitPalette) {
+        val strength = 0.4f + 0.6f * state.intensity
+        val now = java.time.LocalDateTime.now()
+        val rows = listOf(
+            "20151629",
+            "%04d%02d%02d".format(java.util.Locale.ROOT, now.year, now.hour, now.minute),
+            "19850121",
+        )
+        val colon = (System.currentTimeMillis() / 500) % 2 == 0L
+        flux.clocks.forEachIndexed { r, rect -> sevenSegments(canvas, rect, rows[r], if (r == 1) colon else true, strength, palette) }
+        if (state.charging) {
+            val breath = (sin(state.timeMillis / 700.0 * PI).toFloat() + 1f) / 2f
+            halo(canvas, flux.fusion, flux.fusionRadius * 1.8f, ((40 + 120 * breath) * strength).toInt(), palette)
+        }
+    }
+
+    /** Huit chiffres dans [rect] : quatre pour l'année, un deux-points, quatre pour l'heure. */
+    private fun sevenSegments(canvas: Canvas, rect: RectF, digits: String, colon: Boolean, strength: Float, palette: CircuitPalette) {
+        val pad = rect.height() * 0.24f
+        val gap = rect.height() * 0.5f
+        val space = rect.height() * 0.14f
+        val w = (rect.width() - 2 * pad - gap - 7 * space) / 8f
+        val h = rect.height() - 2 * pad
+        stroke.strokeWidth = (w * 0.16f).coerceAtLeast(0.8f * density)
+        var x = rect.left + pad
+        digits.forEachIndexed { i, ch ->
+            val lit = SEGMENTS[ch - '0']
+            for (seg in 0 until 7) {
+                val on = lit and (1 shl seg) != 0
+                val (x0, y0, x1, y1) = SEGMENT_LINES[seg]
+                stroke.color = palette.core
+                stroke.alpha = ((if (on) 230 else 22) * strength).toInt()
+                canvas.drawLine(x + x0 * w, rect.top + pad + y0 * h, x + x1 * w, rect.top + pad + y1 * h, stroke)
+            }
+            x += w + space
+            if (i == 3) {
+                if (colon) {
+                    fill.color = palette.core
+                    fill.alpha = (230 * strength).toInt()
+                    val cx = x - space / 2f + gap / 2f
+                    canvas.drawCircle(cx, rect.top + pad + h * 0.3f, stroke.strokeWidth * 0.7f, fill)
+                    canvas.drawCircle(cx, rect.top + pad + h * 0.7f, stroke.strokeWidth * 0.7f, fill)
+                }
+                x += gap
+            }
+        }
+    }
+
+    /**
+     * Le réacteur arc : une bobine allumée par dixième de batterie, une lueur
+     * qui fait le tour de l'anneau (plus vite en charge), et le cœur qui
+     * respire.
+     */
+    private fun arc(canvas: Canvas, arc: CircuitScene.Arc, state: FrameState, palette: CircuitPalette) {
+        val strength = 0.4f + 0.6f * state.intensity
+        val seconds = state.timeMillis / 1000f
+        val lit = kotlin.math.ceil(state.batteryLevel.coerceIn(0f, 1f) * CircuitScene.COILS).toInt().coerceIn(1, CircuitScene.COILS)
+        val sweep = (seconds * (if (state.charging) 200f else 70f)) % 360f
+        arc.coils.forEachIndexed { i, coil ->
+            val angle = ((arc.angles[i] % 360f) + 360f) % 360f
+            val distance = abs(((angle - sweep + 540f) % 360f) - 180f)
+            val shine = max(0f, 1f - distance / 70f)
+            val a = if (i < lit) (0.45f + 0.55f * shine) * strength else (0.06f + 0.12f * shine) * strength
+            fill.color = palette.glow
+            fill.alpha = (150 * a).toInt()
+            canvas.drawPath(coil, fill)
+            stroke.color = palette.core
+            stroke.alpha = (200 * a).toInt()
+            stroke.strokeWidth = 1.2f * density
+            canvas.drawPath(coil, stroke)
+        }
+        val period = if (state.charging) 1.4f else 3f
+        val breath = 0.6f + 0.4f * sin(seconds / period * 2f * PI.toFloat())
+        halo(canvas, arc.core, arc.coreRadius * 2.4f, (210 * breath * strength).toInt(), palette)
+        fill.color = palette.core
+        fill.alpha = (255 * breath * strength).toInt()
+        canvas.drawCircle(arc.core.x, arc.core.y, arc.coreRadius * 0.55f, fill)
     }
 
     /** Un halo rond, du cœur vers rien. */
@@ -291,6 +380,20 @@ class CircuitPainter(private val scene: CircuitScene) {
     }
 
     companion object {
+        /** Les segments allumés de chaque chiffre (bit 0 : a, en haut, … bit 6 : g, au milieu). */
+        private val SEGMENTS = intArrayOf(0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F)
+
+        /** Les segments a à g, en fraction de la case du chiffre. */
+        private val SEGMENT_LINES = listOf(
+            floatArrayOf(0.1f, 0f, 0.9f, 0f),
+            floatArrayOf(1f, 0.08f, 1f, 0.46f),
+            floatArrayOf(1f, 0.54f, 1f, 0.92f),
+            floatArrayOf(0.1f, 1f, 0.9f, 1f),
+            floatArrayOf(0f, 0.54f, 0f, 0.92f),
+            floatArrayOf(0f, 0.08f, 0f, 0.46f),
+            floatArrayOf(0.1f, 0.5f, 0.9f, 0.5f),
+        )
+
         /** Le fond de la nuit des widgets (`splash_background`). */
         val BACKGROUND = Color.rgb(5, 7, 13)
 

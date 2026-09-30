@@ -640,11 +640,29 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get wallpaperFluxMotionText =>
-      'Les impulsions courent le long des trois bras jusqu\'au cœur, qui s\'illumine ; plus vite pendant la charge. Au-dessus du hublot, la jauge montre le niveau de batterie.';
+      'Les impulsions courent le long des trois bras jusqu\'au cœur, qui s\'illumine ; plus vite pendant la charge. Au-dessus du hublot, la jauge montre le niveau de batterie ; sur la carte mère, les circuits temporels affichent l\'heure.';
 
   @override
   String get wallpaperFluxBattery =>
       'L\'animation s\'arrête dès que le fond n\'est plus visible ; à l\'écran, le convecteur tourne sans cesse, à cadence réduite.';
+
+  @override
+  String get wallpaperArcTitle => 'Iron Man';
+
+  @override
+  String get wallpaperArcDescription =>
+      'Le réacteur arc de Tony Stark, installé dans le téléphone à la place de la batterie.';
+
+  @override
+  String get wallpaperArcMotion => 'Le réacteur';
+
+  @override
+  String get wallpaperArcMotionText =>
+      'Une bobine s\'allume par dixième de batterie et une lueur fait le tour de l\'anneau ; le cœur respire, plus vite pendant la charge.';
+
+  @override
+  String get wallpaperArcBattery =>
+      'L\'animation s\'arrête dès que le fond n\'est plus visible ; à l\'écran, le réacteur tourne sans cesse, à cadence réduite.';
 
   @override
   String get widgetClockTitle => 'Horloge';

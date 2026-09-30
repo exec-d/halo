@@ -43,8 +43,11 @@ import kotlin.random.Random
  */
 open class HaloWallpaperService : WallpaperService() {
 
-    /** Le convecteur temporel à la place de la batterie (voir [FluxWallpaperService]). */
-    protected open val flux = false
+    /** Ce qui occupe la place de la batterie (voir [FluxWallpaperService], [ArcWallpaperService]). */
+    protected open val core = CircuitScene.Core.BATTERY
+
+    /** Les variantes s'animent sans cesse, à une cadence plus lente. */
+    private val animated get() = core != CircuitScene.Core.BATTERY
 
     override fun onCreateEngine(): Engine = CircuitEngine()
 
@@ -126,7 +129,7 @@ open class HaloWallpaperService : WallpaperService() {
             if (width <= 0 || height <= 0) return
             if (scene?.width == width && scene?.height == height) return
             scene?.recycle()
-            val built = CircuitScene.build(width, height, resources.displayMetrics.density, flux)
+            val built = CircuitScene.build(width, height, resources.displayMetrics.density, core)
             scene = built
             painter = CircuitPainter(built)
             state.pulses.clear()
@@ -253,7 +256,7 @@ open class HaloWallpaperService : WallpaperService() {
         private fun requestFrame() {
             if (!visible || frameScheduled) return
             frameScheduled = true
-            val wait = ((if (flux) FLUX_FRAME_MILLIS else FRAME_MILLIS) - (SystemClock.uptimeMillis() - lastFrame)).coerceAtLeast(0L)
+            val wait = ((if (animated) ANIMATED_FRAME_MILLIS else FRAME_MILLIS) - (SystemClock.uptimeMillis() - lastFrame)).coerceAtLeast(0L)
             handler.postDelayed(frame, wait)
         }
 
@@ -281,14 +284,13 @@ open class HaloWallpaperService : WallpaperService() {
             }
 
             val moving = abs(targetX - state.tiltX) > TILT_EPSILON || abs(targetY - state.tiltY) > TILT_EPSILON
-            // Le convecteur s'anime sans cesse, à une cadence plus lente.
-            if (flux || moving || state.ignition < 1f || state.pulses.isNotEmpty() || state.charging) requestFrame()
+            if (animated || moving || state.ignition < 1f || state.pulses.isNotEmpty() || state.charging) requestFrame()
         }
     }
 
     private companion object {
         const val FRAME_MILLIS = 33L
-        const val FLUX_FRAME_MILLIS = 45L
+        const val ANIMATED_FRAME_MILLIS = 45L
         const val SAMPLE_MILLIS = 1000L
         const val SIGNAL_MILLIS = 5000L
         const val IGNITION_MILLIS = 1300L
@@ -310,5 +312,14 @@ open class HaloWallpaperService : WallpaperService() {
  * batterie. Ses impulsions courent vers le cœur, plus vite en charge.
  */
 class FluxWallpaperService : HaloWallpaperService() {
-    override val flux = true
+    override val core = CircuitScene.Core.FLUX
+}
+
+/**
+ * Fond d'écran animé « Iron Man » : l'intérieur de téléphone de Circuit, avec
+ * le réacteur arc de Tony Stark à la place de la batterie. Ses bobines
+ * s'allument selon le niveau de batterie, son cœur respire.
+ */
+class ArcWallpaperService : HaloWallpaperService() {
+    override val core = CircuitScene.Core.ARC
 }

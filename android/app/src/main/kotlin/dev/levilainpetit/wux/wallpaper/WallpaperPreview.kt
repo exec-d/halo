@@ -22,8 +22,9 @@ object WallpaperPreview {
         val metrics = context.resources.displayMetrics
         // Même rendu qu'à l'écran, réduit : les traits gardent leur proportion.
         val density = metrics.density * widthPx / metrics.widthPixels.coerceAtLeast(1)
-        val scene = CircuitScene.build(widthPx, heightPx, density, flux = kind == FLUX)
-        // Pour le convecteur, l'instant où les impulsions arrivent au cœur.
+        val scene = CircuitScene.build(widthPx, heightPx, density, CORES[kind] ?: CircuitScene.Core.BATTERY)
+        // Pour le convecteur, l'instant où les impulsions arrivent au cœur ;
+        // pour le réacteur, un cœur presque au plus clair.
         val state = FrameState().apply {
             this.intensity = intensity
             timeMillis = 830L
@@ -58,10 +59,19 @@ object WallpaperPreview {
             .putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, component(context, kind))
 
     private fun component(context: Context, kind: String) =
-        ComponentName(context, if (kind == FLUX) FluxWallpaperService::class.java else HaloWallpaperService::class.java)
+        ComponentName(
+            context,
+            when (kind) {
+                FLUX -> FluxWallpaperService::class.java
+                ARC -> ArcWallpaperService::class.java
+                else -> HaloWallpaperService::class.java
+            },
+        )
 
     /** Les identifiants sont partagés avec Dart (`wallpaper_screen.dart`). */
     const val CIRCUIT = "circuit"
     const val FLUX = "flux"
-    private val KINDS = listOf(CIRCUIT, FLUX)
+    const val ARC = "arc"
+    private val CORES = mapOf(FLUX to CircuitScene.Core.FLUX, ARC to CircuitScene.Core.ARC)
+    private val KINDS = listOf(CIRCUIT, FLUX, ARC)
 }

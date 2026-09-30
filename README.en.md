@@ -26,16 +26,19 @@ keep that name.*
 | Music | Now playing (neon cover art, controls) |
 | Shortcuts | Controls (flashlight, Wi-Fi, Bluetooth, sound, camera) |
 
-**Two animated wallpapers**:
+**Three animated wallpapers**:
 
 - **Circuit**: the inside of a Pixel 7 as a neon schematic, which reacts to
   tilt, follows the real battery, lights up as data flows and powers on
   component by component with the screen;
 - **Back to the Future**: the same phone, with the DeLorean's flux capacitor
   in place of the battery; its pulses race to the core, faster while
-  charging, and its gauge follows the battery.
+  charging, and its gauge follows the battery; on the motherboard, the time
+  circuits show the time;
+- **Iron Man**: the same phone, with Tony Stark's arc reactor; one coil
+  lights up per tenth of battery and its core breathes.
 
-Both take the phone's colors, like the widgets.
+All take the phone's colors, like the widgets.
 
 **Elsewhere in Android**: a screen saver (neon clock while charging), three
 quick settings tiles (Weather, Halo wallpaper, Battery) and icon shortcuts

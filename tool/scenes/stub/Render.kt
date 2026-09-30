@@ -15,11 +15,11 @@ private val palettes = mapOf(
     "green" to CircuitPalette(Color.rgb(200, 245, 210), Color.rgb(140, 214, 160), Color.rgb(70, 170, 110)),
 )
 
-/** Les fonds : Circuit, et Circuit avec le convecteur temporel. */
-private val scenes = mapOf("circuit" to false, "flux" to true)
+/** Les fonds : Circuit, et ses variantes (convecteur temporel, réacteur arc). */
+private val scenes = mapOf("circuit" to CircuitScene.Core.BATTERY, "flux" to CircuitScene.Core.FLUX, "arc" to CircuitScene.Core.ARC)
 
 /** Les miniatures que `--thumbs` refait (celle de Circuit est faite à part). */
-private val thumbs = listOf("flux")
+private val thumbs = listOf("flux", "arc")
 
 /**
  * `Render <dossier> [fonds]` : chaque fond, dans chaque palette, à trois
@@ -46,22 +46,22 @@ fun main(args: Array<String>) {
     }
     val out = File(args[0]).apply { mkdirs() }
     val only = args.getOrNull(1)?.takeIf { it.isNotEmpty() }?.split(',')
-    for ((name, flux) in scenes) {
+    for ((name, core) in scenes) {
         if (only != null && name !in only) continue
         for ((pn, palette) in palettes) {
             for (time in listOf(300L, 600L, 830L)) {
-                ImageIO.write(render(flux, palette, 540, 1200, 1.3125f, time), "png", File(out, "${name}_${pn}_$time.png"))
+                ImageIO.write(render(core, palette, 540, 1200, 1.3125f, time), "png", File(out, "${name}_${pn}_$time.png"))
             }
         }
         val copper = palettes.getValue("copper")
-        ImageIO.write(render(flux, copper, 540, 1200, 1.3125f, 830L, WallpaperSettings.DISCREET), "png", File(out, "${name}_copper_discreet.png"))
-        ImageIO.write(render(flux, copper, 540, 1200, 1.3125f, 600L, charging = true), "png", File(out, "${name}_copper_charging.png"))
+        ImageIO.write(render(core, copper, 540, 1200, 1.3125f, 830L, WallpaperSettings.DISCREET), "png", File(out, "${name}_copper_discreet.png"))
+        ImageIO.write(render(core, copper, 540, 1200, 1.3125f, 600L, charging = true), "png", File(out, "${name}_copper_charging.png"))
     }
 }
 
 /** Une image du fond à l'instant [time] (ms), tout allumé, avec quelques impulsions en route. */
 private fun render(
-    flux: Boolean,
+    core: CircuitScene.Core,
     palette: CircuitPalette,
     w: Int,
     h: Int,
@@ -70,7 +70,7 @@ private fun render(
     level: Float = WallpaperSettings.NORMAL,
     charging: Boolean = false,
 ): BufferedImage {
-    val scene = CircuitScene.build(w, h, density, flux)
+    val scene = CircuitScene.build(w, h, density, core)
     val state = FrameState().apply {
         intensity = level
         timeMillis = time

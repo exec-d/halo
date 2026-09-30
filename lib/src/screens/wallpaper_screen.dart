@@ -63,8 +63,25 @@ List<(String, String)> _fluxFeatures(AppLocalizations l) => [
 ];
 String _fluxBattery(AppLocalizations l) => l.wallpaperFluxBattery;
 
+const arcWallpaper = HaloWallpaper(
+  id: 'arc',
+  title: _arcTitle,
+  description: _arcDescription,
+  features: _arcFeatures,
+  battery: _arcBattery,
+);
+String _arcTitle(AppLocalizations l) => l.wallpaperArcTitle;
+String _arcDescription(AppLocalizations l) => l.wallpaperArcDescription;
+List<(String, String)> _arcFeatures(AppLocalizations l) => [
+  (l.wallpaperArcMotion, l.wallpaperArcMotionText),
+  (l.wallpaperCircuitTiltTitle, l.wallpaperCircuitTiltText),
+  (l.wallpaperCircuitNetworkTitle, l.wallpaperCircuitNetworkText),
+  (l.wallpaperCircuitWakeTitle, l.wallpaperCircuitWakeText),
+];
+String _arcBattery(AppLocalizations l) => l.wallpaperArcBattery;
+
 /// Les fonds d'écran animés, dans l'ordre du catalogue.
-const haloWallpapers = [circuitWallpaper, fluxWallpaper];
+const haloWallpapers = [circuitWallpaper, fluxWallpaper, arcWallpaper];
 
 /// Un fond d'écran animé : aperçu, ce qu'il montre, son intensité et son
 /// application à l'accueil et à l'écran de verrouillage.
