@@ -661,7 +661,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperArcMotionText =>
-      'One coil lights up per tenth of battery and a glow runs around the ring; the core breathes, faster while charging.';
+      'At start-up, the coils light up one by one, then the core flares. One coil per tenth of battery, two spinning energy tracks, a beating core; while charging, particles spiral into it, and below 15 % it flickers.';
 
   @override
   String get wallpaperArcBattery =>

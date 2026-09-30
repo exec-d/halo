@@ -665,7 +665,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get wallpaperArcMotionText =>
-      'Une bobine s\'allume par dixième de batterie et une lueur fait le tour de l\'anneau ; le cœur respire, plus vite pendant la charge.';
+      'À l\'allumage, les bobines s\'allument une à une puis le cœur s\'embrase. Une bobine par dixième de batterie, deux pistes d\'énergie qui tournent, un cœur qui bat ; en charge, des particules spiralent vers lui, et sous 15 % il vacille.';
 
   @override
   String get wallpaperArcBattery =>

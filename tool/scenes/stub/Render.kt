@@ -44,6 +44,32 @@ fun main(args: Array<String>) {
         }
         return
     }
+    if (args.firstOrNull() == "--frames") {
+        // `--frames <dossier> <fond> <images> <pas ms> [charge]` : une séquence,
+        // l'allumage de l'écran au début (1,3 s), pour faire une animation.
+        val out = File(args[1]).apply { mkdirs() }
+        val core = scenes.getValue(args[2])
+        val count = args[3].toInt()
+        val step = args[4].toLong()
+        val charging = args.getOrNull(5) == "charge"
+        val scene = CircuitScene.build(540, 1200, 1.3125f, core)
+        val painter = CircuitPainter(scene)
+        val state = FrameState().apply {
+            intensity = WallpaperSettings.NORMAL
+            batteryLevel = 0.68f
+            this.charging = charging
+        }
+        for (i in 0 until count) {
+            val t = i * step
+            state.timeMillis = 10_000L + t
+            state.ignition = (t / 1300f).coerceAtMost(1f)
+            state.tiltX = kotlin.math.sin(t / 1400.0).toFloat() * 0.3f
+            val bitmap = Bitmap.createBitmap(540, 1200, Bitmap.Config.ARGB_8888)
+            painter.draw(Canvas(bitmap), state, palettes.getValue("copper"))
+            ImageIO.write(bitmap.image, "png", File(out, "frame_%03d.png".format(i)))
+        }
+        return
+    }
     val out = File(args[0]).apply { mkdirs() }
     val only = args.getOrNull(1)?.takeIf { it.isNotEmpty() }?.split(',')
     for ((name, core) in scenes) {

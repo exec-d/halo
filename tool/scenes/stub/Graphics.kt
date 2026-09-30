@@ -287,6 +287,8 @@ class Path() {
     fun rewind() { p = Path2D.Float() }
     fun reset() { p = Path2D.Float() }
     fun addCircle(x: Float, y: Float, r: Float, d: Direction) = p.append(Ellipse2D.Float(x - r, y - r, 2 * r, 2 * r), false)
+    fun addArc(oval: RectF, start: Float, sweep: Float) =
+        p.append(java.awt.geom.Arc2D.Float(oval.left, oval.top, oval.width(), oval.height(), -start, -sweep, java.awt.geom.Arc2D.OPEN), false)
     fun addRect(l: Float, t: Float, r: Float, b: Float, d: Direction) = p.append(Rectangle2D.Float(l, t, r - l, b - t), false)
     fun addRoundRect(rect: RectF, rx: Float, ry: Float, d: Direction) = p.append(RoundRectangle2D.Float(rect.left, rect.top, rect.width(), rect.height(), rx * 2, ry * 2), false)
     fun op(other: Path, op: Op): Boolean {

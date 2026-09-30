@@ -92,9 +92,15 @@ Same principle (`Core.ARC`, `ArcWallpaperService`): Tony Stark's arc reactor,
 centred on the plate that replaces the battery, linked to the motherboard by
 two cables. Ten coils around the core with the new element's triangle.
 
-- **The coils**: one lit per tenth of battery; a glow runs around the ring,
-  faster while charging.
-- **The core** breathes, faster while charging.
+- **The casing**: knurled double ring, ten bolts, ten wound coils separated
+  by spacers, inner collar, beaded core housing.
+- **Start-up**: each time the screen turns on, the coils light up one by one,
+  then the core flares.
+- **The coils**: one lit per tenth of battery; each flickers, light shows
+  between its windings, a glow runs around the ring.
+- **Two energy tracks** turn in opposite directions, faster while charging.
+- **The core beats** (two close beats) and its rays stretch; while charging,
+  particles spiral into it; below 15 % battery, it flickers.
 - Tilt, network and wake-up are Circuit's; same frame rate as the flux
   capacitor.
 

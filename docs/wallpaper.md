@@ -94,9 +94,15 @@ Même principe (`Core.ARC`, `ArcWallpaperService`) : le réacteur arc de Tony
 Stark, centré sur la platine qui remplace la batterie, relié à la carte mère
 par deux câbles. Dix bobines autour du cœur au triangle du nouvel élément.
 
-- **Les bobines** : une allumée par dixième de batterie ; une lueur fait le
-  tour de l'anneau, plus vite en charge.
-- **Le cœur** respire, plus vite en charge.
+- **Le boîtier** : double anneau moleté, dix boulons, dix bobines à spires
+  séparées par des entretoises, collier intérieur, logement perlé du cœur.
+- **L'allumage** : à chaque allumage de l'écran, les bobines s'allument une à
+  une, puis le cœur s'embrase.
+- **Les bobines** : une allumée par dixième de batterie ; chacune scintille,
+  la lumière passe entre ses spires, une lueur fait le tour de l'anneau.
+- **Deux pistes d'énergie** tournent en sens contraires, plus vite en charge.
+- **Le cœur bat** (deux coups rapprochés) et ses rayons s'étirent ; en charge,
+  des particules spiralent vers lui ; sous 15 % de batterie, il vacille.
 - Inclinaison, réseau et allumage sont ceux de Circuit ; même cadence que le
   convecteur.
 

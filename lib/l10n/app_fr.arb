@@ -372,7 +372,7 @@
   "wallpaperArcTitle": "Iron Man",
   "wallpaperArcDescription": "Le réacteur arc de Tony Stark, installé dans le téléphone à la place de la batterie.",
   "wallpaperArcMotion": "Le réacteur",
-  "wallpaperArcMotionText": "Une bobine s'allume par dixième de batterie et une lueur fait le tour de l'anneau ; le cœur respire, plus vite pendant la charge.",
+  "wallpaperArcMotionText": "À l'allumage, les bobines s'allument une à une puis le cœur s'embrase. Une bobine par dixième de batterie, deux pistes d'énergie qui tournent, un cœur qui bat ; en charge, des particules spiralent vers lui, et sous 15 % il vacille.",
   "wallpaperArcBattery": "L'animation s'arrête dès que le fond n'est plus visible ; à l'écran, le réacteur tourne sans cesse, à cadence réduite.",
   "widgetClockTitle": "Horloge",
   "@widgetClockTitle": {
