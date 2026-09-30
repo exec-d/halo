@@ -3,9 +3,6 @@ package dev.levilainpetit.wux.widgets
 import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
 import android.text.format.DateFormat
 import android.util.SizeF
 import android.view.View
@@ -13,16 +10,15 @@ import android.widget.RemoteViews
 import dev.levilainpetit.wux.MainActivity
 import dev.levilainpetit.wux.R
 import dev.levilainpetit.wux.sky.Body
-import dev.levilainpetit.wux.sky.Night
 import dev.levilainpetit.wux.sky.Sighting
 import dev.levilainpetit.wux.sky.Sky
+import dev.levilainpetit.wux.sky.SkyChart
 import dev.levilainpetit.wux.weather.Weather
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import kotlin.math.roundToInt
-import kotlin.random.Random
 
 /**
  * Ciel de ce soir : depuis le lieu de Météo, la Lune et les planètes visibles
@@ -74,9 +70,25 @@ class SkyWidget : NeonWidget() {
         views.setViewVisibility(R.id.sky_chart, if (showChart) View.VISIBLE else View.GONE)
         if (showChart) {
             val density = context.resources.displayMetrics.density
+            val hours = DateTimeFormatter.ofPattern(
+                when {
+                    !DateFormat.is24HourFormat(context) -> "h a"
+                    Locale.getDefault().language == "fr" -> "H'h'"
+                    else -> "HH"
+                },
+                Locale.getDefault(),
+            )
             views.setImageViewBitmap(
                 R.id.sky_chart,
-                chart(context, night, format, ((size.width - 48) * density).roundToInt(), (64 * density).roundToInt(), density),
+                SkyChart.draw(
+                    night, place.latitude, place.longitude, sightings,
+                    name = { context.getString(NAMES.getValue(it)).uppercase(Locale.getDefault()) },
+                    hour = { hours.format(it) },
+                    now = now,
+                    width = ((size.width - 48) * density).roundToInt(),
+                    height = (64 * density).roundToInt(),
+                    density = density,
+                ),
             )
         }
         return views
@@ -99,62 +111,6 @@ class SkyWidget : NeonWidget() {
         } else {
             context.getString(R.string.sky_rises, context.resources.getStringArray(R.array.sky_rising)[sector])
         }
-    }
-
-    /**
-     * L'horizon déroulé, du nord au nord en passant par le sud : chaque astre
-     * là où il apparaît, avec son nom (en blanc, teinté par la mise en page).
-     */
-    private fun chart(context: Context, night: Night, format: DateTimeFormatter, width: Int, height: Int, density: Float): Bitmap {
-        val bitmap = Bitmap.createBitmap(width.coerceAtLeast(1), height.coerceAtLeast(1), Bitmap.Config.ALPHA_8)
-        val canvas = Canvas(bitmap)
-        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        val label = 8.5f * density
-        val base = height - label - 4 * density
-        val top = label + 3 * density
-        fun x(azimuth: Double) = (azimuth / 360.0 * width).toFloat()
-        fun y(altitude: Double) = (base - (base - top) * (altitude.coerceIn(0.0, 60.0) / 60.0)).toFloat()
-        // Quelques étoiles, toujours les mêmes.
-        val random = Random(11)
-        repeat(40) {
-            paint.alpha = 40 + random.nextInt(60)
-            canvas.drawCircle(random.nextFloat() * width, top + random.nextFloat() * (base - top), (0.5f + random.nextFloat() * 0.6f) * density, paint)
-        }
-        paint.alpha = 200
-        paint.strokeWidth = 1f * density
-        canvas.drawLine(0f, base, width.toFloat(), base, paint)
-        paint.textSize = label
-        paint.textAlign = Paint.Align.CENTER
-        val letters = context.resources.getStringArray(R.array.cardinals)
-        for (k in 0..8) {
-            val px = width * k / 8f
-            canvas.drawLine(px, base, px, base + (if (k % 2 == 0) 3f else 1.5f) * density, paint)
-            if (k % 2 == 0) {
-                paint.textAlign = when (k) {
-                    0 -> Paint.Align.LEFT
-                    8 -> Paint.Align.RIGHT
-                    else -> Paint.Align.CENTER
-                }
-                canvas.drawText(letters[(k % 8)], px, height - 1.5f * density, paint)
-            }
-        }
-        paint.textAlign = Paint.Align.CENTER
-        for (s in night.sightings) {
-            val px = x(s.start.azimuth).coerceIn(4 * density, width - 4 * density)
-            val py = y(s.start.altitude)
-            paint.alpha = 255
-            canvas.drawCircle(px, py, (if (s.body == Body.MOON) 4.5f else 3f) * density, paint)
-            val name = context.getString(NAMES.getValue(s.body)).uppercase(Locale.getDefault())
-            val text = if (s.atStart) name else "$name ${format.format(s.from)}"
-            paint.alpha = 220
-            paint.textAlign = when {
-                px < width * 0.15f -> Paint.Align.LEFT
-                px > width * 0.85f -> Paint.Align.RIGHT
-                else -> Paint.Align.CENTER
-            }
-            canvas.drawText(text, px, (py - 6 * density).coerceAtLeast(label), paint)
-        }
-        return bitmap
     }
 
     private companion object {
