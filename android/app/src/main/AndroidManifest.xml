@@ -34,6 +34,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Contacts favoris : appeler d'un toucher (sinon, le clavier s'ouvre). -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- Pas et sommeil : lecture seule dans Santé Connect, aussi en arrière-plan. -->
+    <uses-permission android:name="android.permission.health.READ_STEPS" />
+    <uses-permission android:name="android.permission.health.READ_SLEEP" />
+    <uses-permission android:name="android.permission.health.READ_HEALTH_DATA_IN_BACKGROUND" />
     <!-- Système avancé : Wi-Fi activé ou non, bande et débit. -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- Système avancé : Bluetooth activé ou non (sans autorisation dès Android 12). -->
@@ -65,12 +69,27 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- Santé Connect : « pourquoi Halo demande ces données » (Android 13 et avant). -->
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
             <!-- Raccourcis de l'icône (appui long). -->
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
         <!-- Paramètres d'un widget, depuis un appui long sur l'écran d'accueil. -->
+        <!-- Santé Connect, Android 14+ : la même explication, depuis les réglages. -->
+        <activity-alias
+            android:name="ViewPermissionUsageActivity"
+            android:exported="true"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
         <activity
             android:name=".WidgetConfigureActivity"
             android:exported="true"
@@ -401,6 +420,17 @@
                 android:resource="@xml/widget_contacts_info" />
         </receiver>
         <receiver
+            android:name=".widgets.HealthWidget"
+            android:exported="false"
+            android:label="@string/widget_health_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_health_info" />
+        </receiver>
+        <receiver
             android:name=".widgets.ProgressWidget"
             android:exported="false"
             android:label="@string/widget_progress_label">
@@ -536,6 +566,8 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <!-- Santé Connect (application séparée jusqu'à Android 13). -->
+        <package android:name="com.google.android.apps.healthdata" />
         <!-- Contrôles : ouvrir l'appareil photo. -->
         <intent>
             <action android:name="android.media.action.STILL_IMAGE_CAMERA" />

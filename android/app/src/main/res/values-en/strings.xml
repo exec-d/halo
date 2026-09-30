@@ -319,6 +319,15 @@
     <string name="progress_year">Year</string>
     <string name="progress_percent">%1$d%%</string>
     <string name="progress_footer">%1$d · day %2$d of %3$d · %4$d days left</string>
+    <string name="widget_health_label">Steps and sleep</string>
+    <string name="widget_health_description">Today\'s steps towards your goal, last night and the week, from Health Connect.</string>
+    <string name="health_steps_share">steps · %1$d%%</string>
+    <string name="health_sleep_title">Sleep</string>
+    <string name="health_duration">%1$d h %2$02d</string>
+    <string name="health_legend">Deep %1$s · light %2$s · REM %3$s</string>
+    <string name="health_no_sleep">No night recorded</string>
+    <string name="health_connect">Allow Health Connect in Halo</string>
+    <string name="health_footer">Goal %1$s steps · average %2$s</string>
     <string name="widget_contacts_label">Favourite contacts</string>
     <string name="widget_contacts_description">Your favourite contacts, one tap to call them.</string>
     <string name="contacts_title">Favourites · call</string>

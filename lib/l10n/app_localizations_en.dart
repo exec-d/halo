@@ -773,6 +773,38 @@ class AppLocalizationsEn extends AppLocalizations {
       'The current Wi-Fi or mobile network, signal strength, ping and local address. The speed test (about ten seconds, a few dozen MB) only runs when you tap “Test”.';
 
   @override
+  String get widgetHealthTitle => 'Steps and sleep';
+
+  @override
+  String get widgetHealthDescription =>
+      'Today\'s steps towards your goal, last night and its stages, and the steps of the last seven days, from Health Connect.';
+
+  @override
+  String get accessHealthButton => 'Allow Health Connect';
+
+  @override
+  String get accessHealthDescription =>
+      'Halo reads your steps and sleep in Health Connect, in the background too so the widget stays up to date. It writes nothing and nothing leaves the phone.';
+
+  @override
+  String get healthGoalTitle => 'Goal';
+
+  @override
+  String get healthGoal => 'Steps per day';
+
+  @override
+  String get healthGoalHelp => 'The widget\'s ring fills up towards this goal.';
+
+  @override
+  String healthGoalSteps(int steps) {
+    final intl.NumberFormat stepsNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String stepsString = stepsNumberFormat.format(steps);
+
+    return '$stepsString steps';
+  }
+
+  @override
   String get widgetContactsTitle => 'Favourite contacts';
 
   @override

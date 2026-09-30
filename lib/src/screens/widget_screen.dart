@@ -65,7 +65,8 @@ class WidgetScreen extends StatelessWidget {
       WuxWidgetKind.mobileData ||
       WuxWidgetKind.media ||
       WuxWidgetKind.timer ||
-      WuxWidgetKind.network => AccessScreen(
+      WuxWidgetKind.network ||
+      WuxWidgetKind.health => AccessScreen(
         homeWidget: homeWidget,
         platform: platform,
         allowPin: !configuring,

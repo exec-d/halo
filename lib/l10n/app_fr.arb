@@ -482,6 +482,22 @@
   "widgetProgressDescription": "La part écoulée du jour, de la semaine, du mois et de l'année, en quatre barres.",
   "widgetNetworkTitle": "Réseau",
   "widgetNetworkDescription": "Le Wi-Fi ou le réseau mobile en cours, la force du signal, le ping et l'adresse locale. Le test de débit (une dizaine de secondes, quelques dizaines de Mo) ne part qu'au toucher de « Tester ».",
+  "widgetHealthTitle": "Pas et sommeil",
+  "widgetHealthDescription": "Les pas du jour vers votre objectif, la dernière nuit et ses phases, et les pas des sept derniers jours, par Santé Connect.",
+  "accessHealthButton": "Autoriser Santé Connect",
+  "accessHealthDescription": "Halo lit vos pas et votre sommeil dans Santé Connect, y compris en arrière-plan pour que le widget reste à jour. Il n'écrit rien et rien ne quitte le téléphone.",
+  "healthGoalTitle": "Objectif",
+  "healthGoal": "Pas par jour",
+  "healthGoalHelp": "L'anneau du widget se remplit vers cet objectif.",
+  "healthGoalSteps": "{steps} pas",
+  "@healthGoalSteps": {
+    "placeholders": {
+      "steps": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
   "widgetContactsTitle": "Contacts favoris",
   "widgetContactsDescription": "Jusqu'à six contacts en pastilles néon ; un toucher pour appeler ou écrire.",
   "contactsTitle": "Contacts",

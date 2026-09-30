@@ -175,6 +175,18 @@ String _ephemerisTitle(AppLocalizations l) => l.widgetEphemerisTitle;
 String _ephemerisDescription(AppLocalizations l) =>
     l.widgetEphemerisDescription;
 
+const healthWidget = WuxHomeWidget(
+  id: 'health',
+  kind: WuxWidgetKind.health,
+  category: WuxWidgetCategory.system,
+  title: _healthTitle,
+  description: _healthDescription,
+  androidProvider: '$_androidPackage.HealthWidget',
+  previewSize: Size(340, 240),
+);
+String _healthTitle(AppLocalizations l) => l.widgetHealthTitle;
+String _healthDescription(AppLocalizations l) => l.widgetHealthDescription;
+
 const contactsWidget = WuxHomeWidget(
   id: 'contacts',
   kind: WuxWidgetKind.contacts,
@@ -371,6 +383,7 @@ const wuxHomeWidgets = <WuxHomeWidget>[
   screenTimeWidget,
   mobileDataWidget,
   networkWidget,
+  healthWidget,
   mediaWidget,
   contactsWidget,
   worldClockWidget,

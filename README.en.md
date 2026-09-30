@@ -8,23 +8,24 @@
 
 **Neon widgets and an animated wallpaper to personalise an Android phone.**
 The colours follow the phone's own (Material You); nothing leaves the device,
-apart from the coordinates sent to Open-Meteo for the weather.
+apart from the coordinates sent to Open-Meteo for the weather and the sea,
+and the Network widget's speed test (Cloudflare's servers).
 
 *Code name: WUX. The Android package (`dev.levilainpetit.wux`) and the code
 keep that name.*
 
 ## What Halo includes
 
-**23 widgets** for the home screen and the lock screen:
+**29 widgets** for the home screen and the lock screen:
 
 | Family | Widgets |
 | --- | --- |
-| Time | Clock (with the next alarm), Analog clock, World clock, Countdown, Stopwatch and timer, Month, Ephemeris |
+| Time | Clock (with the next alarm), Analog clock, World clock, Countdown, Stopwatch and timer, Month, Ephemeris, Progress (day, week, month, year) |
 | Agenda | Agenda, Agenda 2 columns — the current event highlighted, "all day" events can be hidden |
-| Weather | Weather (dashboard and 24-hour bars), 5-day forecast, Rain, Allergies (pollen), Sun and Moon |
-| System | System, Advanced system, Detailed battery, Device (console style), Earbuds and watch, Screen time, Mobile data |
+| Weather | Weather (dashboard and 24-hour bars), 5-day forecast, Rain, Allergies (pollen), Sun and Moon, Sea and waves, Tonight's sky (Moon and planets) |
+| System | System, Advanced system, Detailed battery, Device (console style), Earbuds and watch, Screen time, Mobile data, Network (signal, ping, speed test), Steps and sleep (Health Connect) |
 | Music | Now playing (neon cover art, controls) |
-| Shortcuts | Controls (flashlight, Wi-Fi, Bluetooth, sound, camera) |
+| Shortcuts | Controls (flashlight, Wi-Fi, Bluetooth, sound, camera), Favourite contacts |
 
 **Three animated wallpapers**:
 

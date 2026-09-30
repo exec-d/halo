@@ -219,6 +219,22 @@
   "widgetProgressDescription": "How much of the day, week, month and year has gone by, in four bars.",
   "widgetNetworkTitle": "Network",
   "widgetNetworkDescription": "The current Wi-Fi or mobile network, signal strength, ping and local address. The speed test (about ten seconds, a few dozen MB) only runs when you tap “Test”.",
+  "widgetHealthTitle": "Steps and sleep",
+  "widgetHealthDescription": "Today's steps towards your goal, last night and its stages, and the steps of the last seven days, from Health Connect.",
+  "accessHealthButton": "Allow Health Connect",
+  "accessHealthDescription": "Halo reads your steps and sleep in Health Connect, in the background too so the widget stays up to date. It writes nothing and nothing leaves the phone.",
+  "healthGoalTitle": "Goal",
+  "healthGoal": "Steps per day",
+  "healthGoalHelp": "The widget's ring fills up towards this goal.",
+  "healthGoalSteps": "{steps} steps",
+  "@healthGoalSteps": {
+    "placeholders": {
+      "steps": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
   "widgetContactsTitle": "Favourite contacts",
   "widgetContactsDescription": "Up to six contacts as neon badges; one tap to call or text.",
   "contactsTitle": "Contacts",

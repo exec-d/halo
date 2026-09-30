@@ -134,6 +134,7 @@ class FakePlatform implements WuxPlatform {
   var bluetooth = false;
   var wifiName = false;
   var canCall = false;
+  var health = false;
 
   /// Le contact que rend le sélecteur (`null` : annulé).
   Map<String, dynamic>? picked;
@@ -143,6 +144,12 @@ class FakePlatform implements WuxPlatform {
 
   @override
   Future<void> openUsageAccess() async => usageSettingsOpened++;
+
+  @override
+  Future<bool> hasHealthAccess() async => health;
+
+  @override
+  Future<bool> requestHealthAccess() async => health = true;
 
   @override
   Future<Map<String, dynamic>?> pickContact() async => picked;

@@ -777,6 +777,39 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le Wi-Fi ou le réseau mobile en cours, la force du signal, le ping et l\'adresse locale. Le test de débit (une dizaine de secondes, quelques dizaines de Mo) ne part qu\'au toucher de « Tester ».';
 
   @override
+  String get widgetHealthTitle => 'Pas et sommeil';
+
+  @override
+  String get widgetHealthDescription =>
+      'Les pas du jour vers votre objectif, la dernière nuit et ses phases, et les pas des sept derniers jours, par Santé Connect.';
+
+  @override
+  String get accessHealthButton => 'Autoriser Santé Connect';
+
+  @override
+  String get accessHealthDescription =>
+      'Halo lit vos pas et votre sommeil dans Santé Connect, y compris en arrière-plan pour que le widget reste à jour. Il n\'écrit rien et rien ne quitte le téléphone.';
+
+  @override
+  String get healthGoalTitle => 'Objectif';
+
+  @override
+  String get healthGoal => 'Pas par jour';
+
+  @override
+  String get healthGoalHelp =>
+      'L\'anneau du widget se remplit vers cet objectif.';
+
+  @override
+  String healthGoalSteps(int steps) {
+    final intl.NumberFormat stepsNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String stepsString = stepsNumberFormat.format(steps);
+
+    return '$stepsString pas';
+  }
+
+  @override
   String get widgetContactsTitle => 'Contacts favoris';
 
   @override

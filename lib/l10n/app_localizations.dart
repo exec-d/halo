@@ -1417,6 +1417,54 @@ abstract class AppLocalizations {
   /// **'Le Wi-Fi ou le réseau mobile en cours, la force du signal, le ping et l\'adresse locale. Le test de débit (une dizaine de secondes, quelques dizaines de Mo) ne part qu\'au toucher de « Tester ».'**
   String get widgetNetworkDescription;
 
+  /// No description provided for @widgetHealthTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas et sommeil'**
+  String get widgetHealthTitle;
+
+  /// No description provided for @widgetHealthDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les pas du jour vers votre objectif, la dernière nuit et ses phases, et les pas des sept derniers jours, par Santé Connect.'**
+  String get widgetHealthDescription;
+
+  /// No description provided for @accessHealthButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autoriser Santé Connect'**
+  String get accessHealthButton;
+
+  /// No description provided for @accessHealthDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Halo lit vos pas et votre sommeil dans Santé Connect, y compris en arrière-plan pour que le widget reste à jour. Il n\'écrit rien et rien ne quitte le téléphone.'**
+  String get accessHealthDescription;
+
+  /// No description provided for @healthGoalTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objectif'**
+  String get healthGoalTitle;
+
+  /// No description provided for @healthGoal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas par jour'**
+  String get healthGoal;
+
+  /// No description provided for @healthGoalHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'anneau du widget se remplit vers cet objectif.'**
+  String get healthGoalHelp;
+
+  /// No description provided for @healthGoalSteps.
+  ///
+  /// In fr, this message translates to:
+  /// **'{steps} pas'**
+  String healthGoalSteps(int steps);
+
   /// No description provided for @widgetContactsTitle.
   ///
   /// In fr, this message translates to:

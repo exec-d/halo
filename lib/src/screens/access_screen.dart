@@ -33,6 +33,10 @@ class _AccessScreenState extends State<AccessScreen>
     with WidgetsBindingObserver {
   static const _quotaKey = 'quota';
   static const _cycleKey = 'cycleDay';
+  static const _goalKey = 'goal';
+
+  /// Objectifs de pas proposés.
+  static const _goals = [4000, 5000, 6000, 7000, 8000, 10000, 12000, 15000];
 
   /// Forfaits proposés, en Go ; 0 : pas de forfait.
   static const _quotas = [0, 5, 10, 20, 30, 50, 80, 100, 150, 200, 300];
@@ -41,9 +45,11 @@ class _AccessScreenState extends State<AccessScreen>
   int _revision = 0;
   int _quota = 0;
   int _cycleDay = 1;
+  int _goal = 10000;
 
   WuxPlatform get _platform => widget.platform;
   bool get _mobileData => widget.homeWidget.kind == WuxWidgetKind.mobileData;
+  bool get _health => widget.homeWidget.kind == WuxWidgetKind.health;
   late final _Access _access = _Access.of(widget.homeWidget.kind, _platform);
 
   @override
@@ -65,6 +71,12 @@ class _AccessScreenState extends State<AccessScreen>
   }
 
   Future<void> _load() async {
+    if (_health) {
+      final goal = int.tryParse(
+        await _platform.read(widget.homeWidget, _goalKey) ?? '',
+      );
+      if (goal != null && mounted) setState(() => _goal = goal);
+    }
     if (_mobileData) {
       final quota = await _platform.read(widget.homeWidget, _quotaKey);
       final cycle = await _platform.read(widget.homeWidget, _cycleKey);
@@ -86,6 +98,12 @@ class _AccessScreenState extends State<AccessScreen>
   Future<void> _request() async {
     await _access.request();
     await _refreshAccess();
+  }
+
+  Future<void> _setGoal(int goal) async {
+    setState(() => _goal = goal);
+    await _platform.write(widget.homeWidget, _goalKey, '$goal');
+    if (mounted) setState(() => _revision++);
   }
 
   Future<void> _setQuota(int quota) async {
@@ -115,6 +133,28 @@ class _AccessScreenState extends State<AccessScreen>
           onRequest: _request,
           onOpenAppSettings: _platform.openAppSettings,
         ),
+        if (_health)
+          IuxSection(
+            title: l10n.healthGoalTitle,
+            children: [
+              IuxSelectField<int>(
+                label: l10n.healthGoal,
+                input: IuxInputDescriptor(
+                  semantics: IuxInputSemantics(label: l10n.healthGoal),
+                  helpText: l10n.healthGoalHelp,
+                ),
+                value: _goal,
+                options: [
+                  for (final goal in _goals)
+                    IuxRadioOption<int>(
+                      value: goal,
+                      label: l10n.healthGoalSteps(goal),
+                    ),
+                ],
+                onChanged: _setGoal,
+              ),
+            ],
+          ),
         if (_mobileData)
           IuxSection(
             title: l10n.mobileDataPlanTitle,
@@ -195,6 +235,12 @@ class _Access {
       button: (l10n) => l10n.accessMediaButton,
       description: (l10n) => l10n.accessMediaDescription,
       restricted: true,
+    ),
+    WuxWidgetKind.health => _Access(
+      has: platform.hasHealthAccess,
+      request: platform.requestHealthAccess,
+      button: (l10n) => l10n.accessHealthButton,
+      description: (l10n) => l10n.accessHealthDescription,
     ),
     WuxWidgetKind.network => _Access(
       has: platform.hasWifiNamePermission,

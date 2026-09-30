@@ -323,6 +323,15 @@
     <string name="progress_year">Année</string>
     <string name="progress_percent">%1$d %%</string>
     <string name="progress_footer">%1$d · jour %2$d sur %3$d · %4$d jours restants</string>
+    <string name="widget_health_label">Pas et sommeil</string>
+    <string name="widget_health_description">Les pas du jour vers votre objectif, la dernière nuit et la semaine, par Santé Connect.</string>
+    <string name="health_steps_share">pas · %1$d %%</string>
+    <string name="health_sleep_title">Sommeil</string>
+    <string name="health_duration">%1$d h %2$02d</string>
+    <string name="health_legend">Profond %1$s · léger %2$s · paradoxal %3$s</string>
+    <string name="health_no_sleep">Pas de nuit enregistrée</string>
+    <string name="health_connect">Autorisez Santé Connect dans Halo</string>
+    <string name="health_footer">Objectif %1$s pas · moyenne %2$s</string>
     <string name="widget_contacts_label">Contacts favoris</string>
     <string name="widget_contacts_description">Vos contacts préférés, un toucher pour les appeler.</string>
     <string name="contacts_title">Favoris · appeler</string>

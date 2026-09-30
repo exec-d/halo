@@ -1,5 +1,7 @@
 package dev.levilainpetit.wux.system
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -8,6 +10,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import dev.levilainpetit.wux.widgets.BatteryWidget
 import dev.levilainpetit.wux.widgets.BluetoothDevicesWidget
+import dev.levilainpetit.wux.widgets.HealthWidget
 import dev.levilainpetit.wux.widgets.MediaWidget
 import dev.levilainpetit.wux.widgets.MobileDataWidget
 import dev.levilainpetit.wux.widgets.NetworkWidget
@@ -36,6 +39,7 @@ object SystemRefresh {
         MobileDataWidget().renderAll(context)
         MediaWidget().renderAll(context)
         NetworkWidget().renderAll(context)
+        HealthWidget().renderAll(context)
     }
 }
 
@@ -44,9 +48,12 @@ class SystemRefreshWorker(context: Context, params: WorkerParameters) : Coroutin
         // Un relevé même sans widget Batterie posé : la courbe sera prête.
         BatteryHistory.read(applicationContext)
         // Le widget Réseau affiche le ping : on le mesure ici, hors du fil principal.
-        val manager = android.appwidget.AppWidgetManager.getInstance(applicationContext)
-        if (manager.getAppWidgetIds(android.content.ComponentName(applicationContext, NetworkWidget::class.java)).isNotEmpty()) {
+        val manager = AppWidgetManager.getInstance(applicationContext)
+        if (manager.getAppWidgetIds(ComponentName(applicationContext, NetworkWidget::class.java)).isNotEmpty()) {
             NetworkStatus.measurePing(applicationContext)
+        }
+        if (manager.getAppWidgetIds(ComponentName(applicationContext, HealthWidget::class.java)).isNotEmpty()) {
+            Health.refresh(applicationContext)
         }
         SystemRefresh.redraw(applicationContext)
         return Result.success()

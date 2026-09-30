@@ -59,6 +59,7 @@ object WidgetPreviews {
         "progress" -> ProgressWidget()
         "network" -> NetworkWidget()
         "contacts" -> ContactsWidget()
+        "health" -> HealthWidget()
         "timer" -> TimerWidget()
         "media" -> MediaWidget()
         else -> null

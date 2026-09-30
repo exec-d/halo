@@ -8,23 +8,24 @@
 
 **Des widgets néon et un fond d'écran animé pour personnaliser un téléphone
 Android.** Les couleurs suivent celles du téléphone (Material You) ; rien ne
-quitte l'appareil, hormis les coordonnées envoyées à Open-Meteo pour la météo.
+quitte l'appareil, hormis les coordonnées envoyées à Open-Meteo pour la météo
+et la mer, et le test de débit du widget Réseau (serveurs de Cloudflare).
 
 *Nom de code : WUX. Le paquet Android (`dev.levilainpetit.wux`) et le code
 gardent ce nom.*
 
 ## Ce que contient Halo
 
-**23 widgets** pour l'écran d'accueil et l'écran de verrouillage :
+**29 widgets** pour l'écran d'accueil et l'écran de verrouillage :
 
 | Famille | Widgets |
 | --- | --- |
-| Temps | Horloge (avec la prochaine alarme), Horloge analogique, Fuseaux horaires, Compte à rebours, Chronomètre et minuteur, Mois, Éphéméride |
+| Temps | Horloge (avec la prochaine alarme), Horloge analogique, Fuseaux horaires, Compte à rebours, Chronomètre et minuteur, Mois, Éphéméride, Progression (jour, semaine, mois, année) |
 | Agenda | Agenda, Agenda 2 colonnes — l'événement en cours mis en avant, « toute la journée » masquable |
-| Météo | Météo (tableau de bord et barres des 24 h), Prévisions 5 jours, Pluie, Allergies (pollens), Soleil et Lune |
-| Système | Système, Système avancé, Batterie détaillée, Appareil (façon console), Écouteurs et montre, Temps d'écran, Données mobiles |
+| Météo | Météo (tableau de bord et barres des 24 h), Prévisions 5 jours, Pluie, Allergies (pollens), Soleil et Lune, Mer et vagues, Ciel de ce soir (Lune et planètes) |
+| Système | Système, Système avancé, Batterie détaillée, Appareil (façon console), Écouteurs et montre, Temps d'écran, Données mobiles, Réseau (signal, ping, test de débit), Pas et sommeil (Santé Connect) |
 | Musique | Lecture en cours (pochette néon, commandes) |
-| Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo) |
+| Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo), Contacts favoris |
 
 **Trois fonds d'écran animés** :
 

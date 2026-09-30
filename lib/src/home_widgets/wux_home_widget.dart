@@ -40,6 +40,9 @@ enum WuxWidgetKind {
 
   /// Contacts favoris : les contacts choisis, appeler ou écrire.
   contacts,
+
+  /// Pas et sommeil : l'accès à Santé Connect, et l'objectif de pas.
+  health,
 }
 
 /// Famille d'un widget, pour les filtres de la galerie.

@@ -105,6 +105,12 @@ abstract interface class WuxPlatform {
   /// Affiche la demande ; renvoie la réponse.
   Future<void> requestNotificationPermission();
 
+  /// Vrai si Halo peut lire les pas et le sommeil dans Santé Connect.
+  Future<bool> hasHealthAccess();
+
+  /// Affiche la demande de Santé Connect ; renvoie la réponse.
+  Future<bool> requestHealthAccess();
+
   /// Ouvre le sélecteur de contacts d'Android ; le contact touché (`name`,
   /// `number`, `photo`), ou `null`.
   Future<Map<String, dynamic>?> pickContact();
@@ -257,6 +263,14 @@ class AndroidWuxPlatform implements WuxPlatform {
   @override
   Future<void> openUsageAccess() =>
       _channel.invokeMethod<void>('openUsageAccess');
+
+  @override
+  Future<bool> hasHealthAccess() async =>
+      await _channel.invokeMethod<bool>('hasHealthAccess') ?? false;
+
+  @override
+  Future<bool> requestHealthAccess() async =>
+      await _channel.invokeMethod<bool>('requestHealthAccess') ?? false;
 
   @override
   Future<Map<String, dynamic>?> pickContact() async {

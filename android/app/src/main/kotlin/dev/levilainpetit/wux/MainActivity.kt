@@ -16,6 +16,7 @@ import android.provider.Settings
 import dev.levilainpetit.wux.calendar.CalendarRepository
 import dev.levilainpetit.wux.media.MediaListener
 import dev.levilainpetit.wux.system.BluetoothDevices
+import dev.levilainpetit.wux.system.Health
 import dev.levilainpetit.wux.system.NetworkStatus
 import dev.levilainpetit.wux.system.SystemRefresh
 import dev.levilainpetit.wux.system.UsageAccess
@@ -26,6 +27,7 @@ import dev.levilainpetit.wux.weather.Weather
 import dev.levilainpetit.wux.weather.WeatherRefresh
 import dev.levilainpetit.wux.widgets.AgendaRefresh
 import dev.levilainpetit.wux.widgets.FavoriteContacts
+import dev.levilainpetit.wux.widgets.HealthWidget
 import dev.levilainpetit.wux.widgets.WidgetPreviews
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -52,6 +54,7 @@ open class MainActivity : FlutterActivity() {
     private var pendingLocationPermission: MethodChannel.Result? = null
     private var pendingSimplePermission: MethodChannel.Result? = null
     private var pendingContact: MethodChannel.Result? = null
+    private var pendingHealth: MethodChannel.Result? = null
     private var channel: MethodChannel? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -207,6 +210,28 @@ open class MainActivity : FlutterActivity() {
                     startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
                 }
                 result.success(null)
+            }
+            "hasHealthAccess" -> scope.launch {
+                val granted = Health.granted(applicationContext)
+                result.success(granted)
+                // Au premier plan, Santé Connect répond toujours : on en profite.
+                if (granted && withContext(Dispatchers.IO) { Health.refresh(applicationContext) }) {
+                    HealthWidget().renderAll(applicationContext)
+                }
+            }
+            "requestHealthAccess" -> {
+                if (!Health.available(this)) {
+                    result.success(false)
+                } else {
+                    pendingHealth?.success(false)
+                    pendingHealth = result
+                    try {
+                        startActivityForResult(Health.requestIntent(this), HEALTH_REQUEST)
+                    } catch (e: ActivityNotFoundException) {
+                        pendingHealth = null
+                        result.success(false)
+                    }
+                }
             }
             "pickContact" -> {
                 pendingContact?.success(null)
@@ -398,6 +423,19 @@ open class MainActivity : FlutterActivity() {
     /** Le sélecteur de contacts rend son résultat ici. */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == HEALTH_REQUEST) {
+            val pending = pendingHealth ?: return
+            pendingHealth = null
+            scope.launch {
+                val granted = Health.granted(applicationContext)
+                if (granted) {
+                    withContext(Dispatchers.IO) { Health.refresh(applicationContext) }
+                    HealthWidget().renderAll(applicationContext)
+                }
+                pending.success(granted)
+            }
+            return
+        }
         if (requestCode != CONTACT_REQUEST) return
         val pending = pendingContact ?: return
         pendingContact = null
@@ -455,5 +493,6 @@ open class MainActivity : FlutterActivity() {
         /** Autorisation simple (Bluetooth, notifications) : une réponse oui ou non. */
         const val SIMPLE_REQUEST = 4204
         const val CONTACT_REQUEST = 4205
+        const val HEALTH_REQUEST = 4206
     }
 }

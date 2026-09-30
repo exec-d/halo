@@ -11,6 +11,8 @@ mineure peut changer des réglages.
 
 - **Cinq widgets** : Lecture en cours, Prévisions 5 jours, Horloge
   analogique, Éphéméride, Chronomètre et minuteur.
+- **Six widgets de plus** : Progression, Mer et vagues, Ciel de ce soir,
+  Réseau, Contacts favoris, Pas et sommeil (Santé Connect).
 - **Retour vers le futur**, fond d'écran : l'intérieur du téléphone de
   Circuit, avec le convecteur temporel à la place de la batterie ; ses
   impulsions courent vers le cœur, plus vite en charge ; circuits temporels
