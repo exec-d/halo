@@ -822,6 +822,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Whether rain is coming and when, then the probabilities for the next 12 hours, at the place chosen in Weather.';
 
   @override
+  String get widgetSeaTitle => 'Sea and waves';
+
+  @override
+  String get widgetSeaDescription =>
+      'As close as possible to the Weather place: wave height, period and direction, water temperature, and the waves over the next 24 hours.';
+
+  @override
   String get widgetAllergyTitle => 'Allergies';
 
   @override

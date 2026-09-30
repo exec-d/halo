@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu du lanceur, données d'exemple : widget_sea -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_sea_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/agenda_padding"
+    android:paddingVertical="@dimen/widget_padding_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/preview_sea_place"
+                style="@style/HaloLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+            android:text="Mer · Biarritz" />
+            <TextView
+                android:id="@+id/preview_sea_height"
+                style="@style/HaloValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="34sp"
+            android:text="1,4 m" />
+            <TextView
+                android:id="@+id/preview_sea_detail"
+                style="@style/HaloDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+            android:text="Houle O · 9 s" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:gravity="end"
+            android:orientation="vertical">
+            <TextView
+                style="@style/HaloLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sea_water" />
+            <TextView
+                android:id="@+id/preview_sea_water"
+                style="@style/HaloValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="26sp"
+            android:text="18°" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

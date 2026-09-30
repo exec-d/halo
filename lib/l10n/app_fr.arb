@@ -550,6 +550,8 @@
   "@widgetRainDescription": {
     "description": "Description du widget."
   },
+  "widgetSeaTitle": "Mer et vagues",
+  "widgetSeaDescription": "Au plus près du lieu de Météo : la hauteur, la période et la direction des vagues, la température de l'eau et les vagues des 24 prochaines heures.",
   "widgetAllergyTitle": "Allergies",
   "@widgetAllergyTitle": {
     "description": "Nom du widget, dans le catalogue et en titre de son écran."

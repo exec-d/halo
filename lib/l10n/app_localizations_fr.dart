@@ -826,6 +826,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Si la pluie arrive et quand, puis les probabilités des 12 prochaines heures, au lieu choisi dans Météo.';
 
   @override
+  String get widgetSeaTitle => 'Mer et vagues';
+
+  @override
+  String get widgetSeaDescription =>
+      'Au plus près du lieu de Météo : la hauteur, la période et la direction des vagues, la température de l\'eau et les vagues des 24 prochaines heures.';
+
+  @override
   String get widgetAllergyTitle => 'Allergies';
 
   @override

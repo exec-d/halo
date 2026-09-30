@@ -14,6 +14,7 @@ import androidx.work.WorkerParameters
 import dev.levilainpetit.wux.widgets.AllergyWidget
 import dev.levilainpetit.wux.widgets.ForecastWidget
 import dev.levilainpetit.wux.widgets.RainWidget
+import dev.levilainpetit.wux.widgets.SeaWidget
 import dev.levilainpetit.wux.widgets.SunMoonWidget
 import dev.levilainpetit.wux.widgets.WeatherWidget
 import es.antonborri.home_widget.HomeWidgetPlugin
@@ -66,7 +67,10 @@ object WeatherRefresh {
         val app = context.applicationContext
         thread(name = "wux-weather") {
             try {
-                if (Weather.refresh(app)) redraw(app)
+                if (Weather.refresh(app)) {
+                    Sea.refresh(app, search = false)
+                    redraw(app)
+                }
             } finally {
                 pending.finish()
             }
@@ -79,12 +83,15 @@ object WeatherRefresh {
         RainWidget().renderAll(context)
         AllergyWidget().renderAll(context)
         ForecastWidget().renderAll(context)
+        SeaWidget().renderAll(context)
     }
 }
 
 class WeatherWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
-        val ok = withContext(Dispatchers.IO) { Weather.refresh(applicationContext) }
+        val ok = withContext(Dispatchers.IO) {
+            Weather.refresh(applicationContext).also { if (it) Sea.refresh(applicationContext, search = true) }
+        }
         WeatherRefresh.redraw(applicationContext)
         return if (ok || Weather.place(applicationContext) == null) Result.success() else Result.retry()
     }

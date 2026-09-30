@@ -233,6 +233,8 @@
   "widgetSunMoonDescription": "Sunrise and sunset at the place chosen in Weather, day length and moon phase.",
   "widgetRainTitle": "Rain",
   "widgetRainDescription": "Whether rain is coming and when, then the probabilities for the next 12 hours, at the place chosen in Weather.",
+  "widgetSeaTitle": "Sea and waves",
+  "widgetSeaDescription": "As close as possible to the Weather place: wave height, period and direction, water temperature, and the waves over the next 24 hours.",
   "widgetAllergyTitle": "Allergies",
   "widgetAllergyDescription": "Grasses, birch, alder, olive, mugwort, ragweed and air quality, at the place chosen in Weather. Pollen: Europe only."
 }

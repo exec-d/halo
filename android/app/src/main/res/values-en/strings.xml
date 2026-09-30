@@ -125,6 +125,15 @@
     <string name="rain_in_minutes">Rain in %1$d min</string>
     <string name="rain_at">Rain likely at %1$s (%2$d%%)</string>
     <string name="rain_none">No rain for %1$d h</string>
+    <string name="widget_sea_label">Sea and waves</string>
+    <string name="widget_sea_description">Waves, swell and water temperature as close to you as possible.</string>
+    <string name="sea_title">Sea · %1$s</string>
+    <string name="sea_water">Water</string>
+    <string name="sea_height">%1$s m</string>
+    <string name="sea_swell">%1$s swell</string>
+    <string name="sea_period">%1$d s</string>
+    <string name="sea_distance">%1$d km away</string>
+    <string name="sea_none">No sea within 55 km</string>
     <string name="rain_detail">12 h total %1$s mm · max %2$d%%</string>
     <string name="widget_allergy_label">Allergies</string>
     <string name="widget_allergy_description">Six pollens and air quality.</string>

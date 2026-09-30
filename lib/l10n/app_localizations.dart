@@ -1501,6 +1501,18 @@ abstract class AppLocalizations {
   /// **'Si la pluie arrive et quand, puis les probabilités des 12 prochaines heures, au lieu choisi dans Météo.'**
   String get widgetRainDescription;
 
+  /// No description provided for @widgetSeaTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mer et vagues'**
+  String get widgetSeaTitle;
+
+  /// No description provided for @widgetSeaDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au plus près du lieu de Météo : la hauteur, la période et la direction des vagues, la température de l\'eau et les vagues des 24 prochaines heures.'**
+  String get widgetSeaDescription;
+
   /// Nom du widget, dans le catalogue et en titre de son écran.
   ///
   /// In fr, this message translates to:

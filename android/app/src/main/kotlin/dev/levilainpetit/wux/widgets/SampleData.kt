@@ -105,6 +105,13 @@ object SampleData {
 
     val place = Place("Lyon, Auvergne-Rhône-Alpes, France", 45.76, 4.84)
 
+    /** La mer d'exemple : 1,4 m de houle d'ouest, eau à 18°. */
+    fun sea(): dev.levilainpetit.wux.weather.SeaState {
+        val now = java.time.LocalDateTime.now().withMinute(0).withSecond(0).withNano(0)
+        val heights = doubleArrayOf(1.4, 1.4, 1.5, 1.5, 1.6, 1.7, 1.7, 1.8, 1.9, 1.9, 1.8, 1.8, 1.7, 1.6, 1.5, 1.5, 1.4, 1.4, 1.3, 1.3, 1.2, 1.3, 1.3, 1.4, 1.4)
+        return dev.levilainpetit.wux.weather.SeaState(1.4, 9.0, 270, 18.0, 0, heights.mapIndexed { i, h -> now.plusHours(i.toLong()) to h })
+    }
+
     fun forecast(): Forecast {
         val now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0)
         val codes = intArrayOf(2, 2, 3, 3, 61, 61)
