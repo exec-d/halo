@@ -66,7 +66,7 @@ class SeaWidget : NeonWidget() {
             val format = DateTimeFormatter.ofPattern(if (DateFormat.is24HourFormat(context)) "HH'h'" else "ha", Locale.getDefault())
             views.setImageViewBitmap(
                 R.id.sea_chart,
-                chart(sea, format, ((size.width - 32) * density).roundToInt(), (60 * density).roundToInt(), density),
+                chart(sea, format, ((size.width - 40) * density).roundToInt(), (60 * density).roundToInt(), density),
             )
         }
         return views

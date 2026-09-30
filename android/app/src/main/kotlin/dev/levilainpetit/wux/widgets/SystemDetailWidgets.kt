@@ -79,7 +79,7 @@ class BatteryWidget : NeonWidget() {
                 SystemGraphics.batteryChart(
                     info.history, info.level, info.charging, info.minutesLeft, System.currentTimeMillis(),
                     context.getString(R.string.battery_chart_now),
-                    ((size.width - 32) * d).roundToInt(), (chartHeight * d).roundToInt(), d,
+                    ((size.width - 40) * d).roundToInt(), (chartHeight * d).roundToInt(), d,
                 ),
             )
         }
@@ -318,7 +318,7 @@ class MobileDataWidget : NeonWidget() {
             val d = density(context)
             views.setImageViewBitmap(
                 R.id.md_chart,
-                SystemGraphics.dataChart(data, ((size.width - 32) * d).roundToInt(), (chartHeight * d).roundToInt(), d),
+                SystemGraphics.dataChart(data, ((size.width - 40) * d).roundToInt(), (chartHeight * d).roundToInt(), d),
             )
         }
         return views

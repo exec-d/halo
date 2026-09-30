@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Marge des widgets : assez large pour que les coins arrondis du lanceur
-     (jusqu'à ~36 dp de rayon sur les Pixel récents) ne rognent aucun texte.
+<!-- Marge des widgets. Le lanceur des Pixel récents arrondit les coins des
+     widgets d'environ 43 dp (mesuré sur une capture) : une lettre posée à
+     6 dp du haut doit être à 20 dp du bord pour rester hors de l'arrondi.
+     D'où 20 dp sur les côtés, et seulement 6 dp en haut et en bas.
      Relue par AgendaRenderer pour savoir combien de lignes tiennent ; les
-     dessins des widgets comptent 2 × 16 dp en largeur et 2 × 6 dp en hauteur.
-     En haut et en bas, 6 dp suffisent : les 16 dp des côtés gardent les
-     premières lettres hors de l'arrondi. -->
+     dessins des widgets comptent 2 × 20 dp en largeur et 2 × 6 dp en hauteur. -->
 <resources>
-    <dimen name="agenda_padding">16dp</dimen>
+    <dimen name="agenda_padding">20dp</dimen>
     <!-- Marge haute et basse des widgets de plus d'une rangée. -->
     <dimen name="widget_padding_vertical">6dp</dimen>
 </resources>

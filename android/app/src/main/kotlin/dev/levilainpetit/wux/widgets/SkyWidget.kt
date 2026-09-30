@@ -76,7 +76,7 @@ class SkyWidget : NeonWidget() {
             val density = context.resources.displayMetrics.density
             views.setImageViewBitmap(
                 R.id.sky_chart,
-                chart(context, night, format, ((size.width - 32) * density).roundToInt(), (64 * density).roundToInt(), density),
+                chart(context, night, format, ((size.width - 40) * density).roundToInt(), (64 * density).roundToInt(), density),
             )
         }
         return views

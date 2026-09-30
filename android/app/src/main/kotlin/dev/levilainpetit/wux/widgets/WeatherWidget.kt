@@ -104,7 +104,7 @@ class WeatherWidget : NeonWidget() {
                 WeatherGraphics.bars(
                     points,
                     points.map { format.format(it.time) },
-                    ((size.width - 32) * density).roundToInt(),
+                    ((size.width - 40) * density).roundToInt(),
                     chartHeight,
                     density,
                 ),

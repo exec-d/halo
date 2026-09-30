@@ -57,7 +57,7 @@ class EphemerisWidget : NeonWidget() {
         views.setViewVisibility(R.id.ephemeris_year, if (showYear) View.VISIBLE else View.GONE)
         if (showYear) {
             val d = context.resources.displayMetrics.density
-            views.setImageViewBitmap(R.id.ephemeris_year, year(today, ((size.width - 32) * d).roundToInt(), (22 * d).roundToInt(), d))
+            views.setImageViewBitmap(R.id.ephemeris_year, year(today, ((size.width - 40) * d).roundToInt(), (22 * d).roundToInt(), d))
         }
         return views
     }
