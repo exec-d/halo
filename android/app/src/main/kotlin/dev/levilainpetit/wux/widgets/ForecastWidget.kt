@@ -44,7 +44,7 @@ class ForecastWidget : NeonWidget() {
         val low = shown.minOf { it.min }
         val high = shown.maxOf { it.max }
         val d = context.resources.displayMetrics.density
-        val rangeHeight = max(18f, size.height - 12 - 104 * context.resources.configuration.fontScale)
+        val rangeHeight = max(18f, size.height - 16 - 104 * context.resources.configuration.fontScale)
         val name = DateTimeFormatter.ofPattern("EEE", Locale.getDefault())
         shown.forEach { day ->
             val column = RemoteViews(context.packageName, R.layout.forecast_day)

@@ -35,7 +35,7 @@ class ContactsWidget : NeonWidget() {
         val sms = FavoriteContacts.sms(context)
         val density = context.resources.displayMetrics.density
         // Autant de pastilles que la largeur en laisse tenir (58 dp chacune).
-        val fit = ((size.width - 40) / 58f).toInt().coerceIn(1, FavoriteContacts.MAX)
+        val fit = ((size.width - 48) / 58f).toInt().coerceIn(1, FavoriteContacts.MAX)
         val avatar = (44 * density).roundToInt()
         SLOTS.forEachIndexed { i, (slot, photo, name) ->
             val contact = contacts.getOrNull(i)?.takeIf { i < fit }

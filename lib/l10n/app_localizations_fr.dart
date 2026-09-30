@@ -286,14 +286,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutPrivacyDescription =>
-      'Halo ne crée aucun compte, ne contient ni publicité ni mesure d\'audience, et n\'envoie rien à ses auteurs. Votre agenda, le temps d\'écran, la consommation de données et les appareils Bluetooth sont lus sur le téléphone et n\'en sortent pas. Pour la météo, la pluie, les pollens et la qualité de l\'air, seules les coordonnées du lieu choisi sont envoyées à Open-Meteo. Vos réglages restent sur le téléphone.';
+      'Halo ne crée aucun compte, ne contient ni publicité ni mesure d\'audience, et n\'envoie rien à ses auteurs. Votre agenda, le temps d\'écran, la consommation de données, les appareils Bluetooth, vos contacts favoris, vos pas et votre sommeil (Santé Connect) sont lus sur le téléphone et n\'en sortent pas. Seules quelques requêtes quittent le téléphone : les coordonnées du lieu choisi, envoyées à Open-Meteo pour la météo, la pluie, les pollens, la qualité de l\'air et la mer ; le ping et, quand vous le lancez, le test de débit du widget Réseau, vers les serveurs de Cloudflare. Les planètes du Ciel de ce soir sont calculées sur le téléphone. Vos réglages restent sur le téléphone.';
 
   @override
   String get aboutCreditsTitle => 'Sources et crédits';
 
   @override
   String get aboutCreditWeatherTitle =>
-      'Météo, pluie, pollens, qualité de l\'air';
+      'Météo, pluie, pollens, qualité de l\'air, mer';
 
   @override
   String get aboutCreditWeatherDetail =>

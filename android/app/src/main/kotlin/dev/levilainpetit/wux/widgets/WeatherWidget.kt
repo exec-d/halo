@@ -104,7 +104,7 @@ class WeatherWidget : NeonWidget() {
                 WeatherGraphics.bars(
                     points,
                     points.map { format.format(it.time) },
-                    ((size.width - 40) * density).roundToInt(),
+                    ((size.width - 48) * density).roundToInt(),
                     chartHeight,
                     density,
                 ),
@@ -151,7 +151,7 @@ class WeatherWidget : NeonWidget() {
          * Hauteur (dp, texte à 100 %) du bloc du haut, marges du widget et du
          * graphique comprises : suivre widget_weather.
          */
-        private const val TOP_BLOCK = 168f
+        private const val TOP_BLOCK = 172f
 
         fun degrees(value: Double) = "${value.roundToInt()}°"
 
