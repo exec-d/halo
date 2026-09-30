@@ -12,7 +12,7 @@
         android:id="@+id/weather_readout_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.42"
+        android:layout_weight="0.38"
         android:ellipsize="end"
         android:fontFamily="monospace"
         android:includeFontPadding="false"
@@ -23,14 +23,14 @@
         android:shadowRadius="6"
         android:textAllCaps="true"
         android:textColor="@color/clock_line"
-        android:textSize="12sp" />
+        android:textSize="10sp" />
     <TextView
         android:id="@+id/weather_readout_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.58"
+        android:layout_weight="0.62"
         android:ellipsize="end"
-        android:fontFamily="monospace"
+        android:fontFamily="sans-serif-condensed"
         android:includeFontPadding="false"
         android:maxLines="1"
         android:shadowColor="@color/text_shade"
@@ -38,5 +38,6 @@
         android:shadowDy="0"
         android:shadowRadius="6"
         android:textColor="@color/clock_core"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:letterSpacing="0.02" />
 </LinearLayout>

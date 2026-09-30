@@ -73,6 +73,10 @@
     <string name="readout_humidity">Humidité</string>
     <string name="readout_uv">UV</string>
     <string name="readout_rain">Pluie</string>
+    <string name="readout_rain_now">En cours</string>
+    <string name="readout_rain_in">Dans %1$d min</string>
+    <string name="readout_rain_at">%1$s · %2$d %%</string>
+    <string name="readout_rain_none">Aucune · %1$d h</string>
     <string-array name="uv_levels">
         <item>Faible</item>
         <item>Modéré</item>

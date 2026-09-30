@@ -295,16 +295,19 @@ object Weather {
         }
     }.getOrNull()
 
-    /** Une phrase : pluie en cours, dans combien de temps, ou pas de pluie. */
-    fun rainSummary(context: Context, forecast: Forecast): String {
+    /**
+     * Une phrase : pluie en cours, dans combien de temps, ou pas de pluie.
+     * [short] : la forme brève des relevés du widget Météo (« 10h · 60 % »).
+     */
+    fun rainSummary(context: Context, forecast: Forecast, short: Boolean = false): String {
         val wetQuarter = forecast.rainSoon.indexOfFirst { it >= 0.1 }
-        if (wetQuarter == 0) return context.getString(R.string.rain_now)
-        if (wetQuarter > 0) return context.getString(R.string.rain_in_minutes, wetQuarter * 15)
+        if (wetQuarter == 0) return context.getString(if (short) R.string.readout_rain_now else R.string.rain_now)
+        if (wetQuarter > 0) return context.getString(if (short) R.string.readout_rain_in else R.string.rain_in_minutes, wetQuarter * 15)
         val likely = forecast.rain.firstOrNull { it.probability >= 50 }
-            ?: return context.getString(R.string.rain_none, forecast.rain.size.coerceAtLeast(1))
+            ?: return context.getString(if (short) R.string.readout_rain_none else R.string.rain_none, forecast.rain.size.coerceAtLeast(1))
         val pattern = if (android.text.format.DateFormat.is24HourFormat(context)) "HH'h'" else "h a"
         val hour = java.time.format.DateTimeFormatter.ofPattern(pattern, java.util.Locale.getDefault()).format(likely.time)
-        return context.getString(R.string.rain_at, hour, likely.probability)
+        return context.getString(if (short) R.string.readout_rain_at else R.string.rain_at, hour, likely.probability)
     }
 
     /** Libellé du code météo WMO. */

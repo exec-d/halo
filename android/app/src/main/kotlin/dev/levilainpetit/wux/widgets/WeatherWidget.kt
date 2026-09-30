@@ -49,10 +49,10 @@ class WeatherWidget : NeonWidget() {
         val condition = context.getString(Weather.label(forecast.code))
         views.setTextViewText(R.id.weather_temperature, degrees(forecast.temperature))
         views.setTextViewText(R.id.weather_condition, condition.uppercase(Locale.getDefault()))
-        views.setTextViewText(
-            R.id.weather_place,
-            context.getString(R.string.weather_now_at, place.name.substringBefore(',')),
-        )
+        // Le grand widget n'a que 42 % de sa largeur pour la ville : on
+        // l'écrit seule ; le petit garde « Maintenant · ville ».
+        val city = place.name.substringBefore(',')
+        views.setTextViewText(R.id.weather_place, if (compact) context.getString(R.string.weather_now_at, city) else city)
         if (compact) {
             views.setTextViewText(
                 R.id.weather_line,
@@ -134,7 +134,7 @@ class WeatherWidget : NeonWidget() {
                 ),
             context.getString(R.string.readout_humidity) to (forecast.humidity?.let { "$it %" } ?: "—"),
             uv?.let { context.getString(R.string.readout_uv) to it },
-            context.getString(R.string.readout_rain) to Weather.rainSummary(context, forecast),
+            context.getString(R.string.readout_rain) to Weather.rainSummary(context, forecast, short = true),
         )
     }
 
