@@ -75,7 +75,7 @@ class HealthWidget : NeonWidget() {
             views.setViewVisibility(R.id.health_hypno, if (staged) View.VISIBLE else View.GONE)
             views.setViewVisibility(R.id.health_legend, if (staged) View.VISIBLE else View.GONE)
             if (staged) {
-                val width = ((size.width - 24 - 104 - 14) * density).roundToInt()
+                val width = ((size.width - 32 - 104 - 14) * density).roundToInt()
                 views.setImageViewBitmap(R.id.health_hypno, hypnogram(sleep, zone, width, (40 * density).roundToInt(), density))
                 fun total(kind: SleepStage.Kind) = sleep.stages.filter { it.kind == kind }.sumOf { it.end - it.start }
                 views.setTextViewText(
@@ -94,7 +94,7 @@ class HealthWidget : NeonWidget() {
         views.setViewVisibility(R.id.health_week, if (showWeek) View.VISIBLE else View.GONE)
         views.setViewVisibility(R.id.health_footer, if (showWeek) View.VISIBLE else View.GONE)
         if (showWeek) {
-            views.setImageViewBitmap(R.id.health_week, week(snapshot.days, ((size.width - 24) * density).roundToInt(), (58 * density).roundToInt(), density))
+            views.setImageViewBitmap(R.id.health_week, week(snapshot.days, ((size.width - 32) * density).roundToInt(), (58 * density).roundToInt(), density))
             val average = snapshot.days.map { it.steps }.average()
             views.setTextViewText(R.id.health_footer, context.getString(R.string.health_footer, grouped(goal.toLong()), thousands(average)))
         }

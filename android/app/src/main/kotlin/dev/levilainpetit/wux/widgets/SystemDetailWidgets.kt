@@ -69,7 +69,7 @@ class BatteryWidget : NeonWidget() {
 
         // Assez haut : la courbe ; sinon, seulement les chiffres.
         val scale = fontScale(context)
-        val chartHeight = size.height - 16 - 92 * scale
+        val chartHeight = size.height - 20 - 92 * scale
         val showChart = chartHeight >= 36
         views.setViewVisibility(R.id.battery_chart, if (showChart) View.VISIBLE else View.GONE)
         if (showChart) {
@@ -79,7 +79,7 @@ class BatteryWidget : NeonWidget() {
                 SystemGraphics.batteryChart(
                     info.history, info.level, info.charging, info.minutesLeft, System.currentTimeMillis(),
                     context.getString(R.string.battery_chart_now),
-                    ((size.width - 24) * d).roundToInt(), (chartHeight * d).roundToInt(), d,
+                    ((size.width - 32) * d).roundToInt(), (chartHeight * d).roundToInt(), d,
                 ),
             )
         }
@@ -311,14 +311,14 @@ class MobileDataWidget : NeonWidget() {
         views.setTextViewText(R.id.md_projection, "≈ ${SystemGraphics.formatBytes(data.projected)}")
         views.setTextViewText(R.id.md_average, SystemGraphics.formatBytes(if (data.days.isEmpty()) 0L else data.used / data.days.size))
 
-        val chartHeight = size.height - 16 - 72 * fontScale(context)
+        val chartHeight = size.height - 20 - 72 * fontScale(context)
         val showChart = chartHeight >= 32
         views.setViewVisibility(R.id.md_chart, if (showChart) View.VISIBLE else View.GONE)
         if (showChart) {
             val d = density(context)
             views.setImageViewBitmap(
                 R.id.md_chart,
-                SystemGraphics.dataChart(data, ((size.width - 24) * d).roundToInt(), (chartHeight * d).roundToInt(), d),
+                SystemGraphics.dataChart(data, ((size.width - 32) * d).roundToInt(), (chartHeight * d).roundToInt(), d),
             )
         }
         return views

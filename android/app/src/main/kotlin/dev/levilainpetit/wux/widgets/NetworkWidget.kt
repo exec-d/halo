@@ -94,8 +94,10 @@ class NetworkWidget : NeonWidget() {
         val density = context.resources.displayMetrics.density
         views.setImageViewBitmap(R.id.network_bars, bars(link.level, (30 * density).roundToInt(), (22 * density).roundToInt(), density))
 
-        views.setTextViewText(R.id.network_down, test?.down?.let { mbps(context, it) } ?: "—")
-        views.setTextViewText(R.id.network_up, test?.up?.let { mbps(context, it) } ?: "—")
+        // Pendant le test : une roue qui tourne, et les valeurs en attente.
+        views.setViewVisibility(R.id.network_spinner, if (testing) View.VISIBLE else View.GONE)
+        views.setTextViewText(R.id.network_down, if (testing) "…" else test?.down?.let { mbps(context, it) } ?: "—")
+        views.setTextViewText(R.id.network_up, if (testing) "…" else test?.up?.let { mbps(context, it) } ?: "—")
         views.setTextViewText(R.id.network_test, context.getString(if (testing) R.string.net_testing else R.string.net_test))
         views.setTextViewText(
             R.id.network_tested,

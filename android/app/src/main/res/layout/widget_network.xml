@@ -89,6 +89,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp" />
         </LinearLayout>
+        <ProgressBar
+            android:id="@+id/network_spinner"
+            style="@android:style/Widget.Material.ProgressBar.Small"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/clock_line"
+            android:visibility="gone" />
         <TextView
             android:id="@+id/network_test"
             style="@style/HaloLabel"

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Marge des widgets : assez large pour que les coins arrondis du lanceur
-     (jusqu'à ~30 dp de rayon) ne rognent aucun texte. Relue par
-     AgendaRenderer pour savoir combien de lignes tiennent. -->
+     (jusqu'à ~36 dp de rayon sur les Pixel récents) ne rognent aucun texte.
+     Relue par AgendaRenderer pour savoir combien de lignes tiennent ; les
+     dessins des widgets comptent 2 × 16 dp en largeur et 2 × 10 dp en hauteur. -->
 <resources>
-    <dimen name="agenda_padding">12dp</dimen>
+    <dimen name="agenda_padding">16dp</dimen>
     <!-- Marge haute et basse des widgets de plus d'une rangée. -->
-    <dimen name="widget_padding_vertical">8dp</dimen>
+    <dimen name="widget_padding_vertical">10dp</dimen>
 </resources>
