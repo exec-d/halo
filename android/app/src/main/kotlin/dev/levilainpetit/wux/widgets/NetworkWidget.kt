@@ -120,7 +120,7 @@ class NetworkWidget : NeonWidget() {
         val app = context.applicationContext
         thread(name = "wux-ping") {
             try {
-                NetworkStatus.measurePing(app)
+                NetworkStatus.measurePingIfUseful(app)
                 NetworkWidget().renderAll(app)
             } finally {
                 pending.finish()

@@ -7,6 +7,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
 import android.os.Build
+import android.os.PowerManager
 import android.os.SystemClock
 import android.telephony.TelephonyManager
 import dev.levilainpetit.wux.widgets.SystemStatus
@@ -110,6 +111,18 @@ object NetworkStatus {
     fun testing(context: Context) = System.currentTimeMillis() - HomeWidgetPlugin.getData(context).getLong(TESTING, 0) < 60_000
 
     /** Mesure et garde le ping : le meilleur de trois connexions TCP. Réseau : hors du fil principal. */
+    /**
+     * Le ping, seulement s'il sert : écran allumé (écran éteint, personne ne
+     * le lit, et chaque mesure réveille la radio) et pas déjà mesuré dans les
+     * dix dernières minutes (le worker et la mise à jour du widget tombent
+     * souvent ensemble).
+     */
+    fun measurePingIfUseful(context: Context) {
+        if (context.getSystemService(PowerManager::class.java)?.isInteractive == false) return
+        if (System.currentTimeMillis() - HomeWidgetPlugin.getData(context).getLong(PING_AT, 0) < 10 * 60_000L) return
+        measurePing(context)
+    }
+
     fun measurePing(context: Context): Int? {
         val best = (0 until 3).mapNotNull {
             runCatching {

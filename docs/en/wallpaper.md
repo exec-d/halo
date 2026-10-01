@@ -30,7 +30,7 @@ The scene contains no text, so as not to mix with that of the widgets.
 
 ### What moves
 
-- **Tilt**: layers slide more the deeper they are (gravity sensor), and a
+- **Tilt**: layers slide more the deeper they are (accelerometer), and a
   reflection crosses the glass. The resting position slowly follows the hand:
   it is movement that makes things move, not posture.
 - **Battery**: the real level; while charging, it breathes and pulses rise
@@ -50,7 +50,12 @@ and icons on top readable.
 
 - Nothing runs when the wallpaper is not visible.
 - The animation only runs continuously during movement, a pulse, power-on or
-  charging; otherwise, the wallpaper is a still image.
+  charging; otherwise, the wallpaper is a still image. Hand tremor does not
+  restart drawing: only a real gesture does.
+- Tilt comes from the accelerometer alone, filtered: the gravity sensor
+  would also power the gyroscope, which uses far more.
+- **Android Battery Saver** on: the wallpaper freezes (no sensor, no pulses,
+  no animation, one frame per state change), for all three wallpapers.
 - Fixed parts are drawn once, as `ALPHA_8` masks tinted when drawn (glow at
   half resolution).
 

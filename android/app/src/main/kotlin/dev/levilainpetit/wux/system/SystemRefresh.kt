@@ -50,7 +50,7 @@ class SystemRefreshWorker(context: Context, params: WorkerParameters) : Coroutin
         // Le widget Réseau affiche le ping : on le mesure ici, hors du fil principal.
         val manager = AppWidgetManager.getInstance(applicationContext)
         if (manager.getAppWidgetIds(ComponentName(applicationContext, NetworkWidget::class.java)).isNotEmpty()) {
-            NetworkStatus.measurePing(applicationContext)
+            NetworkStatus.measurePingIfUseful(applicationContext)
         }
         if (manager.getAppWidgetIds(ComponentName(applicationContext, HealthWidget::class.java)).isNotEmpty()) {
             Health.refresh(applicationContext)

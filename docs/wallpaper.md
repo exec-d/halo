@@ -31,7 +31,7 @@ Le décor ne contient aucun texte, pour ne pas se mêler à celui des widgets.
 ### Ce qui bouge
 
 - **Inclinaison** : les plans glissent d'autant plus qu'ils sont profonds
-  (capteur de gravité), et un reflet traverse le verre. La position de repos
+  (accéléromètre), et un reflet traverse le verre. La position de repos
   suit lentement la main : c'est un mouvement qui fait bouger, pas une
   posture.
 - **Batterie** : le niveau réel ; pendant la charge, il respire et des
@@ -52,7 +52,14 @@ widgets et les icônes lisibles par-dessus.
 
 - Rien ne tourne quand le fond n'est pas visible.
 - L'animation ne tourne en continu que pendant un mouvement, une impulsion,
-  l'allumage ou une charge ; sinon, le fond est une image fixe.
+  l'allumage ou une charge ; sinon, le fond est une image fixe. Le
+  tremblement de la main ne relance pas le dessin : seul un vrai geste le
+  fait.
+- L'inclinaison vient de l'accéléromètre seul, filtré : le capteur de
+  gravité allumerait aussi le gyroscope, bien plus gourmand.
+- **Économiseur de batterie** d'Android actif : le fond se fige (ni capteur,
+  ni impulsions, ni animation, une image à chaque changement d'état), pour
+  les trois fonds.
 - Les parties fixes sont dessinées une fois, en masques `ALPHA_8` teintés au
   dessin (halo à demi-résolution).
 

@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.service.notification.NotificationListenerService
+import kotlin.math.abs
 import dev.levilainpetit.wux.widgets.MediaWidget
 
 /**
@@ -24,10 +25,30 @@ class MediaListener : NotificationListenerService() {
     private var sessions: MediaSessionManager? = null
     private val followed = mutableListOf<MediaController>()
 
+    /** Le dernier état de lecture dessiné, pour ignorer les simples avancées de la position. */
+    private var drawnState: PlaybackState? = null
+
     private val callback = object : MediaController.Callback() {
         override fun onMetadataChanged(metadata: MediaMetadata?) = redraw()
-        override fun onPlaybackStateChanged(state: PlaybackState?) = redraw()
+        override fun onPlaybackStateChanged(state: PlaybackState?) {
+            // Certains lecteurs renvoient leur état chaque seconde, la position seule ayant
+            // avancé : le widget n'a besoin d'être redessiné qu'à une pause, une reprise ou un saut.
+            if (state != null && !changed(drawnState, state)) return
+            drawnState = state
+            redraw()
+        }
         override fun onSessionDestroyed() = redraw()
+    }
+
+    /** Lecture, pause, vitesse, ou position qui saute de plus de 5 s par rapport au rythme attendu. */
+    private fun changed(before: PlaybackState?, now: PlaybackState): Boolean {
+        if (before == null || before.state != now.state || before.playbackSpeed != now.playbackSpeed) return true
+        val expected = if (before.state == PlaybackState.STATE_PLAYING) {
+            before.position + ((now.lastPositionUpdateTime - before.lastPositionUpdateTime) * before.playbackSpeed).toLong()
+        } else {
+            before.position
+        }
+        return abs(now.position - expected) > 5_000
     }
 
     private val sessionsChanged = MediaSessionManager.OnActiveSessionsChangedListener { controllers ->

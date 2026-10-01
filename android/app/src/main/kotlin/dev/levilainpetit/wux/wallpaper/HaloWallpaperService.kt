@@ -16,6 +16,7 @@ import android.os.BatteryManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.PowerManager
 import android.os.SystemClock
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
@@ -39,7 +40,12 @@ import kotlin.random.Random
  *
  * Pour la batterie, rien ne tourne quand le fond n'est pas visible, et l'on ne
  * dessine en continu que pendant une animation ; au repos, seule une nouvelle
- * inclinaison, une impulsion ou un changement d'état réveille le dessin.
+ * inclinaison (au-delà du tremblement de la main), une impulsion ou un
+ * changement d'état réveille le dessin. L'inclinaison vient de
+ * l'accéléromètre seul, bien plus sobre que le capteur de gravité (qui
+ * allume aussi le gyroscope). Avec l'économiseur de batterie d'Android, le
+ * fond se fige : ni capteur, ni impulsions, ni animation, une image à chaque
+ * changement d'état.
  */
 open class HaloWallpaperService : WallpaperService() {
 
@@ -77,11 +83,24 @@ open class HaloWallpaperService : WallpaperService() {
 
         private val sensors by lazy { getSystemService(SensorManager::class.java) }
         private val keyguard by lazy { getSystemService(KeyguardManager::class.java) }
+        private val power by lazy { getSystemService(PowerManager::class.java) }
+
+        /** Économiseur de batterie actif : le fond est figé. */
+        private var saver = false
+
+        /** L'accéléromètre lissé : la gravité, sans les secousses. */
+        private var gravityX = Float.NaN
+        private var gravityY = Float.NaN
 
         private val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 when (intent.action) {
                     Intent.ACTION_SCREEN_ON -> pendingIgnition = true
+                    PowerManager.ACTION_POWER_SAVE_MODE_CHANGED -> if (visible) {
+                        // On repart de zéro, dans le nouveau mode.
+                        stop()
+                        start()
+                    }
                     Intent.ACTION_BATTERY_CHANGED -> {
                         readBattery(intent)
                         requestFrame()
@@ -107,6 +126,7 @@ open class HaloWallpaperService : WallpaperService() {
             val filter = IntentFilter().apply {
                 addAction(Intent.ACTION_SCREEN_ON)
                 addAction(Intent.ACTION_BATTERY_CHANGED)
+                addAction(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED)
             }
             val sticky = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
@@ -146,10 +166,28 @@ open class HaloWallpaperService : WallpaperService() {
             if (visible) {
                 refreshPalette()
                 state.intensity = WallpaperSettings.intensity(this@HaloWallpaperService)
+                start()
+            } else {
+                stop()
+            }
+        }
+
+        private fun start() {
+            saver = power?.isPowerSaveMode == true
+            if (saver) {
+                // Figé : à plat, sans impulsions ni allumage.
+                targetX = 0f
+                targetY = 0f
+                state.tiltX = 0f
+                state.tiltY = 0f
+                state.pulses.clear()
+                state.ignition = 1f
+                pendingIgnition = false
+            } else {
                 sensors?.let { manager ->
-                    val sensor = manager.getDefaultSensor(Sensor.TYPE_GRAVITY)
-                        ?: manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-                    sensor?.let { manager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI) }
+                    manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.let {
+                        manager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI)
+                    }
                 }
                 lastBytes = -1L
                 handler.post(sampler)
@@ -158,10 +196,8 @@ open class HaloWallpaperService : WallpaperService() {
                     ignitionStart = SystemClock.uptimeMillis()
                     state.ignition = 0f
                 }
-                requestFrame()
-            } else {
-                stop()
             }
+            requestFrame()
         }
 
         private fun stop() {
@@ -174,8 +210,15 @@ open class HaloWallpaperService : WallpaperService() {
         // ——— Capteur : l'inclinaison, par rapport à la position habituelle ———
 
         override fun onSensorChanged(event: SensorEvent) {
-            val gx = event.values[0]
-            val gy = event.values[1]
+            // Un filtre passe-bas garde la gravité et écarte les secousses (marche, tapotements).
+            if (gravityX.isNaN()) {
+                gravityX = event.values[0]
+                gravityY = event.values[1]
+            }
+            gravityX += (event.values[0] - gravityX) * GRAVITY_FOLLOW
+            gravityY += (event.values[1] - gravityY) * GRAVITY_FOLLOW
+            val gx = gravityX
+            val gy = gravityY
             if (baseX.isNaN()) {
                 baseX = gx
                 baseY = gy
@@ -186,7 +229,8 @@ open class HaloWallpaperService : WallpaperService() {
             baseY += (gy - baseY) * BASE_FOLLOW
             targetX = ((gx - baseX) / TILT_RANGE).coerceIn(-1f, 1f)
             targetY = (-(gy - baseY) / TILT_RANGE).coerceIn(-1f, 1f)
-            if (abs(targetX - state.tiltX) > TILT_EPSILON || abs(targetY - state.tiltY) > TILT_EPSILON) {
+            // Le tremblement de la main ne mérite pas d'image : seul un vrai geste réveille le dessin.
+            if (abs(targetX - state.tiltX) > TILT_START || abs(targetY - state.tiltY) > TILT_START) {
                 requestFrame()
             }
         }
@@ -284,6 +328,7 @@ open class HaloWallpaperService : WallpaperService() {
             }
 
             val moving = abs(targetX - state.tiltX) > TILT_EPSILON || abs(targetY - state.tiltY) > TILT_EPSILON
+            if (saver) return
             if (animated || moving || state.ignition < 1f || state.pulses.isNotEmpty() || state.charging) requestFrame()
         }
     }
@@ -298,8 +343,13 @@ open class HaloWallpaperService : WallpaperService() {
 
         /** Écart de gravité (m/s²) qui donne le décalage maximal. */
         const val TILT_RANGE = 2.2f
-        const val TILT_EPSILON = 0.004f
+        /** Écart d'inclinaison qui relance le dessin, puis en deçà duquel il s'arrête. */
+        const val TILT_START = 0.015f
+        const val TILT_EPSILON = 0.006f
         const val TILT_SMOOTHING = 0.2f
+
+        /** Part de chaque mesure de l'accéléromètre retenue par le filtre. */
+        const val GRAVITY_FOLLOW = 0.25f
 
         /** Part de l'écart rattrapée par la position de repos à chaque mesure. */
         const val BASE_FOLLOW = 0.006f
