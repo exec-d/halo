@@ -563,6 +563,66 @@
                 android:name="android.service.wallpaper"
                 android:resource="@xml/halo_wallpaper_arc" />
         </service>
+        <service
+            android:name=".wallpaper.QuantumWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_quantum_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_quantum" />
+        </service>
+        <service
+            android:name=".wallpaper.NeuralWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_neural_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_neural" />
+        </service>
+        <service
+            android:name=".wallpaper.AtomWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_atom_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_atom" />
+        </service>
+        <service
+            android:name=".wallpaper.VaultWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_vault_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_vault" />
+        </service>
+        <service
+            android:name=".wallpaper.GhostWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_ghost_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/halo_wallpaper_ghost" />
+        </service>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

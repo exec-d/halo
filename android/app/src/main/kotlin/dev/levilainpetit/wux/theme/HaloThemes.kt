@@ -12,7 +12,7 @@ import org.json.JSONObject
  * Un thème Halo : un fond d'écran animé, la palette dans laquelle il se
  * dessine (et qu'il annonce à Android, d'où les couleurs du système et des
  * widgets), et trois sons originaux. Son identifiant est celui de son fond
- * (`circuit`, `flux`, `arc`), partagé avec Dart (`themes_screen.dart`).
+ * (`circuit`, `flux`, `arc`, `quantum`…), partagé avec Dart (`themes_screen.dart`).
  */
 class HaloTheme(
     val id: String,
@@ -49,6 +49,51 @@ object HaloThemes {
                 ThemeSounds.Kind.RING to (R.raw.theme_arc_ring to R.string.theme_sound_arc_ring),
                 ThemeSounds.Kind.NOTIFICATION to (R.raw.theme_arc_notification to R.string.theme_sound_arc_notification),
                 ThemeSounds.Kind.ALARM to (R.raw.theme_arc_alarm to R.string.theme_sound_arc_alarm),
+            ),
+        ),
+        HaloTheme(
+            WallpaperPreview.QUANTUM,
+            CircuitPalette(core = Color.rgb(241, 235, 255), line = Color.rgb(183, 156, 255), glow = Color.rgb(124, 77, 255)),
+            mapOf(
+                ThemeSounds.Kind.RING to (R.raw.theme_quantum_ring to R.string.theme_sound_quantum_ring),
+                ThemeSounds.Kind.NOTIFICATION to (R.raw.theme_quantum_notification to R.string.theme_sound_quantum_notification),
+                ThemeSounds.Kind.ALARM to (R.raw.theme_quantum_alarm to R.string.theme_sound_quantum_alarm),
+            ),
+        ),
+        HaloTheme(
+            WallpaperPreview.NEURAL,
+            CircuitPalette(core = Color.rgb(255, 234, 248), line = Color.rgb(255, 138, 216), glow = Color.rgb(224, 64, 251)),
+            mapOf(
+                ThemeSounds.Kind.RING to (R.raw.theme_neural_ring to R.string.theme_sound_neural_ring),
+                ThemeSounds.Kind.NOTIFICATION to (R.raw.theme_neural_notification to R.string.theme_sound_neural_notification),
+                ThemeSounds.Kind.ALARM to (R.raw.theme_neural_alarm to R.string.theme_sound_neural_alarm),
+            ),
+        ),
+        HaloTheme(
+            WallpaperPreview.ATOM,
+            CircuitPalette(core = Color.rgb(255, 251, 224), line = Color.rgb(255, 228, 92), glow = Color.rgb(255, 196, 0)),
+            mapOf(
+                ThemeSounds.Kind.RING to (R.raw.theme_atom_ring to R.string.theme_sound_atom_ring),
+                ThemeSounds.Kind.NOTIFICATION to (R.raw.theme_atom_notification to R.string.theme_sound_atom_notification),
+                ThemeSounds.Kind.ALARM to (R.raw.theme_atom_alarm to R.string.theme_sound_atom_alarm),
+            ),
+        ),
+        HaloTheme(
+            WallpaperPreview.VAULT,
+            CircuitPalette(core = Color.rgb(238, 255, 224), line = Color.rgb(166, 255, 99), glow = Color.rgb(67, 209, 46)),
+            mapOf(
+                ThemeSounds.Kind.RING to (R.raw.theme_vault_ring to R.string.theme_sound_vault_ring),
+                ThemeSounds.Kind.NOTIFICATION to (R.raw.theme_vault_notification to R.string.theme_sound_vault_notification),
+                ThemeSounds.Kind.ALARM to (R.raw.theme_vault_alarm to R.string.theme_sound_vault_alarm),
+            ),
+        ),
+        HaloTheme(
+            WallpaperPreview.GHOST,
+            CircuitPalette(core = Color.rgb(230, 255, 251), line = Color.rgb(92, 245, 218), glow = Color.rgb(0, 191, 165)),
+            mapOf(
+                ThemeSounds.Kind.RING to (R.raw.theme_ghost_ring to R.string.theme_sound_ghost_ring),
+                ThemeSounds.Kind.NOTIFICATION to (R.raw.theme_ghost_notification to R.string.theme_sound_ghost_notification),
+                ThemeSounds.Kind.ALARM to (R.raw.theme_ghost_alarm to R.string.theme_sound_ghost_alarm),
             ),
         ),
     )

@@ -27,7 +27,7 @@ gardent ce nom.*
 | Musique | Lecture en cours (pochette néon, commandes) |
 | Raccourcis | Contrôles (lampe torche, Wi-Fi, Bluetooth, son, appareil photo), Contacts favoris |
 
-**Trois fonds d'écran animés** :
+**Huit fonds d'écran animés** :
 
 - **Circuit** : l'intérieur d'un Pixel 7 en schéma néon, qui réagit à
   l'inclinaison, suit la vraie batterie, s'illumine au passage des données et
@@ -37,11 +37,17 @@ gardent ce nom.*
   cœur, plus vite en charge, et sa jauge suit la batterie ; sur la carte
   mère, les circuits temporels donnent l'heure ;
 - **Iron Man** : le même téléphone, avec le réacteur arc de Tony Stark ; une
-  bobine s'allume par dixième de batterie et son cœur respire.
+  bobine s'allume par dixième de batterie et son cœur respire ;
+- **Physique quantique**, **Intelligence artificielle**, **Énergie
+  atomique**, **Fallout** et **Ghost in the Shell** : le même téléphone,
+  avec à la place de la batterie le réfrigérateur d'un ordinateur quantique,
+  un réseau de neurones sur sa puce, le cœur d'un réacteur nucléaire, une
+  porte d'abri et son compteur Geiger, ou un cyber-cerveau et sa pluie de
+  code ; chacun suit la batterie et s'emballe en charge.
 
 Tous prennent les couleurs du téléphone, comme les widgets.
 
-**Trois thèmes** (Circuit, Retour vers le futur, Iron Man) : en un toucher,
+**Huit thèmes**, un par fond : en un toucher,
 le fond animé dans sa palette, les couleurs du système qu'Android en tire
 (donc celles des widgets) et trois sons originaux synthétisés (sonnerie,
 notification, alarme). Les packs de thème des Pixel restant réservés à

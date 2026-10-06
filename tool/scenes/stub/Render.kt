@@ -23,7 +23,16 @@ private val scenes = mapOf(
 )
 
 /** Les miniatures que `--thumbs` refait (celle de Circuit est faite à part). */
-private val thumbs = listOf("flux", "arc")
+private val thumbs = listOf("flux", "arc", "quantum", "neural", "atom", "vault", "ghost")
+
+/** Les fonds des thèmes : leur miniature prend la palette du thème (HaloThemes.kt). */
+private val themePalettes = mapOf(
+    "quantum" to CircuitPalette(Color.rgb(241, 235, 255), Color.rgb(183, 156, 255), Color.rgb(124, 77, 255)),
+    "neural" to CircuitPalette(Color.rgb(255, 234, 248), Color.rgb(255, 138, 216), Color.rgb(224, 64, 251)),
+    "atom" to CircuitPalette(Color.rgb(255, 251, 224), Color.rgb(255, 228, 92), Color.rgb(255, 196, 0)),
+    "vault" to CircuitPalette(Color.rgb(238, 255, 224), Color.rgb(166, 255, 99), Color.rgb(67, 209, 46)),
+    "ghost" to CircuitPalette(Color.rgb(230, 255, 251), Color.rgb(92, 245, 218), Color.rgb(0, 191, 165)),
+)
 
 /**
  * `Render <dossier> [fonds]` : chaque fond, dans chaque palette, à trois
@@ -35,7 +44,8 @@ fun main(args: Array<String>) {
     if (args.firstOrNull() == "--thumbs") {
         val out = File(args[1])
         for (name in thumbs) {
-            val image = render(scenes.getValue(name), palettes.getValue("copper"), 720, 1600, 2f, 830L)
+            val palette = themePalettes[name] ?: palettes.getValue("copper")
+            val image = render(scenes.getValue(name), palette, 720, 1600, 2f, 830L)
             // Le sélecteur montre du 9:16 : on recadre au milieu, puis on réduit.
             val crop = image.getSubimage(0, (1600 - 1280) / 2, 720, 1280)
             val small = BufferedImage(360, 640, BufferedImage.TYPE_INT_RGB)

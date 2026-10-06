@@ -1099,4 +1099,199 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get themeColorsPreset =>
       'Couleurs est réglé sur une couleur de base : le système ignore le fond. Choisissez une couleur du fond d\'écran.';
+
+  @override
+  String get wallpaperCoreBattery =>
+      'L\'animation s\'arrête dès que le fond n\'est plus visible ; à l\'écran, elle tourne à pleine cadence 30 secondes après l\'allumage ou un geste sur l\'accueil, puis ralentit jusqu\'au geste suivant.';
+
+  @override
+  String get wallpaperQuantumTitle => 'Physique quantique';
+
+  @override
+  String get wallpaperQuantumDescription =>
+      'Le réfrigérateur à dilution d\'un ordinateur quantique, suspendu dans le téléphone à la place de la batterie.';
+
+  @override
+  String get wallpaperQuantumMotion => 'Le lustre';
+
+  @override
+  String get wallpaperQuantumMotionText =>
+      'Un étage s\'allume par cinquième de batterie ; des photons descendent les câbles coaxiaux jusqu\'à la puce, plus vite en charge ; les cinq qubits oscillent entre deux états et les paires intriquées s\'allument ensemble.';
+
+  @override
+  String get themeQuantumDescription =>
+      'Le lustre d\'un ordinateur quantique, violet.';
+
+  @override
+  String get themeSoundQuantumRing => 'Superposition';
+
+  @override
+  String get themeSoundQuantumRingText =>
+      'Deux tons qui battent, puis une gamme qui monte et redescend';
+
+  @override
+  String get themeSoundQuantumNotification => 'Intrication';
+
+  @override
+  String get themeSoundQuantumNotificationText =>
+      'Deux notes qui sonnent ensemble, deux fois';
+
+  @override
+  String get themeSoundQuantumAlarm => 'Effondrement';
+
+  @override
+  String get themeSoundQuantumAlarmText =>
+      'Un souffle qui se resserre jusqu\'à une note pure';
+
+  @override
+  String get wallpaperNeuralTitle => 'Intelligence artificielle';
+
+  @override
+  String get wallpaperNeuralDescription =>
+      'Une puce d\'accélération et son réseau de neurones, installés dans le téléphone à la place de la batterie.';
+
+  @override
+  String get wallpaperNeuralMotion => 'Le réseau';
+
+  @override
+  String get wallpaperNeuralMotionText =>
+      'Une inférence traverse les cinq couches : les neurones activés s\'allument, le signal court sur leurs connexions et un neurone de sortie l\'emporte. En charge, le réseau apprend : la correction remonte. La jauge suit la batterie.';
+
+  @override
+  String get themeNeuralDescription =>
+      'Un réseau de neurones sur sa puce, magenta.';
+
+  @override
+  String get themeSoundNeuralRing => 'Inférence';
+
+  @override
+  String get themeSoundNeuralRingText =>
+      'Une suite de notes rapides, comme une pensée qui se forme';
+
+  @override
+  String get themeSoundNeuralNotification => 'Jeton';
+
+  @override
+  String get themeSoundNeuralNotificationText => 'Deux petits sons secs';
+
+  @override
+  String get themeSoundNeuralAlarm => 'Éveil';
+
+  @override
+  String get themeSoundNeuralAlarmText =>
+      'Un accord qui se construit couche par couche';
+
+  @override
+  String get wallpaperAtomTitle => 'Énergie atomique';
+
+  @override
+  String get wallpaperAtomDescription =>
+      'Le cœur d\'un réacteur nucléaire, vu de dessus, installé dans le téléphone à la place de la batterie.';
+
+  @override
+  String get wallpaperAtomMotion => 'Le cœur';
+
+  @override
+  String get wallpaperAtomMotionText =>
+      'Les 37 assemblages s\'allument du centre vers le bord selon la batterie ; des neutrons passent de l\'un à l\'autre, la réaction en chaîne, plus vive en charge ; la lueur de la cuve respire.';
+
+  @override
+  String get themeAtomDescription => 'Le cœur d\'un réacteur, jaune.';
+
+  @override
+  String get themeSoundAtomRing => 'Réaction en chaîne';
+
+  @override
+  String get themeSoundAtomRingText =>
+      'Des clics qui s\'accélèrent jusqu\'au grondement';
+
+  @override
+  String get themeSoundAtomNotification => 'Neutron';
+
+  @override
+  String get themeSoundAtomNotificationText => 'Un clic, puis une note claire';
+
+  @override
+  String get themeSoundAtomAlarm => 'Criticité';
+
+  @override
+  String get themeSoundAtomAlarmText =>
+      'La sirène à deux tons de la salle de contrôle';
+
+  @override
+  String get wallpaperVaultTitle => 'Fallout';
+
+  @override
+  String get wallpaperVaultDescription =>
+      'Une porte d\'abri antiatomique et son compteur Geiger, installés dans le téléphone à la place de la batterie.';
+
+  @override
+  String get wallpaperVaultMotion => 'La porte';
+
+  @override
+  String get wallpaperVaultMotionText =>
+      'Une dent de la roue s\'allume par dixième de batterie ; en charge, les verrous tournent et la porte s\'ouvre. L\'aiguille du compteur tremble et sursaute aux coups ; une ligne de balayage descend l\'écran.';
+
+  @override
+  String get themeVaultDescription => 'Une porte d\'abri, vert phosphore.';
+
+  @override
+  String get themeSoundVaultRing => 'Porte de l\'abri';
+
+  @override
+  String get themeSoundVaultRingText =>
+      'La sirène, le sifflement des vérins, puis le choc';
+
+  @override
+  String get themeSoundVaultNotification => 'Terminal';
+
+  @override
+  String get themeSoundVaultNotificationText =>
+      'Trois frappes de clavier et un bip';
+
+  @override
+  String get themeSoundVaultAlarm => 'Compteur Geiger';
+
+  @override
+  String get themeSoundVaultAlarmText =>
+      'Le crépitement d\'un compteur en zone chaude';
+
+  @override
+  String get wallpaperGhostTitle => 'Ghost in the Shell';
+
+  @override
+  String get wallpaperGhostDescription =>
+      'Un cyber-cerveau dans sa coque, branché dans le téléphone à la place de la batterie.';
+
+  @override
+  String get wallpaperGhostMotion => 'Le cyber-cerveau';
+
+  @override
+  String get wallpaperGhostMotionText =>
+      'Le ghost, une étincelle, erre de piste en piste dans le cerveau ; une prise de nuque s\'allume par quart de batterie ; une pluie de code tombe derrière, et en charge, c\'est la plongée : elle accélère.';
+
+  @override
+  String get themeGhostDescription =>
+      'Un cyber-cerveau et sa pluie de code, turquoise.';
+
+  @override
+  String get themeSoundGhostRing => 'Plongée';
+
+  @override
+  String get themeSoundGhostRingText =>
+      'Des tambours graves sous des voix lointaines';
+
+  @override
+  String get themeSoundGhostNotification => 'Ghost';
+
+  @override
+  String get themeSoundGhostNotificationText =>
+      'Un souffle, puis une note qui s\'efface';
+
+  @override
+  String get themeSoundGhostAlarm => 'Synchronisation';
+
+  @override
+  String get themeSoundGhostAlarmText =>
+      'Des tambours et des signaux de données qui montent';
 }

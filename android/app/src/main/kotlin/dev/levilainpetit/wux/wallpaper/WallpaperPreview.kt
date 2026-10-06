@@ -66,6 +66,11 @@ object WallpaperPreview {
             when (kind) {
                 FLUX -> FluxWallpaperService::class.java
                 ARC -> ArcWallpaperService::class.java
+                QUANTUM -> QuantumWallpaperService::class.java
+                NEURAL -> NeuralWallpaperService::class.java
+                ATOM -> AtomWallpaperService::class.java
+                VAULT -> VaultWallpaperService::class.java
+                GHOST -> GhostWallpaperService::class.java
                 else -> HaloWallpaperService::class.java
             },
         )
@@ -74,6 +79,18 @@ object WallpaperPreview {
     const val CIRCUIT = "circuit"
     const val FLUX = "flux"
     const val ARC = "arc"
-    private val CORES = mapOf(FLUX to CircuitScene.Core.FLUX, ARC to CircuitScene.Core.ARC)
-    private val KINDS = listOf(CIRCUIT, FLUX, ARC)
+    const val QUANTUM = "quantum"
+    const val NEURAL = "neural"
+    const val ATOM = "atom"
+    const val VAULT = "vault"
+    const val GHOST = "ghost"
+    private val CORES = mapOf(
+        FLUX to CircuitScene.Core.FLUX, ARC to CircuitScene.Core.ARC, QUANTUM to CircuitScene.Core.QUANTUM,
+        NEURAL to CircuitScene.Core.NEURAL, ATOM to CircuitScene.Core.ATOM, VAULT to CircuitScene.Core.VAULT,
+        GHOST to CircuitScene.Core.GHOST,
+    )
+    private val KINDS = listOf(CIRCUIT) + CORES.keys
+
+    /** L'identifiant du fond qui a [core] à la place de la batterie. */
+    fun kindOf(core: CircuitScene.Core): String = CORES.entries.firstOrNull { it.value == core }?.key ?: CIRCUIT
 }

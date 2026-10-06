@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fond d'écran animé Halo · Ghost in the Shell (GhostWallpaperService). -->
+<wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/wallpaper_ghost_description"
+    android:author="@string/wallpaper_author"
+    android:thumbnail="@drawable/wallpaper_thumb_ghost"
+    android:showMetadataInPreview="false" />

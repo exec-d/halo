@@ -1093,4 +1093,189 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get themeColorsPreset =>
       'Colours is set to a basic colour: the system ignores the wallpaper. Choose a wallpaper colour.';
+
+  @override
+  String get wallpaperCoreBattery =>
+      'The animation stops as soon as the wallpaper is hidden; on screen, it runs at full rate for 30 seconds after the screen turns on or a gesture on the home screen, then slows down until the next gesture.';
+
+  @override
+  String get wallpaperQuantumTitle => 'Quantum physics';
+
+  @override
+  String get wallpaperQuantumDescription =>
+      'A quantum computer\'s dilution refrigerator, hanging inside the phone in place of the battery.';
+
+  @override
+  String get wallpaperQuantumMotion => 'The chandelier';
+
+  @override
+  String get wallpaperQuantumMotionText =>
+      'One stage lights up per fifth of battery; photons run down the coaxial lines to the chip, faster while charging; the five qubits swing between two states and entangled pairs light up together.';
+
+  @override
+  String get themeQuantumDescription =>
+      'A quantum computer\'s chandelier, violet.';
+
+  @override
+  String get themeSoundQuantumRing => 'Superposition';
+
+  @override
+  String get themeSoundQuantumRingText =>
+      'Two beating tones, then a scale up and down';
+
+  @override
+  String get themeSoundQuantumNotification => 'Entanglement';
+
+  @override
+  String get themeSoundQuantumNotificationText =>
+      'Two notes ringing together, twice';
+
+  @override
+  String get themeSoundQuantumAlarm => 'Collapse';
+
+  @override
+  String get themeSoundQuantumAlarmText =>
+      'A hiss narrowing down to a pure note';
+
+  @override
+  String get wallpaperNeuralTitle => 'Artificial intelligence';
+
+  @override
+  String get wallpaperNeuralDescription =>
+      'An accelerator chip and its neural network, fitted inside the phone in place of the battery.';
+
+  @override
+  String get wallpaperNeuralMotion => 'The network';
+
+  @override
+  String get wallpaperNeuralMotionText =>
+      'An inference crosses the five layers: active neurons light up, the signal runs along their connections and one output neuron wins. While charging, the network learns: the correction flows back up. The gauge follows the battery.';
+
+  @override
+  String get themeNeuralDescription => 'A neural network on its chip, magenta.';
+
+  @override
+  String get themeSoundNeuralRing => 'Inference';
+
+  @override
+  String get themeSoundNeuralRingText =>
+      'A run of quick notes, like a thought taking shape';
+
+  @override
+  String get themeSoundNeuralNotification => 'Token';
+
+  @override
+  String get themeSoundNeuralNotificationText => 'Two short dry blips';
+
+  @override
+  String get themeSoundNeuralAlarm => 'Awakening';
+
+  @override
+  String get themeSoundNeuralAlarmText => 'A chord built layer by layer';
+
+  @override
+  String get wallpaperAtomTitle => 'Atomic energy';
+
+  @override
+  String get wallpaperAtomDescription =>
+      'A nuclear reactor core, seen from above, fitted inside the phone in place of the battery.';
+
+  @override
+  String get wallpaperAtomMotion => 'The core';
+
+  @override
+  String get wallpaperAtomMotionText =>
+      'The 37 fuel assemblies light up from the centre outwards with the battery; neutrons pass from one to the next, the chain reaction, livelier while charging; the vessel\'s glow breathes.';
+
+  @override
+  String get themeAtomDescription => 'A reactor core, yellow.';
+
+  @override
+  String get themeSoundAtomRing => 'Chain reaction';
+
+  @override
+  String get themeSoundAtomRingText => 'Clicks speeding up into a rumble';
+
+  @override
+  String get themeSoundAtomNotification => 'Neutron';
+
+  @override
+  String get themeSoundAtomNotificationText => 'A click, then a clear note';
+
+  @override
+  String get themeSoundAtomAlarm => 'Criticality';
+
+  @override
+  String get themeSoundAtomAlarmText => 'The control room\'s two-tone siren';
+
+  @override
+  String get wallpaperVaultTitle => 'Fallout';
+
+  @override
+  String get wallpaperVaultDescription =>
+      'A fallout shelter door and its Geiger counter, fitted inside the phone in place of the battery.';
+
+  @override
+  String get wallpaperVaultMotion => 'The door';
+
+  @override
+  String get wallpaperVaultMotionText =>
+      'One tooth of the wheel lights up per tenth of battery; while charging, the locks turn and the door opens. The counter\'s needle trembles and jumps; a scan line runs down the screen.';
+
+  @override
+  String get themeVaultDescription => 'A shelter door, phosphor green.';
+
+  @override
+  String get themeSoundVaultRing => 'Vault door';
+
+  @override
+  String get themeSoundVaultRingText =>
+      'The siren, the hiss of the rams, then the thud';
+
+  @override
+  String get themeSoundVaultNotification => 'Terminal';
+
+  @override
+  String get themeSoundVaultNotificationText => 'Three keystrokes and a beep';
+
+  @override
+  String get themeSoundVaultAlarm => 'Geiger counter';
+
+  @override
+  String get themeSoundVaultAlarmText => 'A counter crackling in a hot zone';
+
+  @override
+  String get wallpaperGhostTitle => 'Ghost in the Shell';
+
+  @override
+  String get wallpaperGhostDescription =>
+      'A cyberbrain in its shell, plugged into the phone in place of the battery.';
+
+  @override
+  String get wallpaperGhostMotion => 'The cyberbrain';
+
+  @override
+  String get wallpaperGhostMotionText =>
+      'The ghost, a spark, wanders from trace to trace in the brain; one neck port lights up per quarter of battery; code rain falls behind, and while charging it dives: the rain speeds up.';
+
+  @override
+  String get themeGhostDescription => 'A cyberbrain and its code rain, teal.';
+
+  @override
+  String get themeSoundGhostRing => 'Dive';
+
+  @override
+  String get themeSoundGhostRingText => 'Deep drums under distant voices';
+
+  @override
+  String get themeSoundGhostNotification => 'Ghost';
+
+  @override
+  String get themeSoundGhostNotificationText => 'A breath, then a fading note';
+
+  @override
+  String get themeSoundGhostAlarm => 'Synchronisation';
+
+  @override
+  String get themeSoundGhostAlarmText => 'Drums and rising data signals';
 }

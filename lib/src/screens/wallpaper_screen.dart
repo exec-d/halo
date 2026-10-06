@@ -80,8 +80,100 @@ List<(String, String)> _arcFeatures(AppLocalizations l) => [
 ];
 String _arcBattery(AppLocalizations l) => l.wallpaperArcBattery;
 
+const quantumWallpaper = HaloWallpaper(
+  id: 'quantum',
+  title: _quantumTitle,
+  description: _quantumDescription,
+  features: _quantumFeatures,
+  battery: _coreBattery,
+);
+String _quantumTitle(AppLocalizations l) => l.wallpaperQuantumTitle;
+String _quantumDescription(AppLocalizations l) => l.wallpaperQuantumDescription;
+List<(String, String)> _quantumFeatures(AppLocalizations l) => [
+  (l.wallpaperQuantumMotion, l.wallpaperQuantumMotionText),
+  (l.wallpaperCircuitTiltTitle, l.wallpaperCircuitTiltText),
+  (l.wallpaperCircuitNetworkTitle, l.wallpaperCircuitNetworkText),
+  (l.wallpaperCircuitWakeTitle, l.wallpaperCircuitWakeText),
+];
+
+const neuralWallpaper = HaloWallpaper(
+  id: 'neural',
+  title: _neuralTitle,
+  description: _neuralDescription,
+  features: _neuralFeatures,
+  battery: _coreBattery,
+);
+String _neuralTitle(AppLocalizations l) => l.wallpaperNeuralTitle;
+String _neuralDescription(AppLocalizations l) => l.wallpaperNeuralDescription;
+List<(String, String)> _neuralFeatures(AppLocalizations l) => [
+  (l.wallpaperNeuralMotion, l.wallpaperNeuralMotionText),
+  (l.wallpaperCircuitTiltTitle, l.wallpaperCircuitTiltText),
+  (l.wallpaperCircuitNetworkTitle, l.wallpaperCircuitNetworkText),
+  (l.wallpaperCircuitWakeTitle, l.wallpaperCircuitWakeText),
+];
+
+const atomWallpaper = HaloWallpaper(
+  id: 'atom',
+  title: _atomTitle,
+  description: _atomDescription,
+  features: _atomFeatures,
+  battery: _coreBattery,
+);
+String _atomTitle(AppLocalizations l) => l.wallpaperAtomTitle;
+String _atomDescription(AppLocalizations l) => l.wallpaperAtomDescription;
+List<(String, String)> _atomFeatures(AppLocalizations l) => [
+  (l.wallpaperAtomMotion, l.wallpaperAtomMotionText),
+  (l.wallpaperCircuitTiltTitle, l.wallpaperCircuitTiltText),
+  (l.wallpaperCircuitNetworkTitle, l.wallpaperCircuitNetworkText),
+  (l.wallpaperCircuitWakeTitle, l.wallpaperCircuitWakeText),
+];
+
+const vaultWallpaper = HaloWallpaper(
+  id: 'vault',
+  title: _vaultTitle,
+  description: _vaultDescription,
+  features: _vaultFeatures,
+  battery: _coreBattery,
+);
+String _vaultTitle(AppLocalizations l) => l.wallpaperVaultTitle;
+String _vaultDescription(AppLocalizations l) => l.wallpaperVaultDescription;
+List<(String, String)> _vaultFeatures(AppLocalizations l) => [
+  (l.wallpaperVaultMotion, l.wallpaperVaultMotionText),
+  (l.wallpaperCircuitTiltTitle, l.wallpaperCircuitTiltText),
+  (l.wallpaperCircuitNetworkTitle, l.wallpaperCircuitNetworkText),
+  (l.wallpaperCircuitWakeTitle, l.wallpaperCircuitWakeText),
+];
+
+const ghostWallpaper = HaloWallpaper(
+  id: 'ghost',
+  title: _ghostTitle,
+  description: _ghostDescription,
+  features: _ghostFeatures,
+  battery: _coreBattery,
+);
+String _ghostTitle(AppLocalizations l) => l.wallpaperGhostTitle;
+String _ghostDescription(AppLocalizations l) => l.wallpaperGhostDescription;
+List<(String, String)> _ghostFeatures(AppLocalizations l) => [
+  (l.wallpaperGhostMotion, l.wallpaperGhostMotionText),
+  (l.wallpaperCircuitTiltTitle, l.wallpaperCircuitTiltText),
+  (l.wallpaperCircuitNetworkTitle, l.wallpaperCircuitNetworkText),
+  (l.wallpaperCircuitWakeTitle, l.wallpaperCircuitWakeText),
+];
+
+/// Les fonds des thèmes : ce qui tourne quand, la même chose pour tous.
+String _coreBattery(AppLocalizations l) => l.wallpaperCoreBattery;
+
 /// Les fonds d'écran animés, dans l'ordre du catalogue.
-const haloWallpapers = [circuitWallpaper, fluxWallpaper, arcWallpaper];
+const haloWallpapers = [
+  circuitWallpaper,
+  fluxWallpaper,
+  arcWallpaper,
+  quantumWallpaper,
+  neuralWallpaper,
+  atomWallpaper,
+  vaultWallpaper,
+  ghostWallpaper,
+];
 
 /// Un fond d'écran animé : aperçu, ce qu'il montre, son intensité et son
 /// application à l'accueil et à l'écran de verrouillage.

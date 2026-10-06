@@ -132,6 +132,20 @@ Fonds). Un thème porte le nom et l'identifiant de son fond :
 | Circuit | blanc bleuté, bleu ciel, bleu électrique | Bus de données, Impulsion, Démarrage |
 | Retour vers le futur | crème, ambre, orange | 88 mph, Flux, Heure de départ |
 | Iron Man | ivoire, or, rouge | Répulseur, Interface, Réacteur |
+| Physique quantique | lavande, violet clair, violet | Superposition, Intrication, Effondrement |
+| Intelligence artificielle | rose pâle, rose, magenta | Inférence, Jeton, Éveil |
+| Énergie atomique | crème, jaune, jaune d'or | Réaction en chaîne, Neutron, Criticité |
+| Fallout | blanc vert, vert pomme, vert | Porte de l'abri, Terminal, Compteur Geiger |
+| Ghost in the Shell | blanc d'eau, turquoise, vert d'eau | Plongée, Ghost, Synchronisation |
+
+Les cinq derniers fonds changent le cœur du téléphone de Circuit
+(`CoreArt` et ses sous-classes : `QuantumCore`, `NeuralCore`, `AtomCore`,
+`VaultCore`, `GhostCore`) : chacun se dessine une fois dans le plan de la
+batterie et s'anime lui-même (batterie, charge, allumage). Comme le
+convecteur et le réacteur, ils tournent à pleine cadence 30 s après
+l'allumage ou un geste, puis ralentissent. Les noms de films et de jeux ne
+servent qu'à nommer les thèmes : dessins et sons sont originaux, sans logo,
+personnage ni extrait.
 
 Appliquer un thème :
 

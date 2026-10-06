@@ -61,11 +61,7 @@ open class HaloWallpaperService : WallpaperService() {
     protected open val core = CircuitScene.Core.BATTERY
 
     /** L'identifiant du fond, partagé avec les thèmes et Dart. */
-    private val kind get() = when (core) {
-        CircuitScene.Core.FLUX -> WallpaperPreview.FLUX
-        CircuitScene.Core.ARC -> WallpaperPreview.ARC
-        else -> WallpaperPreview.CIRCUIT
-    }
+    private val kind get() = WallpaperPreview.kindOf(core)
 
     /** Les variantes s'animent sans cesse, à une cadence plus lente. */
     private val animated get() = core != CircuitScene.Core.BATTERY
@@ -433,4 +429,44 @@ class FluxWallpaperService : HaloWallpaperService() {
  */
 class ArcWallpaperService : HaloWallpaperService() {
     override val core = CircuitScene.Core.ARC
+}
+
+/**
+ * Fond d'écran animé « Physique quantique » (thème du même nom) : le téléphone de
+ * Circuit avec un autre cœur à la place de la batterie ([QuantumCore]).
+ */
+class QuantumWallpaperService : HaloWallpaperService() {
+    override val core = CircuitScene.Core.QUANTUM
+}
+
+/**
+ * Fond d'écran animé « Intelligence artificielle » (thème du même nom) : le téléphone de
+ * Circuit avec un autre cœur à la place de la batterie ([NeuralCore]).
+ */
+class NeuralWallpaperService : HaloWallpaperService() {
+    override val core = CircuitScene.Core.NEURAL
+}
+
+/**
+ * Fond d'écran animé « Énergie atomique » (thème du même nom) : le téléphone de
+ * Circuit avec un autre cœur à la place de la batterie ([AtomCore]).
+ */
+class AtomWallpaperService : HaloWallpaperService() {
+    override val core = CircuitScene.Core.ATOM
+}
+
+/**
+ * Fond d'écran animé « Fallout » (thème du même nom) : le téléphone de
+ * Circuit avec un autre cœur à la place de la batterie ([VaultCore]).
+ */
+class VaultWallpaperService : HaloWallpaperService() {
+    override val core = CircuitScene.Core.VAULT
+}
+
+/**
+ * Fond d'écran animé « Ghost in the Shell » (thème du même nom) : le téléphone de
+ * Circuit avec un autre cœur à la place de la batterie ([GhostCore]).
+ */
+class GhostWallpaperService : HaloWallpaperService() {
+    override val core = CircuitScene.Core.GHOST
 }

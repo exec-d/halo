@@ -124,8 +124,150 @@ String _arcNotificationText(AppLocalizations l) =>
 String _arcAlarm(AppLocalizations l) => l.themeSoundArcAlarm;
 String _arcAlarmText(AppLocalizations l) => l.themeSoundArcAlarmText;
 
+const quantumTheme = HaloTheme(
+  wallpaper: quantumWallpaper,
+  description: _quantumThemeDescription,
+  accent: Color(0xFFCDBDFF),
+  onAccent: Color(0xFF34118C),
+  swatches: [
+    Color(0xFFCDBDFF),
+    Color(0xFFCBC2DB),
+    Color(0xFFEFB8C8),
+    Color(0xFF141218),
+  ],
+  sounds: [
+    ('ring', _quantumRing, _quantumRingText),
+    ('notification', _quantumNotification, _quantumNotificationText),
+    ('alarm', _quantumAlarm, _quantumAlarmText),
+  ],
+);
+String _quantumThemeDescription(AppLocalizations l) =>
+    l.themeQuantumDescription;
+String _quantumRing(AppLocalizations l) => l.themeSoundQuantumRing;
+String _quantumRingText(AppLocalizations l) => l.themeSoundQuantumRingText;
+String _quantumNotification(AppLocalizations l) =>
+    l.themeSoundQuantumNotification;
+String _quantumNotificationText(AppLocalizations l) =>
+    l.themeSoundQuantumNotificationText;
+String _quantumAlarm(AppLocalizations l) => l.themeSoundQuantumAlarm;
+String _quantumAlarmText(AppLocalizations l) => l.themeSoundQuantumAlarmText;
+
+const neuralTheme = HaloTheme(
+  wallpaper: neuralWallpaper,
+  description: _neuralThemeDescription,
+  accent: Color(0xFFFFADE5),
+  onAccent: Color(0xFF5B0049),
+  swatches: [
+    Color(0xFFFFADE5),
+    Color(0xFFE0BDD3),
+    Color(0xFFF3BA9E),
+    Color(0xFF191116),
+  ],
+  sounds: [
+    ('ring', _neuralRing, _neuralRingText),
+    ('notification', _neuralNotification, _neuralNotificationText),
+    ('alarm', _neuralAlarm, _neuralAlarmText),
+  ],
+);
+String _neuralThemeDescription(AppLocalizations l) => l.themeNeuralDescription;
+String _neuralRing(AppLocalizations l) => l.themeSoundNeuralRing;
+String _neuralRingText(AppLocalizations l) => l.themeSoundNeuralRingText;
+String _neuralNotification(AppLocalizations l) =>
+    l.themeSoundNeuralNotification;
+String _neuralNotificationText(AppLocalizations l) =>
+    l.themeSoundNeuralNotificationText;
+String _neuralAlarm(AppLocalizations l) => l.themeSoundNeuralAlarm;
+String _neuralAlarmText(AppLocalizations l) => l.themeSoundNeuralAlarmText;
+
+const atomTheme = HaloTheme(
+  wallpaper: atomWallpaper,
+  description: _atomThemeDescription,
+  accent: Color(0xFFE5C447),
+  onAccent: Color(0xFF3B2F00),
+  swatches: [
+    Color(0xFFE5C447),
+    Color(0xFFD4C6A0),
+    Color(0xFFABD0B4),
+    Color(0xFF16130B),
+  ],
+  sounds: [
+    ('ring', _atomRing, _atomRingText),
+    ('notification', _atomNotification, _atomNotificationText),
+    ('alarm', _atomAlarm, _atomAlarmText),
+  ],
+);
+String _atomThemeDescription(AppLocalizations l) => l.themeAtomDescription;
+String _atomRing(AppLocalizations l) => l.themeSoundAtomRing;
+String _atomRingText(AppLocalizations l) => l.themeSoundAtomRingText;
+String _atomNotification(AppLocalizations l) => l.themeSoundAtomNotification;
+String _atomNotificationText(AppLocalizations l) =>
+    l.themeSoundAtomNotificationText;
+String _atomAlarm(AppLocalizations l) => l.themeSoundAtomAlarm;
+String _atomAlarmText(AppLocalizations l) => l.themeSoundAtomAlarmText;
+
+const vaultTheme = HaloTheme(
+  wallpaper: vaultWallpaper,
+  description: _vaultThemeDescription,
+  accent: Color(0xFFA1D886),
+  onAccent: Color(0xFF0B3900),
+  swatches: [
+    Color(0xFFA1D886),
+    Color(0xFFBCCBAF),
+    Color(0xFFA0CFD0),
+    Color(0xFF11140F),
+  ],
+  sounds: [
+    ('ring', _vaultRing, _vaultRingText),
+    ('notification', _vaultNotification, _vaultNotificationText),
+    ('alarm', _vaultAlarm, _vaultAlarmText),
+  ],
+);
+String _vaultThemeDescription(AppLocalizations l) => l.themeVaultDescription;
+String _vaultRing(AppLocalizations l) => l.themeSoundVaultRing;
+String _vaultRingText(AppLocalizations l) => l.themeSoundVaultRingText;
+String _vaultNotification(AppLocalizations l) => l.themeSoundVaultNotification;
+String _vaultNotificationText(AppLocalizations l) =>
+    l.themeSoundVaultNotificationText;
+String _vaultAlarm(AppLocalizations l) => l.themeSoundVaultAlarm;
+String _vaultAlarmText(AppLocalizations l) => l.themeSoundVaultAlarmText;
+
+const ghostTheme = HaloTheme(
+  wallpaper: ghostWallpaper,
+  description: _ghostThemeDescription,
+  accent: Color(0xFF6ADBC8),
+  onAccent: Color(0xFF003730),
+  swatches: [
+    Color(0xFF6ADBC8),
+    Color(0xFFB1CCC5),
+    Color(0xFFACCAE6),
+    Color(0xFF0E1513),
+  ],
+  sounds: [
+    ('ring', _ghostRing, _ghostRingText),
+    ('notification', _ghostNotification, _ghostNotificationText),
+    ('alarm', _ghostAlarm, _ghostAlarmText),
+  ],
+);
+String _ghostThemeDescription(AppLocalizations l) => l.themeGhostDescription;
+String _ghostRing(AppLocalizations l) => l.themeSoundGhostRing;
+String _ghostRingText(AppLocalizations l) => l.themeSoundGhostRingText;
+String _ghostNotification(AppLocalizations l) => l.themeSoundGhostNotification;
+String _ghostNotificationText(AppLocalizations l) =>
+    l.themeSoundGhostNotificationText;
+String _ghostAlarm(AppLocalizations l) => l.themeSoundGhostAlarm;
+String _ghostAlarmText(AppLocalizations l) => l.themeSoundGhostAlarmText;
+
 /// Les thèmes, dans l'ordre des fonds.
-const haloThemes = [circuitTheme, fluxTheme, arcTheme];
+const haloThemes = [
+  circuitTheme,
+  fluxTheme,
+  arcTheme,
+  quantumTheme,
+  neuralTheme,
+  atomTheme,
+  vaultTheme,
+  ghostTheme,
+];
 
 /// Le nom d'un rôle de son (`ring`…), pour l'écran.
 String themeSoundRole(AppLocalizations l10n, String kind) => switch (kind) {

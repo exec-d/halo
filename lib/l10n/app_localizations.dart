@@ -1968,6 +1968,342 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Couleurs est réglé sur une couleur de base : le système ignore le fond. Choisissez une couleur du fond d\'écran.'**
   String get themeColorsPreset;
+
+  /// No description provided for @wallpaperCoreBattery.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'animation s\'arrête dès que le fond n\'est plus visible ; à l\'écran, elle tourne à pleine cadence 30 secondes après l\'allumage ou un geste sur l\'accueil, puis ralentit jusqu\'au geste suivant.'**
+  String get wallpaperCoreBattery;
+
+  /// No description provided for @wallpaperQuantumTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Physique quantique'**
+  String get wallpaperQuantumTitle;
+
+  /// No description provided for @wallpaperQuantumDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le réfrigérateur à dilution d\'un ordinateur quantique, suspendu dans le téléphone à la place de la batterie.'**
+  String get wallpaperQuantumDescription;
+
+  /// No description provided for @wallpaperQuantumMotion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le lustre'**
+  String get wallpaperQuantumMotion;
+
+  /// No description provided for @wallpaperQuantumMotionText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un étage s\'allume par cinquième de batterie ; des photons descendent les câbles coaxiaux jusqu\'à la puce, plus vite en charge ; les cinq qubits oscillent entre deux états et les paires intriquées s\'allument ensemble.'**
+  String get wallpaperQuantumMotionText;
+
+  /// No description provided for @themeQuantumDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le lustre d\'un ordinateur quantique, violet.'**
+  String get themeQuantumDescription;
+
+  /// No description provided for @themeSoundQuantumRing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Superposition'**
+  String get themeSoundQuantumRing;
+
+  /// No description provided for @themeSoundQuantumRingText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Deux tons qui battent, puis une gamme qui monte et redescend'**
+  String get themeSoundQuantumRingText;
+
+  /// No description provided for @themeSoundQuantumNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Intrication'**
+  String get themeSoundQuantumNotification;
+
+  /// No description provided for @themeSoundQuantumNotificationText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Deux notes qui sonnent ensemble, deux fois'**
+  String get themeSoundQuantumNotificationText;
+
+  /// No description provided for @themeSoundQuantumAlarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Effondrement'**
+  String get themeSoundQuantumAlarm;
+
+  /// No description provided for @themeSoundQuantumAlarmText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un souffle qui se resserre jusqu\'à une note pure'**
+  String get themeSoundQuantumAlarmText;
+
+  /// No description provided for @wallpaperNeuralTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Intelligence artificielle'**
+  String get wallpaperNeuralTitle;
+
+  /// No description provided for @wallpaperNeuralDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une puce d\'accélération et son réseau de neurones, installés dans le téléphone à la place de la batterie.'**
+  String get wallpaperNeuralDescription;
+
+  /// No description provided for @wallpaperNeuralMotion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le réseau'**
+  String get wallpaperNeuralMotion;
+
+  /// No description provided for @wallpaperNeuralMotionText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une inférence traverse les cinq couches : les neurones activés s\'allument, le signal court sur leurs connexions et un neurone de sortie l\'emporte. En charge, le réseau apprend : la correction remonte. La jauge suit la batterie.'**
+  String get wallpaperNeuralMotionText;
+
+  /// No description provided for @themeNeuralDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un réseau de neurones sur sa puce, magenta.'**
+  String get themeNeuralDescription;
+
+  /// No description provided for @themeSoundNeuralRing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inférence'**
+  String get themeSoundNeuralRing;
+
+  /// No description provided for @themeSoundNeuralRingText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une suite de notes rapides, comme une pensée qui se forme'**
+  String get themeSoundNeuralRingText;
+
+  /// No description provided for @themeSoundNeuralNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jeton'**
+  String get themeSoundNeuralNotification;
+
+  /// No description provided for @themeSoundNeuralNotificationText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Deux petits sons secs'**
+  String get themeSoundNeuralNotificationText;
+
+  /// No description provided for @themeSoundNeuralAlarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Éveil'**
+  String get themeSoundNeuralAlarm;
+
+  /// No description provided for @themeSoundNeuralAlarmText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un accord qui se construit couche par couche'**
+  String get themeSoundNeuralAlarmText;
+
+  /// No description provided for @wallpaperAtomTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Énergie atomique'**
+  String get wallpaperAtomTitle;
+
+  /// No description provided for @wallpaperAtomDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le cœur d\'un réacteur nucléaire, vu de dessus, installé dans le téléphone à la place de la batterie.'**
+  String get wallpaperAtomDescription;
+
+  /// No description provided for @wallpaperAtomMotion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le cœur'**
+  String get wallpaperAtomMotion;
+
+  /// No description provided for @wallpaperAtomMotionText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les 37 assemblages s\'allument du centre vers le bord selon la batterie ; des neutrons passent de l\'un à l\'autre, la réaction en chaîne, plus vive en charge ; la lueur de la cuve respire.'**
+  String get wallpaperAtomMotionText;
+
+  /// No description provided for @themeAtomDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le cœur d\'un réacteur, jaune.'**
+  String get themeAtomDescription;
+
+  /// No description provided for @themeSoundAtomRing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réaction en chaîne'**
+  String get themeSoundAtomRing;
+
+  /// No description provided for @themeSoundAtomRingText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des clics qui s\'accélèrent jusqu\'au grondement'**
+  String get themeSoundAtomRingText;
+
+  /// No description provided for @themeSoundAtomNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Neutron'**
+  String get themeSoundAtomNotification;
+
+  /// No description provided for @themeSoundAtomNotificationText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un clic, puis une note claire'**
+  String get themeSoundAtomNotificationText;
+
+  /// No description provided for @themeSoundAtomAlarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Criticité'**
+  String get themeSoundAtomAlarm;
+
+  /// No description provided for @themeSoundAtomAlarmText.
+  ///
+  /// In fr, this message translates to:
+  /// **'La sirène à deux tons de la salle de contrôle'**
+  String get themeSoundAtomAlarmText;
+
+  /// No description provided for @wallpaperVaultTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fallout'**
+  String get wallpaperVaultTitle;
+
+  /// No description provided for @wallpaperVaultDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une porte d\'abri antiatomique et son compteur Geiger, installés dans le téléphone à la place de la batterie.'**
+  String get wallpaperVaultDescription;
+
+  /// No description provided for @wallpaperVaultMotion.
+  ///
+  /// In fr, this message translates to:
+  /// **'La porte'**
+  String get wallpaperVaultMotion;
+
+  /// No description provided for @wallpaperVaultMotionText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une dent de la roue s\'allume par dixième de batterie ; en charge, les verrous tournent et la porte s\'ouvre. L\'aiguille du compteur tremble et sursaute aux coups ; une ligne de balayage descend l\'écran.'**
+  String get wallpaperVaultMotionText;
+
+  /// No description provided for @themeVaultDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une porte d\'abri, vert phosphore.'**
+  String get themeVaultDescription;
+
+  /// No description provided for @themeSoundVaultRing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Porte de l\'abri'**
+  String get themeSoundVaultRing;
+
+  /// No description provided for @themeSoundVaultRingText.
+  ///
+  /// In fr, this message translates to:
+  /// **'La sirène, le sifflement des vérins, puis le choc'**
+  String get themeSoundVaultRingText;
+
+  /// No description provided for @themeSoundVaultNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminal'**
+  String get themeSoundVaultNotification;
+
+  /// No description provided for @themeSoundVaultNotificationText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trois frappes de clavier et un bip'**
+  String get themeSoundVaultNotificationText;
+
+  /// No description provided for @themeSoundVaultAlarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compteur Geiger'**
+  String get themeSoundVaultAlarm;
+
+  /// No description provided for @themeSoundVaultAlarmText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le crépitement d\'un compteur en zone chaude'**
+  String get themeSoundVaultAlarmText;
+
+  /// No description provided for @wallpaperGhostTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ghost in the Shell'**
+  String get wallpaperGhostTitle;
+
+  /// No description provided for @wallpaperGhostDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un cyber-cerveau dans sa coque, branché dans le téléphone à la place de la batterie.'**
+  String get wallpaperGhostDescription;
+
+  /// No description provided for @wallpaperGhostMotion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le cyber-cerveau'**
+  String get wallpaperGhostMotion;
+
+  /// No description provided for @wallpaperGhostMotionText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le ghost, une étincelle, erre de piste en piste dans le cerveau ; une prise de nuque s\'allume par quart de batterie ; une pluie de code tombe derrière, et en charge, c\'est la plongée : elle accélère.'**
+  String get wallpaperGhostMotionText;
+
+  /// No description provided for @themeGhostDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un cyber-cerveau et sa pluie de code, turquoise.'**
+  String get themeGhostDescription;
+
+  /// No description provided for @themeSoundGhostRing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plongée'**
+  String get themeSoundGhostRing;
+
+  /// No description provided for @themeSoundGhostRingText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des tambours graves sous des voix lointaines'**
+  String get themeSoundGhostRingText;
+
+  /// No description provided for @themeSoundGhostNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ghost'**
+  String get themeSoundGhostNotification;
+
+  /// No description provided for @themeSoundGhostNotificationText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un souffle, puis une note qui s\'efface'**
+  String get themeSoundGhostNotificationText;
+
+  /// No description provided for @themeSoundGhostAlarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Synchronisation'**
+  String get themeSoundGhostAlarm;
+
+  /// No description provided for @themeSoundGhostAlarmText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des tambours et des signaux de données qui montent'**
+  String get themeSoundGhostAlarmText;
 }
 
 class _AppLocalizationsDelegate

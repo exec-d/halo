@@ -9,6 +9,12 @@ mineure peut changer des réglages.
 
 ### Nouveau
 
+- **Cinq thèmes de plus**, chacun avec son fond animé, sa palette et ses
+  trois sons : Physique quantique (le réfrigérateur d'un ordinateur
+  quantique), Intelligence artificielle (un réseau de neurones sur sa puce),
+  Énergie atomique (le cœur d'un réacteur), Fallout (une porte d'abri et son
+  compteur Geiger) et Ghost in the Shell (un cyber-cerveau et sa pluie de
+  code).
 - **Thèmes** : Circuit, Retour vers le futur et Iron Man. Un toucher applique
   le fond animé dans sa palette ; le fond annonce ces couleurs à Android, qui
   en tire celles du système et des widgets ; trois sons originaux,

@@ -128,6 +128,19 @@ its wallpaper:
 | Circuit | bluish white, sky blue, electric blue | Data bus, Pulse, Boot |
 | Back to the Future | cream, amber, orange | 88 mph, Flux, Departure time |
 | Iron Man | ivory, gold, red | Repulsor, Interface, Reactor |
+| Quantum physics | lavender, light violet, violet | Superposition, Entanglement, Collapse |
+| Artificial intelligence | pale pink, pink, magenta | Inference, Token, Awakening |
+| Atomic energy | cream, yellow, golden yellow | Chain reaction, Neutron, Criticality |
+| Fallout | green white, apple green, green | Vault door, Terminal, Geiger counter |
+| Ghost in the Shell | water white, turquoise, sea green | Dive, Ghost, Synchronisation |
+
+The last five wallpapers change the core of Circuit's phone (`CoreArt` and
+its subclasses: `QuantumCore`, `NeuralCore`, `AtomCore`, `VaultCore`,
+`GhostCore`): each draws itself once in the battery layer and animates
+itself (battery, charging, power-on). Like the flux capacitor and the
+reactor, they run at full rate for 30 s after power-on or a gesture, then
+slow down. Film and game names only name the themes: drawings and sounds are
+original, with no logo, character or excerpt.
 
 Applying a theme:
 

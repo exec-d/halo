@@ -27,7 +27,7 @@ keep that name.*
 | Music | Now playing (neon cover art, controls) |
 | Shortcuts | Controls (flashlight, Wi-Fi, Bluetooth, sound, camera), Favourite contacts |
 
-**Three animated wallpapers**:
+**Eight animated wallpapers**:
 
 - **Circuit**: the inside of a Pixel 7 as a neon schematic, which reacts to
   tilt, follows the real battery, lights up as data flows and powers on
@@ -37,11 +37,17 @@ keep that name.*
   charging, and its gauge follows the battery; on the motherboard, the time
   circuits show the time;
 - **Iron Man**: the same phone, with Tony Stark's arc reactor; one coil
-  lights up per tenth of battery and its core breathes.
+  lights up per tenth of battery and its core breathes;
+- **Quantum physics**, **Artificial intelligence**, **Atomic energy**,
+  **Fallout** and **Ghost in the Shell**: the same phone, with in place of
+  the battery a quantum computer's refrigerator, a neural network on its
+  chip, a nuclear reactor core, a shelter door and its Geiger counter, or a
+  cyberbrain and its code rain; each follows the battery and speeds up while
+  charging.
 
 All take the phone's colors, like the widgets.
 
-**Three themes** (Circuit, Back to the Future, Iron Man): in one tap, the
+**Eight themes**, one per wallpaper: in one tap, the
 animated wallpaper in its palette, the system colours Android derives from it
 (so the widgets' too) and three original synthesised sounds (ringtone,
 notification, alarm). Pixel theme packs being reserved for Google, Halo makes
