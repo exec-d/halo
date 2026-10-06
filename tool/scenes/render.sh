@@ -19,7 +19,7 @@ SCENES=$ROOT/android/app/src/main/kotlin/dev/levilainpetit/wux/wallpaper
 BUILD=$ROOT/build/scenes
 mkdir -p "$BUILD/classes"
 "$KOTLINC" -nowarn -d "$BUILD/classes" "$ROOT"/tool/scenes/stub/*.kt \
-  "$SCENES"/CircuitScene.kt "$SCENES"/CircuitPainter.kt
+  "$SCENES"/CircuitScene.kt "$SCENES"/CircuitPainter.kt "$SCENES"/CoreArt.kt "$SCENES"/*Core.kt
 STDLIB=$(dirname "$(readlink -f "$(command -v "$KOTLINC")")")/../lib/kotlin-stdlib.jar
 if [[ "${1:-}" == "--frames" ]]; then
   java -Djava.awt.headless=true -cp "$BUILD/classes:$STDLIB" dev.levilainpetit.wux.wallpaper.RenderKt --frames "$BUILD/frames" "${@:2}"

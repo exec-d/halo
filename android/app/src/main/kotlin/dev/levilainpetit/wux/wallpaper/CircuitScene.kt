@@ -57,10 +57,17 @@ class CircuitScene private constructor(
     val flux: Flux? = null,
     /** Le réacteur arc, s'il remplace la batterie. */
     val arc: Arc? = null,
+    /** Les autres cœurs ([CoreArt]) : ils se dessinent et s'animent eux-mêmes. */
+    val art: CoreArt? = null,
 ) {
 
-    /** Ce qui occupe la place de la batterie. */
-    enum class Core { BATTERY, FLUX, ARC }
+    /**
+     * Ce qui occupe la place de la batterie : la batterie, le convecteur, le
+     * réacteur arc, ou un des cœurs des thèmes ([CoreArt]) : réfrigérateur
+     * quantique, réseau de neurones, cœur de réacteur nucléaire, porte d'abri,
+     * cyber-cerveau.
+     */
+    enum class Core { BATTERY, FLUX, ARC, QUANTUM, NEURAL, ATOM, VAULT, GHOST }
 
     /**
      * Ce qui s'anime dans le réacteur : les dix bobines (autant de dixièmes de
@@ -225,6 +232,12 @@ class CircuitScene private constructor(
         val reactorCenter = PointF(battery.centerX(), battery.centerY())
         val reactorRadius = minOf(battery.width(), battery.height()) / 2f - 3f * u
 
+        // Les autres cœurs, en coordonnées de face.
+        val art = CoreArt.of(
+            core,
+            CoreKit(u, density, RectF(width - battery.right, battery.top, width - battery.left, battery.bottom), board.bottom),
+        )
+
         fun build(): CircuitScene {
             val network = networkRoutes()
             val data = dataRoutes()
@@ -236,6 +249,13 @@ class CircuitScene private constructor(
                         Core.BATTERY -> battery(it)
                         Core.FLUX -> capacitor(it)
                         Core.ARC -> reactor(it)
+                        else -> art?.let { a ->
+                            // Le plan est dessiné vu de dos : on revient à la face.
+                            it.save()
+                            it.scale(-1f, 1f, width / 2f, 0f)
+                            a.drawStatic(it, line, thin, fill)
+                            it.restore()
+                        }
                     }
                 },
                 layer(depth = 0.2f, alpha = 230) { board(it) },
@@ -296,6 +316,7 @@ class CircuitScene private constructor(
                 } else {
                     null
                 },
+                art = art,
             )
         }
 
@@ -316,6 +337,10 @@ class CircuitScene private constructor(
                 clocks.forEach { rect(it, 0.6f) }
                 toroids.forEach { shapes += Path().apply { addCircle(it.x, it.y, TOROID * u, Path.Direction.CW) } to BOARD }
                 shapes += Path().apply { addCircle(fusion.x, fusion.y, FUSION * u, Path.Direction.CW) } to BOARD
+            }
+            art?.outlines()?.forEach {
+                // Vus de face : retournés comme le reste, qui l'est à la fin.
+                shapes += Path(it).apply { transform(Matrix().apply { setScale(-1f, 1f, width / 2f, 0f) }) } to BATTERY
             }
             if (arc) {
                 coils().forEach { shapes += Path().apply { addPoly(it) } to BATTERY }

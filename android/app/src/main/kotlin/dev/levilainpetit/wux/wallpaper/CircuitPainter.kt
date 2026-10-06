@@ -93,6 +93,15 @@ class CircuitPainter(private val scene: CircuitScene) {
     }
     private val glassMatrix = Matrix()
 
+    /** Les pinceaux prêtés aux cœurs des thèmes ([CoreArt]). */
+    private val ink = object : Ink {
+        override val stroke get() = this@CircuitPainter.stroke
+        override val fill get() = this@CircuitPainter.fill
+        override var palette = CircuitPalette(0, 0, 0)
+        override fun halo(canvas: Canvas, at: PointF, radius: Float, alpha: Int) =
+            this@CircuitPainter.halo(canvas, at, radius, alpha, palette)
+    }
+
     private val lockShade = Paint().apply {
         shader = LinearGradient(
             0f, 0f, 0f, scene.height * 0.34f,
@@ -128,6 +137,10 @@ class CircuitPainter(private val scene: CircuitScene) {
                 CircuitScene.BATTERY -> when {
                     scene.flux != null -> flux(canvas, scene.flux, state, palette)
                     scene.arc != null -> arc(canvas, scene.arc, state, palette)
+                    scene.art != null -> {
+                        ink.palette = palette
+                        scene.art.drawLive(canvas, state, ink)
+                    }
                     else -> battery(canvas, state, palette)
                 }
                 CircuitScene.BOARD -> {

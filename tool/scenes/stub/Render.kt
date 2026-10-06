@@ -16,7 +16,11 @@ private val palettes = mapOf(
 )
 
 /** Les fonds : Circuit, et ses variantes (convecteur temporel, réacteur arc). */
-private val scenes = mapOf("circuit" to CircuitScene.Core.BATTERY, "flux" to CircuitScene.Core.FLUX, "arc" to CircuitScene.Core.ARC)
+private val scenes = mapOf(
+    "circuit" to CircuitScene.Core.BATTERY, "flux" to CircuitScene.Core.FLUX, "arc" to CircuitScene.Core.ARC,
+    "quantum" to CircuitScene.Core.QUANTUM, "neural" to CircuitScene.Core.NEURAL, "atom" to CircuitScene.Core.ATOM,
+    "vault" to CircuitScene.Core.VAULT, "ghost" to CircuitScene.Core.GHOST,
+)
 
 /** Les miniatures que `--thumbs` refait (celle de Circuit est faite à part). */
 private val thumbs = listOf("flux", "arc")

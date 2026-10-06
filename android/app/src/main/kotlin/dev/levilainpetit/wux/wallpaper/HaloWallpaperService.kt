@@ -64,7 +64,7 @@ open class HaloWallpaperService : WallpaperService() {
     private val kind get() = when (core) {
         CircuitScene.Core.FLUX -> WallpaperPreview.FLUX
         CircuitScene.Core.ARC -> WallpaperPreview.ARC
-        CircuitScene.Core.BATTERY -> WallpaperPreview.CIRCUIT
+        else -> WallpaperPreview.CIRCUIT
     }
 
     /** Les variantes s'animent sans cesse, à une cadence plus lente. */

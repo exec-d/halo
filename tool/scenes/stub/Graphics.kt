@@ -287,6 +287,10 @@ class Path() {
     fun rewind() { p = Path2D.Float() }
     fun reset() { p = Path2D.Float() }
     fun addCircle(x: Float, y: Float, r: Float, d: Direction) = p.append(Ellipse2D.Float(x - r, y - r, 2 * r, 2 * r), false)
+    fun addOval(r: RectF, d: Direction) = p.append(Ellipse2D.Float(r.left, r.top, r.width(), r.height()), false)
+    /** Comme Android : relie le point courant au début de l'arc. */
+    fun arcTo(oval: RectF, start: Float, sweep: Float) =
+        p.append(java.awt.geom.Arc2D.Float(oval.left, oval.top, oval.width(), oval.height(), -start, -sweep, java.awt.geom.Arc2D.OPEN), true)
     fun addArc(oval: RectF, start: Float, sweep: Float) =
         p.append(java.awt.geom.Arc2D.Float(oval.left, oval.top, oval.width(), oval.height(), -start, -sweep, java.awt.geom.Arc2D.OPEN), false)
     fun addRect(l: Float, t: Float, r: Float, b: Float, d: Direction) = p.append(Rectangle2D.Float(l, t, r - l, b - t), false)
