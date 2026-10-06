@@ -2,9 +2,11 @@ package dev.levilainpetit.wux.theme
 
 import android.content.Context
 import android.graphics.Color
+import android.provider.Settings
 import dev.levilainpetit.wux.R
 import dev.levilainpetit.wux.wallpaper.CircuitPalette
 import dev.levilainpetit.wux.wallpaper.WallpaperPreview
+import org.json.JSONObject
 
 /**
  * Un thème Halo : un fond d'écran animé, la palette dans laquelle il se
@@ -73,6 +75,17 @@ object HaloThemes {
      */
     fun palette(context: Context, kind: String): CircuitPalette =
         chosen(context)?.takeIf { it.id == kind }?.palette ?: CircuitPalette.of(context)
+
+    /**
+     * D'où le système tire ses couleurs (Fond d'écran et style › Couleurs) :
+     * `home_wallpaper`, `lock_wallpaper`, `preset` (une couleur de base, qui
+     * ignore le fond), ou `null` si Android ne le dit pas.
+     */
+    fun colorSource(context: Context): String? = runCatching {
+        val json = Settings.Secure.getString(context.contentResolver, "theme_customization_overlay_packages")
+            ?: return@runCatching null
+        JSONObject(json).optString("android.theme.customization.color_source").takeIf { it.isNotEmpty() }
+    }.getOrNull()
 
     private fun prefs(context: Context) = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 }

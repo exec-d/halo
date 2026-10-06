@@ -74,12 +74,14 @@ class ThemeState {
     this.active,
     this.soundsSupported = false,
     this.canWriteSettings = false,
+    this.colorSource,
   });
 
   factory ThemeState.fromMap(Map<Object?, Object?> map) => ThemeState(
     active: map['active'] as String?,
     soundsSupported: map['soundsSupported'] as bool? ?? false,
     canWriteSettings: map['canWriteSettings'] as bool? ?? false,
+    colorSource: map['colorSource'] as String?,
   );
 
   /// Le thème choisi dont le fond est en place, ou `null`.
@@ -90,4 +92,12 @@ class ThemeState {
 
   /// « Modifier les paramètres système » accordé.
   final bool canWriteSettings;
+
+  /// D'où le système tire ses couleurs : `home_wallpaper`, `lock_wallpaper`,
+  /// `preset` (une couleur de base, qui ignore le fond), ou `null` si
+  /// Android ne le dit pas.
+  final String? colorSource;
+
+  /// Les couleurs du système suivront le fond.
+  bool get colorsFollowWallpaper => colorSource != 'preset';
 }

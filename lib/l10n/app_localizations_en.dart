@@ -981,7 +981,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get themeColorsText =>
-      'The wallpaper announces these colours to Android. If Colours is set to “Wallpaper” in Wallpaper & style, the system and Halo widgets take them.';
+      'The wallpaper announces these colours to Android, which applies them when you confirm the wallpaper (otherwise, the next time the screen sleeps). Colours must be set to a wallpaper colour in Wallpaper & style; the system and Halo widgets then take them.';
 
   @override
   String get themeColorsOpen => 'Open Wallpaper & style';
@@ -1089,4 +1089,8 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get themeLimitsText =>
       'The Pixel launcher refuses icon packs, the lock screen clock is Google\'s and Gboard has no themes for apps. Themed icons and the clock still follow the theme\'s colours.';
+
+  @override
+  String get themeColorsPreset =>
+      'Colours is set to a basic colour: the system ignores the wallpaper. Choose a wallpaper colour.';
 }

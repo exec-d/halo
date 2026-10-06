@@ -132,11 +132,14 @@ its wallpaper:
 Applying a theme:
 
 1. **Wallpaper**: Halo remembers the theme, then Android shows its live
-   wallpaper apply screen (nothing to confirm if it is already set).
+   wallpaper apply screen, even if it is already set: System UI only picks
+   up a live wallpaper's colours when it is applied; otherwise it waits for
+   the next time the screen sleeps.
 2. **Colours**: the wallpaper draws in the theme's palette and announces it to
    Android (`onComputeColors`). If Colours is set to "Wallpaper", the system
    derives its Material You scheme from it; the widgets, which take the system
-   colours (`values-v31/colors.xml`), follow.
+   colours (`values-v31/colors.xml`), follow. On a basic colour, the system
+   ignores the wallpaper: the theme screen says so.
 3. **Sounds**: copied into the phone's sounds (Ringtones/Halo,
    Notifications/Halo, Alarms/Halo), then set as defaults. This needs Android
    10 and the "Modify system settings" permission, which Halo asks for when

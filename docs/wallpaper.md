@@ -136,11 +136,15 @@ Fonds). Un thème porte le nom et l'identifiant de son fond :
 Appliquer un thème :
 
 1. **Le fond** : Halo retient le thème, puis Android affiche son écran
-   d'application du fond animé (rien à confirmer s'il est déjà en place).
+   d'application du fond animé, même s'il est déjà en place : l'interface
+   système ne reprend les couleurs d'un fond animé qu'à son application ;
+   sinon, elle attend la prochaine mise en veille de l'écran.
 2. **Les couleurs** : le fond se dessine dans la palette du thème et
    l'annonce à Android (`onComputeColors`). Si Couleurs est réglé sur « Fond
    d'écran », le système en tire son schéma Material You ; les widgets, qui
-   prennent les couleurs du système (`values-v31/colors.xml`), suivent.
+   prennent les couleurs du système (`values-v31/colors.xml`), suivent. Sur
+   une couleur de base, le système ignore le fond : l'écran du thème le
+   signale.
 3. **Les sons** : copiés dans les sons du téléphone (Sonneries/Halo,
    Notifications/Halo, Alarmes/Halo), puis réglés par défaut. Il faut
    Android 10 et l'autorisation « Modifier les paramètres système », que Halo

@@ -986,7 +986,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get themeColorsText =>
-      'Le fond annonce ces couleurs à Android. Si Couleurs est réglé sur « Fond d\'écran » dans Fond d\'écran et style, le système et les widgets Halo les prennent.';
+      'Le fond annonce ces couleurs à Android, qui les applique quand vous confirmez le fond (sinon, à la prochaine mise en veille de l\'écran). Il faut que Couleurs soit réglé sur une couleur du fond d\'écran dans Fond d\'écran et style ; le système et les widgets Halo les prennent alors.';
 
   @override
   String get themeColorsOpen => 'Ouvrir Fond d\'écran et style';
@@ -1095,4 +1095,8 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get themeLimitsText =>
       'Le lanceur Pixel refuse les packs d\'icônes, l\'horloge de l\'écran verrouillé est celle de Google et Gboard n\'a pas de thème pour les applications. Les icônes à thème et l\'horloge suivent quand même les couleurs du thème.';
+
+  @override
+  String get themeColorsPreset =>
+      'Couleurs est réglé sur une couleur de base : le système ignore le fond. Choisissez une couleur du fond d\'écran.';
 }

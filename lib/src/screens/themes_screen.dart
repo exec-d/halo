@@ -459,7 +459,6 @@ class _ThemeScreenState extends State<ThemeScreen> with WidgetsBindingObserver {
   }
 
   Future<void> _apply() async {
-    final already = await _platform.isWallpaperActive(kind: _theme.id);
     final opened = await _platform.applyTheme(_theme.id);
     if (!mounted) return;
     setState(() {
@@ -477,12 +476,13 @@ class _ThemeScreenState extends State<ThemeScreen> with WidgetsBindingObserver {
     if (_state.canWriteSettings) {
       await _installSounds(kinds);
     } else {
+      // Demandée au retour de l'écran du fond ; s'il ne s'est pas ouvert,
+      // tout de suite.
       setState(() {
         _pending = kinds;
         _askedPermission = false;
       });
-      // Rien ne s'est ouvert pour le fond : on demande tout de suite.
-      if (already) {
+      if (!opened) {
         _askedPermission = true;
         await _platform.requestWriteSettings();
       }
@@ -585,6 +585,12 @@ class _ThemeScreenState extends State<ThemeScreen> with WidgetsBindingObserver {
               title: l10n.themeColorsTitle,
               description: l10n.themeColorsText,
               children: [
+                if (_loaded && !_state.colorsFollowWallpaper) ...[
+                  IuxStatusIndicator(
+                    status: IuxStatus.warning(l10n.themeColorsPreset),
+                  ),
+                  const IuxGap.standard(),
+                ],
                 Row(
                   children: [
                     for (final color in _theme.swatches) ...[

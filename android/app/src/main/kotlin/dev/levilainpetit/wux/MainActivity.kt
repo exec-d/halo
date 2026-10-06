@@ -364,6 +364,7 @@ open class MainActivity : FlutterActivity() {
                     "active" to HaloThemes.active(this)?.id,
                     "soundsSupported" to ThemeSounds.supported,
                     "canWriteSettings" to ThemeSounds.canWrite(this),
+                    "colorSource" to HaloThemes.colorSource(this),
                 ),
             )
             "renderTheme" -> {
@@ -377,22 +378,20 @@ open class MainActivity : FlutterActivity() {
                 }
             }
             "applyTheme" -> {
-                // Choisi tout de suite ; si son fond est déjà en place, il prend
-                // ses couleurs au retour sur l'accueil, sinon Android demande.
+                // Choisi tout de suite, puis l'écran d'application du fond, même
+                // s'il est déjà en place : Android ne reprend les couleurs d'un
+                // fond animé qu'à son application (sinon, à la prochaine mise en
+                // veille de l'écran).
                 val theme = HaloThemes.byId(call.argument<String>("id"))
                 if (theme == null) {
                     result.success(false)
                 } else {
                     HaloThemes.choose(this, theme.id)
-                    if (WallpaperPreview.isActive(this, theme.id)) {
+                    try {
+                        startActivity(WallpaperPreview.applyIntent(this, theme.id))
                         result.success(true)
-                    } else {
-                        try {
-                            startActivity(WallpaperPreview.applyIntent(this, theme.id))
-                            result.success(true)
-                        } catch (e: ActivityNotFoundException) {
-                            result.success(false)
-                        }
+                    } catch (e: ActivityNotFoundException) {
+                        result.success(false)
                     }
                 }
             }
