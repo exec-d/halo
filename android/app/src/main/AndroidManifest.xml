@@ -44,6 +44,10 @@
     <uses-permission
         android:name="android.permission.BLUETOOTH"
         android:maxSdkVersion="30" />
+    <!-- Thèmes : régler la sonnerie, la notification et l'alarme (accordé à la main, une fois). -->
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <application
         android:label="Halo"
         android:name="${applicationName}"

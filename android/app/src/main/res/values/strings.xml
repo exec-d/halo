@@ -373,4 +373,14 @@
     <string name="wallpaper_arc_description">Le réacteur arc de Tony Stark, installé dans le téléphone.</string>
     <string name="battery_chart_now">maint.</string>
     <string name="wallpaper_author" translatable="false">Halo</string>
+    <!-- Thèmes : le nom des sons dans les réglages d'Android. -->
+    <string name="theme_sound_circuit_ring">Halo · Bus de données</string>
+    <string name="theme_sound_circuit_notification">Halo · Impulsion</string>
+    <string name="theme_sound_circuit_alarm">Halo · Démarrage</string>
+    <string name="theme_sound_flux_ring">Halo · 88 mph</string>
+    <string name="theme_sound_flux_notification">Halo · Flux</string>
+    <string name="theme_sound_flux_alarm">Halo · Heure de départ</string>
+    <string name="theme_sound_arc_ring">Halo · Répulseur</string>
+    <string name="theme_sound_arc_notification">Halo · Interface</string>
+    <string name="theme_sound_arc_alarm">Halo · Réacteur</string>
 </resources>

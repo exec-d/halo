@@ -934,4 +934,165 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get widgetAllergyDescription =>
       'Graminées, bouleau, aulne, olivier, armoise, ambroisie et qualité de l\'air, au lieu choisi dans Météo. Pollens : Europe seulement.';
+
+  @override
+  String get catalogThemes => 'Thèmes';
+
+  @override
+  String get catalogThemesHint =>
+      'Un fond, ses couleurs, des widgets assortis et des sons, en un toucher.';
+
+  @override
+  String get themesTitle => 'Thèmes';
+
+  @override
+  String get themesIntro =>
+      'Les packs de thème des Pixel sont réservés à Google. Ceux de Halo appliquent ensemble un fond animé, ses couleurs, des widgets assortis et des sons originaux.';
+
+  @override
+  String get themesContents => 'Fond · couleurs · widgets · 3 sons';
+
+  @override
+  String get themeCircuitDescription =>
+      'Le téléphone en schéma néon, bleu électrique.';
+
+  @override
+  String get themeFluxDescription => 'Le convecteur temporel, orange et ambre.';
+
+  @override
+  String get themeArcDescription => 'Le réacteur arc, rouge et or.';
+
+  @override
+  String get themeApply => 'Appliquer le thème';
+
+  @override
+  String get themeActive => 'Thème actif';
+
+  @override
+  String get themeNotApplied => 'Pas encore appliqué';
+
+  @override
+  String themeUnavailable(String title) {
+    return 'Ce téléphone ne propose pas l\'écran d\'application. Choisissez « Halo · $title » dans Fond d\'écran et style, rubrique Fonds d\'écran animés.';
+  }
+
+  @override
+  String themePreviewSemantics(String title) {
+    return 'Aperçu du thème $title';
+  }
+
+  @override
+  String get themeColorsTitle => 'Couleurs';
+
+  @override
+  String get themeColorsText =>
+      'Le fond annonce ces couleurs à Android. Si Couleurs est réglé sur « Fond d\'écran » dans Fond d\'écran et style, le système et les widgets Halo les prennent.';
+
+  @override
+  String get themeColorsOpen => 'Ouvrir Fond d\'écran et style';
+
+  @override
+  String get themeSoundsTitle => 'Sons';
+
+  @override
+  String get themeSoundsText =>
+      'Des sons originaux, synthétisés. Choisissez ceux que le thème remplace ; ils restent ensuite au choix dans les sons du téléphone.';
+
+  @override
+  String get themeSoundsPermission =>
+      'La première fois, Android demande l\'autorisation « Modifier les paramètres système » : activez-la pour Halo, puis revenez.';
+
+  @override
+  String get themeSoundsAllow => 'Autoriser les sons';
+
+  @override
+  String get themeSoundsUnsupported => 'Les sons demandent Android 10 ou plus.';
+
+  @override
+  String themeSoundsApplied(String list) {
+    return 'Sons réglés : $list.';
+  }
+
+  @override
+  String get themeSoundsWaiting => 'Sons en attente de l\'autorisation.';
+
+  @override
+  String get themeSoundRing => 'Sonnerie';
+
+  @override
+  String get themeSoundNotification => 'Notification';
+
+  @override
+  String get themeSoundAlarm => 'Alarme';
+
+  @override
+  String themeSoundPlay(String name) {
+    return 'Écouter $name';
+  }
+
+  @override
+  String get themeSoundCircuitRing => 'Bus de données';
+
+  @override
+  String get themeSoundCircuitRingText =>
+      'Des octets qui montent et descendent la carte';
+
+  @override
+  String get themeSoundCircuitNotification => 'Impulsion';
+
+  @override
+  String get themeSoundCircuitNotificationText =>
+      'Une impulsion file vers le processeur';
+
+  @override
+  String get themeSoundCircuitAlarm => 'Démarrage';
+
+  @override
+  String get themeSoundCircuitAlarmText => 'Les composants s\'allument un à un';
+
+  @override
+  String get themeSoundFluxRing => '88 mph';
+
+  @override
+  String get themeSoundFluxRingText =>
+      'Le moteur monte, le flux crépite, puis le saut';
+
+  @override
+  String get themeSoundFluxNotification => 'Flux';
+
+  @override
+  String get themeSoundFluxNotificationText =>
+      'Trois éclairs qui se rejoignent au cœur';
+
+  @override
+  String get themeSoundFluxAlarm => 'Heure de départ';
+
+  @override
+  String get themeSoundFluxAlarmText => 'Les bips des circuits temporels';
+
+  @override
+  String get themeSoundArcRing => 'Répulseur';
+
+  @override
+  String get themeSoundArcRingText => 'La charge siffle, puis le tir';
+
+  @override
+  String get themeSoundArcNotification => 'Interface';
+
+  @override
+  String get themeSoundArcNotificationText =>
+      'Deux tons cristallins de l\'affichage tête haute';
+
+  @override
+  String get themeSoundArcAlarm => 'Réacteur';
+
+  @override
+  String get themeSoundArcAlarmText => 'Le cœur bat, de plus en plus fort';
+
+  @override
+  String get themeLimitsTitle => 'Ce que Halo ne peut pas changer';
+
+  @override
+  String get themeLimitsText =>
+      'Le lanceur Pixel refuse les packs d\'icônes, l\'horloge de l\'écran verrouillé est celle de Google et Gboard n\'a pas de thème pour les applications. Les icônes à thème et l\'horloge suivent quand même les couleurs du thème.';
 }

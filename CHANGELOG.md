@@ -9,6 +9,11 @@ mineure peut changer des réglages.
 
 ### Nouveau
 
+- **Thèmes** : Circuit, Retour vers le futur et Iron Man. Un toucher applique
+  le fond animé dans sa palette ; le fond annonce ces couleurs à Android, qui
+  en tire celles du système et des widgets ; trois sons originaux,
+  synthétisés (tool/theme_sounds.py), remplacent au choix la sonnerie, la
+  notification et l'alarme.
 - **Cinq widgets** : Lecture en cours, Prévisions 5 jours, Horloge
   analogique, Éphéméride, Chronomètre et minuteur.
 - **Six widgets de plus** : Progression, Mer et vagues, Lune, Réseau,

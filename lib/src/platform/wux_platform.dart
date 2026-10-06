@@ -52,6 +52,30 @@ abstract interface class WuxPlatform {
   /// Ouvre l'écran système qui applique le fond d'écran ; faux s'il manque.
   Future<bool> applyWallpaper({String kind = 'circuit'});
 
+  /// Le thème en place et ce que permettent les sons.
+  Future<ThemeState> themeState();
+
+  /// Le fond du thème [id], dans la palette du thème, à [size] pixels, en PNG.
+  Future<Uint8List?> renderTheme(String id, Size size);
+
+  /// Choisit le thème [id] et ouvre l'écran système qui applique son fond
+  /// (rien à ouvrir s'il est déjà en place) ; faux s'il manque.
+  Future<bool> applyTheme(String id);
+
+  /// Ouvre le réglage « Modifier les paramètres système » de Halo.
+  Future<void> requestWriteSettings();
+
+  /// Règle les sons [kinds] (`ring`, `notification`, `alarm`) du thème
+  /// [id] ; renvoie ceux qui ont été réglés.
+  Future<List<String>> applyThemeSounds(String id, List<String> kinds);
+
+  /// Joue un son du thème, pour l'écouter.
+  Future<void> playThemeSound(String id, String kind);
+
+  /// Ouvre Fond d'écran et style, où se choisissent les couleurs ; faux si
+  /// rien ne l'ouvre.
+  Future<bool> openColorSettings();
+
   /// Vrai jusqu'à ce que [markLaunched] soit appelé une fois.
   Future<bool> isFirstLaunch();
 
@@ -226,6 +250,44 @@ class AndroidWuxPlatform implements WuxPlatform {
   Future<bool> applyWallpaper({String kind = 'circuit'}) async =>
       await _channel.invokeMethod<bool>('applyWallpaper', {'kind': kind}) ??
       false;
+
+  @override
+  Future<ThemeState> themeState() async {
+    final map = await _channel.invokeMapMethod<Object?, Object?>('themeState');
+    return map == null ? const ThemeState() : ThemeState.fromMap(map);
+  }
+
+  @override
+  Future<Uint8List?> renderTheme(String id, Size size) =>
+      _channel.invokeMethod<Uint8List>('renderTheme', {
+        'id': id,
+        'width': size.width.round(),
+        'height': size.height.round(),
+      });
+
+  @override
+  Future<bool> applyTheme(String id) async =>
+      await _channel.invokeMethod<bool>('applyTheme', {'id': id}) ?? false;
+
+  @override
+  Future<void> requestWriteSettings() =>
+      _channel.invokeMethod<void>('requestWriteSettings');
+
+  @override
+  Future<List<String>> applyThemeSounds(String id, List<String> kinds) async =>
+      await _channel.invokeListMethod<String>('applyThemeSounds', {
+        'id': id,
+        'kinds': kinds,
+      }) ??
+      const [];
+
+  @override
+  Future<void> playThemeSound(String id, String kind) =>
+      _channel.invokeMethod<void>('playThemeSound', {'id': id, 'kind': kind});
+
+  @override
+  Future<bool> openColorSettings() async =>
+      await _channel.invokeMethod<bool>('openColorSettings') ?? false;
 
   @override
   Future<String?> launchTarget() =>

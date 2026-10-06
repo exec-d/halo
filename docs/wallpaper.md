@@ -120,6 +120,38 @@ Pour voir les fonds sans téléphone, `tool/scenes/render.sh` les dessine en
 PNG sur l'ordinateur (voir l'en-tête du script) ; `render.sh --thumbs` refait
 les miniatures du convecteur et du réacteur dans le sélecteur d'Android.
 
+## Thèmes
+
+Les packs de thème des Pixel (Fond d'écran et style › Pack de thème) sont
+réservés à Google : aucune API ne permet à une application d'y figurer.
+Halo fait les siens, dans son écran Thèmes (depuis la galerie et l'onglet
+Fonds). Un thème porte le nom et l'identifiant de son fond :
+
+| Thème | Palette (cœur, traits, halo) | Sons : sonnerie, notification, alarme |
+| --- | --- | --- |
+| Circuit | blanc bleuté, bleu ciel, bleu électrique | Bus de données, Impulsion, Démarrage |
+| Retour vers le futur | crème, ambre, orange | 88 mph, Flux, Heure de départ |
+| Iron Man | ivoire, or, rouge | Répulseur, Interface, Réacteur |
+
+Appliquer un thème :
+
+1. **Le fond** : Halo retient le thème, puis Android affiche son écran
+   d'application du fond animé (rien à confirmer s'il est déjà en place).
+2. **Les couleurs** : le fond se dessine dans la palette du thème et
+   l'annonce à Android (`onComputeColors`). Si Couleurs est réglé sur « Fond
+   d'écran », le système en tire son schéma Material You ; les widgets, qui
+   prennent les couleurs du système (`values-v31/colors.xml`), suivent.
+3. **Les sons** : copiés dans les sons du téléphone (Sonneries/Halo,
+   Notifications/Halo, Alarmes/Halo), puis réglés par défaut. Il faut
+   Android 10 et l'autorisation « Modifier les paramètres système », que Halo
+   demande au retour de l'écran du fond. Ce sont des sons originaux,
+   synthétisés par `tool/theme_sounds.py` (les mêmes recettes que la
+   maquette), en WAV 16 bits.
+
+Sans thème choisi pour le fond en place, le fond reprend les couleurs du
+téléphone. Le code : `theme/HaloThemes.kt`, `theme/ThemeSounds.kt`,
+`lib/src/screens/themes_screen.dart`.
+
 ## Écran de veille
 
 Pendant la charge ou sur un socle, Android peut afficher un écran de veille

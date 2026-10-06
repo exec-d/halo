@@ -159,6 +159,46 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
+  testWidgets('un thème applique son fond, puis ses sons une fois autorisés', (
+    tester,
+  ) async {
+    final platform = FakePlatform();
+    await _open(tester, platform, 'Thèmes');
+    await tester.tap(find.text('Iron Man').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Pas encore appliqué'), findsOneWidget);
+
+    // On écoute la sonnerie, et l'on garde l'alarme du téléphone.
+    final play = find.bySemanticsLabel('Écouter Répulseur').first;
+    await tester.ensureVisible(play);
+    await tester.pumpAndSettle();
+    await tester.tap(play);
+    await tester.ensureVisible(find.text('Alarme'));
+    await tester.tap(find.text('Alarme'));
+    await tester.pumpAndSettle();
+    expect(platform.playedSounds, ['arc.ring']);
+
+    await tester.ensureVisible(find.text('Appliquer le thème'));
+    await tester.tap(find.text('Appliquer le thème'));
+    await tester.pumpAndSettle();
+    expect(platform.activeTheme, 'arc');
+    expect(find.text("Sons en attente de l'autorisation."), findsOneWidget);
+
+    // Retour de l'écran du fond : Halo demande l'autorisation des sons…
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+    expect(platform.writeSettingsRequests, 1);
+
+    // … puis, accordée, règle la sonnerie et la notification.
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+    expect(platform.themeSounds, ['arc.ring', 'arc.notification']);
+    expect(find.text('Sons réglés : Sonnerie, Notification.'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets("l'écran de veille ouvre les réglages d'Android", (tester) async {
     final platform = FakePlatform();
     await tester.pumpWidget(WuxApp(platform: platform, locale: _fr));

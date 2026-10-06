@@ -41,6 +41,12 @@ keep that name.*
 
 All take the phone's colors, like the widgets.
 
+**Three themes** (Circuit, Back to the Future, Iron Man): in one tap, the
+animated wallpaper in its palette, the system colours Android derives from it
+(so the widgets' too) and three original synthesised sounds (ringtone,
+notification, alarm). Pixel theme packs being reserved for Google, Halo makes
+its own in the app.
+
 **Elsewhere in Android**: a screen saver (neon clock while charging), three
 quick settings tiles (Weather, Halo wallpaper, Battery) and icon shortcuts
 (Wallpaper, Widgets, Settings).
@@ -83,6 +89,7 @@ All are optional; each one is used only by the widgets listed.
 | Notification access | Now playing (to see what is playing; no notification is read) | In Android settings |
 | Notifications | Stopwatch and timer (alarm at the end) | In the widget's screen |
 | Internet | Open-Meteo forecasts | — |
+| Modify system settings | Themes: set the ringtone, notification and alarm sounds | In Android settings, when applying a theme |
 
 What Halo does with this data: [PRIVACY.en.md](PRIVACY.en.md).
 

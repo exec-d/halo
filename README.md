@@ -41,6 +41,12 @@ gardent ce nom.*
 
 Tous prennent les couleurs du téléphone, comme les widgets.
 
+**Trois thèmes** (Circuit, Retour vers le futur, Iron Man) : en un toucher,
+le fond animé dans sa palette, les couleurs du système qu'Android en tire
+(donc celles des widgets) et trois sons originaux synthétisés (sonnerie,
+notification, alarme). Les packs de thème des Pixel restant réservés à
+Google, Halo fait les siens dans l'application.
+
 **Ailleurs dans Android** : un écran de veille (horloge néon pendant la
 charge), trois tuiles de réglages rapides (Météo, Fond Halo, Batterie) et des
 raccourcis sur l'icône (Fonds d'écran, Widgets, Réglages).
@@ -85,6 +91,7 @@ Toutes sont facultatives ; chacune ne sert qu'aux widgets indiqués.
 | Accès aux notifications | Lecture en cours (pour voir ce qui joue ; aucune notification lue) | Dans les réglages d'Android |
 | Notifications | Chronomètre et minuteur (sonnerie à la fin) | Dans l'écran du widget |
 | Internet | Prévisions Open-Meteo | — |
+| Modifier les paramètres système | Thèmes : régler la sonnerie, la notification et l'alarme | Dans les réglages d'Android, à l'application d'un thème |
 
 Ce que Halo fait de ces données : [PRIVACY.md](PRIVACY.md).
 

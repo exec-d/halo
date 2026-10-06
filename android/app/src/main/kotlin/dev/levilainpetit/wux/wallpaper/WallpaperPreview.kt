@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.BatteryManager
+import dev.levilainpetit.wux.theme.HaloThemes
 import java.io.ByteArrayOutputStream
 
 /** Aperçu du fond d'écran pour l'application, et son application. */
@@ -16,8 +17,9 @@ object WallpaperPreview {
     /**
      * Une image fixe du fond d'écran, à [widthPx] × [heightPx], en PNG : tout
      * allumé, au vrai niveau de batterie, avec quelques impulsions en route.
+     * [palette] : celle d'un thème ; sinon celle que le fond prendra.
      */
-    fun render(context: Context, widthPx: Int, heightPx: Int, kind: String = CIRCUIT): ByteArray {
+    fun render(context: Context, widthPx: Int, heightPx: Int, kind: String = CIRCUIT, palette: CircuitPalette? = null): ByteArray {
         val intensity = WallpaperSettings.intensity(context)
         val metrics = context.resources.displayMetrics
         // Même rendu qu'à l'écran, réduit : les traits gardent leur proportion.
@@ -38,7 +40,7 @@ object WallpaperPreview {
         scene.networkRoutes.forEachIndexed { i, route -> state.pulses += Pulse(route, 0f, 0.3f + i * 0.2f) }
         scene.dataRoutes.firstOrNull()?.let { state.pulses += Pulse(it, 0f, 0.55f) }
         val bitmap = Bitmap.createBitmap(widthPx, heightPx, Bitmap.Config.ARGB_8888)
-        CircuitPainter(scene).draw(Canvas(bitmap), state, CircuitPalette.of(context))
+        CircuitPainter(scene).draw(Canvas(bitmap), state, palette ?: HaloThemes.palette(context, kind))
         scene.recycle()
         return ByteArrayOutputStream().use { out ->
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)

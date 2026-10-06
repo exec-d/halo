@@ -101,6 +101,54 @@ class FakePlatform implements WuxPlatform {
     return true;
   }
 
+  String? activeTheme;
+  bool canWriteSettings = false;
+  final themeSounds = <String>[];
+  final playedSounds = <String>[];
+  var writeSettingsRequests = 0;
+  var colorSettingsOpened = 0;
+
+  @override
+  Future<ThemeState> themeState() async => ThemeState(
+    active: activeTheme,
+    soundsSupported: true,
+    canWriteSettings: canWriteSettings,
+  );
+
+  @override
+  Future<Uint8List?> renderTheme(String id, Size size) async => null;
+
+  @override
+  Future<bool> applyTheme(String id) async {
+    activeTheme = id;
+    return true;
+  }
+
+  @override
+  Future<void> requestWriteSettings() async {
+    writeSettingsRequests++;
+    canWriteSettings = true;
+  }
+
+  @override
+  Future<List<String>> applyThemeSounds(String id, List<String> kinds) async {
+    if (!canWriteSettings) return const [];
+    themeSounds
+      ..clear()
+      ..addAll(kinds.map((kind) => '$id.$kind'));
+    return kinds;
+  }
+
+  @override
+  Future<void> playThemeSound(String id, String kind) async =>
+      playedSounds.add('$id.$kind');
+
+  @override
+  Future<bool> openColorSettings() async {
+    colorSettingsOpened++;
+    return true;
+  }
+
   String? target;
   void Function(String target)? openHandler;
 

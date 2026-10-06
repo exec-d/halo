@@ -1680,6 +1680,288 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Graminées, bouleau, aulne, olivier, armoise, ambroisie et qualité de l\'air, au lieu choisi dans Météo. Pollens : Europe seulement.'**
   String get widgetAllergyDescription;
+
+  /// No description provided for @catalogThemes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Thèmes'**
+  String get catalogThemes;
+
+  /// No description provided for @catalogThemesHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un fond, ses couleurs, des widgets assortis et des sons, en un toucher.'**
+  String get catalogThemesHint;
+
+  /// No description provided for @themesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Thèmes'**
+  String get themesTitle;
+
+  /// No description provided for @themesIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les packs de thème des Pixel sont réservés à Google. Ceux de Halo appliquent ensemble un fond animé, ses couleurs, des widgets assortis et des sons originaux.'**
+  String get themesIntro;
+
+  /// No description provided for @themesContents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fond · couleurs · widgets · 3 sons'**
+  String get themesContents;
+
+  /// No description provided for @themeCircuitDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le téléphone en schéma néon, bleu électrique.'**
+  String get themeCircuitDescription;
+
+  /// No description provided for @themeFluxDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le convecteur temporel, orange et ambre.'**
+  String get themeFluxDescription;
+
+  /// No description provided for @themeArcDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le réacteur arc, rouge et or.'**
+  String get themeArcDescription;
+
+  /// No description provided for @themeApply.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appliquer le thème'**
+  String get themeApply;
+
+  /// No description provided for @themeActive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Thème actif'**
+  String get themeActive;
+
+  /// No description provided for @themeNotApplied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore appliqué'**
+  String get themeNotApplied;
+
+  /// No description provided for @themeUnavailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce téléphone ne propose pas l\'écran d\'application. Choisissez « Halo · {title} » dans Fond d\'écran et style, rubrique Fonds d\'écran animés.'**
+  String themeUnavailable(String title);
+
+  /// No description provided for @themePreviewSemantics.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aperçu du thème {title}'**
+  String themePreviewSemantics(String title);
+
+  /// No description provided for @themeColorsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couleurs'**
+  String get themeColorsTitle;
+
+  /// No description provided for @themeColorsText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le fond annonce ces couleurs à Android. Si Couleurs est réglé sur « Fond d\'écran » dans Fond d\'écran et style, le système et les widgets Halo les prennent.'**
+  String get themeColorsText;
+
+  /// No description provided for @themeColorsOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir Fond d\'écran et style'**
+  String get themeColorsOpen;
+
+  /// No description provided for @themeSoundsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sons'**
+  String get themeSoundsTitle;
+
+  /// No description provided for @themeSoundsText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des sons originaux, synthétisés. Choisissez ceux que le thème remplace ; ils restent ensuite au choix dans les sons du téléphone.'**
+  String get themeSoundsText;
+
+  /// No description provided for @themeSoundsPermission.
+  ///
+  /// In fr, this message translates to:
+  /// **'La première fois, Android demande l\'autorisation « Modifier les paramètres système » : activez-la pour Halo, puis revenez.'**
+  String get themeSoundsPermission;
+
+  /// No description provided for @themeSoundsAllow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autoriser les sons'**
+  String get themeSoundsAllow;
+
+  /// No description provided for @themeSoundsUnsupported.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les sons demandent Android 10 ou plus.'**
+  String get themeSoundsUnsupported;
+
+  /// No description provided for @themeSoundsApplied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sons réglés : {list}.'**
+  String themeSoundsApplied(String list);
+
+  /// No description provided for @themeSoundsWaiting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sons en attente de l\'autorisation.'**
+  String get themeSoundsWaiting;
+
+  /// No description provided for @themeSoundRing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sonnerie'**
+  String get themeSoundRing;
+
+  /// No description provided for @themeSoundNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notification'**
+  String get themeSoundNotification;
+
+  /// No description provided for @themeSoundAlarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alarme'**
+  String get themeSoundAlarm;
+
+  /// No description provided for @themeSoundPlay.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écouter {name}'**
+  String themeSoundPlay(String name);
+
+  /// No description provided for @themeSoundCircuitRing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bus de données'**
+  String get themeSoundCircuitRing;
+
+  /// No description provided for @themeSoundCircuitRingText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des octets qui montent et descendent la carte'**
+  String get themeSoundCircuitRingText;
+
+  /// No description provided for @themeSoundCircuitNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impulsion'**
+  String get themeSoundCircuitNotification;
+
+  /// No description provided for @themeSoundCircuitNotificationText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une impulsion file vers le processeur'**
+  String get themeSoundCircuitNotificationText;
+
+  /// No description provided for @themeSoundCircuitAlarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Démarrage'**
+  String get themeSoundCircuitAlarm;
+
+  /// No description provided for @themeSoundCircuitAlarmText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les composants s\'allument un à un'**
+  String get themeSoundCircuitAlarmText;
+
+  /// No description provided for @themeSoundFluxRing.
+  ///
+  /// In fr, this message translates to:
+  /// **'88 mph'**
+  String get themeSoundFluxRing;
+
+  /// No description provided for @themeSoundFluxRingText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le moteur monte, le flux crépite, puis le saut'**
+  String get themeSoundFluxRingText;
+
+  /// No description provided for @themeSoundFluxNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Flux'**
+  String get themeSoundFluxNotification;
+
+  /// No description provided for @themeSoundFluxNotificationText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trois éclairs qui se rejoignent au cœur'**
+  String get themeSoundFluxNotificationText;
+
+  /// No description provided for @themeSoundFluxAlarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Heure de départ'**
+  String get themeSoundFluxAlarm;
+
+  /// No description provided for @themeSoundFluxAlarmText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les bips des circuits temporels'**
+  String get themeSoundFluxAlarmText;
+
+  /// No description provided for @themeSoundArcRing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répulseur'**
+  String get themeSoundArcRing;
+
+  /// No description provided for @themeSoundArcRingText.
+  ///
+  /// In fr, this message translates to:
+  /// **'La charge siffle, puis le tir'**
+  String get themeSoundArcRingText;
+
+  /// No description provided for @themeSoundArcNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Interface'**
+  String get themeSoundArcNotification;
+
+  /// No description provided for @themeSoundArcNotificationText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Deux tons cristallins de l\'affichage tête haute'**
+  String get themeSoundArcNotificationText;
+
+  /// No description provided for @themeSoundArcAlarm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réacteur'**
+  String get themeSoundArcAlarm;
+
+  /// No description provided for @themeSoundArcAlarmText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le cœur bat, de plus en plus fort'**
+  String get themeSoundArcAlarmText;
+
+  /// No description provided for @themeLimitsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce que Halo ne peut pas changer'**
+  String get themeLimitsTitle;
+
+  /// No description provided for @themeLimitsText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le lanceur Pixel refuse les packs d\'icônes, l\'horloge de l\'écran verrouillé est celle de Google et Gboard n\'a pas de thème pour les applications. Les icônes à thème et l\'horloge suivent quand même les couleurs du thème.'**
+  String get themeLimitsText;
 }
 
 class _AppLocalizationsDelegate

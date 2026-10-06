@@ -929,4 +929,164 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get widgetAllergyDescription =>
       'Grasses, birch, alder, olive, mugwort, ragweed and air quality, at the place chosen in Weather. Pollen: Europe only.';
+
+  @override
+  String get catalogThemes => 'Themes';
+
+  @override
+  String get catalogThemesHint =>
+      'A wallpaper, its colours, matching widgets and sounds, in one tap.';
+
+  @override
+  String get themesTitle => 'Themes';
+
+  @override
+  String get themesIntro =>
+      'Pixel theme packs are reserved for Google. Halo\'s apply an animated wallpaper, its colours, matching widgets and original sounds together.';
+
+  @override
+  String get themesContents => 'Wallpaper · colours · widgets · 3 sounds';
+
+  @override
+  String get themeCircuitDescription =>
+      'The phone as a neon schematic, electric blue.';
+
+  @override
+  String get themeFluxDescription => 'The flux capacitor, orange and amber.';
+
+  @override
+  String get themeArcDescription => 'The arc reactor, red and gold.';
+
+  @override
+  String get themeApply => 'Apply theme';
+
+  @override
+  String get themeActive => 'Active theme';
+
+  @override
+  String get themeNotApplied => 'Not applied yet';
+
+  @override
+  String themeUnavailable(String title) {
+    return 'This phone doesn\'t offer the apply screen. Choose “Halo · $title” in Wallpaper & style, under Live wallpapers.';
+  }
+
+  @override
+  String themePreviewSemantics(String title) {
+    return 'Preview of the $title theme';
+  }
+
+  @override
+  String get themeColorsTitle => 'Colours';
+
+  @override
+  String get themeColorsText =>
+      'The wallpaper announces these colours to Android. If Colours is set to “Wallpaper” in Wallpaper & style, the system and Halo widgets take them.';
+
+  @override
+  String get themeColorsOpen => 'Open Wallpaper & style';
+
+  @override
+  String get themeSoundsTitle => 'Sounds';
+
+  @override
+  String get themeSoundsText =>
+      'Original, synthesised sounds. Choose which ones the theme replaces; they then stay available in the phone\'s sounds.';
+
+  @override
+  String get themeSoundsPermission =>
+      'The first time, Android asks for the “Modify system settings” permission: turn it on for Halo, then come back.';
+
+  @override
+  String get themeSoundsAllow => 'Allow sounds';
+
+  @override
+  String get themeSoundsUnsupported => 'Sounds need Android 10 or later.';
+
+  @override
+  String themeSoundsApplied(String list) {
+    return 'Sounds set: $list.';
+  }
+
+  @override
+  String get themeSoundsWaiting => 'Sounds waiting for permission.';
+
+  @override
+  String get themeSoundRing => 'Ringtone';
+
+  @override
+  String get themeSoundNotification => 'Notification';
+
+  @override
+  String get themeSoundAlarm => 'Alarm';
+
+  @override
+  String themeSoundPlay(String name) {
+    return 'Play $name';
+  }
+
+  @override
+  String get themeSoundCircuitRing => 'Data bus';
+
+  @override
+  String get themeSoundCircuitRingText => 'Bytes running up and down the board';
+
+  @override
+  String get themeSoundCircuitNotification => 'Pulse';
+
+  @override
+  String get themeSoundCircuitNotificationText =>
+      'A pulse racing to the processor';
+
+  @override
+  String get themeSoundCircuitAlarm => 'Boot';
+
+  @override
+  String get themeSoundCircuitAlarmText => 'Components light up one by one';
+
+  @override
+  String get themeSoundFluxRing => '88 mph';
+
+  @override
+  String get themeSoundFluxRingText =>
+      'The engine revs, the flux crackles, then the jump';
+
+  @override
+  String get themeSoundFluxNotification => 'Flux';
+
+  @override
+  String get themeSoundFluxNotificationText =>
+      'Three sparks meeting at the core';
+
+  @override
+  String get themeSoundFluxAlarm => 'Departure time';
+
+  @override
+  String get themeSoundFluxAlarmText => 'The time circuits\' beeps';
+
+  @override
+  String get themeSoundArcRing => 'Repulsor';
+
+  @override
+  String get themeSoundArcRingText => 'The charge whines, then the blast';
+
+  @override
+  String get themeSoundArcNotification => 'Interface';
+
+  @override
+  String get themeSoundArcNotificationText =>
+      'Two crystal tones from the heads-up display';
+
+  @override
+  String get themeSoundArcAlarm => 'Reactor';
+
+  @override
+  String get themeSoundArcAlarmText => 'The core beats, louder and louder';
+
+  @override
+  String get themeLimitsTitle => 'What Halo can\'t change';
+
+  @override
+  String get themeLimitsText =>
+      'The Pixel launcher refuses icon packs, the lock screen clock is Google\'s and Gboard has no themes for apps. Themed icons and the clock still follow the theme\'s colours.';
 }

@@ -67,3 +67,27 @@ class AppStatus {
   final String? weatherPlace;
   final DateTime? weatherUpdatedAt;
 }
+
+/// Les thèmes côté téléphone : celui en place, et ce que permettent les sons.
+class ThemeState {
+  const ThemeState({
+    this.active,
+    this.soundsSupported = false,
+    this.canWriteSettings = false,
+  });
+
+  factory ThemeState.fromMap(Map<Object?, Object?> map) => ThemeState(
+    active: map['active'] as String?,
+    soundsSupported: map['soundsSupported'] as bool? ?? false,
+    canWriteSettings: map['canWriteSettings'] as bool? ?? false,
+  );
+
+  /// Le thème choisi dont le fond est en place, ou `null`.
+  final String? active;
+
+  /// Android 10 ou plus : Halo peut poser ses sons.
+  final bool soundsSupported;
+
+  /// « Modifier les paramètres système » accordé.
+  final bool canWriteSettings;
+}

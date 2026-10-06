@@ -20,6 +20,8 @@ import dev.levilainpetit.wux.system.Health
 import dev.levilainpetit.wux.system.NetworkStatus
 import dev.levilainpetit.wux.system.SystemRefresh
 import dev.levilainpetit.wux.system.UsageAccess
+import dev.levilainpetit.wux.theme.HaloThemes
+import dev.levilainpetit.wux.theme.ThemeSounds
 import dev.levilainpetit.wux.wallpaper.WallpaperPreview
 import dev.levilainpetit.wux.wallpaper.WallpaperSettings
 import dev.levilainpetit.wux.weather.Place
@@ -92,6 +94,28 @@ open class MainActivity : FlutterActivity() {
                 if (ok) WeatherRefresh.redraw(applicationContext)
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        ThemeSounds.stop()
+    }
+
+    /**
+     * Fond d'écran et style (où se trouve Couleurs) : l'appli de Google sur
+     * les Pixel, sinon l'écran que le téléphone propose pour le fond.
+     */
+    private fun openColorSettings(): Boolean {
+        val pixel = Intent(Intent.ACTION_SET_WALLPAPER).setPackage("com.google.android.apps.wallpaper")
+        for (intent in listOf(pixel, Intent(Intent.ACTION_SET_WALLPAPER))) {
+            try {
+                startActivity(intent)
+                return true
+            } catch (e: ActivityNotFoundException) {
+                continue
+            }
+        }
+        return false
     }
 
     override fun onDestroy() {
@@ -334,6 +358,64 @@ open class MainActivity : FlutterActivity() {
                     result.success(false)
                 }
             }
+            // Thèmes : le fond, ses couleurs et ses sons (theme/).
+            "themeState" -> result.success(
+                mapOf(
+                    "active" to HaloThemes.active(this)?.id,
+                    "soundsSupported" to ThemeSounds.supported,
+                    "canWriteSettings" to ThemeSounds.canWrite(this),
+                ),
+            )
+            "renderTheme" -> {
+                val width = call.argument<Number>("width")?.toInt() ?: 0
+                val height = call.argument<Number>("height")?.toInt() ?: 0
+                val theme = HaloThemes.byId(call.argument<String>("id"))
+                if (width <= 0 || height <= 0 || theme == null) {
+                    result.success(null)
+                } else {
+                    background(result) { WallpaperPreview.render(applicationContext, width, height, theme.id, theme.palette) }
+                }
+            }
+            "applyTheme" -> {
+                // Choisi tout de suite ; si son fond est déjà en place, il prend
+                // ses couleurs au retour sur l'accueil, sinon Android demande.
+                val theme = HaloThemes.byId(call.argument<String>("id"))
+                if (theme == null) {
+                    result.success(false)
+                } else {
+                    HaloThemes.choose(this, theme.id)
+                    if (WallpaperPreview.isActive(this, theme.id)) {
+                        result.success(true)
+                    } else {
+                        try {
+                            startActivity(WallpaperPreview.applyIntent(this, theme.id))
+                            result.success(true)
+                        } catch (e: ActivityNotFoundException) {
+                            result.success(false)
+                        }
+                    }
+                }
+            }
+            "requestWriteSettings" -> {
+                runCatching { startActivity(ThemeSounds.permissionIntent(this)) }
+                result.success(null)
+            }
+            "applyThemeSounds" -> {
+                val theme = HaloThemes.byId(call.argument<String>("id"))
+                val kinds = call.argument<List<String>>("kinds").orEmpty().mapNotNull { ThemeSounds.Kind.of(it) }
+                if (theme == null) {
+                    result.success(emptyList<String>())
+                } else {
+                    background(result) { ThemeSounds.apply(applicationContext, theme, kinds).map { it.id } }
+                }
+            }
+            "playThemeSound" -> {
+                val theme = HaloThemes.byId(call.argument<String>("id"))
+                val kind = ThemeSounds.Kind.of(call.argument<String>("kind") ?: "")
+                if (theme != null && kind != null) ThemeSounds.preview(this, theme, kind)
+                result.success(null)
+            }
+            "openColorSettings" -> result.success(openColorSettings())
             "widgetProvider" -> {
                 // Classe Kotlin du widget en cours de configuration, pour que
                 // Dart retrouve son écran dans le catalogue.

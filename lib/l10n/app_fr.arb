@@ -600,5 +600,80 @@
   "widgetAllergyDescription": "Graminées, bouleau, aulne, olivier, armoise, ambroisie et qualité de l'air, au lieu choisi dans Météo. Pollens : Europe seulement.",
   "@widgetAllergyDescription": {
     "description": "Description du widget."
-  }
+  },
+  "catalogThemes": "Thèmes",
+  "catalogThemesHint": "Un fond, ses couleurs, des widgets assortis et des sons, en un toucher.",
+  "themesTitle": "Thèmes",
+  "themesIntro": "Les packs de thème des Pixel sont réservés à Google. Ceux de Halo appliquent ensemble un fond animé, ses couleurs, des widgets assortis et des sons originaux.",
+  "themesContents": "Fond · couleurs · widgets · 3 sons",
+  "themeCircuitDescription": "Le téléphone en schéma néon, bleu électrique.",
+  "themeFluxDescription": "Le convecteur temporel, orange et ambre.",
+  "themeArcDescription": "Le réacteur arc, rouge et or.",
+  "themeApply": "Appliquer le thème",
+  "themeActive": "Thème actif",
+  "themeNotApplied": "Pas encore appliqué",
+  "themeUnavailable": "Ce téléphone ne propose pas l'écran d'application. Choisissez « Halo · {title} » dans Fond d'écran et style, rubrique Fonds d'écran animés.",
+  "@themeUnavailable": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "themePreviewSemantics": "Aperçu du thème {title}",
+  "@themePreviewSemantics": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "themeColorsTitle": "Couleurs",
+  "themeColorsText": "Le fond annonce ces couleurs à Android. Si Couleurs est réglé sur « Fond d'écran » dans Fond d'écran et style, le système et les widgets Halo les prennent.",
+  "themeColorsOpen": "Ouvrir Fond d'écran et style",
+  "themeSoundsTitle": "Sons",
+  "themeSoundsText": "Des sons originaux, synthétisés. Choisissez ceux que le thème remplace ; ils restent ensuite au choix dans les sons du téléphone.",
+  "themeSoundsPermission": "La première fois, Android demande l'autorisation « Modifier les paramètres système » : activez-la pour Halo, puis revenez.",
+  "themeSoundsAllow": "Autoriser les sons",
+  "themeSoundsUnsupported": "Les sons demandent Android 10 ou plus.",
+  "themeSoundsApplied": "Sons réglés : {list}.",
+  "@themeSoundsApplied": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "themeSoundsWaiting": "Sons en attente de l'autorisation.",
+  "themeSoundRing": "Sonnerie",
+  "themeSoundNotification": "Notification",
+  "themeSoundAlarm": "Alarme",
+  "themeSoundPlay": "Écouter {name}",
+  "@themeSoundPlay": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "themeSoundCircuitRing": "Bus de données",
+  "themeSoundCircuitRingText": "Des octets qui montent et descendent la carte",
+  "themeSoundCircuitNotification": "Impulsion",
+  "themeSoundCircuitNotificationText": "Une impulsion file vers le processeur",
+  "themeSoundCircuitAlarm": "Démarrage",
+  "themeSoundCircuitAlarmText": "Les composants s'allument un à un",
+  "themeSoundFluxRing": "88 mph",
+  "themeSoundFluxRingText": "Le moteur monte, le flux crépite, puis le saut",
+  "themeSoundFluxNotification": "Flux",
+  "themeSoundFluxNotificationText": "Trois éclairs qui se rejoignent au cœur",
+  "themeSoundFluxAlarm": "Heure de départ",
+  "themeSoundFluxAlarmText": "Les bips des circuits temporels",
+  "themeSoundArcRing": "Répulseur",
+  "themeSoundArcRingText": "La charge siffle, puis le tir",
+  "themeSoundArcNotification": "Interface",
+  "themeSoundArcNotificationText": "Deux tons cristallins de l'affichage tête haute",
+  "themeSoundArcAlarm": "Réacteur",
+  "themeSoundArcAlarmText": "Le cœur bat, de plus en plus fort",
+  "themeLimitsTitle": "Ce que Halo ne peut pas changer",
+  "themeLimitsText": "Le lanceur Pixel refuse les packs d'icônes, l'horloge de l'écran verrouillé est celle de Google et Gboard n'a pas de thème pour les applications. Les icônes à thème et l'horloge suivent quand même les couleurs du thème."
 }

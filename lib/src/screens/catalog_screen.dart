@@ -9,6 +9,7 @@ import '../previews/widget_previews.dart';
 import 'dream_screen.dart';
 import 'neon.dart';
 import 'settings_screen.dart';
+import 'themes_screen.dart';
 import 'wallpaper_screen.dart';
 import 'widget_screen.dart';
 
@@ -106,6 +107,8 @@ class _CatalogScreenState extends State<CatalogScreen>
     switch (target) {
       case 'wallpaper':
         _openWallpaper(_active ?? circuitWallpaper);
+      case 'themes':
+        _openThemes();
       case 'settings':
         _push(SettingsScreen(platform: platform));
       case 'weather':
@@ -141,6 +144,8 @@ class _CatalogScreenState extends State<CatalogScreen>
   void _openWallpaper(HaloWallpaper wallpaper) =>
       _push(WallpaperScreen(platform: platform, wallpaper: wallpaper));
 
+  void _openThemes() => _push(ThemesScreen(platform: platform));
+
   void _openWidget(WuxHomeWidget homeWidget) =>
       _push(WidgetScreen(homeWidget: homeWidget, platform: platform));
 
@@ -163,6 +168,7 @@ class _CatalogScreenState extends State<CatalogScreen>
               active: _active,
               onOpen: _openWallpaper,
               onDream: () => _push(DreamScreen(platform: platform)),
+              onThemes: _openThemes,
             ),
             _ => _MineTab(
               platform: platform,
@@ -265,6 +271,11 @@ class _CatalogScreenState extends State<CatalogScreen>
               ),
             ),
           ],
+          if (_query == null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
+              child: ThemesBanner(platform: platform, onOpen: _openThemes),
+            ),
           _SectionHeader(
             key: _widgetsKey,
             title: l10n.catalogWidgets,
@@ -841,12 +852,14 @@ class _WallpapersTab extends StatelessWidget {
     required this.active,
     required this.onOpen,
     required this.onDream,
+    required this.onThemes,
   });
 
   final WuxPlatform platform;
   final HaloWallpaper? active;
   final ValueChanged<HaloWallpaper> onOpen;
   final VoidCallback onDream;
+  final VoidCallback onThemes;
 
   @override
   Widget build(BuildContext context) {
@@ -884,6 +897,8 @@ class _WallpapersTab extends StatelessWidget {
               );
             },
           ),
+          const SizedBox(height: 20),
+          ThemesBanner(platform: platform, onOpen: onThemes),
           const SizedBox(height: 28),
           Semantics(
             header: true,

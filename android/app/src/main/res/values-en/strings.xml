@@ -368,4 +368,14 @@
     <string name="wallpaper_arc_label">Halo · Iron Man</string>
     <string name="wallpaper_arc_description">Tony Stark\'s arc reactor, fitted inside the phone.</string>
     <string name="battery_chart_now">now</string>
+    <!-- Themes: sound names in Android settings. -->
+    <string name="theme_sound_circuit_ring">Halo · Data bus</string>
+    <string name="theme_sound_circuit_notification">Halo · Pulse</string>
+    <string name="theme_sound_circuit_alarm">Halo · Boot</string>
+    <string name="theme_sound_flux_ring">Halo · 88 mph</string>
+    <string name="theme_sound_flux_notification">Halo · Flux</string>
+    <string name="theme_sound_flux_alarm">Halo · Departure time</string>
+    <string name="theme_sound_arc_ring">Halo · Repulsor</string>
+    <string name="theme_sound_arc_notification">Halo · Interface</string>
+    <string name="theme_sound_arc_alarm">Halo · Reactor</string>
 </resources>

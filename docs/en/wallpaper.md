@@ -116,6 +116,38 @@ To look at the wallpapers without a phone, `tool/scenes/render.sh` draws them
 as PNG files on the computer (see the script's header); `render.sh --thumbs`
 redraws the flux capacitor and arc reactor thumbnails in Android's picker.
 
+## Themes
+
+Pixel theme packs (Wallpaper & style › Theme pack) are reserved for Google:
+no API lets an app appear there. Halo makes its own, in its Themes screen
+(from the gallery and the Wallpapers tab). A theme carries the name and id of
+its wallpaper:
+
+| Theme | Palette (core, lines, glow) | Sounds: ringtone, notification, alarm |
+| --- | --- | --- |
+| Circuit | bluish white, sky blue, electric blue | Data bus, Pulse, Boot |
+| Back to the Future | cream, amber, orange | 88 mph, Flux, Departure time |
+| Iron Man | ivory, gold, red | Repulsor, Interface, Reactor |
+
+Applying a theme:
+
+1. **Wallpaper**: Halo remembers the theme, then Android shows its live
+   wallpaper apply screen (nothing to confirm if it is already set).
+2. **Colours**: the wallpaper draws in the theme's palette and announces it to
+   Android (`onComputeColors`). If Colours is set to "Wallpaper", the system
+   derives its Material You scheme from it; the widgets, which take the system
+   colours (`values-v31/colors.xml`), follow.
+3. **Sounds**: copied into the phone's sounds (Ringtones/Halo,
+   Notifications/Halo, Alarms/Halo), then set as defaults. This needs Android
+   10 and the "Modify system settings" permission, which Halo asks for when
+   you come back from the wallpaper screen. They are original sounds,
+   synthesised by `tool/theme_sounds.py` (the same recipes as the mock-up), as
+   16-bit WAV.
+
+With no theme chosen for the wallpaper in place, the wallpaper takes the
+phone's colours again. The code: `theme/HaloThemes.kt`, `theme/ThemeSounds.kt`,
+`lib/src/screens/themes_screen.dart`.
+
 ## Screen saver
 
 While charging or docked, Android can show a screen saver

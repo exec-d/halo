@@ -23,6 +23,7 @@ import android.view.MotionEvent
 import android.view.SurfaceHolder
 import androidx.annotation.RequiresApi
 import dev.levilainpetit.wux.system.BatteryHistory
+import dev.levilainpetit.wux.theme.HaloThemes
 import dev.levilainpetit.wux.widgets.SystemStatus
 import kotlin.math.abs
 import kotlin.math.log10
@@ -59,6 +60,13 @@ open class HaloWallpaperService : WallpaperService() {
     /** Ce qui occupe la place de la batterie (voir [FluxWallpaperService], [ArcWallpaperService]). */
     protected open val core = CircuitScene.Core.BATTERY
 
+    /** L'identifiant du fond, partagé avec les thèmes et Dart. */
+    private val kind get() = when (core) {
+        CircuitScene.Core.FLUX -> WallpaperPreview.FLUX
+        CircuitScene.Core.ARC -> WallpaperPreview.ARC
+        CircuitScene.Core.BATTERY -> WallpaperPreview.CIRCUIT
+    }
+
     /** Les variantes s'animent sans cesse, à une cadence plus lente. */
     private val animated get() = core != CircuitScene.Core.BATTERY
 
@@ -71,7 +79,7 @@ open class HaloWallpaperService : WallpaperService() {
 
         private var scene: CircuitScene? = null
         private var painter: CircuitPainter? = null
-        private var palette = CircuitPalette.of(this@HaloWallpaperService)
+        private var palette = HaloThemes.palette(this@HaloWallpaperService, kind)
         private var visible = false
         private var frameScheduled = false
 
@@ -322,7 +330,7 @@ open class HaloWallpaperService : WallpaperService() {
         }
 
         private fun refreshPalette() {
-            val next = CircuitPalette.of(this@HaloWallpaperService)
+            val next = HaloThemes.palette(this@HaloWallpaperService, kind)
             if (next != palette) {
                 palette = next
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) notifyColorsChanged()
@@ -331,8 +339,10 @@ open class HaloWallpaperService : WallpaperService() {
 
         @RequiresApi(Build.VERSION_CODES.O_MR1)
         override fun onComputeColors(): WallpaperColors =
-            // Les couleurs viennent déjà du téléphone : les annoncer telles
-            // quelles garde Material You stable.
+            // Sans thème, les couleurs viennent déjà du téléphone : les annoncer
+            // telles quelles garde Material You stable. Avec un thème, ce sont
+            // les siennes : Android en tire les couleurs du système, donc
+            // celles des widgets.
             WallpaperColors(Color.valueOf(palette.glow), Color.valueOf(palette.line), Color.valueOf(CircuitPainter.BACKGROUND))
 
         // ——— Dessin ———
