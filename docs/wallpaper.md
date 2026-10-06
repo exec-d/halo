@@ -92,8 +92,11 @@ la batterie. Le service est `FluxWallpaperService`, qui étend
   dernier départ 1985 · 01:21) et trois bobines d'alimentation au-dessus des
   câbles ; sur la carte du bas, Mr. Fusion, qui s'éclaire pendant la charge.
 - **Le reste est celui de Circuit** : inclinaison, réseau, allumage.
-- **Batterie** : à l'écran, le convecteur s'anime sans arrêt, à 22 images
-  par seconde environ ; rien ne tourne quand le fond n'est pas visible.
+- **Batterie** : à l'écran, le convecteur s'anime à 22 images par seconde
+  environ pendant 30 s après l'allumage de l'écran ou un geste sur l'accueil
+  (toucher, changement de page), puis ralentit à 5 images par seconde
+  jusqu'au geste suivant ; en charge, toujours à pleine cadence. Le réacteur
+  arc fait de même. Rien ne tourne quand le fond n'est pas visible.
 
 ## Iron Man
 

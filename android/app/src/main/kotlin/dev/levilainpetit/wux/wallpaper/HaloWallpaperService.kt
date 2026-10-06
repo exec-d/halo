@@ -19,6 +19,7 @@ import android.os.Looper
 import android.os.PowerManager
 import android.os.SystemClock
 import android.service.wallpaper.WallpaperService
+import android.view.MotionEvent
 import android.view.SurfaceHolder
 import androidx.annotation.RequiresApi
 import dev.levilainpetit.wux.system.BatteryHistory
@@ -46,6 +47,12 @@ import kotlin.random.Random
  * allume aussi le gyroscope). Avec l'économiseur de batterie d'Android, le
  * fond se fige : ni capteur, ni impulsions, ni animation, une image à chaque
  * changement d'état.
+ *
+ * Les variantes animées (convecteur, réacteur) tournent à pleine cadence
+ * pendant [ACTIVE_MILLIS] après l'allumage de l'écran ou un geste sur
+ * l'accueil (toucher, changement de page), puis ralentissent à
+ * [IDLE_FRAME_MILLIS] jusqu'au geste suivant ; en charge, toujours à pleine
+ * cadence.
  */
 open class HaloWallpaperService : WallpaperService() {
 
@@ -72,6 +79,9 @@ open class HaloWallpaperService : WallpaperService() {
         private var pendingIgnition = true
         private var lastFrame = 0L
 
+        /** Le dernier allumage ou geste : au-delà de [ACTIVE_MILLIS], les variantes ralentissent. */
+        private var lastActivity = 0L
+
         private var targetX = 0f
         private var targetY = 0f
         private var baseX = Float.NaN
@@ -95,7 +105,10 @@ open class HaloWallpaperService : WallpaperService() {
         private val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 when (intent.action) {
-                    Intent.ACTION_SCREEN_ON -> pendingIgnition = true
+                    Intent.ACTION_SCREEN_ON -> {
+                        pendingIgnition = true
+                        wake()
+                    }
                     PowerManager.ACTION_POWER_SAVE_MODE_CHANGED -> if (visible) {
                         // On repart de zéro, dans le nouveau mode.
                         stop()
@@ -123,6 +136,8 @@ open class HaloWallpaperService : WallpaperService() {
 
         override fun onCreate(surfaceHolder: SurfaceHolder) {
             super.onCreate(surfaceHolder)
+            // Les touchers sur l'accueil relancent la pleine cadence des variantes.
+            if (animated) setTouchEventsEnabled(true)
             val filter = IntentFilter().apply {
                 addAction(Intent.ACTION_SCREEN_ON)
                 addAction(Intent.ACTION_BATTERY_CHANGED)
@@ -172,7 +187,32 @@ open class HaloWallpaperService : WallpaperService() {
             }
         }
 
+        override fun onTouchEvent(event: MotionEvent) {
+            super.onTouchEvent(event)
+            if (event.actionMasked == MotionEvent.ACTION_DOWN) wake()
+        }
+
+        override fun onOffsetsChanged(xOffset: Float, yOffset: Float, xStep: Float, yStep: Float, xPixels: Int, yPixels: Int) {
+            super.onOffsetsChanged(xOffset, yOffset, xStep, yStep, xPixels, yPixels)
+            wake()
+        }
+
+        /** Un geste ou un allumage : pleine cadence, tout de suite si l'on dormait. */
+        private fun wake() {
+            val wasIdle = idle()
+            lastActivity = SystemClock.uptimeMillis()
+            if (wasIdle && frameScheduled) {
+                handler.removeCallbacks(frame)
+                frameScheduled = false
+                requestFrame()
+            }
+        }
+
+        /** Les variantes au repos (sur batterie, sans geste depuis [ACTIVE_MILLIS]). */
+        private fun idle() = animated && !state.charging && SystemClock.uptimeMillis() - lastActivity > ACTIVE_MILLIS
+
         private fun start() {
+            lastActivity = SystemClock.uptimeMillis()
             saver = power?.isPowerSaveMode == true
             if (saver) {
                 // Figé : à plat, sans impulsions ni allumage.
@@ -300,7 +340,12 @@ open class HaloWallpaperService : WallpaperService() {
         private fun requestFrame() {
             if (!visible || frameScheduled) return
             frameScheduled = true
-            val wait = ((if (animated) ANIMATED_FRAME_MILLIS else FRAME_MILLIS) - (SystemClock.uptimeMillis() - lastFrame)).coerceAtLeast(0L)
+            val cadence = when {
+                idle() -> IDLE_FRAME_MILLIS
+                animated -> ANIMATED_FRAME_MILLIS
+                else -> FRAME_MILLIS
+            }
+            val wait = (cadence - (SystemClock.uptimeMillis() - lastFrame)).coerceAtLeast(0L)
             handler.postDelayed(frame, wait)
         }
 
@@ -308,7 +353,7 @@ open class HaloWallpaperService : WallpaperService() {
             val painter = painter ?: return
             if (!visible) return
             val now = SystemClock.uptimeMillis()
-            val elapsed = if (lastFrame == 0L) 0f else ((now - lastFrame).coerceAtMost(100L)) / 1000f
+            val elapsed = if (lastFrame == 0L) 0f else ((now - lastFrame).coerceAtMost(250L)) / 1000f
             lastFrame = now
 
             state.timeMillis = now
@@ -336,6 +381,12 @@ open class HaloWallpaperService : WallpaperService() {
     private companion object {
         const val FRAME_MILLIS = 33L
         const val ANIMATED_FRAME_MILLIS = 45L
+
+        /** Les variantes au repos : 5 images par seconde. */
+        const val IDLE_FRAME_MILLIS = 200L
+
+        /** Pleine cadence des variantes après un allumage ou un geste. */
+        const val ACTIVE_MILLIS = 30_000L
         const val SAMPLE_MILLIS = 1000L
         const val SIGNAL_MILLIS = 5000L
         const val IGNITION_MILLIS = 1300L

@@ -88,8 +88,11 @@ rectangle. The service is `FluxWallpaperService`, which extends
   1985 · 01:21) and three power coils above the cables; on the bottom board,
   Mr. Fusion, which lights up while charging.
 - **The rest is Circuit's**: tilt, network, wake-up.
-- **Battery**: on screen, the flux capacitor animates continuously at about
-  22 frames per second; nothing runs when the wallpaper is not visible.
+- **Battery**: on screen, the flux capacitor animates at about 22 frames per
+  second for 30 s after the screen turns on or a gesture on the home screen
+  (touch, page change), then slows to 5 frames per second until the next
+  gesture; while charging, always at full rate. The arc reactor does the
+  same. Nothing runs when the wallpaper is not visible.
 
 ## Iron Man
 
