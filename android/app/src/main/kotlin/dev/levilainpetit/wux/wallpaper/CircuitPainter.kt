@@ -134,6 +134,10 @@ class CircuitPainter(private val scene: CircuitScene) {
             canvas.drawBitmap(layer.core, 0f, 0f, maskPaint)
             if (igniting) ignite(canvas, index, state, palette)
             when (index) {
+                CircuitScene.CHASSIS -> scene.art?.takeIf { it.wholePhone }?.let {
+                    ink.palette = palette
+                    it.drawLiveChassis(canvas, state, ink)
+                }
                 CircuitScene.BATTERY -> when {
                     scene.flux != null -> flux(canvas, scene.flux, state, palette)
                     scene.arc != null -> arc(canvas, scene.arc, state, palette)
@@ -145,6 +149,10 @@ class CircuitPainter(private val scene: CircuitScene) {
                 }
                 CircuitScene.BOARD -> {
                     scene.flux?.let { timeCircuits(canvas, it, state, palette) }
+                    scene.art?.takeIf { it.wholePhone }?.let {
+                        ink.palette = palette
+                        it.drawLiveBoard(canvas, state, ink)
+                    }
                     antennas(canvas, state, palette)
                     pulses(canvas, state, palette)
                 }

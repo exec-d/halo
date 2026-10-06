@@ -137,7 +137,11 @@ its wallpaper:
 The last five wallpapers change the core of Circuit's phone (`CoreArt` and
 its subclasses: `QuantumCore`, `NeuralCore`, `AtomCore`, `VaultCore`,
 `GhostCore`): each draws itself once in the battery layer and animates
-itself (battery, charging, power-on). Like the flux capacitor and the
+itself (battery, charging, power-on). Quantum physics goes further
+(`wholePhone`): it redraws the whole phone, the back (the forest of cables),
+the middle (plate, columns, chip holder) and the front (the cables, where the
+network pulses run), with its own routes. All take the phone's colours, or
+their theme's. Like the flux capacitor and the
 reactor, they run at full rate for 30 s after power-on or a gesture, then
 slow down. Film and game names only name the themes: drawings and sounds are
 original, with no logo, character or excerpt.

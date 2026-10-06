@@ -38,12 +38,14 @@ gardent ce nom.*
   mère, les circuits temporels donnent l'heure ;
 - **Iron Man** : le même téléphone, avec le réacteur arc de Tony Stark ; une
   bobine s'allume par dixième de batterie et son cœur respire ;
-- **Physique quantique**, **Intelligence artificielle**, **Énergie
-  atomique**, **Fallout** et **Ghost in the Shell** : le même téléphone,
-  avec à la place de la batterie le réfrigérateur d'un ordinateur quantique,
-  un réseau de neurones sur sa puce, le cœur d'un réacteur nucléaire, une
-  porte d'abri et son compteur Geiger, ou un cyber-cerveau et sa pluie de
-  code ; chacun suit la batterie et s'emballe en charge.
+- **Physique quantique** : tout le téléphone devient le lustre d'un
+  ordinateur quantique (câbles coaxiaux en boucles, plateau doré, colonnes de
+  connecteurs, puce au centre) ;
+- **Intelligence artificielle**, **Énergie atomique**, **Fallout** et
+  **Ghost in the Shell** : le même téléphone que Circuit, avec à la place de
+  la batterie un réseau de neurones sur sa puce, le cœur d'un réacteur
+  nucléaire, une porte d'abri et son compteur Geiger, ou un cyber-cerveau et
+  sa pluie de code ; chacun suit la batterie et s'emballe en charge.
 
 Tous prennent les couleurs du téléphone, comme les widgets.
 

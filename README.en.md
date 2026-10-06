@@ -38,12 +38,14 @@ keep that name.*
   circuits show the time;
 - **Iron Man**: the same phone, with Tony Stark's arc reactor; one coil
   lights up per tenth of battery and its core breathes;
-- **Quantum physics**, **Artificial intelligence**, **Atomic energy**,
-  **Fallout** and **Ghost in the Shell**: the same phone, with in place of
-  the battery a quantum computer's refrigerator, a neural network on its
-  chip, a nuclear reactor core, a shelter door and its Geiger counter, or a
-  cyberbrain and its code rain; each follows the battery and speeds up while
-  charging.
+- **Quantum physics**: the whole phone becomes a quantum computer's
+  chandelier (looping coaxial lines, gold plate, connector columns, chip in
+  the middle);
+- **Artificial intelligence**, **Atomic energy**, **Fallout** and **Ghost in
+  the Shell**: Circuit's phone, with in place of the battery a neural network
+  on its chip, a nuclear reactor core, a shelter door and its Geiger counter,
+  or a cyberbrain and its code rain; each follows the battery and speeds up
+  while charging.
 
 All take the phone's colors, like the widgets.
 

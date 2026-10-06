@@ -1103,14 +1103,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperQuantumDescription =>
-      'A quantum computer\'s dilution refrigerator, hanging inside the phone in place of the battery.';
+      'The whole phone becomes the bottom of a quantum computer\'s chandelier: the forest of coaxial lines and their loops, the gold plate, the copper columns covered in connectors and the chip in the middle.';
 
   @override
   String get wallpaperQuantumMotion => 'The chandelier';
 
   @override
   String get wallpaperQuantumMotionText =>
-      'One stage lights up per fifth of battery; photons run down the coaxial lines to the chip, faster while charging; the five qubits swing between two states and entangled pairs light up together.';
+      'The columns\' rows of connectors light up from the bottom, one per tenth of battery. Control pulses run down the cables to the chip and the readout flows back up; the chip beats and its qubits twinkle. While charging, a cold wave runs down the cable loops.';
 
   @override
   String get themeQuantumDescription =>

@@ -20,6 +20,8 @@ class CoreKit(
     val area: RectF,
     /** Le bas de la carte mère, où arrivent les câbles. */
     val boardBottom: Float,
+    /** Hauteur de l'écran, en unités (≈ 216 sur un téléphone 20:9). */
+    val h: Float = 216f,
 ) {
     /** Un point de [area], en fractions de sa largeur et de sa hauteur. */
     fun at(fx: Float, fy: Float) = PointF(area.left + fx * area.width(), area.top + fy * area.height())
@@ -64,6 +66,24 @@ abstract class CoreArt(protected val kit: CoreKit) {
 
     /** Les contours qui s'illuminent à l'allumage, du centre vers le bord. */
     open fun outlines(): List<Path> = emptyList()
+
+    /**
+     * Le cœur redessine tout le téléphone : le fond ([drawChassis], sous le
+     * cadre seul), la batterie ([drawStatic]) et les cartes ([drawBoard]), avec
+     * leurs animations et ses propres trajets d'impulsions ([routes]).
+     */
+    open val wholePhone: Boolean get() = false
+
+    open fun drawChassis(canvas: Canvas, line: Paint, thin: Paint, fill: Paint) = Unit
+    open fun drawBoard(canvas: Canvas, line: Paint, thin: Paint, fill: Paint) = Unit
+    open fun drawLiveChassis(canvas: Canvas, state: FrameState, ink: Ink) = Unit
+    open fun drawLiveBoard(canvas: Canvas, state: FrameState, ink: Ink) = Unit
+
+    /** Les trajets des impulsions du réseau, de la charge et du battement, de face ; `null` : ceux de Circuit. */
+    open fun routes(): Triple<List<CircuitScene.Route>, List<CircuitScene.Route>, List<CircuitScene.Route>>? = null
+
+    /** D'où part l'allumage, de face ; `null` : le processeur de Circuit. */
+    open val origin: PointF? get() = null
 
     /** L'animation reste visible en « Discret », comme les impulsions. */
     protected fun strength(state: FrameState) = 0.4f + 0.6f * state.intensity

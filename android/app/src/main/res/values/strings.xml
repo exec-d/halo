@@ -384,7 +384,7 @@
     <string name="theme_sound_arc_notification">Halo · Interface</string>
     <string name="theme_sound_arc_alarm">Halo · Réacteur</string>
     <string name="wallpaper_quantum_label">Halo · Physique quantique</string>
-    <string name="wallpaper_quantum_description">Le réfrigérateur d\'un ordinateur quantique, suspendu dans le téléphone.</string>
+    <string name="wallpaper_quantum_description">Tout le téléphone devient le lustre d\'un ordinateur quantique.</string>
     <string name="theme_sound_quantum_ring">Halo · Superposition</string>
     <string name="theme_sound_quantum_notification">Halo · Intrication</string>
     <string name="theme_sound_quantum_alarm">Halo · Effondrement</string>

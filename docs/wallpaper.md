@@ -141,7 +141,12 @@ Fonds). Un thème porte le nom et l'identifiant de son fond :
 Les cinq derniers fonds changent le cœur du téléphone de Circuit
 (`CoreArt` et ses sous-classes : `QuantumCore`, `NeuralCore`, `AtomCore`,
 `VaultCore`, `GhostCore`) : chacun se dessine une fois dans le plan de la
-batterie et s'anime lui-même (batterie, charge, allumage). Comme le
+batterie et s'anime lui-même (batterie, charge, allumage). Physique
+quantique va plus loin (`wholePhone`) : il redessine tout le téléphone, le
+fond (la forêt de câbles), le milieu (plateau, colonnes, support de la
+puce) et l'avant (les câbles, où courent les impulsions du réseau), avec
+ses propres trajets. Tous prennent les couleurs du téléphone, ou celles de
+leur thème. Comme le
 convecteur et le réacteur, ils tournent à pleine cadence 30 s après
 l'allumage ou un geste, puis ralentissent. Les noms de films et de jeux ne
 servent qu'à nommer les thèmes : dessins et sons sont originaux, sans logo,

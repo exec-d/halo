@@ -379,7 +379,7 @@
     <string name="theme_sound_arc_notification">Halo · Interface</string>
     <string name="theme_sound_arc_alarm">Halo · Reactor</string>
     <string name="wallpaper_quantum_label">Halo · Quantum physics</string>
-    <string name="wallpaper_quantum_description">A quantum computer\'s dilution refrigerator, hanging inside the phone.</string>
+    <string name="wallpaper_quantum_description">The whole phone becomes a quantum computer\'s chandelier.</string>
     <string name="theme_sound_quantum_ring">Halo · Superposition</string>
     <string name="theme_sound_quantum_notification">Halo · Entanglement</string>
     <string name="theme_sound_quantum_alarm">Halo · Collapse</string>

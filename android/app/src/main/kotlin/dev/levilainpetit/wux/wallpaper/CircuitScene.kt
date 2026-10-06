@@ -235,30 +235,45 @@ class CircuitScene private constructor(
         // Les autres cœurs, en coordonnées de face.
         val art = CoreArt.of(
             core,
-            CoreKit(u, density, RectF(width - battery.right, battery.top, width - battery.left, battery.bottom), board.bottom),
+            CoreKit(u, density, RectF(width - battery.right, battery.top, width - battery.left, battery.bottom), board.bottom, h),
         )
+
+        /** Dessine [block] en coordonnées de face dans un plan dessiné vu de dos. */
+        private fun front(canvas: Canvas, block: (Canvas) -> Unit) {
+            canvas.save()
+            canvas.scale(-1f, 1f, width / 2f, 0f)
+            block(canvas)
+            canvas.restore()
+        }
+
+        /** Un cœur qui redessine tout le téléphone. */
+        private val whole = art?.takeIf { it.wholePhone }
 
         fun build(): CircuitScene {
             val network = networkRoutes()
             val data = dataRoutes()
             val inner = innerRoutes()
             val layers = listOf(
-                layer(depth = 1f, alpha = 90) { chassis(it) },
+                layer(depth = 1f, alpha = 90) {
+                    if (whole != null) {
+                        frame(it)
+                        front(it) { c -> whole.drawChassis(c, line, thin, fill) }
+                    } else {
+                        chassis(it)
+                    }
+                },
                 layer(depth = 0.55f, alpha = 150) {
                     when (core) {
                         Core.BATTERY -> battery(it)
                         Core.FLUX -> capacitor(it)
                         Core.ARC -> reactor(it)
-                        else -> art?.let { a ->
-                            // Le plan est dessiné vu de dos : on revient à la face.
-                            it.save()
-                            it.scale(-1f, 1f, width / 2f, 0f)
-                            a.drawStatic(it, line, thin, fill)
-                            it.restore()
-                        }
+                        // Le plan est dessiné vu de dos : on revient à la face.
+                        else -> art?.let { a -> front(it) { c -> a.drawStatic(c, line, thin, fill) } }
                     }
                 },
-                layer(depth = 0.2f, alpha = 230) { board(it) },
+                layer(depth = 0.2f, alpha = 230) {
+                    if (whole != null) front(it) { c -> whole.drawBoard(c, line, thin, fill) } else board(it)
+                },
                 layer(depth = 0f, alpha = 170) { glass(it) },
             )
             val cell = RectF(battery).apply { inset(2.2f * u, 2.2f * u) }
@@ -269,12 +284,13 @@ class CircuitScene private constructor(
                 height = height,
                 layers = layers,
                 batteryCell = RectF(width - cell.right, cell.top, width - cell.left, cell.bottom),
-                origin = PointF(width - soc.centerX(), soc.centerY()),
+                origin = whole?.origin ?: PointF(width - soc.centerX(), soc.centerY()),
                 parts = parts().onEach { it.path.transform(mirror) },
                 antennas = antennas().apply { transform(mirror) },
-                networkRoutes = network.map { it.mirrored() },
-                dataRoutes = data.map { it.mirrored() },
-                innerRoutes = inner.map { it.mirrored() },
+                // Les trajets d'un cœur sont déjà de face.
+                networkRoutes = whole?.routes()?.first ?: network.map { it.mirrored() },
+                dataRoutes = whole?.routes()?.second ?: data.map { it.mirrored() },
+                innerRoutes = whole?.routes()?.third ?: inner.map { it.mirrored() },
                 density = density,
                 flux = if (flux) {
                     fun PointF.m() = PointF(width - x, y)
@@ -322,6 +338,18 @@ class CircuitScene private constructor(
 
         private fun parts(): List<Part> {
             val shapes = mutableListOf<Pair<Path, Int>>()
+            if (whole != null) {
+                // Ses contours, de face, retournés comme le reste (qui l'est à la fin).
+                val mirror = Matrix().apply { setScale(-1f, 1f, width / 2f, 0f) }
+                val origin = whole.origin?.let { PointF(width - it.x, it.y) } ?: PointF(width / 2f, height / 2f)
+                val bounds = RectF()
+                val sorted = whole.outlines().map { Path(it).apply { transform(mirror) } }.sortedBy {
+                    it.computeBounds(bounds, true)
+                    hypot(bounds.centerX() - origin.x, bounds.centerY() - origin.y)
+                }
+                val last = (sorted.size - 1).coerceAtLeast(1).toFloat()
+                return sorted.mapIndexed { i, path -> Part(path, BATTERY, i / last) }
+            }
             fun rect(rect: RectF, radius: Float, layer: Int = BOARD) {
                 shapes += Path().apply { addRoundRect(rect, radius * u, radius * u, Path.Direction.CW) } to layer
             }
@@ -412,6 +440,15 @@ class CircuitScene private constructor(
                 p(11f, top + 3f), p(89f, top + 3f), p(11f, board.bottom / u - 3f),
                 p(11f, bottomTop + 13f), p(89f, bottomTop + 13f),
             ).forEach { screw(canvas, it) }
+        }
+
+        /** Le cadre seul, et les boutons : ce qui reste du téléphone quand un cœur redessine tout. */
+        private fun frame(canvas: Canvas) {
+            val frame = r(margin, margin, 100f - margin, h - margin)
+            canvas.drawRoundRect(frame, 11f * u, 11f * u, line)
+            canvas.drawRoundRect(RectF(frame).apply { inset(1.4f * u, 1.4f * u) }, 9.6f * u, 9.6f * u, thin)
+            canvas.drawRoundRect(r(margin - 0.9f, 0.2f * h, margin + 0.5f, 0.245f * h), 0.6f * u, 0.6f * u, line)
+            canvas.drawRoundRect(r(margin - 0.9f, 0.285f * h, margin + 0.5f, 0.38f * h), 0.6f * u, 0.6f * u, line)
         }
 
         private fun screw(canvas: Canvas, at: PointF) {

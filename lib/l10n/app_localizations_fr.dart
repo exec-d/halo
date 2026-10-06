@@ -1109,14 +1109,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get wallpaperQuantumDescription =>
-      'Le réfrigérateur à dilution d\'un ordinateur quantique, suspendu dans le téléphone à la place de la batterie.';
+      'Tout le téléphone devient le bas du lustre d\'un ordinateur quantique : la forêt de câbles coaxiaux et leurs boucles, le plateau doré, les colonnes de cuivre couvertes de connecteurs et la puce au centre.';
 
   @override
   String get wallpaperQuantumMotion => 'Le lustre';
 
   @override
   String get wallpaperQuantumMotionText =>
-      'Un étage s\'allume par cinquième de batterie ; des photons descendent les câbles coaxiaux jusqu\'à la puce, plus vite en charge ; les cinq qubits oscillent entre deux états et les paires intriquées s\'allument ensemble.';
+      'Les rangées de connecteurs des colonnes s\'allument de bas en haut, une par dixième de batterie. Des impulsions de commande descendent les câbles jusqu\'à la puce et la lecture remonte ; la puce bat et ses qubits scintillent. En charge, une vague de froid descend les boucles des câbles.';
 
   @override
   String get themeQuantumDescription =>
