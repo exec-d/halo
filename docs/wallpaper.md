@@ -133,7 +133,7 @@ Fonds). Un thème porte le nom et l'identifiant de son fond :
 | Retour vers le futur | crème, ambre, orange | 88 mph, Flux, Heure de départ |
 | Iron Man | ivoire, or, rouge | Répulseur, Interface, Réacteur |
 | Physique quantique | lavande, violet clair, violet | Superposition, Intrication, Effondrement |
-| Intelligence artificielle | rose pâle, rose, magenta | Inférence, Jeton, Éveil |
+| Intelligence artificielle | blanc bleuté, bleu ciel, bleu électrique | Inférence, Jeton, Éveil |
 | Énergie atomique | crème, jaune, jaune d'or | Réaction en chaîne, Neutron, Criticité |
 | Fallout | blanc vert, vert pomme, vert | Porte de l'abri, Terminal, Compteur Geiger |
 | Ghost in the Shell | blanc d'eau, turquoise, vert d'eau | Plongée, Ghost, Synchronisation |
@@ -142,10 +142,13 @@ Les cinq derniers fonds changent le cœur du téléphone de Circuit
 (`CoreArt` et ses sous-classes : `QuantumCore`, `NeuralCore`, `AtomCore`,
 `VaultCore`, `GhostCore`) : chacun se dessine une fois dans le plan de la
 batterie et s'anime lui-même (batterie, charge, allumage). Physique
-quantique va plus loin (`wholePhone`) : il redessine tout le téléphone, le
-fond (la forêt de câbles), le milieu (plateau, colonnes, support de la
-puce) et l'avant (les câbles, où courent les impulsions du réseau), avec
-ses propres trajets. Tous prennent les couleurs du téléphone, ou celles de
+quantique et Intelligence artificielle vont plus loin (`wholePhone`) : ils
+redessinent tout le téléphone, chacun avec ses propres trajets. Le premier
+dessine le fond (la forêt de câbles), le milieu (plateau, colonnes, support
+de la puce) et l'avant (les câbles, où courent les impulsions du réseau). Le
+second dessine au milieu l'accélérateur et son cerveau, et devant la carte
+mère et la carte du bas, détaillées ; les impulsions du réseau y courent sur
+le faisceau du bord. Tous prennent les couleurs du téléphone, ou celles de
 leur thème. Comme le
 convecteur et le réacteur, ils tournent à pleine cadence 30 s après
 l'allumage ou un geste, puis ralentissent. Les noms de films et de jeux ne

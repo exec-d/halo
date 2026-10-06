@@ -155,13 +155,13 @@ String _quantumAlarmText(AppLocalizations l) => l.themeSoundQuantumAlarmText;
 const neuralTheme = HaloTheme(
   wallpaper: neuralWallpaper,
   description: _neuralThemeDescription,
-  accent: Color(0xFFFFADE5),
-  onAccent: Color(0xFF5B0049),
+  accent: Color(0xFF9CCAFF),
+  onAccent: Color(0xFF003258),
   swatches: [
-    Color(0xFFFFADE5),
-    Color(0xFFE0BDD3),
-    Color(0xFFF3BA9E),
-    Color(0xFF191116),
+    Color(0xFF9CCAFF),
+    Color(0xFFBBC7DB),
+    Color(0xFFD6BEE4),
+    Color(0xFF111418),
   ],
   sounds: [
     ('ring', _neuralRing, _neuralRingText),

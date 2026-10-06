@@ -62,7 +62,7 @@ object HaloThemes {
         ),
         HaloTheme(
             WallpaperPreview.NEURAL,
-            CircuitPalette(core = Color.rgb(255, 234, 248), line = Color.rgb(255, 138, 216), glow = Color.rgb(224, 64, 251)),
+            CircuitPalette(core = Color.rgb(232, 245, 255), line = Color.rgb(95, 184, 255), glow = Color.rgb(31, 109, 255)),
             mapOf(
                 ThemeSounds.Kind.RING to (R.raw.theme_neural_ring to R.string.theme_sound_neural_ring),
                 ThemeSounds.Kind.NOTIFICATION to (R.raw.theme_neural_notification to R.string.theme_sound_neural_notification),

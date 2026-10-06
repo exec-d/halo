@@ -28,7 +28,7 @@ private val thumbs = listOf("flux", "arc", "quantum", "neural", "atom", "vault",
 /** Les fonds des thèmes : leur miniature prend la palette du thème (HaloThemes.kt). */
 private val themePalettes = mapOf(
     "quantum" to CircuitPalette(Color.rgb(241, 235, 255), Color.rgb(183, 156, 255), Color.rgb(124, 77, 255)),
-    "neural" to CircuitPalette(Color.rgb(255, 234, 248), Color.rgb(255, 138, 216), Color.rgb(224, 64, 251)),
+    "neural" to CircuitPalette(Color.rgb(232, 245, 255), Color.rgb(95, 184, 255), Color.rgb(31, 109, 255)),
     "atom" to CircuitPalette(Color.rgb(255, 251, 224), Color.rgb(255, 228, 92), Color.rgb(255, 196, 0)),
     "vault" to CircuitPalette(Color.rgb(238, 255, 224), Color.rgb(166, 255, 99), Color.rgb(67, 209, 46)),
     "ghost" to CircuitPalette(Color.rgb(230, 255, 251), Color.rgb(92, 245, 218), Color.rgb(0, 191, 165)),

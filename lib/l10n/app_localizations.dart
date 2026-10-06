@@ -2050,25 +2050,25 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperNeuralDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Une puce d\'accélération et son réseau de neurones, installés dans le téléphone à la place de la batterie.'**
+  /// **'Le téléphone de Circuit, détaillé jusqu\'aux vias, avec à la place de la batterie un accélérateur d\'IA : son boîtier, quatre piles de mémoire et, sur la puce, un cerveau gravé en pistes.'**
   String get wallpaperNeuralDescription;
 
   /// No description provided for @wallpaperNeuralMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Le réseau'**
+  /// **'L\'inférence'**
   String get wallpaperNeuralMotion;
 
   /// No description provided for @wallpaperNeuralMotionText.
   ///
   /// In fr, this message translates to:
-  /// **'Une inférence traverse les cinq couches : les neurones activés s\'allument, le signal court sur leurs connexions et un neurone de sortie l\'emporte. En charge, le réseau apprend : la correction remonte. La jauge suit la batterie.'**
+  /// **'En boucle, les mémoires sont lues couche après couche, les données filent jusqu\'au cerveau, une vague part de sa ligne médiane jusqu\'aux plots, puis la réponse remonte par les nappes et les cœurs du processeur s\'allument. Les plots allumés suivent la batterie. En charge, les bobines s\'éclairent, la ligne médiane pulse et les inférences s\'accélèrent.'**
   String get wallpaperNeuralMotionText;
 
   /// No description provided for @themeNeuralDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Un réseau de neurones sur sa puce, magenta.'**
+  /// **'Un cerveau de silicium sur sa carte, bleu électrique.'**
   String get themeNeuralDescription;
 
   /// No description provided for @themeSoundNeuralRing.

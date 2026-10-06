@@ -389,7 +389,7 @@
     <string name="theme_sound_quantum_notification">Halo · Intrication</string>
     <string name="theme_sound_quantum_alarm">Halo · Effondrement</string>
     <string name="wallpaper_neural_label">Halo · Intelligence artificielle</string>
-    <string name="wallpaper_neural_description">Un réseau de neurones gravé sur une puce, installé dans le téléphone.</string>
+    <string name="wallpaper_neural_description">Un cerveau de silicium à la place de la batterie, sur la carte détaillée de Circuit.</string>
     <string name="theme_sound_neural_ring">Halo · Inférence</string>
     <string name="theme_sound_neural_notification">Halo · Jeton</string>
     <string name="theme_sound_neural_alarm">Halo · Éveil</string>

@@ -1148,18 +1148,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get wallpaperNeuralDescription =>
-      'Une puce d\'accélération et son réseau de neurones, installés dans le téléphone à la place de la batterie.';
+      'Le téléphone de Circuit, détaillé jusqu\'aux vias, avec à la place de la batterie un accélérateur d\'IA : son boîtier, quatre piles de mémoire et, sur la puce, un cerveau gravé en pistes.';
 
   @override
-  String get wallpaperNeuralMotion => 'Le réseau';
+  String get wallpaperNeuralMotion => 'L\'inférence';
 
   @override
   String get wallpaperNeuralMotionText =>
-      'Une inférence traverse les cinq couches : les neurones activés s\'allument, le signal court sur leurs connexions et un neurone de sortie l\'emporte. En charge, le réseau apprend : la correction remonte. La jauge suit la batterie.';
+      'En boucle, les mémoires sont lues couche après couche, les données filent jusqu\'au cerveau, une vague part de sa ligne médiane jusqu\'aux plots, puis la réponse remonte par les nappes et les cœurs du processeur s\'allument. Les plots allumés suivent la batterie. En charge, les bobines s\'éclairent, la ligne médiane pulse et les inférences s\'accélèrent.';
 
   @override
   String get themeNeuralDescription =>
-      'Un réseau de neurones sur sa puce, magenta.';
+      'Un cerveau de silicium sur sa carte, bleu électrique.';
 
   @override
   String get themeSoundNeuralRing => 'Inférence';

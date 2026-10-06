@@ -1142,17 +1142,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperNeuralDescription =>
-      'An accelerator chip and its neural network, fitted inside the phone in place of the battery.';
+      'Circuit\'s phone, detailed down to the vias, with an AI accelerator in place of the battery: its package, four memory stacks and, on the die, a brain etched in traces.';
 
   @override
-  String get wallpaperNeuralMotion => 'The network';
+  String get wallpaperNeuralMotion => 'The inference';
 
   @override
   String get wallpaperNeuralMotionText =>
-      'An inference crosses the five layers: active neurons light up, the signal runs along their connections and one output neuron wins. While charging, the network learns: the correction flows back up. The gauge follows the battery.';
+      'In a loop, the memories are read layer by layer, the data races to the brain, a wave spreads from its midline to the pads, then the answer flows back up the ribbons and the processor\'s cores light up. The lit pads follow the battery. While charging, the coils glow, the midline pulses and inferences speed up.';
 
   @override
-  String get themeNeuralDescription => 'A neural network on its chip, magenta.';
+  String get themeNeuralDescription =>
+      'A silicon brain on its board, electric blue.';
 
   @override
   String get themeSoundNeuralRing => 'Inference';

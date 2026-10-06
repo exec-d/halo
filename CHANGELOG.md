@@ -11,7 +11,8 @@ mineure peut changer des réglages.
 
 - **Cinq thèmes de plus**, chacun avec son fond animé, sa palette et ses
   trois sons : Physique quantique (tout le téléphone devient le lustre
-  d'un ordinateur quantique), Intelligence artificielle (un réseau de neurones sur sa puce),
+  d'un ordinateur quantique), Intelligence artificielle (un cerveau de silicium à la place de la
+  batterie, sur la carte détaillée de Circuit),
   Énergie atomique (le cœur d'un réacteur), Fallout (une porte d'abri et son
   compteur Geiger) et Ghost in the Shell (un cyber-cerveau et sa pluie de
   code).

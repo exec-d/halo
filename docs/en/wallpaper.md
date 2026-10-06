@@ -129,7 +129,7 @@ its wallpaper:
 | Back to the Future | cream, amber, orange | 88 mph, Flux, Departure time |
 | Iron Man | ivory, gold, red | Repulsor, Interface, Reactor |
 | Quantum physics | lavender, light violet, violet | Superposition, Entanglement, Collapse |
-| Artificial intelligence | pale pink, pink, magenta | Inference, Token, Awakening |
+| Artificial intelligence | bluish white, sky blue, electric blue | Inference, Token, Awakening |
 | Atomic energy | cream, yellow, golden yellow | Chain reaction, Neutron, Criticality |
 | Fallout | green white, apple green, green | Vault door, Terminal, Geiger counter |
 | Ghost in the Shell | water white, turquoise, sea green | Dive, Ghost, Synchronisation |
@@ -137,10 +137,13 @@ its wallpaper:
 The last five wallpapers change the core of Circuit's phone (`CoreArt` and
 its subclasses: `QuantumCore`, `NeuralCore`, `AtomCore`, `VaultCore`,
 `GhostCore`): each draws itself once in the battery layer and animates
-itself (battery, charging, power-on). Quantum physics goes further
-(`wholePhone`): it redraws the whole phone, the back (the forest of cables),
-the middle (plate, columns, chip holder) and the front (the cables, where the
-network pulses run), with its own routes. All take the phone's colours, or
+itself (battery, charging, power-on). Quantum physics and Artificial
+intelligence go further (`wholePhone`): they redraw the whole phone, each
+with its own routes. The first draws the back (the forest of cables), the
+middle (plate, columns, chip holder) and the front (the cables, where the
+network pulses run). The second draws the accelerator and its brain in the
+middle, and the detailed motherboard and bottom board in front; the network
+pulses run along the edge bundle. All take the phone's colours, or
 their theme's. Like the flux capacitor and the
 reactor, they run at full rate for 30 s after power-on or a gesture, then
 slow down. Film and game names only name the themes: drawings and sounds are

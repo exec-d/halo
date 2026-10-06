@@ -41,11 +41,13 @@ keep that name.*
 - **Quantum physics**: the whole phone becomes a quantum computer's
   chandelier (looping coaxial lines, gold plate, connector columns, chip in
   the middle);
-- **Artificial intelligence**, **Atomic energy**, **Fallout** and **Ghost in
-  the Shell**: Circuit's phone, with in place of the battery a neural network
-  on its chip, a nuclear reactor core, a shelter door and its Geiger counter,
-  or a cyberbrain and its code rain; each follows the battery and speeds up
-  while charging.
+- **Artificial intelligence**: Circuit's phone, detailed down to the vias,
+  with an AI accelerator in place of the battery (four memory stacks, a brain
+  etched in traces) running an inference;
+- **Atomic energy**, **Fallout** and **Ghost in the Shell**: Circuit's phone,
+  with in place of the battery a nuclear reactor core, a shelter door and its
+  Geiger counter, or a cyberbrain and its code rain; each follows the battery
+  and speeds up while charging.
 
 All take the phone's colors, like the widgets.
 

@@ -41,9 +41,11 @@ gardent ce nom.*
 - **Physique quantique** : tout le téléphone devient le lustre d'un
   ordinateur quantique (câbles coaxiaux en boucles, plateau doré, colonnes de
   connecteurs, puce au centre) ;
-- **Intelligence artificielle**, **Énergie atomique**, **Fallout** et
-  **Ghost in the Shell** : le même téléphone que Circuit, avec à la place de
-  la batterie un réseau de neurones sur sa puce, le cœur d'un réacteur
+- **Intelligence artificielle** : le téléphone de Circuit, détaillé jusqu'aux
+  vias, avec à la place de la batterie un accélérateur d'IA (quatre piles de
+  mémoire, un cerveau gravé en pistes) où tourne une inférence ;
+- **Énergie atomique**, **Fallout** et **Ghost in the Shell** : le même
+  téléphone que Circuit, avec à la place de la batterie le cœur d'un réacteur
   nucléaire, une porte d'abri et son compteur Geiger, ou un cyber-cerveau et
   sa pluie de code ; chacun suit la batterie et s'emballe en charge.
 
