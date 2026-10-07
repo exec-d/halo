@@ -13,8 +13,8 @@ mineure peut changer des réglages.
   trois sons : Physique quantique (tout le téléphone devient le lustre
   d'un ordinateur quantique), Intelligence artificielle (un cerveau de silicium à la place de la
   batterie, sur la carte détaillée de Circuit),
-  Énergie atomique (tout le téléphone devient la cuve d'un réacteur), Fallout (une porte d'abri et son
-  compteur Geiger) et Ghost in the Shell (un cyber-cerveau et sa pluie de
+  Énergie atomique (tout le téléphone devient la cuve d'un réacteur), Fallout (tout le téléphone devient le
+  Pip-Boy) et Ghost in the Shell (un cyber-cerveau et sa pluie de
   code).
 - **Thèmes** : Circuit, Retour vers le futur et Iron Man. Un toucher applique
   le fond animé dans sa palette ; le fond annonce ces couleurs à Android, qui

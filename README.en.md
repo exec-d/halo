@@ -47,9 +47,12 @@ keep that name.*
 - **Atomic energy**: the whole phone becomes a pressurised water reactor
   vessel, in cross-section (rod drive mechanisms, head, core and its fuel
   assemblies, water loop); the rods come out of the core with the battery;
-- **Fallout** and **Ghost in the Shell**: Circuit's phone, with in place of
-  the battery a shelter door and its Geiger counter, or a cyberbrain and its
-  code rain; each follows the battery and speeds up while charging.
+- **Fallout**: the whole phone becomes the Pip-Boy; its CRT screen cycles
+  through STAT (with the Vault Boy), INV, DATA, MAP and RADIO, and HEALTH
+  follows the battery;
+- **Ghost in the Shell**: Circuit's phone, with in place of the battery a
+  cyberbrain and its code rain; it follows the battery and speeds up while
+  charging.
 
 All take the phone's colors, like the widgets.
 

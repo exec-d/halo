@@ -141,22 +141,28 @@ Fonds). Un thème porte le nom et l'identifiant de son fond :
 Les cinq derniers fonds changent le cœur du téléphone de Circuit
 (`CoreArt` et ses sous-classes : `QuantumCore`, `NeuralCore`, `AtomCore`,
 `VaultCore`, `GhostCore`) : chacun se dessine une fois dans le plan de la
-batterie et s'anime lui-même (batterie, charge, allumage). Physique
-quantique, Intelligence artificielle et Énergie atomique vont plus loin
-(`wholePhone`) : ils redessinent tout le téléphone, chacun avec ses propres
-trajets. Énergie atomique dessine devant la cuve et ses mécanismes, au
-milieu les équipements internes et le cœur ; les impulsions du réseau
-suivent le circuit d'eau. Le premier
-dessine le fond (la forêt de câbles), le milieu (plateau, colonnes, support
-de la puce) et l'avant (les câbles, où courent les impulsions du réseau). Le
-second dessine au milieu l'accélérateur et son cerveau, et devant la carte
-mère et la carte du bas, détaillées ; les impulsions du réseau y courent sur
-le faisceau du bord. Tous prennent les couleurs du téléphone, ou celles de
-leur thème. Comme le
+batterie et s'anime lui-même (batterie, charge, allumage). Quatre vont plus
+loin (`wholePhone`) : ils redessinent tout le téléphone, chacun avec ses
+propres trajets d'impulsions.
+
+- Physique quantique : au fond la forêt de câbles, au milieu le plateau, les
+  colonnes et le support de la puce, devant les câbles, où courent les
+  impulsions du réseau.
+- Intelligence artificielle : au milieu l'accélérateur et son cerveau, devant
+  la carte mère et la carte du bas, détaillées ; le réseau court sur le
+  faisceau du bord.
+- Énergie atomique : devant la cuve et ses mécanismes, au milieu les
+  équipements internes et le cœur ; le réseau suit le circuit d'eau.
+- Fallout : devant le boîtier du Pip-Boy, au fond la lueur du phosphore ;
+  l'écran fait défiler les cinq onglets du jeu (`VaultBoy` porte le masque du
+  Vault Boy) ; le réseau suit les jointures du boîtier.
+
+Tous prennent les couleurs du téléphone, ou celles de leur thème. Comme le
 convecteur et le réacteur, ils tournent à pleine cadence 30 s après
-l'allumage ou un geste, puis ralentissent. Les noms de films et de jeux ne
-servent qu'à nommer les thèmes : dessins et sons sont originaux, sans logo,
-personnage ni extrait.
+l'allumage ou un geste, puis ralentissent. Les noms de films et de jeux nomment les thèmes, et les dessins et sons sont
+originaux, sauf pour Fallout : son écran reprend les textes du Pip-Boy et le
+Vault Boy, tiré d'une capture. Halo est à usage personnel et n'est pas
+distribué.
 
 Appliquer un thème :
 

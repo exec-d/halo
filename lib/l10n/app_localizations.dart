@@ -2182,25 +2182,25 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperVaultDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Une porte d\'abri antiatomique et son compteur Geiger, installés dans le téléphone à la place de la batterie.'**
+  /// **'Tout le téléphone devient le Pip-Boy : son boîtier, ses verrous, son compteur Geiger et sa molette, et le grand écran cathodique vert qui fait défiler STAT, INV, DATA, MAP et RADIO.'**
   String get wallpaperVaultDescription;
 
   /// No description provided for @wallpaperVaultMotion.
   ///
   /// In fr, this message translates to:
-  /// **'La porte'**
+  /// **'Le Pip-Boy'**
   String get wallpaperVaultMotion;
 
   /// No description provided for @wallpaperVaultMotionText.
   ///
   /// In fr, this message translates to:
-  /// **'Une dent de la roue s\'allume par dixième de batterie ; en charge, les verrous tournent et la porte s\'ouvre. L\'aiguille du compteur tremble et sursaute aux coups ; une ligne de balayage descend l\'écran.'**
+  /// **'Toutes les 7 secondes, un parasite et l\'onglet suivant : le Vault Boy qui arrive en rebondissant, un Stimpak qui tourne en fil de fer, la vraie date (en 2287) et l\'heure, la carte et sa boussole, l\'oscilloscope de la radio. HEALTH suit la batterie ; en charge, STIMPAK s\'allume et la barre se remplit en vague. Avec du réseau, le compteur Geiger s\'affole. À l\'allumage, l\'écran s\'ouvre comme un tube.'**
   String get wallpaperVaultMotionText;
 
   /// No description provided for @themeVaultDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Une porte d\'abri, vert phosphore.'**
+  /// **'Le Pip-Boy, vert phosphore.'**
   String get themeVaultDescription;
 
   /// No description provided for @themeSoundVaultRing.

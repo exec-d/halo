@@ -137,19 +137,26 @@ its wallpaper:
 The last five wallpapers change the core of Circuit's phone (`CoreArt` and
 its subclasses: `QuantumCore`, `NeuralCore`, `AtomCore`, `VaultCore`,
 `GhostCore`): each draws itself once in the battery layer and animates
-itself (battery, charging, power-on). Quantum physics, Artificial
-intelligence and Atomic energy go further (`wholePhone`): they redraw the
-whole phone, each with its own routes. Atomic energy draws the vessel and its
-mechanisms in front, the internals and the core in the middle; the network
-pulses follow the water loop. The first draws the back (the forest of cables), the
-middle (plate, columns, chip holder) and the front (the cables, where the
-network pulses run). The second draws the accelerator and its brain in the
-middle, and the detailed motherboard and bottom board in front; the network
-pulses run along the edge bundle. All take the phone's colours, or
-their theme's. Like the flux capacitor and the
+itself (battery, charging, power-on). Four go further (`wholePhone`): they
+redraw the whole phone, each with its own pulse routes.
+
+- Quantum physics: the forest of cables at the back, the plate, columns and
+  chip holder in the middle, the cables in front, where the network pulses
+  run.
+- Artificial intelligence: the accelerator and its brain in the middle, the
+  detailed motherboard and bottom board in front; the network runs along the
+  edge bundle.
+- Atomic energy: the vessel and its mechanisms in front, the internals and
+  the core in the middle; the network follows the water loop.
+- Fallout: the Pip-Boy's casing in front, the phosphor glow at the back; the
+  screen cycles through the game's five tabs (`VaultBoy` holds the Vault Boy
+  mask); the network follows the casing's seams.
+
+All take the phone's colours, or their theme's. Like the flux capacitor and the
 reactor, they run at full rate for 30 s after power-on or a gesture, then
-slow down. Film and game names only name the themes: drawings and sounds are
-original, with no logo, character or excerpt.
+slow down. Film and game names name the themes, and drawings and sounds are original,
+except for Fallout: its screen uses the Pip-Boy's texts and the Vault Boy,
+taken from a screenshot. Halo is for personal use and is not distributed.
 
 Applying a theme:
 

@@ -69,6 +69,8 @@ class Typeface private constructor(val family: String, val bold: Boolean) {
         const val NORMAL = 0
         const val BOLD = 1
         fun create(t: Typeface?, style: Int) = Typeface(t?.family ?: Font.SANS_SERIF, style == BOLD)
+        /** La famille demandée est approchée par la police sans empattement de Java. */
+        fun create(family: String?, style: Int) = Typeface(Font.SANS_SERIF, style == BOLD)
     }
 }
 
@@ -170,6 +172,12 @@ class Bitmap private constructor(val image: BufferedImage, val alpha8: Boolean =
     fun setPixel(x: Int, y: Int, c: Int) = image.setRGB(x, y, c)
     fun getPixel(x: Int, y: Int) = image.getRGB(x, y)
     fun recycle() {}
+    /** Le canal alpha seul, en masque ALPHA_8. */
+    fun extractAlpha(): Bitmap {
+        val out = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+        for (y in 0 until height) for (x in 0 until width) out.setRGB(x, y, (image.getRGB(x, y) and 0xFF000000.toInt()) or 0xFFFFFF)
+        return Bitmap(out, true)
+    }
     fun compress(format: CompressFormat, quality: Int, out: java.io.OutputStream): Boolean = javax.imageio.ImageIO.write(image, "png", out)
 
     /** Le masque flouté (flou gaussien approché par trois flous en boîte), décalé de -rayon. */
@@ -244,6 +252,7 @@ class Paint(flags: Int = 0) {
         const val DITHER_FLAG = 4
     }
     var isAntiAlias = flags and ANTI_ALIAS_FLAG != 0
+    var isFilterBitmap = flags and FILTER_BITMAP_FLAG != 0
     var color: Int = Color.BLACK
     var alpha: Int
         get() = Color.alpha(color)
@@ -490,5 +499,16 @@ class Canvas(private val bitmap: Bitmap) {
             out.setRGB(0, y, image.width, 1, row, 0, image.width)
         }
         return out
+    }
+}
+
+object BitmapFactory {
+    fun decodeByteArray(data: ByteArray, offset: Int, length: Int): Bitmap? {
+        val img = javax.imageio.ImageIO.read(java.io.ByteArrayInputStream(data, offset, length)) ?: return null
+        val out = BufferedImage(img.width, img.height, BufferedImage.TYPE_INT_ARGB)
+        out.createGraphics().apply { drawImage(img, 0, 0, null); dispose() }
+        val bitmap = Bitmap.createBitmap(img.width, img.height, Bitmap.Config.ARGB_8888)
+        for (y in 0 until img.height) for (x in 0 until img.width) bitmap.setPixel(x, y, out.getRGB(x, y))
+        return bitmap
     }
 }

@@ -64,7 +64,7 @@ class CircuitScene private constructor(
     /**
      * Ce qui occupe la place de la batterie : la batterie, le convecteur, le
      * réacteur arc, ou un des cœurs des thèmes ([CoreArt]) : réfrigérateur
-     * quantique, cerveau de silicium, cuve de réacteur nucléaire, porte d'abri,
+     * quantique, cerveau de silicium, cuve de réacteur nucléaire, Pip-Boy,
      * cyber-cerveau.
      */
     enum class Core { BATTERY, FLUX, ARC, QUANTUM, NEURAL, ATOM, VAULT, GHOST }

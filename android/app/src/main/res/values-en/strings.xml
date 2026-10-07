@@ -394,7 +394,7 @@
     <string name="theme_sound_atom_notification">Halo · Neutron</string>
     <string name="theme_sound_atom_alarm">Halo · Criticality</string>
     <string name="wallpaper_vault_label">Halo · Fallout</string>
-    <string name="wallpaper_vault_description">A fallout shelter door and its Geiger counter, inside the phone.</string>
+    <string name="wallpaper_vault_description">The whole phone becomes the Pip-Boy, its CRT screen and the Vault Boy.</string>
     <string name="theme_sound_vault_ring">Halo · Vault door</string>
     <string name="theme_sound_vault_notification">Halo · Terminal</string>
     <string name="theme_sound_vault_alarm">Halo · Geiger counter</string>

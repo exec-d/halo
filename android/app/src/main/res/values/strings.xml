@@ -399,7 +399,7 @@
     <string name="theme_sound_atom_notification">Halo · Neutron</string>
     <string name="theme_sound_atom_alarm">Halo · Criticité</string>
     <string name="wallpaper_vault_label">Halo · Fallout</string>
-    <string name="wallpaper_vault_description">Une porte d\'abri antiatomique et son compteur Geiger, dans le téléphone.</string>
+    <string name="wallpaper_vault_description">Tout le téléphone devient le Pip-Boy, son écran cathodique et le Vault Boy.</string>
     <string name="theme_sound_vault_ring">Halo · Porte de l\'abri</string>
     <string name="theme_sound_vault_notification">Halo · Terminal</string>
     <string name="theme_sound_vault_alarm">Halo · Compteur Geiger</string>

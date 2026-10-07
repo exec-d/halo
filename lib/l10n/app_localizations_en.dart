@@ -1214,17 +1214,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperVaultDescription =>
-      'A fallout shelter door and its Geiger counter, fitted inside the phone in place of the battery.';
+      'The whole phone becomes the Pip-Boy: its casing, latches, Geiger counter and dial, and the big green CRT screen cycling through STAT, INV, DATA, MAP and RADIO.';
 
   @override
-  String get wallpaperVaultMotion => 'The door';
+  String get wallpaperVaultMotion => 'The Pip-Boy';
 
   @override
   String get wallpaperVaultMotionText =>
-      'One tooth of the wheel lights up per tenth of battery; while charging, the locks turn and the door opens. The counter\'s needle trembles and jumps; a scan line runs down the screen.';
+      'Every 7 seconds, a burst of static and the next tab: the Vault Boy bouncing in, a Stimpak spinning in wireframe, the real date (in 2287) and time, the map and its compass, the radio\'s oscilloscope. HEALTH follows the battery; while charging, STIMPAK lights up and the bar fills in a wave. With network traffic, the Geiger counter goes wild. On power-on, the screen opens like a tube.';
 
   @override
-  String get themeVaultDescription => 'A shelter door, phosphor green.';
+  String get themeVaultDescription => 'The Pip-Boy, phosphor green.';
 
   @override
   String get themeSoundVaultRing => 'Vault door';

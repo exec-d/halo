@@ -1223,17 +1223,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get wallpaperVaultDescription =>
-      'Une porte d\'abri antiatomique et son compteur Geiger, installés dans le téléphone à la place de la batterie.';
+      'Tout le téléphone devient le Pip-Boy : son boîtier, ses verrous, son compteur Geiger et sa molette, et le grand écran cathodique vert qui fait défiler STAT, INV, DATA, MAP et RADIO.';
 
   @override
-  String get wallpaperVaultMotion => 'La porte';
+  String get wallpaperVaultMotion => 'Le Pip-Boy';
 
   @override
   String get wallpaperVaultMotionText =>
-      'Une dent de la roue s\'allume par dixième de batterie ; en charge, les verrous tournent et la porte s\'ouvre. L\'aiguille du compteur tremble et sursaute aux coups ; une ligne de balayage descend l\'écran.';
+      'Toutes les 7 secondes, un parasite et l\'onglet suivant : le Vault Boy qui arrive en rebondissant, un Stimpak qui tourne en fil de fer, la vraie date (en 2287) et l\'heure, la carte et sa boussole, l\'oscilloscope de la radio. HEALTH suit la batterie ; en charge, STIMPAK s\'allume et la barre se remplit en vague. Avec du réseau, le compteur Geiger s\'affole. À l\'allumage, l\'écran s\'ouvre comme un tube.';
 
   @override
-  String get themeVaultDescription => 'Une porte d\'abri, vert phosphore.';
+  String get themeVaultDescription => 'Le Pip-Boy, vert phosphore.';
 
   @override
   String get themeSoundVaultRing => 'Porte de l\'abri';
