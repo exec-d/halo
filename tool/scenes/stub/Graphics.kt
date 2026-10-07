@@ -58,6 +58,7 @@ class RectF(var left: Float = 0f, var top: Float = 0f, var right: Float = 0f, va
     fun centerX() = (left + right) / 2
     fun centerY() = (top + bottom) / 2
     fun inset(dx: Float, dy: Float) { left += dx; top += dy; right -= dx; bottom -= dy }
+    fun contains(x: Float, y: Float) = left < right && top < bottom && x >= left && x < right && y >= top && y < bottom
 }
 
 class Typeface private constructor(val family: String, val bold: Boolean) {

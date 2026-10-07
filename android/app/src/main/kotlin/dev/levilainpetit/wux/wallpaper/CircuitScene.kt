@@ -201,6 +201,33 @@ class CircuitScene private constructor(
         val toroids = listOf(150f, 300f, 450f).map { x -> PointF(q(x, 0f).x, board.bottom - 4.5f * u) }
         val fusion = p(22f, bottomTop + 8f)
 
+        // Convecteur : une carte mère bien plus dense (vue de dos, en unités).
+        // À droite du processeur, un codec audio et son quartz, un gyroscope,
+        // une bobine et un connecteur de nappe ; sur la carte du bas, le
+        // contrôleur de charge et une barrette de protection.
+        val codec = r(73.5f, top + 3.5f, 80f, top + 10.5f)
+        val crystal = r(74f, top + 13.5f, 79.5f, top + 16.5f)
+        val gyro = r(73.5f, top + 31.5f, 79.5f, top + 37.5f)
+        val inductor = r(74f, top + 41f, 79f, top + 46f)
+        val flex = r(74.5f, top + 48.5f, 78.5f, top + 58f)
+        val charger = r(62f, bottomTop + 14f, 72f, bottomTop + 20f)
+        val esd = r(9.5f, bottomTop + 15.5f, 16.5f, bottomTop + 19f)
+        val fluxParts = listOf(codec, crystal, gyro, inductor, flex, charger, esd)
+
+        /** Les bus de la carte dense : codec, gyroscope, nappe, circuits temporels, charge. */
+        val buses: List<List<PointF>> = if (!flux) emptyList() else buildList {
+            val t = top
+            for (i in 0 until 3) add(listOf(p(73.5f, t + 5f + i * 2f), p(72.2f - i * 0.8f, t + 5f + i * 2f), p(72.2f - i * 0.8f, t + 15f), p(69.5f - i * 1.6f, t + 17.5f), p(69.5f - i * 1.6f, t + 19f)))
+            for (i in 0 until 3) add(listOf(p(71f, t + 32.5f + i * 1.8f), p(73.5f, t + 32.5f + i * 1.8f)))
+            for (i in 0 until 4) add(listOf(p(71f, t + 45.5f + i * 1.4f), p(72.4f + i * 0.5f, t + 45.5f + i * 1.4f), p(72.4f + i * 0.5f, t + 49.5f + i * 2.2f), p(74.5f, t + 49.5f + i * 2.2f)))
+            for (i in 0 until 3) {
+                val cy = clocks[i].centerY() / u
+                add(listOf(p(32f, cy), p(32.4f + i * 0.6f, cy), p(32.4f + i * 0.6f, pmic.top / u)))
+            }
+            for (i in 0 until 2) add(listOf(p(62f, bottomTop + 15.2f + i * 1.4f), p(60.8f - i * 0.8f, bottomTop + 15.2f + i * 1.4f), p(60.8f - i * 0.8f, usb.top / u - 0.4f)))
+            for (i in 0 until 2) add(listOf(p(16.5f, bottomTop + 16.4f + i * 1.6f), p(36f - i * 1.2f, bottomTop + 16.4f + i * 1.6f), p(38.6f - i * 1.2f, usb.top / u + 1.5f + i * 1.6f), p(40f, usb.top / u + 1.5f + i * 1.6f)))
+        }
+
         // Les autres cœurs, en coordonnées de face.
         val art = CoreArt.of(
             core,
@@ -584,6 +611,7 @@ class CircuitScene private constructor(
         // ——— Plan avant : cartes, puces, pistes ———
 
         private fun board(canvas: Canvas) {
+            if (flux) copperPour(canvas)
             canvas.drawRoundRect(board, 3f * u, 3f * u, line)
             canvas.drawRoundRect(bottom, 3f * u, 3f * u, line)
 
@@ -643,6 +671,7 @@ class CircuitScene private constructor(
                     canvas.drawRect(RectF(it).apply { inset(0.8f * u, 0.8f * u) }, thin)
                 }
                 toroids.forEach { toroid(canvas, it) }
+                fluxBoard(canvas)
             }
 
             // Petits composants semés sur la carte mère, hors des grosses puces.
@@ -653,17 +682,27 @@ class CircuitScene private constructor(
                 RectF(modem).apply { inset(-2f * u, -2f * u) },
                 RectF(pmic).apply { inset(-2f * u, -2f * u) },
                 RectF(connector).apply { inset(-2f * u, -2f * u) },
-            ) + (if (flux) clocks.map { RectF(it).apply { inset(-1.5f * u, -1.5f * u) } } + toroids.map { RectF(it.x - 4f * u, it.y - 4f * u, it.x + 4f * u, it.y + 4f * u) } else emptyList()) +
-                traces.map { bounds(it).apply { inset(-1.2f * u, -1.2f * u) } }
+            ) + (if (flux) clocks.map { RectF(it).apply { inset(-1.5f * u, -1.5f * u) } } + toroids.map { RectF(it.x - 4f * u, it.y - 4f * u, it.x + 4f * u, it.y + 4f * u) } + fluxParts.map { RectF(it).apply { inset(-1.6f * u, -1.6f * u) } } + meanders().map { bounds(it).apply { inset(-1.2f * u, -1.2f * u) } } else emptyList()) +
+                if (flux) (traces + buses).flatMap { segmentBoxes(it, 1f * u) } else traces.map { bounds(it).apply { inset(-1.2f * u, -1.2f * u) } }
             val random = Random(7)
             fill.alpha = 150
-            repeat(160) {
+            val placed = mutableListOf<RectF>()
+            repeat(if (flux) 2400 else 160) {
                 val w = (if (random.nextBoolean()) 1.6f else 1f) * u
                 val hh = w * 0.55f
                 val cx = board.left + (3f * u) + random.nextFloat() * (board.width() - 6f * u)
                 val cy = board.top + (3f * u) + random.nextFloat() * (board.height() - 6f * u)
                 val rect = if (random.nextBoolean()) RectF(cx, cy, cx + w, cy + hh) else RectF(cx, cy, cx + hh, cy + w)
-                if (keepOut.none { RectF.intersects(it, rect) }) canvas.drawRect(rect, fill)
+                if (keepOut.any { RectF.intersects(it, rect) }) return@repeat
+                if (!flux) {
+                    canvas.drawRect(rect, fill)
+                    return@repeat
+                }
+                // Le convecteur : de vrais composants, deux pastilles et leur corps, sans se chevaucher.
+                val room = RectF(rect).apply { inset(-0.9f * u, -0.9f * u) }
+                if (placed.any { RectF.intersects(it, room) }) return@repeat
+                placed += room
+                smd(canvas, rect)
             }
             fill.alpha = 255
 
@@ -677,6 +716,190 @@ class CircuitScene private constructor(
                 canvas.drawCircle(points.first().x, points.first().y, 0.55f * u, fill)
                 canvas.drawCircle(points.last().x, points.last().y, 0.55f * u, fill)
             }
+        }
+
+        /** Les boîtes de chaque segment d'une piste, élargies de [margin]. */
+        private fun segmentBoxes(points: List<PointF>, margin: Float) = points.zipWithNext().map { (a, b) ->
+            RectF(minOf(a.x, b.x) - margin, minOf(a.y, b.y) - margin, maxOf(a.x, b.x) + margin, maxOf(a.y, b.y) + margin)
+        }
+
+        /**
+         * Le plan de cuivre du convecteur : une fine hachure sur les deux cartes,
+         * dégagée autour des puces, des composants et des pistes.
+         */
+        private fun copperPour(canvas: Canvas) {
+            val hatch = Paint(thin).apply { alpha = 60; strokeWidth = 0.5f * density }
+            for (rect in listOf(board, bottom)) {
+                canvas.save()
+                canvas.clipRect(RectF(rect).apply { inset(2.2f * u, 2.2f * u) })
+                var d = -rect.height()
+                while (d < rect.width()) {
+                    canvas.drawLine(rect.left + d, rect.bottom, rect.left + d + rect.height(), rect.top, hatch)
+                    d += 1.3f * u
+                }
+                canvas.restore()
+            }
+            val clear = Paint(Paint.ANTI_ALIAS_FLAG).apply { xfermode = android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.CLEAR) }
+            val holes = listOf(soc, ram, modem, pmic, connector, bottomConnector, usb, motor, pill) + clocks + fluxParts
+            holes.forEach { canvas.drawRoundRect(RectF(it).apply { inset(-1.6f * u, -1.6f * u) }, 1f * u, 1f * u, clear) }
+            canvas.drawRoundRect(RectF(soc.left - 3.6f * u, soc.top - 3.6f * u, soc.right + 3.6f * u, ram.bottom + 3f * u), 2f * u, 2f * u, clear)
+            (toroids + fusion + flash).forEach { canvas.drawCircle(it.x, it.y, 5f * u, clear) }
+            listOf(camera1 to camera1Radius, camera2 to camera2Radius).forEach { (c, r) -> canvas.drawCircle(c.x, c.y, (r + 1.5f) * u, clear) }
+            val gap = Paint(clear).apply { style = Paint.Style.STROKE; strokeWidth = 1.6f * u; strokeCap = Paint.Cap.ROUND; strokeJoin = Paint.Join.ROUND }
+            (traces + buses + meanders()).forEach { points ->
+                canvas.drawPath(Path().apply { moveTo(points[0].x, points[0].y); points.drop(1).forEach { lineTo(it.x, it.y) } }, gap)
+            }
+        }
+
+        /** Un petit composant monté en surface : ses deux pastilles et son corps. */
+        private fun smd(canvas: Canvas, rect: RectF) {
+            val horizontal = rect.width() > rect.height()
+            val pad = (if (horizontal) rect.width() else rect.height()) * 0.28f
+            fill.alpha = 170
+            if (horizontal) {
+                canvas.drawRect(rect.left, rect.top, rect.left + pad, rect.bottom, fill)
+                canvas.drawRect(rect.right - pad, rect.top, rect.right, rect.bottom, fill)
+            } else {
+                canvas.drawRect(rect.left, rect.top, rect.right, rect.top + pad, fill)
+                canvas.drawRect(rect.left, rect.bottom - pad, rect.right, rect.bottom, fill)
+            }
+            fill.alpha = 70
+            canvas.drawRect(rect, fill)
+            fill.alpha = 150
+        }
+
+        /** Trois pistes accordées en serpentin, de la mémoire aux bobines. */
+        private fun meanders(): List<List<PointF>> = (0 until 3).map { i ->
+            val x0 = ram.left / u + 4f + i * 2.4f
+            val start = ram.bottom / u + 1.2f
+            val points = mutableListOf(p(x0, start))
+            var y = start + 1.2f
+            var side = if (i % 2 == 0) 1f else -1f
+            while (y < start + 8.4f) {
+                points += p(x0, y)
+                points += p(x0 + side * 0.7f, y)
+                points += p(x0 + side * 0.7f, y + 0.6f)
+                points += p(x0, y + 0.6f)
+                side = -side
+                y += 1.2f
+            }
+            val target = toroids[1]
+            points += p(x0, start + 9.4f)
+            points += PointF(target.x + (i - 1) * 1.1f * u, start * u + 9.4f * u)
+            points
+        }
+
+        /** La carte mère dense du convecteur : puces détaillées, nouveaux composants, vias, points de test. */
+        private fun fluxBoard(canvas: Canvas) {
+            val faint = Paint(thin).apply { alpha = 120 }
+            val dashed = Paint(thin).apply { alpha = 110; pathEffect = DashPathEffect(floatArrayOf(0.8f * u, 0.6f * u), 0f) }
+            fun courtyard(rect: RectF) = canvas.drawRect(RectF(rect).apply { inset(-1.1f * u, -1.1f * u) }, dashed)
+            fun corner(rect: RectF) {
+                val m = 0.9f * u
+                canvas.drawLine(rect.left + m, rect.top + m, rect.left + m + 1.2f * u, rect.top + m, thin)
+                canvas.drawLine(rect.left + m, rect.top + m, rect.left + m, rect.top + m + 1.2f * u, thin)
+            }
+            fun grid(rect: RectF, cols: Int, rows: Int, r: Float) {
+                fill.alpha = 110
+                for (i in 0 until cols) for (j in 0 until rows) {
+                    canvas.drawCircle(rect.left + rect.width() * (i + 0.5f) / cols, rect.top + rect.height() * (j + 0.5f) / rows, r * u, fill)
+                }
+            }
+
+            // Le processeur : une rangée de billes, ses seize cœurs, son repère.
+            val ring = RectF(soc).apply { inset(1.6f * u, 1.6f * u) }
+            fill.alpha = 110
+            for (k in 0 until 9) {
+                val f = (k + 0.5f) / 9f
+                for ((x, y) in listOf(ring.left + ring.width() * f to ring.top, ring.left + ring.width() * f to ring.bottom, ring.left to ring.top + ring.height() * f, ring.right to ring.top + ring.height() * f)) {
+                    canvas.drawCircle(x, y, 0.28f * u, fill)
+                }
+            }
+            val die = RectF(soc).apply { inset(5.6f * u, 5.6f * u) }
+            for (i in 0 until 4) for (j in 0 until 4) {
+                val cell = RectF(die.left + die.width() * i / 4f, die.top + die.height() * j / 4f, die.left + die.width() * (i + 1) / 4f, die.top + die.height() * (j + 1) / 4f).apply { inset(0.35f * u, 0.35f * u) }
+                canvas.drawRect(cell, faint)
+            }
+            corner(soc)
+            // La mémoire en deux puces, leurs billes.
+            canvas.drawLine(ram.centerX(), ram.top + 0.6f * u, ram.centerX(), ram.bottom - 0.6f * u, thin)
+            grid(RectF(ram.left + 1.2f * u, ram.top + 1.6f * u, ram.centerX() - 1.2f * u, ram.bottom - 1.6f * u), 6, 3, 0.26f)
+            grid(RectF(ram.centerX() + 1.2f * u, ram.top + 1.6f * u, ram.right - 1.2f * u, ram.bottom - 1.6f * u), 6, 3, 0.26f)
+            // Le modem et la gestion d'énergie : leur puce intérieure, leurs billes.
+            for (chipRect in listOf(modem, pmic)) {
+                canvas.drawRect(RectF(chipRect).apply { inset(1.8f * u, 1.8f * u) }, faint)
+                corner(chipRect)
+                courtyard(chipRect)
+            }
+            grid(RectF(modem).apply { inset(3.4f * u, 3.4f * u) }, 3, 3, 0.45f)
+            pins(canvas, pmic, 4)
+
+            // Les nouveaux composants.
+            chip(canvas, codec)
+            pins(canvas, codec, 4)
+            canvas.drawRect(RectF(codec).apply { inset(1.4f * u, 1.4f * u) }, faint)
+            corner(codec)
+            courtyard(codec)
+            canvas.drawRoundRect(crystal, 1.5f * u, 1.5f * u, thin)
+            canvas.drawRoundRect(RectF(crystal).apply { inset(0.6f * u, 0.6f * u) }, 1f * u, 1f * u, faint)
+            chip(canvas, gyro)
+            grid(RectF(gyro).apply { inset(1.2f * u, 1.2f * u) }, 3, 3, 0.3f)
+            corner(gyro)
+            courtyard(gyro)
+            canvas.drawRect(inductor, thin)
+            canvas.drawCircle(inductor.centerX(), inductor.centerY(), inductor.width() * 0.34f, thin)
+            canvas.drawCircle(inductor.centerX(), inductor.centerY(), inductor.width() * 0.16f, faint)
+            connector(canvas, RectF(flex.left, flex.top, flex.right, flex.bottom).also { canvas.drawRect(it, thin) }.let { RectF(it.left + 0.5f * u, it.top + 0.5f * u, it.right - 0.5f * u, it.bottom - 0.5f * u) })
+            var fy = flex.top + 1.2f * u
+            while (fy < flex.bottom - 0.6f * u) {
+                canvas.drawLine(flex.left + 0.8f * u, fy, flex.right - 0.8f * u, fy, faint)
+                fy += 1f * u
+            }
+            chip(canvas, charger)
+            pins(canvas, charger, 4)
+            canvas.drawRect(RectF(charger).apply { inset(1.6f * u, 1.6f * u) }, faint)
+            corner(charger)
+            canvas.drawRect(esd, thin)
+            for (k in 1 until 6) canvas.drawLine(esd.left + esd.width() * k / 6f, esd.top, esd.left + esd.width() * k / 6f, esd.bottom, faint)
+            clocks.forEach { courtyard(it) }
+
+            // Les bus : codec, gyroscope, nappe, circuits temporels, charge, avec leurs pastilles.
+            fill.alpha = 150
+            buses.forEach { points ->
+                canvas.drawPath(Path().apply { moveTo(points[0].x, points[0].y); points.drop(1).forEach { lineTo(it.x, it.y) } }, thin)
+                canvas.drawCircle(points.first().x, points.first().y, 0.4f * u, fill)
+                canvas.drawCircle(points.last().x, points.last().y, 0.4f * u, fill)
+            }
+            // Les serpentins, de la mémoire aux bobines.
+            meanders().forEach { points ->
+                canvas.drawPath(Path().apply { moveTo(points[0].x, points[0].y); points.drop(1).forEach { lineTo(it.x, it.y) } }, thin)
+            }
+
+            // Les vias de couture le long des bords des deux cartes, et quelques points de test.
+            fill.alpha = 140
+            fun stitch(rect: RectF, skip: (Float, Float) -> Boolean) {
+                val inset = 1.3f * u
+                var x = rect.left + 3.5f * u
+                while (x < rect.right - 3.5f * u) {
+                    for (y in listOf(rect.top + inset, rect.bottom - inset)) if (!skip(x, y)) canvas.drawCircle(x, y, 0.32f * u, thin)
+                    x += 2.4f * u
+                }
+                var y = rect.top + 3.5f * u
+                while (y < rect.bottom - 3.5f * u) {
+                    for (x2 in listOf(rect.left + inset, rect.right - inset)) if (!skip(x2, y)) canvas.drawCircle(x2, y, 0.32f * u, thin)
+                    y += 2.4f * u
+                }
+            }
+            val busy = listOf(RectF(pill).apply { inset(-1f * u, -1f * u) }, RectF(connector).apply { inset(-1f * u, -1.5f * u) }, RectF(bottomConnector).apply { inset(-1f * u, -1.5f * u) }, RectF(usb).apply { inset(-1f * u, -1f * u) }) +
+                traces.map { bounds(it).apply { inset(-1f * u, -1f * u) } }
+            stitch(board) { x, y -> busy.any { it.contains(x, y) } }
+            stitch(bottom) { x, y -> busy.any { it.contains(x, y) } || hypot(x - fusion.x, y - fusion.y) < (FUSION + 1.5f) * u }
+            for ((tx, ty) in listOf(45f to top + 6f, 45.5f to top + 64f, 72f to top + 22f, 33f to top + 46.5f, 30f to bottomTop + 15f, 75f to bottomTop + 4.5f)) {
+                val at = p(tx, ty)
+                canvas.drawCircle(at.x, at.y, 0.9f * u, thin)
+                canvas.drawCircle(at.x, at.y, 0.35f * u, fill)
+            }
+            fill.alpha = 255
         }
 
         // Pas de texte dans le décor : il se mêlerait à celui des widgets.
