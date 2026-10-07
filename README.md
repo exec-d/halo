@@ -36,8 +36,9 @@ gardent ce nom.*
   de la DeLorean à la place de la batterie ; ses impulsions courent vers le
   cœur, plus vite en charge, et sa jauge suit la batterie ; sur la carte
   mère, les circuits temporels donnent l'heure ;
-- **Iron Man** : le même téléphone, avec le réacteur arc de Tony Stark ; une
-  bobine s'allume par dixième de batterie et son cœur respire ;
+- **Iron Man** : le téléphone porte l'armure (cadre en plaques boulonnées,
+  casque, pectoraux, côtes, abdominaux) et le réacteur arc bat en son
+  centre ; une bobine s'allume par dixième de batterie ;
 - **Physique quantique** : tout le téléphone devient le lustre d'un
   ordinateur quantique (câbles coaxiaux en boucles, plateau doré, colonnes de
   connecteurs, puce au centre) ;

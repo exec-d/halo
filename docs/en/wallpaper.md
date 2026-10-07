@@ -91,30 +91,32 @@ rectangle. The service is `FluxWallpaperService`, which extends
 - **Battery**: on screen, the flux capacitor animates at about 22 frames per
   second for 30 s after the screen turns on or a gesture on the home screen
   (touch, page change), then slows to 5 frames per second until the next
-  gesture; while charging, always at full rate. The arc reactor does the
-  same. Nothing runs when the wallpaper is not visible.
+  gesture; while charging, always at full rate. Nothing runs when the wallpaper is not visible.
 
 ## Iron Man
 
-Same principle (`Core.ARC`, `ArcWallpaperService`): Tony Stark's arc reactor,
-centred on the plate that replaces the battery, linked to the motherboard by
-two cables. Ten coils around the core with the new element's triangle.
+The phone wears the armour (`Core.ARC`, `ArcCore`, `ArcWallpaperService`): it
+redraws the whole phone, like the themes' cores (see below).
 
-- **The casing**: knurled double ring, ten bolts, ten wound coils separated
-  by spacers, inner collar, beaded core housing.
-- **Start-up**: each time the screen turns on, the coils light up one by one,
-  then the core flares.
-- **The coils**: one lit per tenth of battery; each flickers, light shows
-  between its windings, a glow runs around the ring.
-- **Two energy tracks** turn in opposite directions, faster while charging.
-- **The core beats** (two close beats) and its rays stretch; while charging,
-  particles spiral into it; below 15 % battery, it flickers.
-- Tilt, network and wake-up are Circuit's; same frame rate as the flux
-  capacitor.
+- **The frame**: a belt of bolted plates, armoured pistons for the buttons,
+  an iris around the front camera, a reinforced housing for the USB port,
+  conduits along the sides.
+- **The plates**: the helmet and its status lights, the collarbones, the
+  chest around the reactor housing, the rib slats, the abs, the vertebral
+  sternum and two pistons; between them, a hexagonal mesh and energy
+  conduits. Each plate hides the ones behind it.
+- **The reactor**: ten-sided housing, capacitors, bolted casing, graduated
+  ring, ten wound coils and their leads, clamps, core.
+- **It beats** (two beats, then a pause): the edges facing it light up, a
+  wave runs through the mesh and along the conduits. One coil per tenth of
+  battery. While charging, the current rises from the port to the reactor,
+  the rings turn and the pistons stretch; with network traffic, pulses come
+  from the corners and the status lights blink fast.
+- Tilt and power-on are Circuit's; same frame rate as the others.
 
 To look at the wallpapers without a phone, `tool/scenes/render.sh` draws them
 as PNG files on the computer (see the script's header); `render.sh --thumbs`
-redraws the flux capacitor and arc reactor thumbnails in Android's picker.
+redraws the wallpapers' thumbnails in Android's picker.
 
 ## Themes
 
@@ -134,8 +136,8 @@ its wallpaper:
 | Fallout | green white, apple green, green | Vault door, Terminal, Geiger counter |
 | Ghost in the Shell | water white, turquoise, sea green | Dive, Ghost, Synchronisation |
 
-The last five wallpapers (`CoreArt` and its subclasses: `QuantumCore`,
-`NeuralCore`, `AtomCore`, `VaultCore`, `GhostCore`) redraw the whole phone
+Iron Man and the last five wallpapers (`CoreArt` and its subclasses:
+`ArcCore`, `QuantumCore`, `NeuralCore`, `AtomCore`, `VaultCore`, `GhostCore`) redraw the whole phone
 (`wholePhone`): the back, the middle and the front, each with its own
 animation (battery, charging, power-on), power-on outlines and pulse
 routes.

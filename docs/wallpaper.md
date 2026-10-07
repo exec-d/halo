@@ -95,30 +95,32 @@ la batterie. Le service est `FluxWallpaperService`, qui étend
 - **Batterie** : à l'écran, le convecteur s'anime à 22 images par seconde
   environ pendant 30 s après l'allumage de l'écran ou un geste sur l'accueil
   (toucher, changement de page), puis ralentit à 5 images par seconde
-  jusqu'au geste suivant ; en charge, toujours à pleine cadence. Le réacteur
-  arc fait de même. Rien ne tourne quand le fond n'est pas visible.
+  jusqu'au geste suivant ; en charge, toujours à pleine cadence. Rien ne tourne quand le fond n'est pas visible.
 
 ## Iron Man
 
-Même principe (`Core.ARC`, `ArcWallpaperService`) : le réacteur arc de Tony
-Stark, centré sur la platine qui remplace la batterie, relié à la carte mère
-par deux câbles. Dix bobines autour du cœur au triangle du nouvel élément.
+Le téléphone porte l'armure (`Core.ARC`, `ArcCore`, `ArcWallpaperService`) :
+il redessine tout le téléphone, comme les cœurs des thèmes (voir plus bas).
 
-- **Le boîtier** : double anneau moleté, dix boulons, dix bobines à spires
-  séparées par des entretoises, collier intérieur, logement perlé du cœur.
-- **L'allumage** : à chaque allumage de l'écran, les bobines s'allument une à
-  une, puis le cœur s'embrase.
-- **Les bobines** : une allumée par dixième de batterie ; chacune scintille,
-  la lumière passe entre ses spires, une lueur fait le tour de l'anneau.
-- **Deux pistes d'énergie** tournent en sens contraires, plus vite en charge.
-- **Le cœur bat** (deux coups rapprochés) et ses rayons s'étirent ; en charge,
-  des particules spiralent vers lui ; sous 15 % de batterie, il vacille.
-- Inclinaison, réseau et allumage sont ceux de Circuit ; même cadence que le
-  convecteur.
+- **Le cadre** : une ceinture de plaques boulonnées, des vérins blindés à la
+  place des boutons, un iris autour de la caméra frontale, un logement
+  renforcé pour le port USB, des gaines le long des flancs.
+- **Les plaques** : le casque et ses voyants, les clavicules, les pectoraux
+  autour du logement du réacteur, les lamelles des côtes, les abdominaux, le
+  sternum en vertèbres et deux vérins ; entre elles, une maille hexagonale et
+  des conduits d'énergie. Chaque plaque masque celles de derrière.
+- **Le réacteur** : logement à dix pans, condensateurs, boîtier vissé,
+  couronne graduée, dix bobines à spires et leurs fils, brides, cœur.
+- **Il bat** (deux coups, puis un temps) : les arêtes tournées vers lui
+  s'éclairent, une onde parcourt la maille et file dans les conduits. Une
+  bobine par dixième de batterie. En charge, le courant monte du port au
+  réacteur, les anneaux tournent et les vérins se détendent ; avec du réseau,
+  les impulsions viennent des coins et les voyants clignotent vite.
+- Inclinaison et allumage sont ceux de Circuit ; même cadence que les autres.
 
 Pour voir les fonds sans téléphone, `tool/scenes/render.sh` les dessine en
 PNG sur l'ordinateur (voir l'en-tête du script) ; `render.sh --thumbs` refait
-les miniatures du convecteur et du réacteur dans le sélecteur d'Android.
+les miniatures des fonds dans le sélecteur d'Android.
 
 ## Thèmes
 
@@ -138,8 +140,8 @@ Fonds). Un thème porte le nom et l'identifiant de son fond :
 | Fallout | blanc vert, vert pomme, vert | Porte de l'abri, Terminal, Compteur Geiger |
 | Ghost in the Shell | blanc d'eau, turquoise, vert d'eau | Plongée, Ghost, Synchronisation |
 
-Les cinq derniers fonds (`CoreArt` et ses sous-classes : `QuantumCore`,
-`NeuralCore`, `AtomCore`, `VaultCore`, `GhostCore`) redessinent tout le
+Iron Man et les cinq derniers fonds (`CoreArt` et ses sous-classes :
+`ArcCore`, `QuantumCore`, `NeuralCore`, `AtomCore`, `VaultCore`, `GhostCore`) redessinent tout le
 téléphone (`wholePhone`) : le fond, le milieu et l'avant, chacun avec son
 animation (batterie, charge, allumage), ses contours d'allumage et ses
 propres trajets d'impulsions.

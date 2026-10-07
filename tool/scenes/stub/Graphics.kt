@@ -227,7 +227,9 @@ class ColorMatrix {
 open class ColorFilter
 class ColorMatrixColorFilter(val matrix: ColorMatrix) : ColorFilter()
 class PorterDuffColorFilter(val color: Int, val mode: PorterDuff.Mode) : ColorFilter()
-object PorterDuff { enum class Mode { SRC_IN, SRC_ATOP, MULTIPLY, SRC_OVER, ADD, SCREEN } }
+object PorterDuff { enum class Mode { SRC_IN, SRC_ATOP, MULTIPLY, SRC_OVER, ADD, SCREEN, CLEAR } }
+open class Xfermode
+class PorterDuffXfermode(val mode: PorterDuff.Mode) : Xfermode()
 
 open class MaskFilter
 open class PathEffect
@@ -240,7 +242,7 @@ class Paint(flags: Int = 0) {
     constructor(other: Paint) : this() {
         color = other.color; style = other.style; strokeWidth = other.strokeWidth; strokeCap = other.strokeCap
         strokeJoin = other.strokeJoin; shader = other.shader; typeface = other.typeface; textAlign = other.textAlign
-        textSize = other.textSize; colorFilter = other.colorFilter; letterSpacing = other.letterSpacing
+        textSize = other.textSize; colorFilter = other.colorFilter; letterSpacing = other.letterSpacing; xfermode = other.xfermode
     }
     enum class Style { FILL, STROKE, FILL_AND_STROKE }
     enum class Cap { BUTT, ROUND, SQUARE }
@@ -253,6 +255,7 @@ class Paint(flags: Int = 0) {
     }
     var isAntiAlias = flags and ANTI_ALIAS_FLAG != 0
     var isFilterBitmap = flags and FILTER_BITMAP_FLAG != 0
+    var xfermode: Xfermode? = null
     var color: Int = Color.BLACK
     var alpha: Int
         get() = Color.alpha(color)
@@ -419,6 +422,18 @@ class Canvas(private val bitmap: Bitmap) {
     }
 
     private fun shape(shape: java.awt.Shape, paint: Paint) {
+        if ((paint.xfermode as? PorterDuffXfermode)?.mode == PorterDuff.Mode.CLEAR) {
+            // Efface : le masque redevient transparent sous la forme.
+            g.composite = AlphaComposite.Clear
+            if (paint.style == Paint.Style.STROKE) {
+                g.stroke = BasicStroke(paint.strokeWidth.coerceAtLeast(1f), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
+                g.draw(shape)
+            } else {
+                g.fill(shape)
+            }
+            g.composite = AlphaComposite.SrcOver
+            return
+        }
         val blur = blurred(paint)
         if (blur > 0f) {
             glow(shape, paint, blur, fill = paint.style != Paint.Style.STROKE)

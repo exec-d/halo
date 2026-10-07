@@ -655,18 +655,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperArcDescription =>
-      'Tony Stark\'s arc reactor, fitted inside the phone in place of the battery.';
+      'The phone wears Iron Man\'s armour: a frame of bolted plates, the helmet, collarbones, chest, ribs and abs, and at the centre Tony Stark\'s arc reactor.';
 
   @override
-  String get wallpaperArcMotion => 'The reactor';
+  String get wallpaperArcMotion => 'The armour';
 
   @override
   String get wallpaperArcMotionText =>
-      'At start-up, the coils light up one by one, then the core flares. One coil per tenth of battery, two spinning energy tracks, a beating core; while charging, particles spiral into it, and below 15 % it flickers.';
-
-  @override
-  String get wallpaperArcBattery =>
-      'The animation stops as soon as the wallpaper is no longer visible; on screen, the reactor runs continuously at a reduced frame rate.';
+      'The reactor beats like a heart: with each beat, the edges facing it light up, a wave runs through the mesh between the plates and races along the conduits. One coil lights up per tenth of battery. While charging, the current rises from the USB port to the reactor, the rings turn and the pistons stretch. At power-on, the armour wakes plate by plate.';
 
   @override
   String get widgetClockTitle => 'Clock';
@@ -955,7 +951,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeFluxDescription => 'The flux capacitor, orange and amber.';
 
   @override
-  String get themeArcDescription => 'The arc reactor, red and gold.';
+  String get themeArcDescription => 'Iron Man\'s armour, red and gold.';
 
   @override
   String get themeApply => 'Apply theme';

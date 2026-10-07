@@ -366,7 +366,7 @@
     <string name="wallpaper_flux_label">Halo · Back to the Future</string>
     <string name="wallpaper_flux_description">The DeLorean\'s flux capacitor, fitted inside the phone.</string>
     <string name="wallpaper_arc_label">Halo · Iron Man</string>
-    <string name="wallpaper_arc_description">Tony Stark\'s arc reactor, fitted inside the phone.</string>
+    <string name="wallpaper_arc_description">The phone wears Iron Man\'s armour, its arc reactor beating at the centre.</string>
     <string name="battery_chart_now">now</string>
     <!-- Themes: sound names in Android settings. -->
     <string name="theme_sound_circuit_ring">Halo · Data bus</string>

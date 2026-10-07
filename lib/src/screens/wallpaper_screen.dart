@@ -68,7 +68,7 @@ const arcWallpaper = HaloWallpaper(
   title: _arcTitle,
   description: _arcDescription,
   features: _arcFeatures,
-  battery: _arcBattery,
+  battery: _coreBattery,
 );
 String _arcTitle(AppLocalizations l) => l.wallpaperArcTitle;
 String _arcDescription(AppLocalizations l) => l.wallpaperArcDescription;
@@ -78,7 +78,6 @@ List<(String, String)> _arcFeatures(AppLocalizations l) => [
   (l.wallpaperCircuitNetworkTitle, l.wallpaperCircuitNetworkText),
   (l.wallpaperCircuitWakeTitle, l.wallpaperCircuitWakeText),
 ];
-String _arcBattery(AppLocalizations l) => l.wallpaperArcBattery;
 
 const quantumWallpaper = HaloWallpaper(
   id: 'quantum',

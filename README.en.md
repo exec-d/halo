@@ -36,8 +36,9 @@ keep that name.*
   in place of the battery; its pulses race to the core, faster while
   charging, and its gauge follows the battery; on the motherboard, the time
   circuits show the time;
-- **Iron Man**: the same phone, with Tony Stark's arc reactor; one coil
-  lights up per tenth of battery and its core breathes;
+- **Iron Man**: the phone wears the armour (bolted frame plates, helmet,
+  chest, ribs, abs) and the arc reactor beats at its centre; one coil lights
+  up per tenth of battery;
 - **Quantum physics**: the whole phone becomes a quantum computer's
   chandelier (looping coaxial lines, gold plate, connector columns, chip in
   the middle);

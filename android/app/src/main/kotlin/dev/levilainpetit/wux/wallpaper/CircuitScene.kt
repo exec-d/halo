@@ -30,8 +30,8 @@ import kotlin.random.Random
  *
  * Variantes ([Core]) : à la place de la batterie et de la bobine, le
  * convecteur temporel de Retour vers le futur (avec, sur les cartes, les
- * afficheurs des circuits temporels, des bobines d'alimentation et Mr. Fusion)
- * ou le réacteur arc d'Iron Man.
+ * afficheurs des circuits temporels, des bobines d'alimentation et Mr. Fusion),
+ * ou un des cœurs des thèmes ([CoreArt]), qui redessinent tout le téléphone.
  */
 class CircuitScene private constructor(
     val width: Int,
@@ -55,39 +55,17 @@ class CircuitScene private constructor(
     val density: Float,
     /** Le convecteur temporel, s'il remplace la batterie. */
     val flux: Flux? = null,
-    /** Le réacteur arc, s'il remplace la batterie. */
-    val arc: Arc? = null,
     /** Les autres cœurs ([CoreArt]) : ils se dessinent et s'animent eux-mêmes. */
     val art: CoreArt? = null,
 ) {
 
     /**
-     * Ce qui occupe la place de la batterie : la batterie, le convecteur, le
-     * réacteur arc, ou un des cœurs des thèmes ([CoreArt]) : réfrigérateur
+     * Ce qui occupe la place de la batterie : la batterie, le convecteur, ou
+     * un des cœurs des thèmes ([CoreArt]) : armure d'Iron Man, réfrigérateur
      * quantique, cerveau de silicium, cuve de réacteur nucléaire, Pip-Boy,
      * cyberespace.
      */
     enum class Core { BATTERY, FLUX, ARC, QUANTUM, NEURAL, ATOM, VAULT, GHOST }
-
-    /**
-     * Ce qui s'anime dans le réacteur : les dix bobines (autant de dixièmes de
-     * batterie), leur angle au centre, et le cœur.
-     */
-    class Arc(
-        val coils: List<Path>,
-        /** Angle de chaque bobine vu de face (degrés, 0 à droite, sens horaire). */
-        val angles: List<Float>,
-        /** L'enroulement de chaque bobine : des segments (x0, y0, x1, y1…), éclairés par-dessous. */
-        val windings: List<FloatArray>,
-        val core: PointF,
-        /** Rayon du boîtier, et du cœur. */
-        val radius: Float,
-        val coreRadius: Float,
-        /** Les deux pistes d'énergie, en arcs, qui tournent en sens contraires. */
-        val outerTrack: Path,
-        val innerTrack: Path,
-        val unit: Float,
-    )
 
     /**
      * Ce qui s'anime dans le convecteur : les lampes de chaque bras, du bout
@@ -165,17 +143,12 @@ class CircuitScene private constructor(
         const val TOROID = 2.6f
         const val FUSION = 4.2f
 
-        /** Les bobines du réacteur arc, et la demi-largeur de chacune (degrés). */
-        const val COILS = 10
-        const val COIL_HALF = 13f
-
         fun build(width: Int, height: Int, density: Float, core: Core = Core.BATTERY): CircuitScene =
             Builder(width, height, density, core).build()
     }
 
     private class Builder(val width: Int, val height: Int, val density: Float, val core: Core) {
         val flux = core == Core.FLUX
-        val arc = core == Core.ARC
         val u = width / 100f
         /** Hauteur de l'écran en unités (≈ 222 sur un téléphone 20:9). */
         val h = height / u
@@ -228,10 +201,6 @@ class CircuitScene private constructor(
         val toroids = listOf(150f, 300f, 450f).map { x -> PointF(q(x, 0f).x, board.bottom - 4.5f * u) }
         val fusion = p(22f, bottomTop + 8f)
 
-        // Réacteur arc : centré sur la batterie.
-        val reactorCenter = PointF(battery.centerX(), battery.centerY())
-        val reactorRadius = minOf(battery.width(), battery.height()) / 2f - 3f * u
-
         // Les autres cœurs, en coordonnées de face.
         val art = CoreArt.of(
             core,
@@ -266,7 +235,6 @@ class CircuitScene private constructor(
                     when (core) {
                         Core.BATTERY -> battery(it)
                         Core.FLUX -> capacitor(it)
-                        Core.ARC -> reactor(it)
                         // Le plan est dessiné vu de dos : on revient à la face.
                         else -> art?.let { a -> front(it) { c -> a.drawStatic(c, line, thin, fill) } }
                     }
@@ -309,29 +277,6 @@ class CircuitScene private constructor(
                 } else {
                     null
                 },
-                arc = if (arc) {
-                    val center = PointF(width - reactorCenter.x, reactorCenter.y)
-                    fun track(radius: Float, count: Int, sweep: Float) = Path().apply {
-                        val box = RectF(center.x - radius, center.y - radius, center.x + radius, center.y + radius)
-                        for (k in 0 until count) addArc(box, k * 360f / count, sweep)
-                    }
-                    Arc(
-                        coils = coils().map { Path().apply { addPoly(it) }.apply { transform(mirror) } },
-                        // Vu de face, le sens des angles s'inverse.
-                        angles = (0 until COILS).map { 180f - coilAngle(it) },
-                        windings = (0 until COILS).map { i ->
-                            windings(i).flatMap { (a, b) -> listOf(width - a.x, a.y, width - b.x, b.y) }.toFloatArray()
-                        },
-                        core = center,
-                        radius = reactorRadius,
-                        coreRadius = reactorRadius * 0.3f,
-                        outerTrack = track(reactorRadius * 0.885f, 6, 34f),
-                        innerTrack = track(reactorRadius * 0.47f, 8, 22f),
-                        unit = u,
-                    )
-                } else {
-                    null
-                },
                 art = art,
             )
         }
@@ -369,10 +314,6 @@ class CircuitScene private constructor(
             art?.outlines()?.forEach {
                 // Vus de face : retournés comme le reste, qui l'est à la fin.
                 shapes += Path(it).apply { transform(Matrix().apply { setScale(-1f, 1f, width / 2f, 0f) }) } to BATTERY
-            }
-            if (arc) {
-                coils().forEach { shapes += Path().apply { addPoly(it) } to BATTERY }
-                shapes += Path().apply { addCircle(reactorCenter.x, reactorCenter.y, reactorRadius, Path.Direction.CW) } to BATTERY
             }
             rect(pill, 8.5f)
             for ((center, radius) in listOf(camera1 to camera1Radius, camera2 to camera2Radius)) {
@@ -638,135 +579,6 @@ class CircuitScene private constructor(
                 val sn = kotlin.math.sin(a).toFloat()
                 canvas.drawLine(fusion.x + c * r * 0.62f, fusion.y + sn * r * 0.62f, fusion.x + c * r * 0.95f, fusion.y + sn * r * 0.95f, thin)
             }
-        }
-
-        // ——— Plan du milieu, variante : le réacteur arc ———
-
-        /** L'angle (degrés, vu de dos) de la bobine [i], la première en haut. */
-        fun coilAngle(i: Int) = -90f + i * 360f / COILS
-
-        fun around(radius: Float, degrees: Float): PointF {
-            val a = Math.toRadians(degrees.toDouble())
-            return PointF(reactorCenter.x + kotlin.math.cos(a).toFloat() * radius, reactorCenter.y + kotlin.math.sin(a).toFloat() * radius)
-        }
-
-        /** Chaque bobine : un secteur d'anneau entre 0,58 et 0,82 du rayon. */
-        fun coils(): List<List<PointF>> = (0 until COILS).map { i ->
-            val a = coilAngle(i)
-            val half = COIL_HALF
-            val outer = (0..8).map { k -> around(reactorRadius * 0.82f, a - half + 2 * half * k / 8f) }
-            val inner = (0..8).map { k -> around(reactorRadius * 0.58f, a + half - 2 * half * k / 8f) }
-            outer + inner
-        }
-
-        /** Les spires d'une bobine : des traits en travers de l'anneau. */
-        fun windings(i: Int): List<Pair<PointF, PointF>> {
-            val a = coilAngle(i)
-            return (0..10).map { k ->
-                val o = a - COIL_HALF + 1.5f + (2 * COIL_HALF - 3f) * k / 10f
-                around(reactorRadius * 0.605f, o) to around(reactorRadius * 0.795f, o)
-            }
-        }
-
-        /** Un boulon à tête hexagonale. */
-        private fun bolt(canvas: Canvas, at: PointF, radius: Float) {
-            canvas.drawCircle(at.x, at.y, radius, thin)
-            val hex = (0 until 6).map { k ->
-                val t = Math.toRadians(k * 60.0 + 30)
-                PointF(at.x + kotlin.math.cos(t).toFloat() * radius * 0.62f, at.y + kotlin.math.sin(t).toFloat() * radius * 0.62f)
-            }
-            canvas.drawPath(Path().apply { addPoly(hex) }, thin)
-        }
-
-        private fun reactor(canvas: Canvas) {
-            val rr = reactorRadius
-            val c = reactorCenter
-            val step = 360f / COILS
-            // La platine, ses vis, et les deux câbles vers la carte mère.
-            canvas.drawRoundRect(battery, 2f * u, 2f * u, line)
-            canvas.drawRoundRect(RectF(battery).apply { inset(1.4f * u, 1.4f * u) }, 1.4f * u, 1.4f * u, thin)
-            listOf(
-                PointF(battery.left + 3.5f * u, battery.top + 3.5f * u), PointF(battery.right - 3.5f * u, battery.top + 3.5f * u),
-                PointF(battery.left + 3.5f * u, battery.bottom - 3.5f * u), PointF(battery.right - 3.5f * u, battery.bottom - 3.5f * u),
-            ).forEach { screw(canvas, it) }
-            for (dx in floatArrayOf(-14f, 14f)) {
-                val x = c.x + dx * u
-                canvas.drawRect(RectF(x - 3f * u, battery.top - 2f * u, x + 3f * u, battery.top), thin)
-                canvas.drawLine(x - 1.6f * u, battery.top - 2f * u, x - 1.6f * u, board.bottom, thin)
-                canvas.drawLine(x + 1.6f * u, battery.top - 2f * u, x + 1.6f * u, board.bottom, thin)
-                var y = battery.top - 3.4f * u
-                while (y > board.bottom + 0.6f * u) {
-                    canvas.drawLine(x - 1.6f * u, y, x + 1.6f * u, y, thin)
-                    y -= 1.4f * u
-                }
-                // Le câble rejoint le boîtier par un connecteur.
-                val angle = if (dx < 0) -118f else -62f
-                val entry = around(rr, angle)
-                canvas.drawLine(x, battery.top, entry.x, entry.y, thin)
-                val plug = around(rr * 1.03f, angle)
-                canvas.drawCircle(plug.x, plug.y, 1.3f * u, line)
-                canvas.drawCircle(plug.x, plug.y, 0.6f * u, thin)
-            }
-            // Des fils plus fins, des coins de la platine vers le boîtier.
-            for (angle in floatArrayOf(40f, 140f)) {
-                val to = around(rr, angle)
-                val from = PointF(if (angle < 90f) battery.right - 5f * u else battery.left + 5f * u, battery.bottom - 6f * u)
-                canvas.drawLine(from.x, from.y, from.x, to.y + (from.y - to.y) * 0.4f, thin)
-                canvas.drawLine(from.x, to.y + (from.y - to.y) * 0.4f, to.x, to.y, thin)
-            }
-
-            // Le boîtier : deux anneaux, un moletage, dix boulons entre les bobines.
-            canvas.drawCircle(c.x, c.y, rr, line)
-            canvas.drawCircle(c.x, c.y, rr * 0.955f, thin)
-            for (k in 0 until 90) {
-                val angle = k * 4f
-                // Pas de moletage sous les boulons.
-                val offset = ((angle - coilAngle(0) - step / 2) % step + step) % step
-                if (offset < 6f || offset > step - 6f) continue
-                val p0 = around(rr * 0.91f, angle)
-                val p1 = around(rr * 0.945f, angle)
-                canvas.drawLine(p0.x, p0.y, p1.x, p1.y, thin)
-            }
-            for (i in 0 until COILS) bolt(canvas, around(rr * 0.93f, coilAngle(i) + step / 2), 1.1f * u)
-            canvas.drawCircle(c.x, c.y, rr * 0.86f, line)
-
-            // Les dix bobines, leurs spires, et les entretoises qui les séparent.
-            coils().forEach { canvas.drawPath(Path().apply { addPoly(it) }, line) }
-            for (i in 0 until COILS) {
-                windings(i).forEach { (a, b) -> canvas.drawLine(a.x, a.y, b.x, b.y, thin) }
-                val between = coilAngle(i) + step / 2
-                val spacer = listOf(
-                    around(rr * 0.57f, between - 2.2f), around(rr * 0.845f, between - 1.6f),
-                    around(rr * 0.845f, between + 1.6f), around(rr * 0.57f, between + 2.2f),
-                )
-                canvas.drawPath(Path().apply { addPoly(spacer) }, thin)
-                around(rr * 0.71f, between).let { canvas.drawCircle(it.x, it.y, 0.45f * u, thin) }
-            }
-
-            // Le collier intérieur, ses encoches face aux bobines.
-            canvas.drawCircle(c.x, c.y, rr * 0.545f, line)
-            canvas.drawCircle(c.x, c.y, rr * 0.5f, thin)
-            for (i in 0 until COILS) {
-                val a = coilAngle(i)
-                for (o in floatArrayOf(-4f, 4f)) {
-                    val p0 = around(rr * 0.5f, a + o)
-                    val p1 = around(rr * 0.545f, a + o)
-                    canvas.drawLine(p0.x, p0.y, p1.x, p1.y, thin)
-                }
-            }
-
-            // Le cœur : son logement perlé, le triangle du nouvel élément, le noyau.
-            canvas.drawCircle(c.x, c.y, rr * 0.44f, line)
-            for (k in 0 until 24) around(rr * 0.405f, k * 15f).let { canvas.drawCircle(it.x, it.y, 0.3f * u, thin) }
-            val tri = listOf(-90f, 30f, 150f).map { around(rr * 0.33f, it) }
-            canvas.drawPath(Path().apply { addPoly(tri) }, line)
-            tri.forEachIndexed { k, v ->
-                val to = around(rr * 0.44f, -90f + k * 120f)
-                canvas.drawLine(v.x, v.y, to.x, to.y, thin)
-            }
-            canvas.drawPath(Path().apply { addPoly(listOf(90f, 210f, 330f).map { around(rr * 0.19f, it) }) }, thin)
-            canvas.drawCircle(c.x, c.y, rr * 0.14f, thin)
-            canvas.drawCircle(c.x, c.y, rr * 0.07f, thin)
         }
 
         // ——— Plan avant : cartes, puces, pistes ———

@@ -128,6 +128,7 @@ abstract class CoreArt(protected val kit: CoreKit) {
     companion object {
         /** Le cœur de [core], ou `null` pour ceux que [CircuitScene] dessine lui-même. */
         fun of(core: CircuitScene.Core, kit: CoreKit): CoreArt? = when (core) {
+            CircuitScene.Core.ARC -> ArcCore(kit)
             CircuitScene.Core.QUANTUM -> QuantumCore(kit)
             CircuitScene.Core.NEURAL -> NeuralCore(kit)
             CircuitScene.Core.ATOM -> AtomCore(kit)

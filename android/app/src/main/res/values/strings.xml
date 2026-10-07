@@ -370,7 +370,7 @@
     <string name="wallpaper_flux_label">Halo · Retour vers le futur</string>
     <string name="wallpaper_flux_description">Le convecteur temporel de la DeLorean, installé dans le téléphone.</string>
     <string name="wallpaper_arc_label">Halo · Iron Man</string>
-    <string name="wallpaper_arc_description">Le réacteur arc de Tony Stark, installé dans le téléphone.</string>
+    <string name="wallpaper_arc_description">Le téléphone porte l\'armure d\'Iron Man, et son réacteur arc bat au centre.</string>
     <string name="battery_chart_now">maint.</string>
     <string name="wallpaper_author" translatable="false">Halo</string>
     <!-- Thèmes : le nom des sons dans les réglages d'Android. -->

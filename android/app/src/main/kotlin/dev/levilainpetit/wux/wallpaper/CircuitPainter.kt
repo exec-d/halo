@@ -140,7 +140,6 @@ class CircuitPainter(private val scene: CircuitScene) {
                 }
                 CircuitScene.BATTERY -> when {
                     scene.flux != null -> flux(canvas, scene.flux, state, palette)
-                    scene.arc != null -> arc(canvas, scene.arc, state, palette)
                     scene.art != null -> {
                         ink.palette = palette
                         scene.art.drawLive(canvas, state, ink)
@@ -286,122 +285,6 @@ class CircuitPainter(private val scene: CircuitScene) {
                 x += gap
             }
         }
-    }
-
-    /**
-     * Le réacteur arc, vivant :
-     * - à l'allumage de l'écran, les bobines s'allument une à une, puis le
-     *   cœur s'embrase ;
-     * - une bobine allumée par dixième de batterie ; chacune scintille à son
-     *   rythme, la lumière passe entre ses spires, et une lueur fait le tour ;
-     * - deux pistes d'énergie tournent en sens contraires ;
-     * - le cœur bat (deux coups rapprochés), plus vite en charge, et ses
-     *   rayons s'étirent à chaque battement ;
-     * - en charge, des particules spiralent des câbles vers le cœur ;
-     * - batterie faible : le cœur devient instable et vacille.
-     */
-    private fun arc(canvas: Canvas, arc: CircuitScene.Arc, state: FrameState, palette: CircuitPalette) {
-        val strength = 0.4f + 0.6f * state.intensity
-        val seconds = state.timeMillis / 1000f
-        val battery = state.batteryLevel.coerceIn(0f, 1f)
-        val lit = kotlin.math.ceil(battery * CircuitScene.COILS).toInt().coerceIn(1, CircuitScene.COILS)
-        val ignition = state.ignition.coerceIn(0f, 1f)
-        val cx = arc.core.x
-        val cy = arc.core.y
-
-        // Une lueur diffuse derrière tout le boîtier.
-        halo(canvas, arc.core, arc.radius * 1.15f, (45 * strength * ignition).toInt(), palette)
-
-        // Les pistes d'énergie.
-        val spin = seconds * (if (state.charging) 90f else 28f)
-        for ((track, angle) in listOf(arc.outerTrack to spin, arc.innerTrack to -spin * 1.6f)) {
-            canvas.save()
-            canvas.rotate(angle % 360f, cx, cy)
-            stroke.color = palette.glow
-            stroke.alpha = (55 * strength * ignition).toInt()
-            stroke.strokeWidth = 5f * density
-            canvas.drawPath(track, stroke)
-            stroke.color = palette.core
-            stroke.alpha = (170 * strength * ignition).toInt()
-            stroke.strokeWidth = 1.3f * density
-            canvas.drawPath(track, stroke)
-            canvas.restore()
-        }
-
-        // Les bobines.
-        val sweep = (seconds * (if (state.charging) 220f else 80f)) % 360f
-        arc.coils.forEachIndexed { i, coil ->
-            // À l'allumage, la bobine i s'allume à son tour.
-            val on = ((ignition - 0.08f * i) / 0.18f).coerceIn(0f, 1f)
-            val angle = ((arc.angles[i] % 360f) + 360f) % 360f
-            val distance = abs(((angle - sweep + 540f) % 360f) - 180f)
-            val shine = max(0f, 1f - distance / 60f)
-            val flicker = 0.86f + 0.14f * sin(seconds * 7.3f + i * 1.7f) * sin(seconds * 3.1f + i * 0.9f)
-            val a = on * strength * if (i < lit) (0.45f + 0.55f * shine) * flicker else 0.05f + 0.1f * shine
-            fill.color = palette.glow
-            fill.alpha = (130 * a).toInt()
-            canvas.drawPath(coil, fill)
-            // La lumière entre les spires.
-            stroke.color = palette.core
-            stroke.alpha = (235 * a).toInt()
-            stroke.strokeWidth = 0.9f * density
-            canvas.drawLines(arc.windings[i], stroke)
-            stroke.alpha = (180 * a).toInt()
-            stroke.strokeWidth = 1.3f * density
-            canvas.drawPath(coil, stroke)
-        }
-
-        // En charge : des particules qui spiralent vers le cœur.
-        if (state.charging) {
-            for (k in 0 until 10) {
-                val p = ((seconds * 0.45f + k / 10f) % 1f)
-                val r = arc.radius * (0.95f - 0.72f * p)
-                val t = (k * 36f + p * 300f) * PI.toFloat() / 180f
-                val x = cx + kotlin.math.cos(t) * r
-                val y = cy + kotlin.math.sin(t) * r
-                fill.color = palette.core
-                fill.alpha = (230 * sin(p * PI.toFloat()) * strength).toInt()
-                canvas.drawCircle(x, y, 0.45f * arc.unit, fill)
-            }
-        }
-
-        // Le cœur bat : deux coups rapprochés par période.
-        val period = if (state.charging) 0.8f else 1.15f
-        val p = (seconds / period) % 1f
-        val second = if (p > 0.22f) 0.6f * kotlin.math.exp(-(p - 0.22f) * 10f) else 0f
-        val beat = (kotlin.math.exp(-p * 10f) + second).coerceAtMost(1f)
-        var level = (0.5f + 0.5f * beat) * max(0f, (ignition - 0.7f) / 0.3f)
-        // L'allumage finit par un éclat.
-        if (ignition in 0.75f..0.999f) level = max(level, 1f - (ignition - 0.75f) * 3f)
-        // Batterie faible : le cœur vacille.
-        if (battery < 0.15f) {
-            val tick = (seconds * 14f).toInt()
-            val noise = ((tick * 1103515245 + 12345) ushr 16 and 0xFF) / 255f
-            level *= 0.35f + 0.65f * noise
-        }
-        halo(canvas, arc.core, arc.coreRadius * (2.1f + 0.9f * beat), (215 * level * strength).toInt(), palette)
-        // Les rayons, qui s'étirent au battement.
-        stroke.color = palette.core
-        stroke.strokeWidth = 1.1f * density
-        stroke.alpha = (140 * level * strength).toInt()
-        val turn = seconds * 12f * PI.toFloat() / 180f
-        for (k in 0 until 6) {
-            val t = turn + k * PI.toFloat() / 3f
-            val r0 = arc.coreRadius * 0.62f
-            val r1 = arc.coreRadius * (1.25f + 0.55f * beat)
-            canvas.drawLine(
-                cx + kotlin.math.cos(t) * r0, cy + kotlin.math.sin(t) * r0,
-                cx + kotlin.math.cos(t) * r1, cy + kotlin.math.sin(t) * r1,
-                stroke,
-            )
-        }
-        // Le noyau : un petit disque vif, et le triangle éclairé autour.
-        fill.color = palette.core
-        fill.alpha = (255 * level * strength).toInt()
-        canvas.drawCircle(cx, cy, arc.coreRadius * (0.26f + 0.05f * beat), fill)
-        stroke.alpha = (220 * level * strength).toInt()
-        stroke.strokeWidth = 1.4f * density
-        canvas.drawCircle(cx, cy, arc.coreRadius * 0.47f, stroke)
     }
 
     /** Un halo rond, du cœur vers rien. */

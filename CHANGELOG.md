@@ -9,6 +9,8 @@ mineure peut changer des réglages.
 
 ### Nouveau
 
+- **Iron Man**, refait : le téléphone porte l'armure, avec le réacteur arc
+  qui bat en son centre.
 - **Cinq thèmes de plus**, chacun avec son fond animé, sa palette et ses
   trois sons : Physique quantique (tout le téléphone devient le lustre
   d'un ordinateur quantique), Intelligence artificielle (un cerveau de silicium à la place de la

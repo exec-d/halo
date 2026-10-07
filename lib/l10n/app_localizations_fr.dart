@@ -658,18 +658,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get wallpaperArcDescription =>
-      'Le réacteur arc de Tony Stark, installé dans le téléphone à la place de la batterie.';
+      'Le téléphone porte l\'armure d\'Iron Man : un cadre en plaques boulonnées, le casque, les clavicules, les pectoraux, les côtes et les abdominaux, et au centre le réacteur arc de Tony Stark.';
 
   @override
-  String get wallpaperArcMotion => 'Le réacteur';
+  String get wallpaperArcMotion => 'L\'armure';
 
   @override
   String get wallpaperArcMotionText =>
-      'À l\'allumage, les bobines s\'allument une à une puis le cœur s\'embrase. Une bobine par dixième de batterie, deux pistes d\'énergie qui tournent, un cœur qui bat ; en charge, des particules spiralent vers lui, et sous 15 % il vacille.';
-
-  @override
-  String get wallpaperArcBattery =>
-      'L\'animation s\'arrête dès que le fond n\'est plus visible ; à l\'écran, le réacteur tourne sans cesse, à cadence réduite.';
+      'Le réacteur bat comme un cœur : à chaque battement, les arêtes tournées vers lui s\'éclairent, une onde parcourt la maille entre les plaques et file dans les conduits. Une bobine s\'allume par dixième de batterie. En charge, le courant monte du port USB jusqu\'au réacteur, les anneaux tournent et les vérins se détendent. À l\'allumage, l\'armure s\'éveille plaque après plaque.';
 
   @override
   String get widgetClockTitle => 'Horloge';
@@ -960,7 +956,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get themeFluxDescription => 'Le convecteur temporel, orange et ambre.';
 
   @override
-  String get themeArcDescription => 'Le réacteur arc, rouge et or.';
+  String get themeArcDescription => 'L\'armure d\'Iron Man, rouge et or.';
 
   @override
   String get themeApply => 'Appliquer le thème';

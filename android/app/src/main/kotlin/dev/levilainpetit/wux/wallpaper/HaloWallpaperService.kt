@@ -423,9 +423,8 @@ class FluxWallpaperService : HaloWallpaperService() {
 }
 
 /**
- * Fond d'écran animé « Iron Man » : l'intérieur de téléphone de Circuit, avec
- * le réacteur arc de Tony Stark à la place de la batterie. Ses bobines
- * s'allument selon le niveau de batterie, son cœur respire.
+ * Fond d'écran animé « Iron Man » : le téléphone porte l'armure ([ArcCore]),
+ * et le réacteur arc bat en son centre ; ses bobines suivent la batterie.
  */
 class ArcWallpaperService : HaloWallpaperService() {
     override val core = CircuitScene.Core.ARC
