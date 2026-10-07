@@ -1179,17 +1179,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperAtomDescription =>
-      'A nuclear reactor core, seen from above, fitted inside the phone in place of the battery.';
+      'The whole phone becomes a pressurised water reactor vessel, in cross-section: the control rod drive mechanisms on the head, the flange and its studs, the core and its eleven fuel assemblies, the inlet and outlet nozzles.';
 
   @override
-  String get wallpaperAtomMotion => 'The core';
+  String get wallpaperAtomMotion => 'The reactor';
 
   @override
   String get wallpaperAtomMotionText =>
-      'The 37 fuel assemblies light up from the centre outwards with the battery; neutrons pass from one to the next, the chain reaction, livelier while charging; the vessel\'s glow breathes.';
+      'The control rods come out of the core as far as the battery allows, and the core glows all the brighter; each mechanism\'s indicator lights one segment per tenth. Fissions spark in the fuel rods and set off others. The water comes in cold, runs down the vessel wall, crosses the core, brightening as it heats, and leaves hot. While charging, the mechanisms\' coils light up in turn and the flow speeds up.';
 
   @override
-  String get themeAtomDescription => 'A reactor core, yellow.';
+  String get themeAtomDescription => 'A reactor vessel, yellow.';
 
   @override
   String get themeSoundAtomRing => 'Chain reaction';

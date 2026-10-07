@@ -389,7 +389,7 @@
     <string name="theme_sound_neural_notification">Halo · Token</string>
     <string name="theme_sound_neural_alarm">Halo · Awakening</string>
     <string name="wallpaper_atom_label">Halo · Atomic energy</string>
-    <string name="wallpaper_atom_description">A nuclear reactor core, seen from above, inside the phone.</string>
+    <string name="wallpaper_atom_description">The whole phone becomes a nuclear reactor vessel, in cross-section.</string>
     <string name="theme_sound_atom_ring">Halo · Chain reaction</string>
     <string name="theme_sound_atom_notification">Halo · Neutron</string>
     <string name="theme_sound_atom_alarm">Halo · Criticality</string>

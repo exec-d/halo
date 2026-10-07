@@ -394,7 +394,7 @@
     <string name="theme_sound_neural_notification">Halo · Jeton</string>
     <string name="theme_sound_neural_alarm">Halo · Éveil</string>
     <string name="wallpaper_atom_label">Halo · Énergie atomique</string>
-    <string name="wallpaper_atom_description">Le cœur d\'un réacteur nucléaire, vu de dessus, dans le téléphone.</string>
+    <string name="wallpaper_atom_description">Tout le téléphone devient la cuve d\'un réacteur nucléaire, en coupe.</string>
     <string name="theme_sound_atom_ring">Halo · Réaction en chaîne</string>
     <string name="theme_sound_atom_notification">Halo · Neutron</string>
     <string name="theme_sound_atom_alarm">Halo · Criticité</string>

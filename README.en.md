@@ -44,10 +44,12 @@ keep that name.*
 - **Artificial intelligence**: Circuit's phone, detailed down to the vias,
   with an AI accelerator in place of the battery (four memory stacks, a brain
   etched in traces) running an inference;
-- **Atomic energy**, **Fallout** and **Ghost in the Shell**: Circuit's phone,
-  with in place of the battery a nuclear reactor core, a shelter door and its
-  Geiger counter, or a cyberbrain and its code rain; each follows the battery
-  and speeds up while charging.
+- **Atomic energy**: the whole phone becomes a pressurised water reactor
+  vessel, in cross-section (rod drive mechanisms, head, core and its fuel
+  assemblies, water loop); the rods come out of the core with the battery;
+- **Fallout** and **Ghost in the Shell**: Circuit's phone, with in place of
+  the battery a shelter door and its Geiger counter, or a cyberbrain and its
+  code rain; each follows the battery and speeds up while charging.
 
 All take the phone's colors, like the widgets.
 

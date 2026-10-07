@@ -2116,25 +2116,25 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperAtomDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Le cœur d\'un réacteur nucléaire, vu de dessus, installé dans le téléphone à la place de la batterie.'**
+  /// **'Tout le téléphone devient la cuve d\'un réacteur à eau pressurisée, en coupe : les mécanismes des barres de commande sur le couvercle, la bride et ses goujons, le cœur et ses onze assemblages de combustible, les tubulures d\'entrée et de sortie.'**
   String get wallpaperAtomDescription;
 
   /// No description provided for @wallpaperAtomMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Le cœur'**
+  /// **'Le réacteur'**
   String get wallpaperAtomMotion;
 
   /// No description provided for @wallpaperAtomMotionText.
   ///
   /// In fr, this message translates to:
-  /// **'Les 37 assemblages s\'allument du centre vers le bord selon la batterie ; des neutrons passent de l\'un à l\'autre, la réaction en chaîne, plus vive en charge ; la lueur de la cuve respire.'**
+  /// **'Les barres de commande sortent du cœur d\'autant que de batterie, et le cœur brille d\'autant plus ; l\'indicateur de chaque mécanisme allume un segment par dixième. Des fissions s\'allument dans les crayons et en allument d\'autres. L\'eau entre froide, descend le long de la cuve, traverse le cœur en s\'éclairant et ressort chaude. En charge, les bobines des mécanismes s\'allument tour à tour et le débit s\'accélère.'**
   String get wallpaperAtomMotionText;
 
   /// No description provided for @themeAtomDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Le cœur d\'un réacteur, jaune.'**
+  /// **'La cuve d\'un réacteur, jaune.'**
   String get themeAtomDescription;
 
   /// No description provided for @themeSoundAtomRing.

@@ -142,8 +142,11 @@ Les cinq derniers fonds changent le cœur du téléphone de Circuit
 (`CoreArt` et ses sous-classes : `QuantumCore`, `NeuralCore`, `AtomCore`,
 `VaultCore`, `GhostCore`) : chacun se dessine une fois dans le plan de la
 batterie et s'anime lui-même (batterie, charge, allumage). Physique
-quantique et Intelligence artificielle vont plus loin (`wholePhone`) : ils
-redessinent tout le téléphone, chacun avec ses propres trajets. Le premier
+quantique, Intelligence artificielle et Énergie atomique vont plus loin
+(`wholePhone`) : ils redessinent tout le téléphone, chacun avec ses propres
+trajets. Énergie atomique dessine devant la cuve et ses mécanismes, au
+milieu les équipements internes et le cœur ; les impulsions du réseau
+suivent le circuit d'eau. Le premier
 dessine le fond (la forêt de câbles), le milieu (plateau, colonnes, support
 de la puce) et l'avant (les câbles, où courent les impulsions du réseau). Le
 second dessine au milieu l'accélérateur et son cerveau, et devant la carte

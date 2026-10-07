@@ -137,9 +137,11 @@ its wallpaper:
 The last five wallpapers change the core of Circuit's phone (`CoreArt` and
 its subclasses: `QuantumCore`, `NeuralCore`, `AtomCore`, `VaultCore`,
 `GhostCore`): each draws itself once in the battery layer and animates
-itself (battery, charging, power-on). Quantum physics and Artificial
-intelligence go further (`wholePhone`): they redraw the whole phone, each
-with its own routes. The first draws the back (the forest of cables), the
+itself (battery, charging, power-on). Quantum physics, Artificial
+intelligence and Atomic energy go further (`wholePhone`): they redraw the
+whole phone, each with its own routes. Atomic energy draws the vessel and its
+mechanisms in front, the internals and the core in the middle; the network
+pulses follow the water loop. The first draws the back (the forest of cables), the
 middle (plate, columns, chip holder) and the front (the cables, where the
 network pulses run). The second draws the accelerator and its brain in the
 middle, and the detailed motherboard and bottom board in front; the network
