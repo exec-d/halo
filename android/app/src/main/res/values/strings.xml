@@ -404,7 +404,7 @@
     <string name="theme_sound_vault_notification">Halo · Terminal</string>
     <string name="theme_sound_vault_alarm">Halo · Compteur Geiger</string>
     <string name="wallpaper_ghost_label">Halo · Ghost in the Shell</string>
-    <string name="wallpaper_ghost_description">Un cyber-cerveau dans sa coque, branché dans le téléphone.</string>
+    <string name="wallpaper_ghost_description">Tout le téléphone devient le cyberespace du film : la plongée dans le réseau.</string>
     <string name="theme_sound_ghost_ring">Halo · Plongée</string>
     <string name="theme_sound_ghost_notification">Halo · Ghost</string>
     <string name="theme_sound_ghost_alarm">Halo · Synchronisation</string>

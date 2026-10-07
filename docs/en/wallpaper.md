@@ -134,11 +134,11 @@ its wallpaper:
 | Fallout | green white, apple green, green | Vault door, Terminal, Geiger counter |
 | Ghost in the Shell | water white, turquoise, sea green | Dive, Ghost, Synchronisation |
 
-The last five wallpapers change the core of Circuit's phone (`CoreArt` and
-its subclasses: `QuantumCore`, `NeuralCore`, `AtomCore`, `VaultCore`,
-`GhostCore`): each draws itself once in the battery layer and animates
-itself (battery, charging, power-on). Four go further (`wholePhone`): they
-redraw the whole phone, each with its own pulse routes.
+The last five wallpapers (`CoreArt` and its subclasses: `QuantumCore`,
+`NeuralCore`, `AtomCore`, `VaultCore`, `GhostCore`) redraw the whole phone
+(`wholePhone`): the back, the middle and the front, each with its own
+animation (battery, charging, power-on), power-on outlines and pulse
+routes.
 
 - Quantum physics: the forest of cables at the back, the plate, columns and
   chip holder in the middle, the cables in front, where the network pulses
@@ -148,6 +148,9 @@ redraw the whole phone, each with its own pulse routes.
   edge bundle.
 - Atomic energy: the vessel and its mechanisms in front, the internals and
   the core in the middle; the network follows the water loop.
+- Ghost in the Shell: the tunnel's rays and the cascading glyphs at the
+  back, the network's layers and their nodes in the middle, the reticle in
+  front; the network dives from the corners to the vanishing point.
 - Fallout: the Pip-Boy's casing in front, the phosphor glow at the back; the
   screen cycles through the game's five tabs (`VaultBoy` holds the Vault Boy
   mask); the network follows the casing's seams.

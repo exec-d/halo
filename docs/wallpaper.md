@@ -138,11 +138,10 @@ Fonds). Un thème porte le nom et l'identifiant de son fond :
 | Fallout | blanc vert, vert pomme, vert | Porte de l'abri, Terminal, Compteur Geiger |
 | Ghost in the Shell | blanc d'eau, turquoise, vert d'eau | Plongée, Ghost, Synchronisation |
 
-Les cinq derniers fonds changent le cœur du téléphone de Circuit
-(`CoreArt` et ses sous-classes : `QuantumCore`, `NeuralCore`, `AtomCore`,
-`VaultCore`, `GhostCore`) : chacun se dessine une fois dans le plan de la
-batterie et s'anime lui-même (batterie, charge, allumage). Quatre vont plus
-loin (`wholePhone`) : ils redessinent tout le téléphone, chacun avec ses
+Les cinq derniers fonds (`CoreArt` et ses sous-classes : `QuantumCore`,
+`NeuralCore`, `AtomCore`, `VaultCore`, `GhostCore`) redessinent tout le
+téléphone (`wholePhone`) : le fond, le milieu et l'avant, chacun avec son
+animation (batterie, charge, allumage), ses contours d'allumage et ses
 propres trajets d'impulsions.
 
 - Physique quantique : au fond la forêt de câbles, au milieu le plateau, les
@@ -153,6 +152,9 @@ propres trajets d'impulsions.
   faisceau du bord.
 - Énergie atomique : devant la cuve et ses mécanismes, au milieu les
   équipements internes et le cœur ; le réseau suit le circuit d'eau.
+- Ghost in the Shell : au fond les rayons du tunnel et les cascades de
+  signes, au milieu les couches du réseau et leurs nœuds, devant le
+  réticule ; le réseau plonge des coins vers le point de fuite.
 - Fallout : devant le boîtier du Pip-Boy, au fond la lueur du phosphore ;
   l'écran fait défiler les cinq onglets du jeu (`VaultBoy` porte le masque du
   Vault Boy) ; le réseau suit les jointures du boîtier.

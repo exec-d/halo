@@ -50,9 +50,9 @@ keep that name.*
 - **Fallout**: the whole phone becomes the Pip-Boy; its CRT screen cycles
   through STAT (with the Vault Boy), INV, DATA, MAP and RADIO, and HEALTH
   follows the battery;
-- **Ghost in the Shell**: Circuit's phone, with in place of the battery a
-  cyberbrain and its code rain; it follows the battery and speeds up while
-  charging.
+- **Ghost in the Shell**: the whole phone becomes the 1995 film's
+  cyberspace; you dive through the network's layers among cascading digits,
+  and the reticle counts the battery.
 
 All take the phone's colors, like the widgets.
 

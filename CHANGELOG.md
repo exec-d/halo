@@ -14,8 +14,8 @@ mineure peut changer des réglages.
   d'un ordinateur quantique), Intelligence artificielle (un cerveau de silicium à la place de la
   batterie, sur la carte détaillée de Circuit),
   Énergie atomique (tout le téléphone devient la cuve d'un réacteur), Fallout (tout le téléphone devient le
-  Pip-Boy) et Ghost in the Shell (un cyber-cerveau et sa pluie de
-  code).
+  Pip-Boy) et Ghost in the Shell (tout le téléphone devient le cyberespace du
+  film).
 - **Thèmes** : Circuit, Retour vers le futur et Iron Man. Un toucher applique
   le fond animé dans sa palette ; le fond annonce ces couleurs à Android, qui
   en tire celles du système et des widgets ; trois sons originaux,

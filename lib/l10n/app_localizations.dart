@@ -2248,25 +2248,25 @@ abstract class AppLocalizations {
   /// No description provided for @wallpaperGhostDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Un cyber-cerveau dans sa coque, branché dans le téléphone à la place de la batterie.'**
+  /// **'Tout le téléphone devient le cyberespace du film de 1995 : on plonge à travers les couches du réseau, parmi les cascades de chiffres et de katakanas, avec le réticule au centre.'**
   String get wallpaperGhostDescription;
 
   /// No description provided for @wallpaperGhostMotion.
   ///
   /// In fr, this message translates to:
-  /// **'Le cyber-cerveau'**
+  /// **'La plongée'**
   String get wallpaperGhostMotion;
 
   /// No description provided for @wallpaperGhostMotionText.
   ///
   /// In fr, this message translates to:
-  /// **'Le ghost, une étincelle, erre de piste en piste dans le cerveau ; une prise de nuque s\'allume par quart de batterie ; une pluie de code tombe derrière, et en charge, c\'est la plongée : elle accélère.'**
+  /// **'Les couches du réseau arrivent du fond, cadre après cadre, avec leurs nœuds reliés où filent des paquets ; les signes tombent en cascade, plus petits au loin. Le réticule allume un segment par dixième de batterie, avec SYNC en dessous. En charge, la plongée accélère et le centre pulse ; avec du réseau, les paquets filent partout.'**
   String get wallpaperGhostMotionText;
 
   /// No description provided for @themeGhostDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Un cyber-cerveau et sa pluie de code, turquoise.'**
+  /// **'Le cyberespace du film, turquoise.'**
   String get themeGhostDescription;
 
   /// No description provided for @themeSoundGhostRing.

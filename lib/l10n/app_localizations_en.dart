@@ -1250,17 +1250,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wallpaperGhostDescription =>
-      'A cyberbrain in its shell, plugged into the phone in place of the battery.';
+      'The whole phone becomes the 1995 film\'s cyberspace: you dive through the network\'s layers, among cascading digits and katakana, with the reticle at the centre.';
 
   @override
-  String get wallpaperGhostMotion => 'The cyberbrain';
+  String get wallpaperGhostMotion => 'The dive';
 
   @override
   String get wallpaperGhostMotionText =>
-      'The ghost, a spark, wanders from trace to trace in the brain; one neck port lights up per quarter of battery; code rain falls behind, and while charging it dives: the rain speeds up.';
+      'The network\'s layers come from the depths, frame after frame, with their linked nodes where packets race; glyphs cascade down, smaller in the distance. The reticle lights one segment per tenth of battery, with SYNC below. While charging, the dive speeds up and the centre pulses; with network traffic, packets race everywhere.';
 
   @override
-  String get themeGhostDescription => 'A cyberbrain and its code rain, teal.';
+  String get themeGhostDescription => 'The film\'s cyberspace, teal.';
 
   @override
   String get themeSoundGhostRing => 'Dive';

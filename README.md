@@ -50,9 +50,9 @@ gardent ce nom.*
 - **Fallout** : tout le téléphone devient le Pip-Boy ; son écran cathodique
   fait défiler STAT (avec le Vault Boy), INV, DATA, MAP et RADIO, et HEALTH
   suit la batterie ;
-- **Ghost in the Shell** : le même téléphone que Circuit, avec à la place de
-  la batterie un cyber-cerveau et sa pluie de code ; il suit la batterie et
-  s'emballe en charge.
+- **Ghost in the Shell** : tout le téléphone devient le cyberespace du film
+  de 1995 ; on plonge à travers les couches du réseau, parmi les cascades de
+  chiffres, et le réticule compte la batterie.
 
 Tous prennent les couleurs du téléphone, comme les widgets.
 

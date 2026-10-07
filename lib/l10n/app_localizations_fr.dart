@@ -1261,18 +1261,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get wallpaperGhostDescription =>
-      'Un cyber-cerveau dans sa coque, branché dans le téléphone à la place de la batterie.';
+      'Tout le téléphone devient le cyberespace du film de 1995 : on plonge à travers les couches du réseau, parmi les cascades de chiffres et de katakanas, avec le réticule au centre.';
 
   @override
-  String get wallpaperGhostMotion => 'Le cyber-cerveau';
+  String get wallpaperGhostMotion => 'La plongée';
 
   @override
   String get wallpaperGhostMotionText =>
-      'Le ghost, une étincelle, erre de piste en piste dans le cerveau ; une prise de nuque s\'allume par quart de batterie ; une pluie de code tombe derrière, et en charge, c\'est la plongée : elle accélère.';
+      'Les couches du réseau arrivent du fond, cadre après cadre, avec leurs nœuds reliés où filent des paquets ; les signes tombent en cascade, plus petits au loin. Le réticule allume un segment par dixième de batterie, avec SYNC en dessous. En charge, la plongée accélère et le centre pulse ; avec du réseau, les paquets filent partout.';
 
   @override
-  String get themeGhostDescription =>
-      'Un cyber-cerveau et sa pluie de code, turquoise.';
+  String get themeGhostDescription => 'Le cyberespace du film, turquoise.';
 
   @override
   String get themeSoundGhostRing => 'Plongée';
