@@ -87,6 +87,10 @@ rectangle. The service is `FluxWallpaperService`, which extends
   (destination 2015 · 16:29, present at the real time, last departed
   1985 · 01:21) and three power coils above the cables; on the bottom board,
   Mr. Fusion, which lights up while charging.
+- **A much denser motherboard**: a hatched copper pour cleared around the
+  chips and traces, stitching vias, test points, many surface-mount parts,
+  an audio codec and its crystal, a gyroscope, an inductor, a flex
+  connector, a charge controller and meandered traces.
 - **The rest is Circuit's**: tilt, network, wake-up.
 - **Battery**: on screen, the flux capacitor animates at about 22 frames per
   second for 30 s after the screen turns on or a gesture on the home screen

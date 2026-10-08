@@ -91,6 +91,11 @@ la batterie. Le service est `FluxWallpaperService`, qui étend
   circuits temporels (destination 2015 · 16:29, présent à l'heure réelle,
   dernier départ 1985 · 01:21) et trois bobines d'alimentation au-dessus des
   câbles ; sur la carte du bas, Mr. Fusion, qui s'éclaire pendant la charge.
+- **Une carte mère bien plus dense** : un plan de cuivre hachuré, dégagé
+  autour des puces et des pistes, des vias de couture, des points de test,
+  de nombreux composants montés en surface, un codec audio et son quartz, un
+  gyroscope, une bobine, un connecteur de nappe, un contrôleur de charge et
+  des pistes en serpentin.
 - **Le reste est celui de Circuit** : inclinaison, réseau, allumage.
 - **Batterie** : à l'écran, le convecteur s'anime à 22 images par seconde
   environ pendant 30 s après l'allumage de l'écran ou un geste sur l'accueil

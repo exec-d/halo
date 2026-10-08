@@ -9,6 +9,8 @@ mineure peut changer des réglages.
 
 ### Nouveau
 
+- **Retour vers le futur** : la carte mère du convecteur devient bien plus
+  dense (plan de cuivre, vias, composants, nouveaux bus).
 - **Iron Man**, refait : le téléphone porte l'armure, avec le réacteur arc
   qui bat en son centre.
 - **Cinq thèmes de plus**, chacun avec son fond animé, sa palette et ses
